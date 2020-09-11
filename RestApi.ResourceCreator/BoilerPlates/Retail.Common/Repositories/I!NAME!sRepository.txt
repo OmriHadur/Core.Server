@@ -1,0 +1,8 @@
+﻿using Retail.Common.Entities;
+
+namespace Retail.Common.Repositories
+{
+    public interface I!NAME!sRepository : IRepository<!NAME!Entity>
+    {
+    }
+}

@@ -1,0 +1,26 @@
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /src
+COPY ["Retail.Web/Retail.Web.csproj", "Retail.Web/"]
+COPY ["Retail.Application/Retail.Application.csproj", "Retail.Application/"]
+COPY ["Retail.Common/Retail.Common.csproj", "Retail.Common/"]
+COPY ["Retail.Standard.Shared/Retail.Standard.Shared.csproj", "Retail.Standard.Shared/"]
+COPY ["Retail.Persistence/Retail.Persistence.csproj", "Retail.Persistence/"]
+RUN dotnet restore "Retail.Web/Retail.Web.csproj"
+COPY . .
+WORKDIR "/src/Retail.Web"
+RUN dotnet build "Retail.Web.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Retail.Web.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Retail.Web.dll"]

@@ -1,0 +1,8 @@
+﻿using Retail.Standard.Shared.Resources;
+
+namespace Retail.Standard.Client.Interfaces
+{
+    public interface I!NAME!sControllClient : IRestClient<!NAME!CreateResource, !NAME!Resource>
+    {
+    }
+}

@@ -1,0 +1,15 @@
+﻿using Retail.Standard.Client.Interfaces;
+using Retail.Standard.Shared.Resources;
+
+namespace Retail.Standard.Client.Clients
+{
+    public class !NAME!sControllClient :
+        RestClient<!NAME!CreateResource, !NAME!Resource>,
+        I!NAME!sControllClient
+    {
+        public !NAME!sControllClient()
+            :base( "api/!NAME!s")
+        {
+        }
+    }
+}

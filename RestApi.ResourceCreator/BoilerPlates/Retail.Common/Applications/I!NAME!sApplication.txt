@@ -1,0 +1,8 @@
+﻿using Retail.Standard.Shared.Resources;
+
+namespace Retail.Common.Applications
+{
+    public interface I!NAME!sApplication : IRestApplication<!NAME!CreateResource, !NAME!Resource>
+    {
+    }
+}
