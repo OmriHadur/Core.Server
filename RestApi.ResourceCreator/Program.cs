@@ -8,7 +8,7 @@ namespace RestApi.ResourceCreator
     {
         static readonly string ProjectName = "BestEmployeePoll";
         static readonly string ProjectPath = @"E:\Dropbox\Workspace\BestEmployeePoll";
-        static readonly string NewResourceName = "Address";
+        static readonly string[] NewResourcesName = new string[] {  };
 
         static readonly string NameWildCard = "!NAME!";
         static readonly string ProjectWildCard = "!PROJECT!";
@@ -16,22 +16,33 @@ namespace RestApi.ResourceCreator
 
         public static void Main(string[] args)
         {
-            var files = Directory.GetFiles(boilerPlatesPath, "*.*", SearchOption.AllDirectories);
-
-            foreach (var fileInfo in files.Select(f => new FileInfo(f)))
+            foreach (var NewResourceName in NewResourcesName)
             {
-                var newFileDirectoryPath = GetNewFileDirectoryPath(fileInfo);
-                var newFilePath = GetNewFilePath(NewResourceName, fileInfo, newFileDirectoryPath);
+                var files = GetBolierplateFiles();
 
-                if (!File.Exists(newFilePath))
+                foreach (var fileInfo in files.Select(f => new FileInfo(f)))
                 {
-                    var fileContent = File.ReadAllText(fileInfo.FullName);
-                    fileContent = fileContent.Replace(NameWildCard, NewResourceName);
-                    fileContent = fileContent.Replace(ProjectWildCard, ProjectName);
-                    using var fs = File.CreateText(newFilePath);
-                    fs.Write(fileContent);
+                    var newFileDirectoryPath = GetNewFileDirectoryPath(fileInfo);
+                    var newFilePath = GetNewFilePath(NewResourceName, fileInfo, newFileDirectoryPath);
+
+                    if (!File.Exists(newFilePath))
+                        CreateFile(NewResourceName, fileInfo, newFilePath);
                 }
             }
+        }
+
+        private static void CreateFile(string NewResourceName, FileInfo fileInfo, string newFilePath)
+        {
+            var fileContent = File.ReadAllText(fileInfo.FullName);
+            fileContent = fileContent.Replace(NameWildCard, NewResourceName);
+            fileContent = fileContent.Replace(ProjectWildCard, ProjectName);
+            using var fs = File.CreateText(newFilePath);
+            fs.Write(fileContent);
+        }
+
+        private static string[] GetBolierplateFiles()
+        {
+            return Directory.GetFiles(boilerPlatesPath, "*.*", SearchOption.AllDirectories);
         }
 
         private static string GetNewFilePath(string name, FileInfo fileInfo, string newFileDirectoryPath)
