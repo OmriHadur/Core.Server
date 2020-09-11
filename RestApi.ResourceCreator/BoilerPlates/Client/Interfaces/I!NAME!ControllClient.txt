@@ -1,6 +1,7 @@
-﻿using Retail.Standard.Shared.Resources;
+﻿using !PROJECT!.Shared.Resources;
+using RestApi.Client.Interfaces;
 
-namespace Retail.Standard.Client.Interfaces
+namespace !PROJECT!.Standard.Client.Interfaces
 {
     public interface I!NAME!ControllClient : IRestClient<!NAME!CreateResource, !NAME!Resource>
     {

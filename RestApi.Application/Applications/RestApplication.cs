@@ -8,7 +8,7 @@ using Unity;
 using RestApi.Shared.Resources;
 using RestApi.Shared.Resources.Users;
 
-namespace RestApi.Application.Application
+namespace RestApi.Application
 {
     public class RestApplication<TCreateResource, TResource, TEntity>
         : ApplicationBase, IRestApplication<TCreateResource, TResource>

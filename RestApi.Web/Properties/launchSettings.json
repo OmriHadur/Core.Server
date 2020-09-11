@@ -15,19 +15,9 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IIS",
-      "launchUrl": "api\\weatherforecasts",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    },
-    "RetailServerWeb": {
-      "commandName": "IIS",
-      "launchUrl": "weatherforecast",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "ancmHostingModel": "InProcess",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
     },
     "newProfile1": {
       "commandName": "IIS"
@@ -35,7 +25,6 @@
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "/api/weatherforecasts",
       "publishAllPorts": true,
       "useSSL": true
     }

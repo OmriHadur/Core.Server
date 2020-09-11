@@ -8,9 +8,8 @@ using RestApi.Common;
 using RestApi.Shared.Resources.Users;
 using RestApi.Shared.Errors;
 using Unity;
-using System.Collections.Generic;
 
-namespace RestApi.Application.Application
+namespace RestApi.Application
 {
     [Inject]
     public class UserApplication : RestApplication<UserCreateResource, UserResource, UserEntity>, IUserApplication

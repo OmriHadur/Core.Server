@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Web", "RestApi.Web\RestApi.Web.csproj", "{03372C20-DA0E-466C-8299-5EC8FA41AA71}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApiApplication", "RestApi.Application\RestApiApplication.csproj", "{13EBE1D2-2079-42CD-A8CA-058A3F018A76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Application", "RestApi.Application\RestApi.Application.csproj", "{13EBE1D2-2079-42CD-A8CA-058A3F018A76}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Common", "RestApi.Common\RestApi.Common.csproj", "{27D12351-8D10-4148-B61E-51DFA8A3960C}"
 EndProject

@@ -10,6 +10,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>RestApi.ResourceCreator.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,7 +29,7 @@
     <None Update="BoilerPlates\Common\Entities\!NAME!Entity.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Common\Repositories\I!NAMES!Repository.txt">
+    <None Update="BoilerPlates\Common\Repositories\I!NAME!Repository.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="BoilerPlates\Persistence\Repositories\!NAME!Repository.txt">

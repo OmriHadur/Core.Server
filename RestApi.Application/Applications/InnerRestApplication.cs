@@ -12,7 +12,7 @@ using RestApi.Shared.Errors;
 using MongoDB.Bson;
 using System;
 
-namespace RestApi.Application.Application
+namespace RestApi.Application
 {
     public abstract class InnerRestApplication<TCreateResource, TResource, TParentEntity, TEntity>
         : ApplicationBase, IInnerRestApplication<TCreateResource, TResource>

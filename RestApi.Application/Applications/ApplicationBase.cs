@@ -4,7 +4,7 @@ using RestApi.Common.Errors;
 using RestApi.Shared.Errors;
 using Unity;
 
-namespace RestApi.Application.Application
+namespace RestApi.Application
 {
     public class ApplicationBase
     {

@@ -17,7 +17,7 @@ using RestApi.Application.Mapping;
 using System.Collections.Generic;
 using RestApi.Persistence.Repositories;
 using RestApi.Shared.Resources;
-using RestApi.Application.Application;
+using RestApi.Application;
 
 namespace RestApi.Web
 {

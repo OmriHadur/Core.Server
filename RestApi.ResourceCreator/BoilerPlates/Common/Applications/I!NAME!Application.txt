@@ -1,6 +1,7 @@
-﻿using Retail.Standard.Shared.Resources;
+﻿using !PROJECT!.Shared.Resources;
+using RestApi.Common.Applications;
 
-namespace Retail.Common.Applications
+namespace !PROJECT!.Common.Applications
 {
     public interface I!NAME!Application : IRestApplication<!NAME!CreateResource, !NAME!Resource>
     {

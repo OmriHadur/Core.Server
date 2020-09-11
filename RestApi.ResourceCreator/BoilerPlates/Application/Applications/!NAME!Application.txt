@@ -1,9 +1,10 @@
-﻿using Retail.Common.Applications;
-using Retail.Common.Entities;
-using Retail.Standard.Shared.Resources;
-using Retail.Common;
+﻿using !PROJECT!.Common.Applications;
+using !PROJECT!.Common.Entities;
+using !PROJECT!.Shared.Resources;
+using RestApi.Application;
+using RestApi.Common;
 
-namespace Retail.Application.Application
+namespace !PROJECT!.Application
 {
     [Inject]
     public class !NAME!Application : RestApplication<!NAME!CreateResource, !NAME!Resource, !NAME!Entity>, I!NAME!Application

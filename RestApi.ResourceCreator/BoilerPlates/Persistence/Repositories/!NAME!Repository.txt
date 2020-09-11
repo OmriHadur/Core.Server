@@ -1,8 +1,9 @@
-﻿using Retail.Common.Entities;
-using Retail.Common.Repositories;
-using Retail.Common;
+﻿using !PROJECT!.Common.Entities;
+using !PROJECT!.Common.Repositories;
+using RestApi.Persistence.Repositories;
+using RestApi.Common;
 
-namespace Retail.Persistence.Repositories
+namespace !PROJECT!.Persistence.Repositories
 {
     [Inject]
     public class !NAME!Repository : MongoRepository<!NAME!Entity>, I!NAME!Repository

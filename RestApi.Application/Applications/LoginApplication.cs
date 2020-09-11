@@ -12,7 +12,7 @@ using RestApi.Common.Entities.Helpers;
 using System;
 using System.Collections.Generic;
 
-namespace RestApi.Application.Application
+namespace RestApi.Application
 {
     [Inject]
     public class LoginApplication : RestApplication<LoginCreateResource, LoginResource, LoginEntity>, ILoginApplication
