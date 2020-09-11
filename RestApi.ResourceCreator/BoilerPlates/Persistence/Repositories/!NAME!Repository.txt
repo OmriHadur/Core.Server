@@ -5,7 +5,7 @@ using Retail.Common;
 namespace Retail.Persistence.Repositories
 {
     [Inject]
-    public class !NAME!sRepository : MongoRepository<!NAME!Entity>, I!NAME!sRepository
+    public class !NAME!Repository : MongoRepository<!NAME!Entity>, I!NAME!Repository
     {
     }
 }

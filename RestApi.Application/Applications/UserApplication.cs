@@ -13,13 +13,13 @@ using System.Collections.Generic;
 namespace RestApi.Application.Application
 {
     [Inject]
-    public class UsersApplication : RestApplication<UserCreateResource, UserResource, UserEntity>, IUsersApplication
+    public class UserApplication : RestApplication<UserCreateResource, UserResource, UserEntity>, IUserApplication
     {
-        private IUsersRepository _usersRepository => Repository as IUsersRepository;
+        private IUserRepository _usersRepository => Repository as IUserRepository;
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
         [Dependency]
-        public ILoginsApplication LoginsApplication;
+        public ILoginApplication LoginsApplication;
 
         protected override UserEntity GetNewTEntity(UserCreateResource resource)
         {

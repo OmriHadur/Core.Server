@@ -4,7 +4,7 @@ using RestApi.Shared.Resources.Users;
 
 namespace RestApi.Common.Applications
 {
-    public interface IUsersApplication : IRestApplication<UserCreateResource, UserResource>
+    public interface IUserApplication : IRestApplication<UserCreateResource, UserResource>
     {
     }
 }

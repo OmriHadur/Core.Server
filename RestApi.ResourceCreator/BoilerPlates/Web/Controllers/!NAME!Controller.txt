@@ -5,7 +5,7 @@ namespace Retail.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class !NAME!sController : RestController<!NAME!CreateResource, !NAME!Resource>
+    public class !NAME!Controller : RestController<!NAME!CreateResource, !NAME!Resource>
     {
     }
 }

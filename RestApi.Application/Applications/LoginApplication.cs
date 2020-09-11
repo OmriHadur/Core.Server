@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace RestApi.Application.Application
 {
     [Inject]
-    public class LoginsApplication : RestApplication<LoginCreateResource, LoginResource, LoginEntity>, ILoginsApplication
+    public class LoginApplication : RestApplication<LoginCreateResource, LoginResource, LoginEntity>, ILoginApplication
     {
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
@@ -25,7 +25,7 @@ namespace RestApi.Application.Application
         [Dependency]
         public IJwtManager JwtManager { get; set; }
         [Dependency]
-        public IUsersRepository UsersRepository { get; set; }
+        public IUserRepository UsersRepository { get; set; }
 
         public override async Task<ActionResult<LoginResource>> Get(string id)
         {
@@ -57,7 +57,7 @@ namespace RestApi.Application.Application
 
         public async Task DeleteByUserId(string id)
         {
-            await (Repository as ILoginsRepository).DeleteByUserId(id);
+            await (Repository as ILoginRepository).DeleteByUserId(id);
         }
 
         private ActionResult<LoginResource> GetLoginWithUser(LoginEntity loginEntity, UserEntity userEntity)
@@ -69,7 +69,7 @@ namespace RestApi.Application.Application
 
         private async Task DeleteLastLogin(UserEntity user)
         {
-            var login = await (Repository as ILoginsRepository).GetByUserId(user.Id);
+            var login = await (Repository as ILoginRepository).GetByUserId(user.Id);
             if (login != null)
                 await Repository.Remove(login);
         }

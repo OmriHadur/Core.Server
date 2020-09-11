@@ -2,7 +2,7 @@
 
 namespace Retail.Standard.Client.Interfaces
 {
-    public interface I!NAME!sControllClient : IRestClient<!NAME!CreateResource, !NAME!Resource>
+    public interface I!NAME!ControllClient : IRestClient<!NAME!CreateResource, !NAME!Resource>
     {
     }
 }

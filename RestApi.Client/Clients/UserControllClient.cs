@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-using RestApi.Client.Interfaces;
-using RestApi.Client.Results;
+﻿using RestApi.Client.Interfaces;
 using RestApi.Shared.Resources.Users;
 
 namespace RestApi.Client.Clients
@@ -11,7 +8,7 @@ namespace RestApi.Client.Clients
         IUserControllClient
     {
         public UserControllClient()
-            :base("users")
+            :base("user")
         {
         }
     }

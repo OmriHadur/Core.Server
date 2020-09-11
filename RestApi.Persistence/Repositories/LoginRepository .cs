@@ -7,7 +7,7 @@ using MongoDB.Driver;
 namespace RestApi.Persistence.Repositories
 {
     [Inject]
-    public class LoginsRepository : MongoRepository<LoginEntity>, ILoginsRepository
+    public class LoginRepository : MongoRepository<LoginEntity>, ILoginRepository
     {
         public async Task DeleteByUserId(string userId)
         {

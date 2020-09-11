@@ -1,6 +1,4 @@
-﻿using RestApi.Client.Results;
-using RestApi.Shared.Resources.Users;
-using System.Threading.Tasks;
+﻿using RestApi.Shared.Resources.Users;
 
 namespace RestApi.Client.Interfaces
 {

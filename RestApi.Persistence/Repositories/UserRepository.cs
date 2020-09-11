@@ -7,7 +7,7 @@ using RestApi.Common;
 namespace RestApi.Persistence.Repositories
 {
     [Inject]
-    public class UsersRepository : MongoRepository<UserEntity>, IUsersRepository
+    public class UserRepository : MongoRepository<UserEntity>, IUserRepository
     {
         public async Task<bool> EmailExists(string email)
         {

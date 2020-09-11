@@ -3,12 +3,12 @@ using Retail.Standard.Shared.Resources;
 
 namespace Retail.Standard.Client.Clients
 {
-    public class !NAME!sControllClient :
+    public class !NAME!ControllClient :
         RestClient<!NAME!CreateResource, !NAME!Resource>,
-        I!NAME!sControllClient
+        I!NAME!ControllClient
     {
-        public !NAME!sControllClient()
-            :base( "api/!NAME!s")
+        public !NAME!ControllClient()
+            :base( "api/!NAME!")
         {
         }
     }

@@ -2,13 +2,15 @@
 using System.IO;
 using System.Linq;
 
-namespace Retail.ResourceCreator
+namespace RestApi.ResourceCreator
 {
     class Program
     {
-        static string WildCard = "!NAME!";
-        static string OutputPath = @"..\..\..\..\";
-        static string boilerPlatesPath = Directory.GetCurrentDirectory() + "\\BoilerPlates";
+        static readonly string WildCard = "!Name!";
+        static readonly string FoldersPrefix = "BestEmployeePoll";
+        static readonly string OutputPath = @"E:\Dropbox\Workspace\BestEmployeePoll";
+        static readonly string boilerPlatesPath = Directory.GetCurrentDirectory() + "\\BoilerPlates";
+
         static void Main(string[] args)
         {
             var name = "Address";
@@ -39,7 +41,7 @@ namespace Retail.ResourceCreator
         private static string GetNewFileDirectoryPath(FileInfo fileInfo)
         {
             var absPath = fileInfo.Directory.FullName.Replace(boilerPlatesPath, string.Empty);
-            var newFileDirectoryPath = $"{OutputPath}{absPath}\\";
+            var newFileDirectoryPath = $"{OutputPath}\\{FoldersPrefix}{absPath}\\";
             Directory.CreateDirectory(newFileDirectoryPath);
             return newFileDirectoryPath;
         }

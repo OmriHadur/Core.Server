@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Shared", "RestApi.S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client", "RestApi.Client\RestApi.Client.csproj", "{782404E8-8F96-47DB-8240-FC3A4459BBD8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.ResourceCreator", "RestApi.ResourceCreator\RestApi.ResourceCreator.csproj", "{397D7F98-7848-45CD-90A0-633E735BC7C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{782404E8-8F96-47DB-8240-FC3A4459BBD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{782404E8-8F96-47DB-8240-FC3A4459BBD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{782404E8-8F96-47DB-8240-FC3A4459BBD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{397D7F98-7848-45CD-90A0-633E735BC7C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{397D7F98-7848-45CD-90A0-633E735BC7C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{397D7F98-7848-45CD-90A0-633E735BC7C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{397D7F98-7848-45CD-90A0-633E735BC7C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

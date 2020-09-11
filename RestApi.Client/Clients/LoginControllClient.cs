@@ -8,7 +8,7 @@ namespace RestApi.Client.Clients
         ILoginControllClient
     {
         public LoginControllClient()
-            :base("logins")
+            :base("login")
         {
         }
     }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup Label="Globals">
     <SccProjectName>SAK</SccProjectName>
@@ -13,34 +13,34 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="BoilerPlates\Retail.Application\Application\!NAME!sApplication.txt">
+    <None Update="BoilerPlates\Application\Applications\!NAME!Application.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Common\Applications\I!NAME!sApplication.txt">
+    <None Update="BoilerPlates\Client\Clients\!NAME!ControllClient.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Common\Entities\!NAME!Entity.txt">
+    <None Update="BoilerPlates\Client\Interfaces\I!NAME!ControllClient.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Common\Repositories\I!NAME!sRepository.txt">
+    <None Update="BoilerPlates\Common\Applications\I!NAME!Application.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Persistence\Repositories\!NAME!sRepository.txt">
+    <None Update="BoilerPlates\Common\Entities\!NAME!Entity.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Standard.Client\Clients\!NAME!sControllClient.txt">
+    <None Update="BoilerPlates\Common\Repositories\I!NAMES!Repository.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Standard.Client\Interfaces\I!NAME!sControllClient.txt">
+    <None Update="BoilerPlates\Persistence\Repositories\!NAME!Repository.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Standard.Shared\Resources\!NAME!CreateResource.txt">
+    <None Update="BoilerPlates\Shared\Resources\!NAME!CreateResource.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Standard.Shared\Resources\!NAME!Resource.txt">
+    <None Update="BoilerPlates\Shared\Resources\!NAME!Resource.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Retail.Web\Controllers\!NAME!sController.txt">
+    <None Update="BoilerPlates\Web\Controllers\!NAME!Controller.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

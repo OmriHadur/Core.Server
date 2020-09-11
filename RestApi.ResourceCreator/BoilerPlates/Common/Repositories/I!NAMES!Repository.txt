@@ -2,7 +2,7 @@
 
 namespace Retail.Common.Repositories
 {
-    public interface I!NAME!sRepository : IRepository<!NAME!Entity>
+    public interface I!NAME!Repository : IRepository<!NAME!Entity>
     {
     }
 }

@@ -6,7 +6,7 @@ using Retail.Common;
 namespace Retail.Application.Application
 {
     [Inject]
-    public class !NAME!Application : RestApplication<!NAME!CreateResource, !NAME!Resource, !NAME!Entity>, I!NAME!sApplication
+    public class !NAME!Application : RestApplication<!NAME!CreateResource, !NAME!Resource, !NAME!Entity>, I!NAME!Application
     {
     }
 }
