@@ -1,5 +1,5 @@
 ﻿
-namespace RestApi.Standard.Shared.Resources
+namespace RestApi.Shared.Resources
 {
     public class CreateResource
     {

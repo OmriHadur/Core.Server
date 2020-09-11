@@ -1,4 +1,4 @@
-﻿using RestApi.Standard.Shared.Resources.Users;
+﻿using RestApi.Shared.Resources.Users;
 using System.Security.Claims;
 
 namespace RestApi.Common.Entities.Helpers

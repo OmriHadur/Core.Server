@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using RestApi.Common.Errors;
-using RestApi.Standard.Shared.Errors;
+using RestApi.Shared.Errors;
 using Unity;
 
 namespace RestApi.Application.Application

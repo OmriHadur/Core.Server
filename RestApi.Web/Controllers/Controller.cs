@@ -1,8 +1,8 @@
 ﻿using RestApi.Common.Entities.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Unity;
-using RestApi.Standard.Shared.Errors;
-using RestApi.Standard.Shared.Resources.Users;
+using RestApi.Shared.Errors;
+using RestApi.Shared.Resources.Users;
 using RestApi.Common.Errors;
 
 namespace RestApi.Web.Controllers

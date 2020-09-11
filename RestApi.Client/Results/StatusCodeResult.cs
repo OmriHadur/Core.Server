@@ -1,6 +1,6 @@
-﻿using RestApi.Standard.Client.Results;
+﻿using RestApi.Client.Results;
 
-namespace RestApi.Standard.Client.Results
+namespace RestApi.Client.Results
 {
     public class StatusCodeResult : ActionResult
     {

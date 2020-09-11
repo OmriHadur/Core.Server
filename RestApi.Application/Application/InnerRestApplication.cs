@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity;
-using RestApi.Standard.Shared.Resources;
-using RestApi.Standard.Shared.Resources.Users;
+using RestApi.Shared.Resources;
+using RestApi.Shared.Resources.Users;
 using System.Linq;
-using RestApi.Standard.Shared.Errors;
+using RestApi.Shared.Errors;
 using MongoDB.Bson;
 using System;
 

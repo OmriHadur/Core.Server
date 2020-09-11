@@ -1,4 +1,4 @@
-﻿namespace RestApi.Standard.Client.Interfaces
+﻿namespace RestApi.Client.Interfaces
 {
     public interface IClientBase
     {

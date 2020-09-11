@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using RestApi.Common.Entities;
-using RestApi.Standard.Shared.Resources;
+using RestApi.Shared.Resources;
 using System;
 
 namespace RestApi.Application.Mapping

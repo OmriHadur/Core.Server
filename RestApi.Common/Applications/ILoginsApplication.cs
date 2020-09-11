@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using RestApi.Standard.Shared.Resources.Users;
+using RestApi.Shared.Resources.Users;
 
 namespace RestApi.Common.Applications
 {

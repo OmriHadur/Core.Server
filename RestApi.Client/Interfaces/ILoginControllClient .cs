@@ -1,8 +1,8 @@
-﻿using RestApi.Standard.Client.Results;
-using RestApi.Standard.Shared.Resources.Users;
+﻿using RestApi.Client.Results;
+using RestApi.Shared.Resources.Users;
 using System.Threading.Tasks;
 
-namespace RestApi.Standard.Client.Interfaces
+namespace RestApi.Client.Interfaces
 {
     public interface ILoginControllClient : IRestClient<LoginCreateResource, LoginResource>
     {

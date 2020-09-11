@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using RestApi.Common.Entities;
-using RestApi.Standard.Shared.Resources;
-using RestApi.Standard.Shared.Resources.Users;
+using RestApi.Shared.Resources;
+using RestApi.Shared.Resources.Users;
 using System;
 using System.Linq;
 

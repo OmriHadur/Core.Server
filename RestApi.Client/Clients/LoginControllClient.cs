@@ -1,7 +1,7 @@
-﻿using RestApi.Standard.Client.Interfaces;
-using RestApi.Standard.Shared.Resources.Users;
+﻿using RestApi.Client.Interfaces;
+using RestApi.Shared.Resources.Users;
 
-namespace RestApi.Standard.Client.Clients
+namespace RestApi.Client.Clients
 {
     public class LoginControllClient : 
         RestClient<LoginCreateResource, LoginResource>,

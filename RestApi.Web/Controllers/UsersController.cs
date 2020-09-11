@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using RestApi.Standard.Shared.Resources.Users;
+using RestApi.Shared.Resources.Users;
 using System.Threading.Tasks;
 
 namespace RestApi.Web.Controllers

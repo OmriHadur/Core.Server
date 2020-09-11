@@ -14,6 +14,10 @@ using Unity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using RestApi.Application.Mapping;
+using System.Collections.Generic;
+using RestApi.Persistence.Repositories;
+using RestApi.Shared.Resources;
+using RestApi.Application.Application;
 
 namespace RestApi.Web
 {
@@ -56,8 +60,17 @@ namespace RestApi.Web
 
         public void ConfigureContainer(IUnityContainer container)
         {
-            foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (Assembly assembly in GetAssemblies())
                 AddAssembly(assembly, container);
+        }
+
+        protected virtual IEnumerable<Assembly> GetAssemblies()
+        {
+            yield return typeof(AppSettings).Assembly;//RestApi.Common
+            yield return typeof(Resource).Assembly; //RestApi.Shared
+            yield return typeof(MongoRepository<>).Assembly;//RestApi.Persistence
+            yield return typeof(ApplicationBase).Assembly;//RestApiApplication
+            yield return GetType().Assembly;//RestApi.Web
         }
 
         private void AddAssembly(Assembly assembly, IUnityContainer container)

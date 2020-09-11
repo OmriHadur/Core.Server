@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["Retail.Web/Retail.Web.csproj", "Retail.Web/"]
 COPY ["Retail.Application/Retail.Application.csproj", "Retail.Application/"]
 COPY ["Retail.Common/Retail.Common.csproj", "Retail.Common/"]
-COPY ["Retail.Standard.Shared/Retail.Standard.Shared.csproj", "Retail.Standard.Shared/"]
+COPY ["Retail.Shared/Retail.Shared.csproj", "Retail.Shared/"]
 COPY ["Retail.Persistence/Retail.Persistence.csproj", "Retail.Persistence/"]
 RUN dotnet restore "Retail.Web/Retail.Web.csproj"
 COPY . .

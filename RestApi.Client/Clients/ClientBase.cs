@@ -1,14 +1,14 @@
 ﻿using Newtonsoft.Json;
-using RestApi.Standard.Client.Interfaces;
-using RestApi.Standard.Client.Results;
-using RestApi.Standard.Shared.Errors;
+using RestApi.Client.Interfaces;
+using RestApi.Client.Results;
+using RestApi.Shared.Errors;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace RestApi.Standard.Client.Clients
+namespace RestApi.Client.Clients
 {
     public class ClientBase : IClientBase
     {

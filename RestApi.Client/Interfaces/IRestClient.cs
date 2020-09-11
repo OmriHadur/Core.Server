@@ -1,10 +1,10 @@
 ﻿
-using RestApi.Standard.Client.Results;
-using RestApi.Standard.Shared.Resources;
+using RestApi.Client.Results;
+using RestApi.Shared.Resources;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace RestApi.Standard.Client.Interfaces
+namespace RestApi.Client.Interfaces
 {
     public interface IRestClient<TCreateResource, TResource> :
         IClientBase

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RestApi.Common.Applications;
-using RestApi.Standard.Shared.Resources;
+using RestApi.Shared.Resources;
 using Unity;
 
 namespace RestApi.Web.Controllers

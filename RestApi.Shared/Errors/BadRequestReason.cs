@@ -1,4 +1,4 @@
-﻿namespace RestApi.Standard.Shared.Errors
+﻿namespace RestApi.Shared.Errors
 {
     public enum BadRequestReason
     {

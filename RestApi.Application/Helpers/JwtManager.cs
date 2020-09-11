@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using RestApi.Common;
-using RestApi.Standard.Shared.Resources.Users;
+using RestApi.Shared.Resources.Users;
 
 namespace RestApi.Application.Helper
 {

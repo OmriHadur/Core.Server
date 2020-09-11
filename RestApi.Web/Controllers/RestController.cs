@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestApi.Common.Applications;
 using Unity;
 using Microsoft.Extensions.Logging;
-using RestApi.Standard.Shared.Resources;
+using RestApi.Shared.Resources;
 
 namespace RestApi.Web.Controllers
 {

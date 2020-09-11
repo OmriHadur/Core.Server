@@ -5,8 +5,8 @@ using RestApi.Common.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using RestApi.Common;
-using RestApi.Standard.Shared.Resources.Users;
-using RestApi.Standard.Shared.Errors;
+using RestApi.Shared.Resources.Users;
+using RestApi.Shared.Errors;
 using Unity;
 using System.Collections.Generic;
 

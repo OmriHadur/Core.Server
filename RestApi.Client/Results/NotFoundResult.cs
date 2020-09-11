@@ -1,5 +1,5 @@
 ﻿
-namespace RestApi.Standard.Client.Results
+namespace RestApi.Client.Results
 {
     public class NotFoundResult : ActionResult
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestApi.Standard.Shared.Errors;
+using RestApi.Shared.Errors;
 
 namespace RestApi.Common.Errors
 {

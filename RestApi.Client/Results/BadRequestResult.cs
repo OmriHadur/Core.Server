@@ -1,6 +1,6 @@
-﻿using RestApi.Standard.Shared.Errors;
+﻿using RestApi.Shared.Errors;
 
-namespace RestApi.Standard.Client.Results
+namespace RestApi.Client.Results
 {
     public class BadRequestResult : ActionResult
     {

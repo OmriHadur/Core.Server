@@ -5,7 +5,7 @@ using RestApi.Common.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using RestApi.Common;
-using RestApi.Standard.Shared.Resources.Users;
+using RestApi.Shared.Resources.Users;
 using Microsoft.Extensions.Options;
 using Unity;
 using RestApi.Common.Entities.Helpers;

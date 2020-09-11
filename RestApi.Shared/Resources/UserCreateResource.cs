@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace RestApi.Standard.Shared.Resources.Users
+namespace RestApi.Shared.Resources.Users
 {
     public class UserCreateResource : CreateResource
     {

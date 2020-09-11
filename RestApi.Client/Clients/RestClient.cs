@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using RestApi.Standard.Client.Interfaces;
-using RestApi.Standard.Client.Results;
-using RestApi.Standard.Shared.Resources;
+using RestApi.Client.Interfaces;
+using RestApi.Client.Results;
+using RestApi.Shared.Resources;
 
-namespace RestApi.Standard.Client.Clients
+namespace RestApi.Client.Clients
 {
     public abstract class RestClient<TCreateResource, TResource> :
         ClientBase, 

@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\RestApi.Application\RestApiApplication.csproj" />
     <ProjectReference Include="..\RestApi.Common\RestApi.Common.csproj" />
+    <ProjectReference Include="..\RestApi.Persistence\RestApi.Persistence.csproj" />
     <ProjectReference Include="..\RestApi.Shared\RestApi.Shared.csproj" />
   </ItemGroup>
 

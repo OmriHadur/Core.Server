@@ -1,5 +1,5 @@
 ﻿
-namespace RestApi.Standard.Shared.Resources.Users
+namespace RestApi.Shared.Resources.Users
 {
     public class LoginResource : Resource
     {
