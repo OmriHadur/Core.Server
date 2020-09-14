@@ -1,7 +1,7 @@
 ﻿using RestApi.Client.Results;
 using RestApi.Shared.Resources;
 
-namespace RestApi.Tests.RestResourcesCreators.Interfaces
+namespace RestApi.Tests.ResourceCreators.Interfaces
 {
     public interface IResourceCreator<TCreateResource,TResource> : 
         IResourceGetter<TResource>

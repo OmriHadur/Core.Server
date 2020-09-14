@@ -1,0 +1,9 @@
+﻿using !PROJECT!.Shared.Resources;
+using RestApi.Common.Applications;
+
+namespace !PROJECT!.Common.Applications
+{
+    public interface I!NAME!Application : IInnerRestApplication<!NAME!CreateResource, !NAME!Resource>
+    {
+    }
+}

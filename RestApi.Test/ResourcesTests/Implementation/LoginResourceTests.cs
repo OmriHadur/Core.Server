@@ -1,9 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RestApi.Client.Interfaces;
 using RestApi.Client.Results;
 using RestApi.Shared.Resources.Users;
 
-namespace RestApi.Tests.RestRourcesTests
+namespace RestApi.Tests.ResourceTests
 {
     [TestClass]
     public class LoginResourceTests : ResourceTests<LoginCreateResource, LoginResource>

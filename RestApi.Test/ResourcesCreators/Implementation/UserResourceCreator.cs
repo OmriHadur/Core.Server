@@ -1,6 +1,6 @@
 ﻿using RestApi.Shared.Resources.Users;
 
-namespace RestApi.Tests.RestResourcesCreators
+namespace RestApi.Tests.ResourceCreators
 {
     public class UserResourceCreator : RestResourceCreator<UserCreateResource, UserResource>
     {

@@ -64,11 +64,25 @@ namespace RestApi.Persistence.Repositories
         {
             return (await Entities.FindAsync(predicate)).FirstOrDefault();
         }
-        public virtual async Task<TEntity> Get(string id)
+        public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)
+        {
+            return (await Entities.FindAsync(predicate)).Any();
+        }
+
+        public async Task<TEntity> Get(string id)
         {
             return (await Entities.FindAsync(e => e.Id == id)).FirstOrDefault();
         }
 
+        public async Task<IEnumerable<TEntity>> GetAll(IEnumerable<string> ids)
+        {
+            return (await Entities.FindAsync(e => ids.Contains(e.Id))).ToList();
+        }
+
+        public async Task<IEnumerable<TEntity>> FindAll(Func<TEntity, bool> findFunc)
+        {
+            return (await Entities.FindAsync(e => findFunc(e))).ToList();
+        }
         public virtual async Task<List<TEntity>> GetAll()
         {
             var answer = await Entities.FindAsync(e => true);

@@ -15,6 +15,6 @@ namespace RestApi.Web
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUnityServiceProvider(new UnityContainer())
-                .UseStartup<Startup>();
+                .UseStartup<RestApiStartup>();
     }
 }

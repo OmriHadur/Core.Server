@@ -1,9 +1,0 @@
-﻿using !PROJECT!.Shared.Resources;
-using RestApi.Client.Interfaces;
-
-namespace !PROJECT!.Standard.Client.Interfaces
-{
-    public interface I!NAME!ControllClient : IRestClient<!NAME!CreateResource, !NAME!Resource>
-    {
-    }
-}

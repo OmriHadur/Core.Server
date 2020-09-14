@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RestApi.Tests.RestResourcesCreators.Interfaces
+namespace RestApi.Tests.ResourceCreators.Interfaces
 {
     public interface IResourceDeleter
     {

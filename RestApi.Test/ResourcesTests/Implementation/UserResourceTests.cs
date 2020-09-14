@@ -2,7 +2,7 @@
 using RestApi.Shared.Errors;
 using RestApi.Shared.Resources.Users;
 
-namespace RestApi.Tests.RestRourcesTests
+namespace RestApi.Tests.ResourceTests
 {
     [TestClass]
     public class UserResourceTests : ResourceTests<UserCreateResource, UserResource>

@@ -8,36 +8,55 @@ namespace RestApi.ResourceCreator
     {
         static readonly string ProjectName = "BestEmployeePoll";
         static readonly string ProjectPath = @"E:\Dropbox\Workspace\BestEmployeePoll";
-        static readonly string[] NewResourcesName = new string[] {  };
+        static string NewResourceName = "employee";
+        static string NewResourcePluralName = NewResourceName + "s";
+
+        static readonly string ParentName =  "" ;
+        static readonly bool IsInnerRest = false;
 
         static readonly string NameWildCard = "!NAME!";
+        static readonly string NamePluralWildCard = "!NAMES!";
         static readonly string ProjectWildCard = "!PROJECT!";
-        static readonly string boilerPlatesPath = Directory.GetCurrentDirectory() + "\\BoilerPlates";
+        static readonly string ParentWildCard = "!PARENT!";
+        static readonly string boilerPlatesPath = Directory.GetCurrentDirectory() + "\\BoilerPlates\\" + (IsInnerRest ? "InnerRest" : "Rest");
 
         public static void Main(string[] args)
         {
-            foreach (var NewResourceName in NewResourcesName)
+            NewResourceName = GetStarsWithUpper(NewResourceName);
+            NewResourcePluralName = GetStarsWithUpper(NewResourcePluralName);
+            var files = GetBolierplateFiles();
+
+            foreach (var fileInfo in files.Select(f => new FileInfo(f)))
             {
-                var files = GetBolierplateFiles();
+                var newFileDirectoryPath = GetNewFileDirectoryPath(fileInfo);
+                var newFilePath = GetNewFilePath(fileInfo, newFileDirectoryPath);
 
-                foreach (var fileInfo in files.Select(f => new FileInfo(f)))
-                {
-                    var newFileDirectoryPath = GetNewFileDirectoryPath(fileInfo);
-                    var newFilePath = GetNewFilePath(NewResourceName, fileInfo, newFileDirectoryPath);
-
-                    if (!File.Exists(newFilePath))
-                        CreateFile(NewResourceName, fileInfo, newFilePath);
-                }
+                if (!File.Exists(newFilePath))
+                    CreateFile(fileInfo, newFilePath);
             }
         }
 
-        private static void CreateFile(string NewResourceName, FileInfo fileInfo, string newFilePath)
+        private static string GetStarsWithUpper(string newResourceName)
+        {
+            newResourceName = newResourceName.ToLower();
+            newResourceName = newResourceName[0].ToString().ToUpper() + newResourceName.Substring(1);
+            return newResourceName;
+        }
+
+        private static void CreateFile(FileInfo fileInfo, string newFilePath)
         {
             var fileContent = File.ReadAllText(fileInfo.FullName);
-            fileContent = fileContent.Replace(NameWildCard, NewResourceName);
-            fileContent = fileContent.Replace(ProjectWildCard, ProjectName);
+            fileContent = ReplateWildCards(fileContent);
             using var fs = File.CreateText(newFilePath);
             fs.Write(fileContent);
+        }
+
+        private static string ReplateWildCards(string fileContent)
+        {
+            fileContent = fileContent.Replace(NameWildCard, NewResourceName);
+            fileContent = fileContent.Replace(NamePluralWildCard, NewResourcePluralName);
+            fileContent = fileContent.Replace(ProjectWildCard, ProjectName);
+            return fileContent.Replace(ParentWildCard, ParentName);
         }
 
         private static string[] GetBolierplateFiles()
@@ -45,10 +64,11 @@ namespace RestApi.ResourceCreator
             return Directory.GetFiles(boilerPlatesPath, "*.*", SearchOption.AllDirectories);
         }
 
-        private static string GetNewFilePath(string name, FileInfo fileInfo, string newFileDirectoryPath)
+        private static string GetNewFilePath(FileInfo fileInfo, string newFileDirectoryPath)
         {
             var fileName = fileInfo.Name.Replace(".txt", ".cs");
-            fileName = fileName.Replace(NameWildCard, name);
+            fileName = fileName.Replace(NameWildCard, NewResourceName);
+            fileName = fileName.Replace(NamePluralWildCard, NewResourcePluralName);
             var newFilePath = newFileDirectoryPath + fileName;
             return newFilePath;
         }

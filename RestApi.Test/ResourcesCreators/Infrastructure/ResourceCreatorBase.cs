@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RestApi.Shared.Resources;
-using RestApi.Tests.RestResourcesCreators.Interfaces;
+using RestApi.Tests.ResourceCreators.Interfaces;
 using RestApi.Tests.Utils;
 using System;
 using Unity;
 
-namespace RestApi.Tests.RestResourcesCreators
+namespace RestApi.Tests.ResourceCreators
 {
     public class ResourceCreatorBase
     {

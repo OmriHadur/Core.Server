@@ -1,6 +1,8 @@
 ﻿using RestApi.Client.Clients;
-using RestApi.Tests.RestResourcesCreators.Interfaces;
+using RestApi.Tests.ResourceCreators.Interfaces;
+using RestApi.Tests.Utils;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Unity;
@@ -9,14 +11,26 @@ namespace RestApi.Tests.Unity
 {
     public class TestsUnityContainer : ITestsUnityContainer
     {
-        private UnityContainer _unityContainer;
+        private readonly UnityContainer _unityContainer;
 
         public TestsUnityContainer()
         {
             _unityContainer = new UnityContainer();
-            AddAssembly(GetType().Assembly);
-            AddAssembly(typeof(ClientBase).Assembly);
-            AddDeleters(GetType().Assembly);
+
+            foreach (var assembly in GetAssemblies())
+            {
+                AddAssembly(assembly);
+                AddDeleters(assembly);
+            }
+        }
+
+        protected IEnumerable<Assembly> GetAssemblies()
+        {
+            var config = new ConfigHandler().Config;
+            foreach (var assemblyName in config.Assemblies)
+            {
+                yield return Assembly.LoadFrom(assemblyName + ".dll");
+            } 
         }
 
         public T Resolve<T>()

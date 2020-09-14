@@ -36,7 +36,7 @@ namespace RestApi.Application
             var entity = await Repository.Get(id);
             if (entity == null)
                 return NotFound(id);
-            return Map(entity);
+            return await Map(entity);
         }
 
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource createResource)
@@ -46,7 +46,7 @@ namespace RestApi.Application
             if (!(result is OkResult))
                 return result;
             entity = await AddEntityToDb(entity);
-            return Map(entity);
+            return await Map(entity);
         }
 
         public virtual async Task<ActionResult<TResource>> Update(string id, TCreateResource createResource)
@@ -60,7 +60,7 @@ namespace RestApi.Application
                 return result;
             await Repository.Update(entity);
             entity = await Repository.Get(entity.Id);
-            return Map(entity);
+            return await Map(entity);
         }
 
         public virtual async Task<ActionResult> Delete(string id)
@@ -79,7 +79,7 @@ namespace RestApi.Application
                 NotFound(id);
         }
 
-        protected ActionResult<TResource> Map(TEntity entity)
+        protected async virtual Task<TResource> Map(TEntity entity)
         {
             return Mapper.Map<TResource>(entity);
         }

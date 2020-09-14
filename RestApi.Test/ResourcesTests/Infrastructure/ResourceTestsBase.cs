@@ -1,11 +1,10 @@
 using RestApi.Shared.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using RestApi.Tests.RestResourcesCreators.Interfaces;
+using RestApi.Tests.ResourceCreators.Interfaces;
 using RestApi.Client.Results;
-using RestApi.Client.Interfaces;
 
-namespace RestApi.Tests.RestRourcesTests
+namespace RestApi.Tests.ResourceTests
 {
     public abstract class ResourceTestsBase<TCreateResource,TResource> :
         TestsBase

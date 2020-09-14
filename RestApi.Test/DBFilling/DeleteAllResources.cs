@@ -2,7 +2,7 @@
 using RestApi.Client.Interfaces;
 using RestApi.Shared.Resources;
 using RestApi.Shared.Resources.Users;
-using RestApi.Tests.RestRourcesTests;
+using RestApi.Tests.ResourceTests;
 
 namespace RestApi.Tests.DBFilling
 {

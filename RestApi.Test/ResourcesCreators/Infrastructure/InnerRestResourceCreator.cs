@@ -1,10 +1,10 @@
 ﻿using RestApi.Client.Interfaces;
 using RestApi.Client.Results;
 using RestApi.Shared.Resources;
-using RestApi.Tests.RestResourcesCreators.Interfaces;
+using RestApi.Tests.ResourceCreators.Interfaces;
 using Unity;
 
-namespace RestApi.Tests.RestResourcesCreators
+namespace RestApi.Tests.ResourceCreators
 {
     public abstract class InnerRestResourceCreator<TCreateResource, TResource, TParentResource> :
         ResourceCreatorBase,

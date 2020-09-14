@@ -1,5 +1,5 @@
 ﻿using RestApi.Shared.Resources.Users;
-using RestApi.Tests.RestResourcesCreators.Interfaces;
+using RestApi.Tests.ResourceCreators.Interfaces;
 using System;
 using Unity;
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestApi.Common.Repositories
 {
-    public interface IRepository<TEntity> 
+    public interface IRepository<TEntity>
         where TEntity : Entity
     {
         Task Add(TEntity entity);
@@ -15,14 +15,20 @@ namespace RestApi.Common.Repositories
 
         Task<TEntity> Get(string id);
 
+        Task<IEnumerable<TEntity>> GetAll(IEnumerable<string> ids);
+
         Task<List<TEntity>> GetAll();
 
-        Task Remove(TEntity entity);
+        Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
+
+        Task<TEntity> FindFirst(Expression<Func<TEntity, bool>> predicate);
+        Task<bool> Exists(Expression<Func<TEntity, bool>> predicate);
 
         Task RemoveRange(IEnumerable<TEntity> entities);
 
         Task Update(TEntity item);
 
         Task<bool> Exists(string id);
+        Task Remove(TEntity entity);
     }
 }

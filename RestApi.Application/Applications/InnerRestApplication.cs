@@ -8,9 +8,7 @@ using Unity;
 using RestApi.Shared.Resources;
 using RestApi.Shared.Resources.Users;
 using System.Linq;
-using RestApi.Shared.Errors;
 using MongoDB.Bson;
-using System;
 
 namespace RestApi.Application
 {

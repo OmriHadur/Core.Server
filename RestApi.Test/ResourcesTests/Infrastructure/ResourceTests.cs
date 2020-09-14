@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestApi.Shared.Resources;
 
-namespace RestApi.Tests.RestRourcesTests
+namespace RestApi.Tests.ResourceTests
 {
     public abstract class ResourceTests<TCreateResource, TResource> :
         ResourceTestsBase<TCreateResource, TResource>

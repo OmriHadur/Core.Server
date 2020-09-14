@@ -1,14 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RestApi.Client.Results;
 using RestApi.Shared.Resources;
-using RestApi.Tests.RestResourcesCreators.Interfaces;
+using RestApi.Tests.ResourceCreators.Interfaces;
 using RestApi.Tests.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;
 
-namespace RestApi.Tests.RestResourcesCreators
+namespace RestApi.Tests.ResourceCreators
 {
     public class ResourcesHolder : IResourcesHolder
     {
