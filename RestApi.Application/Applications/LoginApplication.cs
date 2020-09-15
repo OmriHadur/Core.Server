@@ -51,7 +51,7 @@ namespace RestApi.Application
                 CreateTime = DateTime.Now,
                 Token = GetToken(userEntity)
             };
-            await AddEntityToDb(loginEntity);
+            await AddEntity(loginEntity);
             return GetLoginWithUser(loginEntity, userEntity);
         }
 
@@ -71,7 +71,7 @@ namespace RestApi.Application
         {
             var login = await (Repository as ILoginRepository).GetByUserId(user.Id);
             if (login != null)
-                await Repository.Remove(login);
+                await Repository.Delete(login);
         }
 
         private string GetToken(UserEntity user)

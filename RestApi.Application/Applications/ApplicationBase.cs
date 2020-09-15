@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RestApi.Common.Errors;
 using RestApi.Shared.Errors;
+using System;
 using Unity;
 
 namespace RestApi.Application
@@ -16,7 +17,15 @@ namespace RestApi.Application
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {
-            return new BadRequestApplicationResult(badRequestReason);
+            return BadRequest<BadRequestReason>(badRequestReason);
+        }
+
+        protected ActionResult BadRequest<TReson>(TReson badRequestReason)
+            where TReson : struct, Enum
+        {
+            return new BadRequestApplicationResult(
+                Convert.ToInt32(badRequestReason), 
+                Enum.GetName(typeof(TReson), badRequestReason));
         }
 
         public ActionResult NotFound(string obj)

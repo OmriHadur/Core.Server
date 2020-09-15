@@ -36,7 +36,7 @@ namespace RestApi.Persistence.Repositories
             get{ return GetType().Name.Replace("Repository", ""); }
         }
 
-        public async Task Remove(TEntity entity) {
+        public async Task Delete(TEntity entity) {
             await Entities.DeleteOneAsync(e => e.Id == entity.Id);
         }
 
@@ -92,7 +92,7 @@ namespace RestApi.Persistence.Repositories
         public async Task RemoveRange(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
-                await Remove(entity);
+                await Delete(entity);
         }
 
         public async Task Update(TEntity entity)

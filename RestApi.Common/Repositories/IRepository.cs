@@ -29,6 +29,6 @@ namespace RestApi.Common.Repositories
         Task Update(TEntity item);
 
         Task<bool> Exists(string id);
-        Task Remove(TEntity entity);
+        Task Delete(TEntity entity);
     }
 }

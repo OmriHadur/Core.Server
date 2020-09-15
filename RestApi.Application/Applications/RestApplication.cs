@@ -42,10 +42,7 @@ namespace RestApi.Application
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource createResource)
         {
             var entity = GetNewTEntity(createResource);
-            var result = await UpdateEntity(createResource, entity);
-            if (!(result is OkResult))
-                return result;
-            entity = await AddEntityToDb(entity);
+            await AddEntity(entity);
             return await Map(entity);
         }
 
@@ -55,10 +52,7 @@ namespace RestApi.Application
             if (entity == null)
                 return NotFound(id);
             Mapper.Map(createResource, entity);
-            var result = await UpdateEntity(createResource,entity);
-            if (!(result is OkResult))
-                return result;
-            await Repository.Update(entity);
+            await UpdateEntity(entity);
             entity = await Repository.Get(entity.Id);
             return await Map(entity);
         }
@@ -68,8 +62,7 @@ namespace RestApi.Application
             var entity = await Repository.Get(id);
             if (entity == null)
                 return NotFound(id);
-            await Repository.Remove(entity);
-            return Ok();
+            return await DeleteEntity(entity);
         }
 
         public virtual async Task<ActionResult> Exists(string id)
@@ -94,10 +87,20 @@ namespace RestApi.Application
             return Mapper.Map<TEntity>(resource);
         }
 
-        protected virtual async Task<TEntity> AddEntityToDb(TEntity entity)
+        protected virtual async Task UpdateEntity(TEntity entity)
+        {
+            await Repository.Update(entity);
+        }
+
+        protected async virtual Task<ActionResult> DeleteEntity(TEntity entity)
+        {
+            await Repository.Delete(entity);
+            return Ok();
+        }
+
+        protected virtual async Task AddEntity(TEntity entity)
         {
             await Repository.Add(entity);
-            return await Repository.Get(entity.Id);
         }
 
         protected async Task<bool> IsEntityExists<TFEntity>(string entityId)
@@ -112,11 +115,6 @@ namespace RestApi.Application
         {
             var repository = UnityContainer.Resolve<IRepository<TFEntity>>();
             return await repository.Get(entityId);
-        }
-
-        protected async virtual Task<ActionResult> UpdateEntity(TCreateResource createResource, TEntity entity)
-        {
-            return Ok();
         }
     }
 }

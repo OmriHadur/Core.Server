@@ -12,11 +12,6 @@ namespace RestApi.Web.Controllers
         [Dependency]
         public IJwtManager JwtManager { get; set; }
 
-        protected ActionResult BadRequest(BadRequestReason badRequestReason)
-        {
-            return new BadRequestApplicationResult(badRequestReason);
-        }
-
         protected UserResource GetUser()
         {
             return JwtManager.GetUser(User);

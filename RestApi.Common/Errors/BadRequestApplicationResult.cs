@@ -5,10 +5,9 @@ namespace RestApi.Common.Errors
 {
     public class BadRequestApplicationResult : BadRequestObjectResult
     {
-        public BadRequestApplicationResult(BadRequestReason reason) 
-            : base(reason)
+        public BadRequestApplicationResult(int reasonNumber, string description)
+            : base(new { Reason = reasonNumber, Description = description })
         {
-
         }
     }
 }
