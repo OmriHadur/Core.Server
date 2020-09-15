@@ -105,11 +105,18 @@ namespace RestApi.Tests.ResourceTests
             return creator.GetRandomCreateResource();
         }
 
-        protected void AssertBadRequestReason<T>(ActionResult<T> response, BadRequestReason badRequestReason)
+        protected void AssertBadRequestReason<T, TReson>(ActionResult<T> response, TReson badRequestReason)
+            where TReson : struct, Enum
         {
-            var result = response.Result as BadRequestResult;
+            AssertBadRequestReason(response.Result, badRequestReason);
+        }
+
+        protected void AssertBadRequestReason<TReson>(ActionResult response, TReson badRequestReason)
+            where TReson : struct, Enum
+        {
+            var result = response as BadRequestResult;
             Assert.IsNotNull(result);
-            Assert.AreEqual(badRequestReason, result.Reason);
+            Assert.AreEqual(Convert.ToInt32(badRequestReason), result.Reason);
         }
     }
 }

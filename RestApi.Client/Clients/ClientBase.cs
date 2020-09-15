@@ -109,9 +109,10 @@ namespace RestApi.Client.Clients
         private static async Task<ActionResult> GetBadRequestResult(HttpResponseMessage response)
         {
             var jsonValue = await response.Content.ReadAsStringAsync();
-            int.TryParse(jsonValue, out int badRequestReason);
+            var reason = JsonConvert.DeserializeAnonymousType(jsonValue, new { reason = "" }).reason;
+            int.TryParse(reason, out int badRequestReason);
             if (badRequestReason != 0)
-                return new BadRequestResult((BadRequestReason)badRequestReason);
+                return new BadRequestResult(badRequestReason);
             return JsonConvert.DeserializeObject<ValidationErrorResult>(jsonValue);
         }
 

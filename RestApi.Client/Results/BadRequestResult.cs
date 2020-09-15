@@ -4,8 +4,8 @@ namespace RestApi.Client.Results
 {
     public class BadRequestResult : ActionResult
     {
-        public BadRequestReason Reason { get; private set; }
-        public BadRequestResult(BadRequestReason reason)
+        public int Reason { get; private set; }
+        public BadRequestResult(int reason)
         {
             Reason = reason;
         }

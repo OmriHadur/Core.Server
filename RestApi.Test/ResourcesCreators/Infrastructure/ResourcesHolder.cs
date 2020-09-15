@@ -85,8 +85,10 @@ namespace RestApi.Tests.ResourceCreators
         public ActionResult Delete<TResource>(string resourceId)
                         where TResource : Resource
         {
-            _resourcesIdsPerType[typeof(TResource)].Remove(resourceId);
-            return GetDeleter(typeof(TResource)).Delete(resourceId);
+            var result = GetDeleter(typeof(TResource)).Delete(resourceId);
+            if (result == null || result is OkResult)
+                _resourcesIdsPerType[typeof(TResource)].Remove(resourceId);
+            return result;
         }
 
         public ActionResult<TResource> Get<TResource>(string id)
@@ -102,10 +104,10 @@ namespace RestApi.Tests.ResourceCreators
             else
             {
                 var result = Create<TResource>();
-                if (result.Result!=null)
+                if (result.Result != null)
                     return result.Value.Id; ;
                 return result.Value.Id;
-            }      
+            }
         }
 
         public IEnumerable<string> GetResourceIds<TResource>() where TResource : Resource
@@ -130,7 +132,7 @@ namespace RestApi.Tests.ResourceCreators
                 return;
             }
             var resourceDeleter = GetDeleter(type);
-            foreach (var resourceId in _resourcesIdsPerType[type])
+            foreach (var resourceId in _resourcesIdsPerType[type].Reverse())
             {
                 if (!IsInstanceOfGenericType(typeof(InnerRestResourceCreator<,,>), resourceDeleter))
                     resourceDeleter.Delete(resourceId);
