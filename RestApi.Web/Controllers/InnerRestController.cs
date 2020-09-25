@@ -18,36 +18,41 @@ namespace RestApi.Web.Controllers
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Get(string parentId)
         {
-            Application.CurrentUser = GetUser();
+            SetUser();
             return await Application.Get(parentId);
         }
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TResource>> Get(string parentId, string id)
         {
-            Application.CurrentUser = GetUser();
+            SetUser();
             return await Application.Get(parentId, id);
         }
 
         [HttpPost]
         public virtual async Task<ActionResult<TResource>> Create(string parentId, TCreateResource resource)
         {
-            Application.CurrentUser = GetUser();
+            SetUser();
             return await Application.Create(parentId, resource);
         }
 
         [HttpPut("{id}")]
         public virtual async Task<ActionResult<TResource>> Update(string parentId, string id, TCreateResource resource)
         {
-            Application.CurrentUser = GetUser();
+            SetUser();
             return await Application.Update(parentId, id, resource);
         }
 
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult<TResource>> Delete(string parentId, string id)
         {
-            Application.CurrentUser = GetUser();
+            SetUser();
             return await Application.Delete(parentId, id);
+        }
+
+        private void SetUser()
+        {
+            Application.CurrentUser = GetUser();
         }
     }
 }

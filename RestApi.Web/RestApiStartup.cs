@@ -19,6 +19,7 @@ using RestApi.Persistence.Repositories;
 using RestApi.Shared.Resources;
 using RestApi.Application;
 using AutoMapper;
+using RestApi.Common.Mapping;
 
 namespace RestApi.Web
 {
@@ -54,37 +55,25 @@ namespace RestApi.Web
 
         private void AddAutoMapper(IServiceCollection services)
         {
-            var config = new MapperConfiguration(cfg =>
-            { cfg.AddProfile(GetAutoMapperProfile()); });
-            services.AddSingleton(config.CreateMapper());
+            services.AddSingleton(provider => new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(GetProfile(provider));
+            }).CreateMapper());
         }
 
-        protected virtual Profile GetAutoMapperProfile()
+        protected virtual AutoMapperProfile GetProfile(IServiceProvider provider)
         {
-            return new AutoMapperProfile();
+            return new AutoMapperProfile(provider.GetService<IUnityContainer>());
         }
 
-        public void ConfigureContainer(IUnityContainer container)
+        public virtual void ConfigureContainer(IUnityContainer container)
         {
-            foreach (Assembly assembly in GetAssemblies())
-                AddAssembly(assembly, container);
+            GetUnityContainerBuilder().ConfigureContainer(container);
         }
 
-        protected virtual IEnumerable<Assembly> GetAssemblies()
+        protected virtual UnityContainerBuilder GetUnityContainerBuilder()
         {
-            yield return typeof(AppSettings).Assembly;//RestApi.Common
-            yield return typeof(Resource).Assembly; //RestApi.Shared
-            yield return typeof(MongoRepository<>).Assembly;//RestApi.Persistence
-            yield return typeof(ApplicationBase).Assembly;//RestApiApplication
-            yield return GetType().Assembly;//RestApi.Web
-        }
-
-        private void AddAssembly(Assembly assembly, IUnityContainer container)
-        {
-            var classTypes = assembly.GetTypes().Where(t => t.GetCustomAttribute<InjectAttribute>() != null);
-            foreach (var classType in classTypes)
-                foreach (var interfaceType in classType.GetInterfaces())
-                    container.RegisterType(interfaceType, classType);
+            return new UnityContainerBuilder();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

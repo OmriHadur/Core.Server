@@ -1,25 +1,18 @@
 ﻿using AutoMapper;
-using RestApi.Common.Entities;
-using RestApi.Shared.Resources;
-using RestApi.Shared.Resources.Users;
+using RestApi.Common.Mapping;
+using System.Collections.Generic;
+using System.Linq;
+using Unity;
 
 namespace RestApi.Application.Mapping
 {
     public class AutoMapperProfile : Profile
     {
-        public AutoMapperProfile()
+        public AutoMapperProfile(IUnityContainer unityContainer)
         {
-            AddMapping<UserCreateResource, UserResource, UserEntity>();
-            AddMapping<LoginCreateResource, LoginResource, LoginEntity>();
-        }
-
-        public void AddMapping<TCreateResource, TResource, TEntity>()
-            where TCreateResource : CreateResource
-            where TResource : Resource
-            where TEntity : Entity
-        {
-            CreateMap<TCreateResource, TEntity>();
-            CreateMap<TResource, TEntity>().ReverseMap();
+            var mappers = unityContainer.ResolveAll<IResourceMapper>();
+            foreach (var mapper in mappers)
+                mapper.AddMapping(this);             
         }
     }
 }

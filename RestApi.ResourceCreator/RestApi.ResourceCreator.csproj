@@ -47,6 +47,9 @@
     <None Update="BoilerPlates\Rest\Application\Applications\!NAMES!Application.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="BoilerPlates\Rest\Application\Mapping\!NAME!Mapping.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="BoilerPlates\Rest\Client\Clients\!NAMES!ControllClient.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
