@@ -1,15 +1,14 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using RestApi.Common;
 using RestApi.Common.Entities;
 using RestApi.Common.Query;
 using RestApi.Common.Repositories;
+using RestApi.Persistence.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Authentication;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Unity;
 
@@ -20,6 +19,9 @@ namespace RestApi.Persistence.Repositories
     {
         protected IMongoCollection<TEntity> Entities;
 
+        [Dependency]
+        public IQueryFilterFactory QueryFilterFactory;
+        
         [Dependency]
         public IMongoDBConfig MongoDatabaseSettings
         {
@@ -112,48 +114,8 @@ namespace RestApi.Persistence.Repositories
 
         public async Task<List<TEntity>> Query(QueryBase query)
         {
-            var filter = GetFilter(query);
+            var filter = QueryFilterFactory.GetFilter<TEntity>(query);
             return (await Entities.FindAsync(filter)).ToList();
-        }
-
-        private static FilterDefinition<TEntity> GetFilter(QueryBase query)
-        {
-            if (query is StringQuery)
-                return GetFilter(query as StringQuery);
-            else if(query is NumberQuery)
-                return GetFilter(query as NumberQuery);
-            else if (query is LogicQuery)
-                return GetFilter(query as LogicQuery);
-            return null;
-        }
-
-        private static FilterDefinition<TEntity> GetFilter(StringQuery stringQuery)
-        {
-            var queryExpr = new BsonRegularExpression(new Regex(stringQuery.Regex, RegexOptions.IgnoreCase));
-            return Builders<TEntity>.Filter.Regex(stringQuery.Field, queryExpr);
-        }
-
-        private static FilterDefinition<TEntity> GetFilter(NumberQuery numberQuery)
-        {
-            switch (numberQuery.Operand)
-            {
-                case Shared.Query.NumberQueryOperands.LessThen:
-                    return Builders<TEntity>.Filter.Lt(numberQuery.Field, numberQuery.Value);
-                case Shared.Query.NumberQueryOperands.Equals:
-                    return Builders<TEntity>.Filter.Eq(numberQuery.Field, numberQuery.Value);
-                case Shared.Query.NumberQueryOperands.GreaterThen:
-                    return Builders<TEntity>.Filter.Gt(numberQuery.Field, numberQuery.Value);
-            }
-            return null;
-        }
-
-        private static FilterDefinition<TEntity> GetFilter(LogicQuery logicQuery)
-        {
-            var filters = logicQuery.Queries.Select(q => GetFilter(q));
-            if (logicQuery.IsAnd)
-                return Builders<TEntity>.Filter.And(filters);
-            else
-                return Builders<TEntity>.Filter.Or(filters);
         }
     }
 }
