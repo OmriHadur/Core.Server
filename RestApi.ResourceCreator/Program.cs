@@ -8,7 +8,7 @@ namespace RestApi.ResourceCreator
     {
         static readonly string ProjectName = "BestEmployeePoll";
         static readonly string ProjectPath = @"E:\Dropbox\Workspace\BestEmployeePoll";
-        static string NewResourceName = "employee";
+        static string NewResourceName = "Poll";
         static string NewResourcePluralName = NewResourceName + "s";
 
         static readonly string ParentName =  "" ;
@@ -22,8 +22,6 @@ namespace RestApi.ResourceCreator
 
         public static void Main(string[] args)
         {
-            NewResourceName = GetStarsWithUpper(NewResourceName);
-            NewResourcePluralName = GetStarsWithUpper(NewResourcePluralName);
             var files = GetBolierplateFiles();
 
             foreach (var fileInfo in files.Select(f => new FileInfo(f)))
@@ -34,13 +32,6 @@ namespace RestApi.ResourceCreator
                 if (!File.Exists(newFilePath))
                     CreateFile(fileInfo, newFilePath);
             }
-        }
-
-        private static string GetStarsWithUpper(string newResourceName)
-        {
-            newResourceName = newResourceName.ToLower();
-            newResourceName = newResourceName[0].ToString().ToUpper() + newResourceName.Substring(1);
-            return newResourceName;
         }
 
         private static void CreateFile(FileInfo fileInfo, string newFilePath)

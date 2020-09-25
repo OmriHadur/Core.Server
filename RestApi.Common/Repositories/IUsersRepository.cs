@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace RestApi.Common.Repositories
 {
-    public interface IUserRepository : IRepository<UserEntity>
+    public interface IUsersRepository : IRepository<UserEntity>
     {
         Task<bool> EmailExists(string email);
 

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace RestApi.Common.Repositories
 {
-    public interface ILoginRepository : IRepository<LoginEntity>
+    public interface ILoginsRepository  : IRepository<LoginEntity>
     {
         Task<LoginEntity> GetByUserId(string id);
         Task DeleteByUserId(string id);

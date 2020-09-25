@@ -12,13 +12,13 @@ using Unity;
 namespace RestApi.Application
 {
     [Inject]
-    public class UserApplication : RestApplication<UserCreateResource, UserResource, UserEntity>, IUserApplication
+    public class UsersApplication : RestApplication<UserCreateResource, UserResource, UserEntity>, IUsersApplication
     {
-        private IUserRepository _usersRepository => Repository as IUserRepository;
+        private IUsersRepository _usersRepository => Repository as IUsersRepository;
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
         [Dependency]
-        public ILoginApplication LoginsApplication;
+        public ILoginsApplication LoginsApplication;
 
         protected override UserEntity GetNewTEntity(UserCreateResource resource)
         {

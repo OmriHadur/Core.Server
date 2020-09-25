@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using Unity;
 using RestApi.Shared.Resources;
 using RestApi.Shared.Resources.Users;
+using RestApi.Shared.Query;
+using System.Linq;
+using RestApi.Application.Helpers;
+using RestApi.Shared.Errors;
 
 namespace RestApi.Application
 {
@@ -22,11 +26,14 @@ namespace RestApi.Application
         [Dependency]
         public IUnityContainer UnityContainer { get; set; }
 
+        [Dependency]
+        public IQueryBuilder QueryBuilder;
+
         public UserResource CurrentUser { get; set; }
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Get()
         {
-            var entities = await Repository.GetAll();
+            var entities = await Repository.Get();
             var resources = Mapper.Map<IEnumerable<TResource>>(entities);
             return Ok(resources);
         }
@@ -37,6 +44,18 @@ namespace RestApi.Application
             if (entity == null)
                 return NotFound(id);
             return await Map(entity);
+        }
+
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
+        {
+            var validationError = QueryBuilder.Validate<TResource>(queryResource);
+            if (validationError != null)
+                return BadRequest((BadRequestReason)validationError);
+
+            var query = QueryBuilder.Build<TResource>(queryResource);
+            var entities = await Repository.Query(query);
+            var resources = Mapper.Map<IEnumerable<TResource>>(entities);
+            return Ok(resources);
         }
 
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource createResource)

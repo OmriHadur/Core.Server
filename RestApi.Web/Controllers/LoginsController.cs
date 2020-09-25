@@ -6,7 +6,7 @@ namespace RestApi.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class LoginController : RestController<LoginCreateResource, LoginResource>
+    public class LoginsController : RestController<LoginCreateResource, LoginResource>
     {
         public async override Task<ActionResult<LoginResource>> Create(LoginCreateResource createResource)
         {

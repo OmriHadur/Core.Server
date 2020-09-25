@@ -5,6 +5,7 @@ using RestApi.Common.Applications;
 using Unity;
 using Microsoft.Extensions.Logging;
 using RestApi.Shared.Resources;
+using RestApi.Shared.Query;
 
 namespace RestApi.Web.Controllers
 {
@@ -31,6 +32,13 @@ namespace RestApi.Web.Controllers
         {
             Application.CurrentUser = GetUser();
             return await Application.Get(id);
+        }
+
+        [HttpPost("query")]
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query)
+        {
+            Application.CurrentUser = GetUser();
+            return await Application.Query(query);
         }
 
         [HttpPost]

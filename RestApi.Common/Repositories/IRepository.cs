@@ -1,4 +1,5 @@
 ﻿using RestApi.Common.Entities;
+using RestApi.Common.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -17,7 +18,9 @@ namespace RestApi.Common.Repositories
 
         Task<IEnumerable<TEntity>> GetAll(IEnumerable<string> ids);
 
-        Task<List<TEntity>> GetAll();
+        Task<List<TEntity>> Get();
+
+        Task<List<TEntity>> Query(QueryBase query);
 
         Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
 

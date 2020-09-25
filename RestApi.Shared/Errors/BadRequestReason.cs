@@ -5,6 +5,8 @@
         SameExists = 1,
         InvalidUserOrPassword,
         InvalidToken,
-        InvalidGuid
+        InvalidGuid,
+        PropertyNotFound,
+        PropertyNotCurectType
     }
 }

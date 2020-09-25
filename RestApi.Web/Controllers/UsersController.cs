@@ -8,7 +8,7 @@ namespace RestApi.Web.Controllers
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : RestController<UserCreateResource, UserResource>
+    public class UsersController : RestController<UserCreateResource, UserResource>
     {
         [HttpPost]
         [AllowAnonymous]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestApi.Shared.Resources;
 using RestApi.Shared.Resources.Users;
+using RestApi.Shared.Query;
 
 namespace RestApi.Common.Applications
 {
@@ -13,6 +14,8 @@ namespace RestApi.Common.Applications
         UserResource CurrentUser { get; set; }
 
         Task<ActionResult<IEnumerable<TResource>>> Get();
+
+        Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query);
 
         Task<ActionResult<TResource>> Get(string id);
 
