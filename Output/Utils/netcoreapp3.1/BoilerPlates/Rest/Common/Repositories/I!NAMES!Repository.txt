@@ -1,0 +1,9 @@
+﻿using !PROJECT!.Common.Entities;
+using RestApi.Common.Repositories;
+
+namespace !PROJECT!.Common.Repositories
+{
+    public interface I!NAMES!Repository : IRepository<!NAME!Entity>
+    {
+    }
+}

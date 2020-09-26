@@ -1,0 +1,12 @@
+﻿using !PROJECT!.Common.Entities;
+using !PROJECT!.Common.Repositories;
+using RestApi.Persistence.Repositories;
+using RestApi.Common;
+
+namespace !PROJECT!.Persistence.Repositories
+{
+    [Inject]
+    public class !NAMES!Repository : MongoRepository<!NAME!Entity>, I!NAMES!Repository
+    {
+    }
+}

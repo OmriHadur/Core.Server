@@ -1,0 +1,16 @@
+﻿using !PROJECT!.Shared.Resources;
+using !PROJECT!.Standard.Client.Interfaces;
+using RestApi.Client.Clients;
+
+namespace !PROJECT!.Standard.Client.Clients
+{
+    public class !NAME!ControllClient : 
+        InnerRestClient<!NAME!CreateResource, !NAME!Resource>,
+        I!NAME!ControllClient
+    {
+        public !NAME!ControllClient()
+            : base("!PARENT!/{0}/!NAME!")
+        {
+        }
+    }
+}
