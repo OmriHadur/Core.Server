@@ -36,7 +36,7 @@ namespace RestApi.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<MongoDBConfig>(
-                Configuration.GetSection("MongoDB"));
+                Configuration.GetSection(Config.MongoDbSection));
 
             services.AddSingleton<IMongoDBConfig>(sp =>
                 sp.GetRequiredService<IOptions<MongoDBConfig>>().Value);
@@ -68,12 +68,7 @@ namespace RestApi.Web
 
         public virtual void ConfigureContainer(IUnityContainer container)
         {
-            GetUnityContainerBuilder().ConfigureContainer(container);
-        }
-
-        protected virtual UnityContainerBuilder GetUnityContainerBuilder()
-        {
-            return new UnityContainerBuilder();
+            new UnityContainerBuilder().ConfigureContainer(container, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,7 +100,7 @@ namespace RestApi.Web
         private void ConfigureJwtAuthentication(IServiceCollection services)
         {
             // configure strongly typed settings objects
-            var appSettingsSection = Configuration.GetSection("AppSettings");
+            var appSettingsSection = Configuration.GetSection(Config.AppSettingsSection);
             services.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication

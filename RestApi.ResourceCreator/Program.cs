@@ -4,21 +4,21 @@ using System.Linq;
 
 namespace RestApi.ResourceCreator
 {
-    class Program
+    public class Program
     {
         static readonly string ProjectName = "BestEmployeePoll";
-        static readonly string ProjectPath = @"E:\Dropbox\Workspace\BestEmployeePoll";
-        static string NewResourceName = "Poll";
-        static string NewResourcePluralName = NewResourceName + "s";
+        static readonly string ProjectPath = @"E:\Dropbox\Workspace\" + ProjectName;
+        static readonly string NewResourceName = "Poll";
+        static readonly string NewResourcePluralName = NewResourceName + "s";
 
-        static readonly string ParentName =  "" ;
+        static readonly string ParentName = "";
         static readonly bool IsInnerRest = false;
 
         static readonly string NameWildCard = "!NAME!";
         static readonly string NamePluralWildCard = "!NAMES!";
         static readonly string ProjectWildCard = "!PROJECT!";
         static readonly string ParentWildCard = "!PARENT!";
-        static readonly string boilerPlatesPath = Directory.GetCurrentDirectory() + "\\BoilerPlates\\" + (IsInnerRest ? "InnerRest" : "Rest");
+        static readonly string boilerPlatesPath = GetBoilerPlatesPath();
 
         public static void Main(string[] args)
         {
@@ -70,6 +70,13 @@ namespace RestApi.ResourceCreator
             var newFileDirectoryPath = $"{ProjectPath}\\{ProjectName}.{absPath}\\";
             Directory.CreateDirectory(newFileDirectoryPath);
             return newFileDirectoryPath;
+        }
+
+        private static string GetBoilerPlatesPath()
+        {
+            return Directory.GetCurrentDirectory() + 
+                "\\BoilerPlates\\" + 
+                (IsInnerRest ? "InnerRest" : "Rest");
         }
     }
 }

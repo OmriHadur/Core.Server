@@ -28,9 +28,7 @@ namespace RestApi.Tests.Unity
         {
             var config = new ConfigHandler().Config;
             foreach (var assemblyName in config.Assemblies)
-            {
                 yield return Assembly.LoadFrom(assemblyName + ".dll");
-            } 
         }
 
         public T Resolve<T>()

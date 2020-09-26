@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <OutputPath>E:\Workspace\RestApi\Output\</OutputPath>
-    <StartupObject>RestApi.Web.RestApiProgram</StartupObject>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

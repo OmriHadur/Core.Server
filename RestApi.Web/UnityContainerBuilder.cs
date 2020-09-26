@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using RestApi.Application;
 using RestApi.Common;
 using RestApi.Persistence.Repositories;
@@ -15,21 +16,21 @@ namespace RestApi.Web
 {
     public class UnityContainerBuilder
     {
-        public void ConfigureContainer(IUnityContainer container)
+        public void ConfigureContainer(IUnityContainer container, IConfiguration configuration)
         {
-            foreach (Assembly assembly in GetAssemblies())
+            var assembliesName = configuration.GetSection(Config.AssembliesSection).Get<string[]>();
+
+            foreach (Assembly assembly in GetAssemblies(assembliesName))
                 AddAssembly(assembly, container);
         }
 
-        protected virtual IEnumerable<Assembly> GetAssemblies()
+        protected virtual IEnumerable<Assembly> GetAssemblies(string[] assembliesName)
         {
-            var dlls = Directory.GetFiles(".\\bin", "BestEmployeePoll.*.dll", SearchOption.AllDirectories);
-            foreach (var dll in dlls)
-                yield return Assembly.LoadFrom(dll);
-
-            dlls = Directory.GetFiles(".\\bin", "RestApi.*.dll", SearchOption.AllDirectories);
-            foreach (var dll in dlls)
-                yield return Assembly.LoadFrom(dll);
+            foreach (var assemblyName in assembliesName)
+            {
+                var path = $"{AppDomain.CurrentDomain.BaseDirectory}\\{assemblyName}.dll";
+                yield return Assembly.LoadFrom(path);
+            }
         }
 
         private void AddAssembly(Assembly assembly, IUnityContainer container)
