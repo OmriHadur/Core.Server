@@ -15,6 +15,6 @@ namespace Core.Server.Web
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseUnityServiceProvider(new UnityContainer())
-                .UseStartup<RestApiStartup>();
+                .UseStartup<CoreServerStartup>();
     }
 }

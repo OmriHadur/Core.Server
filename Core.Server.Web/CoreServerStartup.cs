@@ -22,9 +22,9 @@ using Core.Server.Common.Mapping;
 
 namespace Core.Server.Web
 {
-    public class RestApiStartup
+    public class CoreServerStartup
     {
-        public RestApiStartup(IConfiguration configuration)
+        public CoreServerStartup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
