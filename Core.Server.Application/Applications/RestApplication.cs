@@ -8,7 +8,6 @@ using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Shared.Query;
-using System.Linq;
 using Core.Server.Application.Helpers;
 using Core.Server.Shared.Errors;
 
@@ -60,6 +59,9 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource createResource)
         {
+            var validation = await Validate(createResource);
+            if (!(validation is OkResult))
+                return validation;
             var entity = GetNewTEntity(createResource);
             await AddEntity(entity);
             return await Map(entity);
@@ -70,6 +72,9 @@ namespace Core.Server.Application
             var entity = await Repository.Get(id);
             if (entity == null)
                 return NotFound(id);
+            var validation = await Validate(createResource);
+            if (!(validation is OkResult))
+                return validation;
             Mapper.Map(createResource, entity);
             await UpdateEntity(entity);
             entity = await Repository.Get(entity.Id);
@@ -89,6 +94,10 @@ namespace Core.Server.Application
             return await Repository.Exists(id) ? 
                 Ok() : 
                 NotFound(id);
+        }
+        protected virtual async Task<ActionResult> Validate(TCreateResource createResource)
+        {
+            return Ok();
         }
 
         protected async virtual Task<TResource> Map(TEntity entity)

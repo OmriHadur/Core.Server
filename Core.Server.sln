@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Web", "Core.Ser
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3B37922F-5B9E-41DF-9001-F6FBC4E2A8EF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Test", "Core.Server.Test\RestApi.Test.csproj", "{9AE53C67-3A30-4A56-B306-C11256D5EE34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Test", "Core.Server.Test\Core.Server.Test.csproj", "{9AE53C67-3A30-4A56-B306-C11256D5EE34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.ResourceCreator", "Core.Server.ResourceCreator\RestApi.ResourceCreator.csproj", "{EA343CE6-960E-4759-93AC-B4CF101BF131}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Utils.ResourceCreator", "Core.Server.Utils.ResourceCreator\Core.Server.Utils.ResourceCreator.csproj", "{EA343CE6-960E-4759-93AC-B4CF101BF131}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
