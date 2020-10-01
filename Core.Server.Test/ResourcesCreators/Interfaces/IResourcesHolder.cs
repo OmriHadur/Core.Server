@@ -1,5 +1,6 @@
 ﻿using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
+using Core.Server.Shared.Resources.Users;
 using System;
 using System.Collections.Generic;
 
@@ -40,5 +41,7 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
             where TResource : Resource;
 
         void DeleteAll();
+
+        UserResource GetLoggedUser();
     }
 }

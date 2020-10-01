@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utills", "Utills", "{D44FCD89-207C-491A-A8AC-2AFF5D856AE5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{E45A514F-F289-4AD5-9C7A-5E4DAEBEFE5E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{E45A514F-F289-4AD5-9C7A-5E4DAEBEFE5E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Application", "Core.Server.Application\Core.Server.Application.csproj", "{F0FF5B73-8317-4625-B7D4-29F1F962E392}"
 EndProject

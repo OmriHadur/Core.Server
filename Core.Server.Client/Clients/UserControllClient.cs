@@ -8,7 +8,7 @@ namespace Core.Server.Client.Clients
         IUserControllClient
     {
         public UserControllClient()
-            :base("user")
+            :base("users")
         {
         }
     }

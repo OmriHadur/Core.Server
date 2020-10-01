@@ -8,7 +8,7 @@ namespace Core.Server.Client.Clients
         ILoginControllClient
     {
         public LoginControllClient()
-            :base("login")
+            :base("logins")
         {
         }
     }

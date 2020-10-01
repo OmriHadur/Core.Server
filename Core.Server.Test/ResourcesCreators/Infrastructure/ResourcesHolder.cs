@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;
+using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Tests.ResourceCreators
 {
@@ -80,6 +81,12 @@ namespace Core.Server.Tests.ResourceCreators
             unityContainer.Resolve<ITokenHandler>().Login();
             foreach (var resourcesType in _resourcesIdsPerType.Keys)
                 Delete(resourcesType);
+        }
+
+        public UserResource GetLoggedUser()
+        {
+            unityContainer.Resolve<ITokenHandler>().Login();
+            return GetLastOrCreate<UserResource>().Value;
         }
 
         public ActionResult Delete<TResource>(string resourceId)
