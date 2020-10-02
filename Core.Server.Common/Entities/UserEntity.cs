@@ -1,19 +1,10 @@
-﻿
-using System.Collections.Generic;
+﻿using Core.Server.Shared.Resources.User;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Common.Entities
 {
     public class UserEntity : Entity
     {
-        [Required]
-        [StringLength(25)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [StringLength(25)]
-        public string LastName { get; set; }
-
         [Required]
         [StringLength(50)]
         public string Email { get; set; }
@@ -24,6 +15,6 @@ namespace Core.Server.Common.Entities
         [Required]
         public byte[] PasswordSalt { get; set; }
 
-        public bool IsAdmin { get; set; }
+        public UserStatus Status { get; set; }
     }
 }

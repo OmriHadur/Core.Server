@@ -14,7 +14,7 @@ namespace Core.Server.Application.Helper
     [Inject]
     public class JwtManager : IJwtManager
     {
-        private const string UserResourceKey = "UserResource";
+        private const string UserResourceKey = nameof(UserResource);
 
         public string GenerateToken(UserResource user, string secret)
         {
@@ -22,13 +22,19 @@ namespace Core.Server.Application.Helper
             var key = Encoding.ASCII.GetBytes(secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {new Claim(UserResourceKey,JsonConvert.SerializeObject(user))}),
+                Subject = GetClaims(user),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        private static ClaimsIdentity GetClaims(UserResource user)
+        {
+            return new ClaimsIdentity(
+                new Claim[]{
+                new Claim(UserResourceKey,JsonConvert.SerializeObject(user))});
         }
 
         public UserResource GetUser(ClaimsPrincipal ClaimsPrincipal)

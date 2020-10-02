@@ -7,7 +7,7 @@
 
   <PropertyGroup>
     <OutputPath>..\Output\Server\</OutputPath>
-    <StartupObject>Core.Server.Web.Program</StartupObject>
+    <StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

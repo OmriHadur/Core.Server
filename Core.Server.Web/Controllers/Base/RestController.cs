@@ -9,6 +9,8 @@ using Core.Server.Shared.Query;
 
 namespace Core.Server.Web.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class RestController<TCreateResource, TUpdateResource, TResource>
         : Controller
         where TCreateResource : CreateResource
@@ -45,10 +47,10 @@ namespace Core.Server.Web.Controllers
             return await Application.Create(resource);
         }
 
-        [HttpPut("{id}")]
-        public virtual async Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
+        [HttpPut]
+        public virtual async Task<ActionResult<TResource>> Update(TUpdateResource resource)
         {
-            return await Application.Update(id, resource);
+            return await Application.Update(resource);
         }
 
         [HttpDelete("{id}")]

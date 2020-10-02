@@ -14,7 +14,9 @@ using System;
 namespace Core.Server.Application
 {
     [Inject]
-    public class LoginsApplication : RestApplication<LoginCreateResource,LoginUpdateResource, LoginResource, LoginEntity>, ILoginsApplication
+    public class LoginsApplication : 
+        RestApplication<LoginCreateResource,LoginUpdateResource, LoginResource, LoginEntity>, 
+        ILoginsApplication
     {
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
@@ -56,7 +58,7 @@ namespace Core.Server.Application
 
         public async Task DeleteByUserId(string id)
         {
-            await (Repository as ILoginsRepository ).DeleteByUserId(id);
+            await Repository.DeleteOne(e=>e.UserId==id);
         }
 
         private ActionResult<LoginResource> GetLoginWithUser(LoginEntity loginEntity, UserEntity userEntity)

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 namespace Core.Server.Web.Controllers
 {
     [Authorize]
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UserController : RestController<UserCreateResource,UserUpdateResource, UserResource>
+    public class UserController :
+        RestController<UserCreateResource, UserUpdateResource, UserResource>
     {
         [HttpPost]
         [AllowAnonymous]

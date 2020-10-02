@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
 using Core.Server.Shared.Query;
+using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Common.Applications
 {
@@ -22,7 +22,7 @@ namespace Core.Server.Common.Applications
 
         Task<ActionResult<TResource>> Create(TCreateResource resource);
 
-        Task<ActionResult<TResource>> Update(string id, TUpdateResource resource);
+        Task<ActionResult<TResource>> Update(TUpdateResource resource);
 
         Task<ActionResult> Delete(string id);
 

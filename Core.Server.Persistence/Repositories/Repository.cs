@@ -14,7 +14,7 @@ using Unity;
 
 namespace Core.Server.Persistence.Repositories
 {
-    public class MongoRepository<TEntity> : IRepository<TEntity>
+    public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : Entity
     {
         protected IMongoCollection<TEntity> Entities;
@@ -38,7 +38,7 @@ namespace Core.Server.Persistence.Repositories
 
         private string CollectionName
         {
-            get{ return GetType().Name.Replace("Repository", ""); }
+            get{ return GetType().Name.Replace("Repository", string.Empty); }
         }
 
         public async Task Delete(TEntity entity) {
@@ -81,11 +81,16 @@ namespace Core.Server.Persistence.Repositories
             await entities.ForEachAsync(update);
         }
 
-        public async Task Delete(Expression<Func<TEntity, bool>> predicate)
+        public async Task DeleteMany(Expression<Func<TEntity, bool>> predicate)
         {
             await Entities.DeleteManyAsync(predicate);
         }
 
+        public async Task DeleteOne(Expression<Func<TEntity, bool>> predicate)
+        {
+            await Entities.DeleteOneAsync(predicate);
+        }
+        
         public async Task<TEntity> Get(string id)
         {
             return (await Entities.FindAsync(e => e.Id == id)).FirstOrDefault();
@@ -117,9 +122,15 @@ namespace Core.Server.Persistence.Repositories
             await Entities.ReplaceOneAsync(e => e.Id == entity.Id, entity);
         }
 
-        public async Task<bool> Exists(string id)
+        public async Task<bool> IsExists(string id)
         {
             var answer = await Entities.FindAsync(e => e.Id == id);
+            return answer.FirstOrDefault() != null;
+        }
+
+        public async Task<bool> IsExists(Expression<Func<TEntity, bool>> predicate)
+        {
+            var answer = await Entities.FindAsync(predicate);
             return answer.FirstOrDefault() != null;
         }
 

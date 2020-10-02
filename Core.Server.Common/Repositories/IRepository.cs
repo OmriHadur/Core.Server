@@ -26,7 +26,8 @@ namespace Core.Server.Common.Repositories
 
         Task<TEntity> FindFirst(Expression<Func<TEntity, bool>> predicate);
 
-        Task Delete(Expression<Func<TEntity, bool>> predicate);
+        Task DeleteMany(Expression<Func<TEntity, bool>> predicate);
+        Task DeleteOne(Expression<Func<TEntity, bool>> predicate);
 
         Task<bool> Exists(Expression<Func<TEntity, bool>> predicate);
 
@@ -34,7 +35,8 @@ namespace Core.Server.Common.Repositories
 
         Task Update(TEntity item);
 
-        Task<bool> Exists(string id);
+        Task<bool> IsExists(string id);
+        Task<bool> IsExists(Expression<Func<TEntity, bool>> predicate);
         Task Delete(TEntity entity);
     }
 }

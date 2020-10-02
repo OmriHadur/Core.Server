@@ -13,9 +13,10 @@ namespace Core.Server.Application
 {
     [Inject]
     public class UsersApplication :
-        RestApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>
+        RestApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>,
+        IUserApplication
     {
-        private IUsersRepository _usersRepository => Repository as IUsersRepository;
+        private IUserRepository _usersRepository => Repository as IUserRepository;
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
         [Dependency]
@@ -33,7 +34,7 @@ namespace Core.Server.Application
 
         public async override Task<ActionResult<UserResource>> Create(UserCreateResource createResource)
         {
-            if (await _usersRepository.EmailExists(createResource.Email))
+            if (await _usersRepository.IsExists(e => e.Email == createResource.Email))
                 return BadRequest(BadRequestReason.SameExists);
 
             return await base.Create(createResource);
@@ -43,7 +44,7 @@ namespace Core.Server.Application
         {
             var respose = await base.Delete(id);
             if (respose is OkResult)
-                await LoginsRepository.Delete(e => e.UserId == id);
+                await LoginsRepository.DeleteMany(e => e.UserId == id);
             return respose;
         }
     }

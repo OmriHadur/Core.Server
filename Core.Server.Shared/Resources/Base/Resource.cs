@@ -15,7 +15,7 @@ namespace Core.Server.Shared.Resources
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

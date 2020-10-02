@@ -1,7 +1,9 @@
 ﻿
+using Core.Server.Common.Helpers;
+
 namespace Core.Server.Application.Helper
 {
-    public class PasswordHasher
+    public class PasswordHasher: IPasswordHasher
     {
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

@@ -67,11 +67,11 @@ namespace Core.Server.Application
             return await Map(entity);
         }
 
-        public virtual async Task<ActionResult<TResource>> Update(string id, TUpdateResource updateResource)
+        public virtual async Task<ActionResult<TResource>> Update(TUpdateResource updateResource)
         {
-            var entity = await Repository.Get(id);
+            var entity = await Repository.Get(updateResource.Id);
             if (entity == null)
-                return NotFound(id);
+                return NotFound(updateResource.Id);
             var validation = await Validate(updateResource, entity);
             if (!(validation is OkResult))
                 return validation;
@@ -91,7 +91,7 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult> Exists(string id)
         {
-            return await Repository.Exists(id) ?
+            return await Repository.IsExists(id) ?
                 Ok() :
                 NotFound(id);
         }
@@ -141,7 +141,7 @@ namespace Core.Server.Application
             where TFEntity : Entity
         {
             var repository = UnityContainer.Resolve<IRepository<TFEntity>>();
-            return await repository.Exists(entityId);
+            return await repository.IsExists(entityId);
         }
 
         protected async Task<TFEntity> GetEntity<TFEntity>(string entityId)
