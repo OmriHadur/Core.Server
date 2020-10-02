@@ -13,9 +13,10 @@ using Core.Server.Shared.Errors;
 
 namespace Core.Server.Application
 {
-    public class RestApplication<TCreateResource, TResource, TEntity>
-        : ApplicationBase, IRestApplication<TCreateResource, TResource>
+    public class RestApplication<TCreateResource, TUpdateResource, TResource, TEntity>
+        : ApplicationBase, IRestApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
+        where TUpdateResource : UpdateResource
         where TResource : Resource
         where TEntity : Entity, new()
     {
@@ -29,7 +30,6 @@ namespace Core.Server.Application
         public IQueryBuilder QueryBuilder;
 
         public UserResource CurrentUser { get; set; }
-
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Get()
         {
             var entities = await Repository.Get();
@@ -67,15 +67,15 @@ namespace Core.Server.Application
             return await Map(entity);
         }
 
-        public virtual async Task<ActionResult<TResource>> Update(string id, TCreateResource createResource)
+        public virtual async Task<ActionResult<TResource>> Update(string id, TUpdateResource updateResource)
         {
             var entity = await Repository.Get(id);
             if (entity == null)
                 return NotFound(id);
-            var validation = await Validate(createResource);
+            var validation = await Validate(updateResource, entity);
             if (!(validation is OkResult))
                 return validation;
-            Mapper.Map(createResource, entity);
+            Mapper.Map(updateResource, entity);
             await UpdateEntity(entity);
             entity = await Repository.Get(entity.Id);
             return await Map(entity);
@@ -91,11 +91,17 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult> Exists(string id)
         {
-            return await Repository.Exists(id) ? 
-                Ok() : 
+            return await Repository.Exists(id) ?
+                Ok() :
                 NotFound(id);
         }
+
         protected virtual async Task<ActionResult> Validate(TCreateResource createResource)
+        {
+            return Ok();
+        }
+
+        protected virtual async Task<ActionResult> Validate(TUpdateResource updateResource, TEntity entity)
         {
             return Ok();
         }

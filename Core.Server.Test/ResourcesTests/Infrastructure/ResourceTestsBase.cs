@@ -6,16 +6,17 @@ using Core.Server.Client.Results;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public abstract class ResourceTestsBase<TCreateResource,TResource> :
+    public abstract class ResourceTestsBase<TCreateResource, TUpdateResource,TResource> :
         TestsBase
         where TCreateResource : CreateResource, new()
+        where TUpdateResource: UpdateResource
         where TResource : Resource
     {
         protected TResource CreatedResource;
-        protected IResourceCreator<TCreateResource,TResource> ResourceCreator;
+        protected IResourceCreator<TCreateResource, TUpdateResource,TResource> ResourceCreator;
         public ResourceTestsBase()
         {
-            ResourceCreator = TestsUnityContainer.Resolve<IResourceCreator<TCreateResource, TResource>>();
+            ResourceCreator = TestsUnityContainer.Resolve<IResourceCreator<TCreateResource, TUpdateResource,TResource>>();
         }
 
         [TestInitialize]

@@ -3,9 +3,10 @@ using Core.Server.Shared.Resources;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public abstract class ResourceTests<TCreateResource, TResource> :
-        ResourceTestsBase<TCreateResource, TResource>
+    public abstract class ResourceTests<TCreateResource, TUpdateResource, TResource> :
+        ResourceTestsBase<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource, new()
+        where TUpdateResource: UpdateResource
         where TResource : Resource
     {
 
@@ -48,7 +49,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public virtual void TestUpdate()
         {
-            var resourceToUpdate = ResourceCreator.GetRandomCreateResource();
+            var resourceToUpdate = ResourceCreator.GetRandomUpdateResource();
             var updatedItemResult = ResourceCreator.Update(CreatedResource.Id, resourceToUpdate);
             Assert.IsNotNull(updatedItemResult.Value);
             Validate(resourceToUpdate, updatedItemResult.Value);
@@ -57,7 +58,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public virtual void TestUpdateNotFound()
         {
-            var resourceToUpdate = ResourceCreator.GetRandomCreateResource();
+            var resourceToUpdate = ResourceCreator.GetRandomUpdateResource();
             var updatedItemResult = ResourceCreator.Update(RandomId, resourceToUpdate);
             AssertNotFound(updatedItemResult);
         }

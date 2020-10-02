@@ -2,7 +2,7 @@
 
 namespace Core.Server.Tests.ResourceCreators
 {
-    public class UserResourceCreator : RestResourceCreator<UserCreateResource, UserResource>
+    public class UserResourceCreator : RestResourceCreator<UserCreateResource,UserUpdateResource, UserResource>
     {
         public override void SetCreateResource(UserCreateResource createResource)
         {

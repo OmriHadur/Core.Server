@@ -26,12 +26,14 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
         ActionResult<TResource> Create<TResource>()
             where TResource : Resource;
 
-        ActionResult<TResource> Create<TCreateResource, TResource>(TCreateResource createResource)
+        ActionResult<TResource> Create<TCreateResource, TUpdateResource, TResource>(TCreateResource createResource)
             where TCreateResource : CreateResource, new()
+            where TUpdateResource : UpdateResource
             where TResource : Resource;
 
-        ActionResult<TResource> EditAndCreate<TCreateResource, TResource>(Action<TCreateResource> edit)
+        ActionResult<TResource> EditAndCreate<TCreateResource, TUpdateResource, TResource>(Action<TCreateResource> edit)
             where TCreateResource : CreateResource, new()
+            where TUpdateResource : UpdateResource
             where TResource : Resource;
 
         ActionResult Delete<TResource>(string id)

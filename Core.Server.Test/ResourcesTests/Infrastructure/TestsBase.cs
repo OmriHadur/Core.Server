@@ -97,11 +97,12 @@ namespace Core.Server.Tests.ResourceTests
             }
         }
 
-        protected TCreateResource GetRandomCreateResource<TCreateResource, TResource>() 
+        protected TCreateResource GetRandomCreateResource<TCreateResource, TUpdateResource, TResource>() 
             where TCreateResource : CreateResource, new()
+            where TUpdateResource : UpdateResource
             where TResource : Resource
         {
-            var creator = TestsUnityContainer.Resolve<IResourceCreator<TCreateResource, TResource>>();
+            var creator = TestsUnityContainer.Resolve<IResourceCreator<TCreateResource, TUpdateResource,TResource>>();
             return creator.GetRandomCreateResource();
         }
 

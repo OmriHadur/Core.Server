@@ -51,23 +51,25 @@ namespace Core.Server.Tests.ResourceCreators
             return resourceResult;
         }
 
-        public ActionResult<TResource> Create<TCreateResource, TResource>(TCreateResource createResource)
+        public ActionResult<TResource> Create<TCreateResource, TUpdateResource,TResource>(TCreateResource createResource)
             where TCreateResource : CreateResource, new()
+            where TUpdateResource : UpdateResource
             where TResource : Resource
         {
-            var resourceResult = GetCreator<TCreateResource, TResource>().Create(createResource);
+            var resourceResult = GetCreator<TCreateResource, TUpdateResource, TResource >().Create(createResource);
             AddId(resourceResult.Value);
             return resourceResult;
         }
 
-        public ActionResult<TResource> EditAndCreate<TCreateResource, TResource>(Action<TCreateResource> edit)
+        public ActionResult<TResource> EditAndCreate<TCreateResource, TUpdateResource,TResource>(Action<TCreateResource> edit)
             where TCreateResource : CreateResource, new()
+            where TUpdateResource : UpdateResource
             where TResource : Resource
         {
-            var resourceCreator = GetCreator<TCreateResource, TResource>();
+            var resourceCreator = GetCreator<TCreateResource, TUpdateResource, TResource >();
             var createResource = resourceCreator.GetRandomCreateResource();
             edit(createResource);
-            return Create<TCreateResource, TResource>(createResource);
+            return Create<TCreateResource, TUpdateResource,TResource>(createResource);
         }
 
         public void DeleteAll<TResource>()
@@ -141,7 +143,7 @@ namespace Core.Server.Tests.ResourceCreators
             var resourceDeleter = GetDeleter(type);
             foreach (var resourceId in _resourcesIdsPerType[type].Reverse())
             {
-                if (!IsInstanceOfGenericType(typeof(InnerRestResourceCreator<,,>), resourceDeleter))
+                if (!IsInstanceOfGenericType(typeof(InnerRestResourceCreator<,,,>), resourceDeleter))
                     resourceDeleter.Delete(resourceId);
             }
             _resourcesIdsPerType[type].Clear();
@@ -163,11 +165,12 @@ namespace Core.Server.Tests.ResourceCreators
         }
 
 
-        private IResourceCreator<TCreateResource, TResource> GetCreator<TCreateResource, TResource>()
+        private IResourceCreator<TCreateResource, TUpdateResource ,TResource> GetCreator<TCreateResource, TUpdateResource,TResource>()
             where TCreateResource : CreateResource, new()
+            where TUpdateResource: UpdateResource
             where TResource : Resource
         {
-            return unityContainer.Resolve<IResourceCreator<TCreateResource, TResource>>();
+            return unityContainer.Resolve<IResourceCreator<TCreateResource, TUpdateResource,TResource>>();
         }
 
         private IResourceGetter<TResource> GetGetter<TResource>()

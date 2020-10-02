@@ -10,12 +10,11 @@ using Microsoft.Extensions.Options;
 using Unity;
 using Core.Server.Common.Entities.Helpers;
 using System;
-using System.Collections.Generic;
 
 namespace Core.Server.Application
 {
     [Inject]
-    public class LoginsApplication : RestApplication<LoginCreateResource, LoginResource, LoginEntity>, ILoginsApplication
+    public class LoginsApplication : RestApplication<LoginCreateResource,LoginUpdateResource, LoginResource, LoginEntity>, ILoginsApplication
     {
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
@@ -24,8 +23,9 @@ namespace Core.Server.Application
 
         [Dependency]
         public IJwtManager JwtManager { get; set; }
+
         [Dependency]
-        public IUsersRepository UsersRepository { get; set; }
+        public IRepository<UserEntity> UsersRepository { get; set; }
 
         public override async Task<ActionResult<LoginResource>> Get(string id)
         {
@@ -38,17 +38,16 @@ namespace Core.Server.Application
 
         public async override Task<ActionResult<LoginResource>> Create(LoginCreateResource resource)
         {
-            var userEntity = await UsersRepository.GetByEmail(resource.Email);
+            var userEntity = await UsersRepository.FindFirst(e => e.Email == resource.Email);
 
             if (userEntity == null || !IsPasswordCurrent(resource, userEntity))
                 return new UnauthorizedResult();
-
-            await DeleteLastLogin(userEntity);
 
             var loginEntity = new LoginEntity()
             {
                 UserId = userEntity.Id,
                 CreateTime = DateTime.Now,
+                IsValid = true,
                 Token = GetToken(userEntity)
             };
             await AddEntity(loginEntity);
@@ -65,13 +64,6 @@ namespace Core.Server.Application
             var loginResource = Mapper.Map<LoginResource>(loginEntity);
             loginResource.User = Mapper.Map<UserResource>(userEntity);
             return loginResource;
-        }
-
-        private async Task DeleteLastLogin(UserEntity user)
-        {
-            var login = await (Repository as ILoginsRepository ).GetByUserId(user.Id);
-            if (login != null)
-                await Repository.Delete(login);
         }
 
         private string GetToken(UserEntity user)

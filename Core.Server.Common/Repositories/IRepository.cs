@@ -25,6 +25,9 @@ namespace Core.Server.Common.Repositories
         Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
 
         Task<TEntity> FindFirst(Expression<Func<TEntity, bool>> predicate);
+
+        Task Delete(Expression<Func<TEntity, bool>> predicate);
+
         Task<bool> Exists(Expression<Func<TEntity, bool>> predicate);
 
         Task RemoveRange(IEnumerable<TEntity> entities);

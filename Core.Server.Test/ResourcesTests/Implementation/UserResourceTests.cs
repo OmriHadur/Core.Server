@@ -5,7 +5,7 @@ using Core.Server.Shared.Resources.Users;
 namespace Core.Server.Tests.ResourceTests
 {
     [TestClass]
-    public class UserResourceTests : ResourceTests<UserCreateResource, UserResource>
+    public class UserResourceTests : ResourceTests<UserCreateResource,UserUpdateResource, UserResource>
     {
         [TestMethod]
         public override void TestList()
@@ -17,7 +17,7 @@ namespace Core.Server.Tests.ResourceTests
         public void TestReCreate()
         {
             var userResource = ResourcesHolder.GetLastOrCreate<UserResource>().Value;
-            var response = ResourcesHolder.EditAndCreate<UserCreateResource, UserResource>(u => u.Email = userResource.Email);
+            var response = ResourcesHolder.EditAndCreate<UserCreateResource, UserUpdateResource, UserResource >(u => u.Email = userResource.Email);
             AssertBadRequestReason(response, BadRequestReason.SameExists);
         }
     }

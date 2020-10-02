@@ -6,15 +6,21 @@ using Core.Server.Shared.Resources;
 
 namespace Core.Server.Client.Clients
 {
-    public abstract class RestClient<TCreateResource, TResource> :
-        ClientBase, 
-        IRestClient<TCreateResource, TResource>
+    public abstract class RestClient<TCreateResource, TUpdateResource, TResource> :
+        ClientBase,
+        IRestClient<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
+        where TUpdateResource : UpdateResource
         where TResource : Resource
     {
-        protected RestClient(string apiRoute) : 
-            base(apiRoute)
+        protected RestClient() :
+            base(GetApiName())
         {
+        }
+
+        private static string GetApiName()
+        {
+            return nameof(TCreateResource).Replace("Resource", string.Empty);
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> Get()
@@ -32,7 +38,7 @@ namespace Core.Server.Client.Clients
             return PostAsync<TResource>(ApiUrl, resource);
         }
 
-        public Task<ActionResult<TResource>> Update(string id, TCreateResource resource)
+        public Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
         {
             return PutAsync<TResource>(ApiUrl + id, resource);
         }

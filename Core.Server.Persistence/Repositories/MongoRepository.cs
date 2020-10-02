@@ -75,6 +75,17 @@ namespace Core.Server.Persistence.Repositories
             return (await Entities.FindAsync(predicate)).Any();
         }
 
+        public async Task Update(Expression<Func<TEntity, bool>> predicate, Action<TEntity> update)
+        {
+            var entities = await Entities.FindAsync(predicate);
+            await entities.ForEachAsync(update);
+        }
+
+        public async Task Delete(Expression<Func<TEntity, bool>> predicate)
+        {
+            await Entities.DeleteManyAsync(predicate);
+        }
+
         public async Task<TEntity> Get(string id)
         {
             return (await Entities.FindAsync(e => e.Id == id)).FirstOrDefault();

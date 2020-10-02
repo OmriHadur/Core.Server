@@ -6,15 +6,16 @@ using Unity;
 
 namespace Core.Server.Tests.ResourceCreators
 {
-    public abstract class InnerRestResourceCreator<TCreateResource, TResource, TParentResource> :
+    public abstract class InnerRestResourceCreator<TCreateResource, TUpdateResource,TResource, TParentResource> :
         ResourceCreatorBase,
-        IResourceCreator<TCreateResource, TResource>
+        IResourceCreator<TCreateResource, TUpdateResource,TResource>
         where TCreateResource : CreateResource, new()
+        where TUpdateResource : UpdateResource, new()
         where TResource : Resource
         where TParentResource : Resource
     {
         [Dependency]
-        public IInnerRestClient<TCreateResource, TResource> _restInnerClient;
+        public IInnerRestClient<TCreateResource, TUpdateResource,TResource> _restInnerClient;
 
         public ActionResult<TResource> Create()
         {
@@ -44,14 +45,21 @@ namespace Core.Server.Tests.ResourceCreators
             return createdResource;
         }
 
-        public ActionResult<TResource> Update(string id, TCreateResource resourceToCreate)
+        public ActionResult<TResource> Update(string id, TUpdateResource updateResource)
         {
-            return RestInnerClient.Update(ParentId, id, resourceToCreate as TCreateResource).Result;
+            return RestInnerClient.Update(ParentId, id, updateResource).Result;
+        }
+
+        public TUpdateResource GetRandomUpdateResource()
+        {
+            var updateResource = new TUpdateResource();
+            ObjectRandomizer.AddRandomValues(updateResource);
+            return updateResource;
         }
 
         protected string ParentId => GetResourceId<TParentResource>();
 
-        protected IInnerRestClient<TCreateResource, TResource> RestInnerClient
+        protected IInnerRestClient<TCreateResource, TUpdateResource, TResource> RestInnerClient
         {
             get
             {

@@ -12,13 +12,14 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class UsersApplication : RestApplication<UserCreateResource, UserResource, UserEntity>, IUsersApplication
+    public class UsersApplication :
+        RestApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>
     {
         private IUsersRepository _usersRepository => Repository as IUsersRepository;
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
         [Dependency]
-        public ILoginsApplication LoginsApplication;
+        public IRepository<LoginEntity> LoginsRepository;
 
         protected override UserEntity GetNewTEntity(UserCreateResource resource)
         {
@@ -42,7 +43,7 @@ namespace Core.Server.Application
         {
             var respose = await base.Delete(id);
             if (respose is OkResult)
-                await LoginsApplication.DeleteByUserId(id);
+                await LoginsRepository.Delete(e => e.UserId == id);
             return respose;
         }
     }

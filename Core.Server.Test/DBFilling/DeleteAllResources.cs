@@ -12,16 +12,17 @@ namespace Core.Server.Tests.DBFilling
         [TestMethod]
         public void TestDeleteAllResources()
         {
-            DeleteAllResourcesOfType<LoginCreateResource, LoginResource>();
-            DeleteAllResourcesOfType<UserCreateResource, UserResource>();
+            DeleteAllResourcesOfType<LoginCreateResource,LoginUpdateResource, LoginResource>();
+            DeleteAllResourcesOfType<UserCreateResource,UserUpdateResource, UserResource>();
         }
 
-        private void DeleteAllResourcesOfType<TCreateResource, TResource>()
+        private void DeleteAllResourcesOfType<TCreateResource, TUpdateResource, TResource>()
             where TCreateResource : CreateResource
+            where TUpdateResource: UpdateResource
             where TResource : Resource
         {
             ResourcesHolder.DeleteAll<TResource>();
-            var resourceClient = GetClient<IRestClient<TCreateResource, TResource>>();
+            var resourceClient = GetClient<IRestClient<TCreateResource, TUpdateResource, TResource >>();
             var resources = resourceClient.Get().Result;
             foreach (var resource in resources.Value)
                 resourceClient.Delete(resource.Id).Wait();

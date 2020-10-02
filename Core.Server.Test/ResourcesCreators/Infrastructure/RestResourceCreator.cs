@@ -6,14 +6,15 @@ using Unity;
 
 namespace Core.Server.Tests.ResourceCreators
 {
-    public abstract class RestResourceCreator<TCreateResource, TResource> :
+    public abstract class RestResourceCreator<TCreateResource, TUpdateResource, TResource> :
         ResourceCreatorBase,
-        IResourceCreator<TCreateResource, TResource>
+        IResourceCreator<TCreateResource, TUpdateResource,TResource>
         where TCreateResource : CreateResource, new()
+        where TUpdateResource : UpdateResource, new()
         where TResource : Resource
     {
         [Dependency]
-        public IRestClient<TCreateResource, TResource> _restClient;
+        public IRestClient<TCreateResource, TUpdateResource ,TResource> _restClient;
 
         public ActionResult<TResource> Create()
         {
@@ -42,17 +43,30 @@ namespace Core.Server.Tests.ResourceCreators
             SetCreateResource(createdResource);
             return createdResource;
         }
+
+        public TUpdateResource GetRandomUpdateResource()
+        {
+            var updateResource = new TUpdateResource();
+            SetUpdatResource(updateResource);
+            return updateResource;
+        }
+
         public virtual void SetCreateResource(TCreateResource createResource)
         {
             ObjectRandomizer.AddRandomValues(createResource);
         }
 
-        public ActionResult<TResource> Update(string id, TCreateResource resourceToCreate)
+        public virtual void SetUpdatResource(TUpdateResource updateResource)
         {
-            return RestClient.Update(id, resourceToCreate as TCreateResource).Result;
+            ObjectRandomizer.AddRandomValues(updateResource);
         }
 
-        protected IRestClient<TCreateResource, TResource> RestClient
+        public ActionResult<TResource> Update(string id, TUpdateResource updateResource)
+        {
+            return RestClient.Update(id, updateResource).Result;
+        }
+
+        protected IRestClient<TCreateResource, TUpdateResource,TResource> RestClient
         {
             get
             {

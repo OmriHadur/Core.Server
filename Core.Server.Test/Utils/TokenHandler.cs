@@ -39,7 +39,7 @@ namespace Core.Server.Tests.Utils
             logginin = true;
             var user = ResourcesHolder.Create<UserResource>().Value;
             var loginCreateResource = new LoginCreateResource() { Email = user.Email, Password = ConfigHandler.Config.UserPassword };
-            var login = ResourcesHolder.Create<LoginCreateResource, LoginResource>(loginCreateResource).Value;
+            var login = ResourcesHolder.Create<LoginCreateResource,LoginUpdateResource, LoginResource>(loginCreateResource).Value;
             token = login.Token;
             logginin = false;
             OnTokenChange?.Invoke(this, token);

@@ -23,11 +23,12 @@ namespace Core.Server.Tests.DBFilling
             ResourcesHolder.DeleteAll<LoginResource>();
         }
 
-        protected List<TResource> GetAll<TCreateResource, TResource>()
+        protected List<TResource> GetAll<TCreateResource, TUpdateResource, TResource>()
             where TCreateResource : CreateResource
+            where TUpdateResource : UpdateResource
             where TResource : Resource
         {
-            var response = GetClient<IRestClient<TCreateResource, TResource>>().Get().Result;
+            var response = GetClient<IRestClient<TCreateResource, TUpdateResource,TResource>>().Get().Result;
             return response.Value.ToList();
         }
 

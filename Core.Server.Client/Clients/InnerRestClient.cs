@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Client.Clients
 {
-    public abstract class InnerRestClient<TCreateResource, TResource> :
+    public abstract class InnerRestClient<TCreateResource, TUpdateResource, TResource> :
         ClientBase, 
-        IInnerRestClient<TCreateResource, TResource> 
+        IInnerRestClient<TCreateResource, TUpdateResource, TResource> 
         where TCreateResource : CreateResource
+        where TUpdateResource: UpdateResource
         where TResource : Resource
     {
         public InnerRestClient(string apiRouteWithParentId) :
@@ -32,7 +33,7 @@ namespace Core.Server.Client.Clients
             return PostAsync<TResource>(string.Format(ApiUrl, parentId), resource);
         }
 
-        public Task<ActionResult<TResource>> Update(string parentId, string id, TCreateResource resource)
+        public Task<ActionResult<TResource>> Update(string parentId, string id, TUpdateResource resource)
         {
             return PutAsync<TResource>(string.Format(ApiUrl, parentId) + id, resource);
         }

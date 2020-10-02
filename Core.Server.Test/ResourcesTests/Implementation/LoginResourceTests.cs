@@ -5,7 +5,7 @@ using Core.Server.Shared.Resources.Users;
 namespace Core.Server.Tests.ResourceTests
 {
     [TestClass]
-    public class LoginResourceTests : ResourceTests<LoginCreateResource, LoginResource>
+    public class LoginResourceTests : ResourceTests<LoginCreateResource,LoginUpdateResource, LoginResource>
     {
         [TestMethod]
         public override void TestList()
@@ -17,7 +17,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public void TestLoginWithBadEmail()
         {
-            var response = ResourcesHolder.EditAndCreate<LoginCreateResource, LoginResource>((r) => r.Email = "a" + r.Email);
+            var response = ResourcesHolder.EditAndCreate<LoginCreateResource, LoginUpdateResource, LoginResource >((r) => r.Email = "a" + r.Email);
 
             Assert.IsTrue(response.Result is UnauthorizedResult);
         }
@@ -25,7 +25,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public void TestLoginWithBadPassword()
         {
-            var response = ResourcesHolder.EditAndCreate<LoginCreateResource, LoginResource>((r) => r.Password = "a" + r.Password);
+            var response = ResourcesHolder.EditAndCreate<LoginCreateResource, LoginUpdateResource, LoginResource >((r) => r.Password = "a" + r.Password);
 
             Assert.IsTrue(response.Result is UnauthorizedResult);
         }
@@ -36,7 +36,7 @@ namespace Core.Server.Tests.ResourceTests
             var loginCreateResource = ResourceCreator.GetRandomCreateResource();
             ResourcesHolder.DeleteAll<UserResource>();
 
-            var response = ResourcesHolder.Create<LoginCreateResource, LoginResource>(loginCreateResource);
+            var response = ResourcesHolder.Create<LoginCreateResource, LoginUpdateResource, LoginResource >(loginCreateResource);
 
             Assert.IsTrue(response.Result is UnauthorizedResult);
         }
