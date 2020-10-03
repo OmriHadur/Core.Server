@@ -9,13 +9,15 @@ using Core.Server.Shared.Query;
 
 namespace Core.Server.Web.Controllers
 {
-    public class RestController<TCreateResource, TUpdateResource, TResource, TApplication>
-        : QueryController<TResource, TApplication>
+    public class RestController<TCreateResource, TUpdateResource, TResource>
+        : BaseController
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
-        where TApplication: IRestApplication<TCreateResource, TUpdateResource, TResource>
     {
+        [Dependency]
+        public IAlterApplication<TCreateResource, TUpdateResource, TResource> Application;
+
         [HttpPost]
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource resource)
         {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Core.Server.Common.Repositories
 {
     public interface IBatchRepository<TEntity>
-        : IRestRepository<TEntity>
+        : IBaseRepository
         where TEntity : Entity
     {
         Task AddMany(IEnumerable<TEntity> entities);

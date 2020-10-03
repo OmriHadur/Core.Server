@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
 using Core.Server.Shared.Query;
 using Core.Server.Application.Helpers;
 using Core.Server.Shared.Errors;
@@ -14,7 +13,7 @@ using Core.Server.Shared.Errors;
 namespace Core.Server.Application
 {
     public class QueryApplication<TResource, TEntity>
-        : ApplicationBase, IQueryApplication< TResource>
+        : BaseApplication, IQueryApplication< TResource>
         where TResource : Resource
         where TEntity : Entity, new()
     {
@@ -22,12 +21,7 @@ namespace Core.Server.Application
         public IQueryRepository<TEntity> QueryRepository { get; set; }
 
         [Dependency]
-        public IUnityContainer UnityContainer { get; set; }
-
-        [Dependency]
         public IQueryBuilder QueryBuilder;
-
-        public UserResource CurrentUser { get; set; }
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Get()
         {
@@ -41,7 +35,7 @@ namespace Core.Server.Application
             var entity = await QueryRepository.Get(id);
             if (entity == null)
                 return NotFound(id);
-            return await Map(entity);
+            return Map<TResource, TEntity>(entity);
         }
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
@@ -61,30 +55,6 @@ namespace Core.Server.Application
             return await QueryRepository.Exists(id) ?
                 Ok() :
                 NotFound(id);
-        }
-
-        protected async virtual Task<TResource> Map(TEntity entity)
-        {
-            return Mapper.Map<TResource>(entity);
-        }
-
-        protected async Task<ActionResult<IEnumerable<TResource>>> MapMany(IEnumerable<TEntity> entities)
-        {
-            return Ok(Mapper.Map<IEnumerable<TResource>>(entities));
-        }
-
-        protected async Task<bool> IsEntityExists<TFEntity>(string entityId)
-            where TFEntity : Entity
-        {
-            var repository = UnityContainer.Resolve<IRestRepository<TFEntity>>();
-            return await repository.Exists(entityId);
-        }
-
-        protected async Task<TFEntity> GetEntity<TFEntity>(string entityId)
-            where TFEntity : Entity
-        {
-            var repository = UnityContainer.Resolve<IRestRepository<TFEntity>>();
-            return await repository.Get(entityId);
         }
     }
 }

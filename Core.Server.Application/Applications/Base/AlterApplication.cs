@@ -8,16 +8,16 @@ using Core.Server.Shared.Resources;
 
 namespace Core.Server.Application
 {
-    public class RestApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : QueryApplication<TResource, TEntity>, 
-        IRestApplication<TCreateResource, TUpdateResource, TResource>
+    public class AlterApplication<TCreateResource, TUpdateResource, TResource, TEntity>
+        : BaseApplication, 
+        IAlterApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
         where TEntity : Entity, new()
     {
         [Dependency]
-        public IRestRepository<TEntity> RestRepository { get; set; }
+        public IAlterRepository<TEntity> RestRepository { get; set; }
 
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource createResource)
         {

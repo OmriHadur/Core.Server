@@ -5,20 +5,20 @@ using Core.Server.Shared.Errors;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Common.Errors;
 using Core.Server.Common.Applications;
+using Microsoft.Extensions.Logging;
+using Core.Server.Shared.Resources;
 
 namespace Core.Server.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ControllerBase<TApplication> 
-        : ControllerBase
-        where TApplication : IApplicationBase
+    public class BaseController: ControllerBase
     {
         [Dependency]
-        public TApplication Application { get; set; }
+        public IJwtManager JwtManager { get; set; }
 
         [Dependency]
-        public IJwtManager JwtManager { get; set; }
+        public IBaseApplication ApplicationBase;
 
         protected UserResource GetUser()
         {
@@ -27,7 +27,7 @@ namespace Core.Server.Web.Controllers
 
         protected void SetUser()
         {
-            Application.CurrentUser = GetUser();
+            ApplicationBase.CurrentUser = GetUser();
         }
     }
 }

@@ -9,13 +9,12 @@ using Core.Server.Shared.Query;
 
 namespace Core.Server.Web.Controllers
 {
-    public class QueryController<TResource, TApplication>
-        : ControllerBase<TApplication>
+    public class QueryController<TResource>
+        : BaseController
         where TResource : Resource
-        where TApplication: IQueryApplication<TResource>
     {
         [Dependency]
-        public ILogger<TResource> Logger;
+        public IQueryApplication<TResource> Application;
 
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Get()

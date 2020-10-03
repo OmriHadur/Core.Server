@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Common.Repositories
 {
-    public interface IRestRepository<TEntity>
-        : IQueryRepository<TEntity>
+    public interface IAlterRepository<TEntity>
+        : IBaseRepository
         where TEntity : Entity
     {
         Task Add(TEntity entity);

@@ -20,7 +20,7 @@ namespace Core.Server.Application
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
         [Dependency]
-        public IRestRepository<LoginEntity> LoginsRepository;
+        public IAlterRepository<LoginEntity> LoginsRepository;
 
         protected override UserEntity GetNewTEntity(UserCreateResource resource)
         {

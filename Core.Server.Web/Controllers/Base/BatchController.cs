@@ -9,36 +9,37 @@ using Core.Server.Shared.Query;
 
 namespace Core.Server.Web.Controllers
 {
-    public class BatchController<TCreateResource, TUpdateResource, TResource, TApplication>
-        : RestController<TCreateResource, TUpdateResource, TResource, TApplication>
+    public class BatchController<TCreateResource, TUpdateResource, TResource>
+        : BaseController
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
-        where TApplication : IBatchApplication<TCreateResource, TUpdateResource, TResource>
-
     {
+        [Dependency]
+        public IBatchApplication<TCreateResource, TUpdateResource, TResource> BatchApplication;
+
         [HttpGet("batch")]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids)
         {
-            return await Application.BatchGet(ids);
+            return await BatchApplication.BatchGet(ids);
         }
 
         [HttpPost("batch")]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
         {
-            return await Application.BatchCreate(resources);
+            return await BatchApplication.BatchCreate(resources);
         }
 
         [HttpPut("batch")]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
         {
-            return await Application.BatchUpdate(resources);
+            return await BatchApplication.BatchUpdate(resources);
         }
 
         [HttpDelete("batch")]
         public virtual async Task<ActionResult> BatchDelete(string[] ids)
         {
-            return await Application.BatchDelete(ids);
+            return await BatchApplication.BatchDelete(ids);
         }
     }
 }

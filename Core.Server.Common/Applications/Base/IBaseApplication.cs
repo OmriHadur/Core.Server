@@ -2,7 +2,7 @@
 
 namespace Core.Server.Common.Applications
 {
-    public interface IApplicationBase
+    public interface IBaseApplication
     {
         public UserResource CurrentUser { get; set; }
     }

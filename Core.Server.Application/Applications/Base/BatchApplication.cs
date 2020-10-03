@@ -12,7 +12,7 @@ using System;
 namespace Core.Server.Application
 {
     public class BatchApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : RestApplication<TCreateResource, TUpdateResource, TResource, TEntity>,
+        : BaseApplication,
         IBatchApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource

@@ -8,7 +8,7 @@ namespace Core.Server.Web.Controllers
 {
     [Authorize]
     public class UserController :
-        BatchController<UserCreateResource, UserUpdateResource, UserResource,IUserApplication>
+        RestController<UserCreateResource, UserUpdateResource, UserResource>
     {
         [HttpPost]
         [AllowAnonymous]

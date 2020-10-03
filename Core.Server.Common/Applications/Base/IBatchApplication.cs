@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Query;
-using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Common.Applications
 {
     public interface IBatchApplication<TCreateResource, TUpdateResource, TResource>
-        :IRestApplication<TCreateResource, TUpdateResource, TResource>
+        : IBaseApplication
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

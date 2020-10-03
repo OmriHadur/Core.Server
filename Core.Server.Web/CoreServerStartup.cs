@@ -19,14 +19,17 @@ using Core.Server.Shared.Resources;
 using Core.Server.Application;
 using AutoMapper;
 using Core.Server.Common.Mapping;
+using Core.Server.Web.Utils;
 
 namespace Core.Server.Web
 {
     public class CoreServerStartup
     {
+        private IReflactionHelper reflactionHelper;
         public CoreServerStartup(IConfiguration configuration)
         {
             Configuration = configuration;
+            reflactionHelper = new ReflactionHelper(configuration);
         }
 
         public IConfiguration Configuration { get; }
@@ -47,9 +50,14 @@ namespace Core.Server.Web
 
             ConfigureJwtAuthentication(services);
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddControllersAsServices();
+            services.
+                AddMvc(o => o.Conventions.Add(
+                    new GenericControllerRouteConvention()
+                )).
+                ConfigureApplicationPartManager(m =>
+                    m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider(reflactionHelper)
+                ))
+                 .AddControllersAsServices();
         }
 
         private void AddAutoMapper(IServiceCollection services)
@@ -67,7 +75,7 @@ namespace Core.Server.Web
 
         public virtual void ConfigureContainer(IUnityContainer container)
         {
-            new UnityContainerBuilder().ConfigureContainer(container, Configuration);
+            new UnityContainerBuilder().ConfigureContainer(container,reflactionHelper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

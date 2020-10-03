@@ -10,18 +10,18 @@ using System.Linq;
 namespace Core.Server.Persistence.Repositories
 {
     public class BatchRepository<TEntity> :
-        RestRepository<TEntity>,
+        BaseRepository<TEntity>,
         IBatchRepository<TEntity>
         where TEntity : Entity
     {
         public async Task AddMany(IEnumerable<TEntity> entities)
         {
-            await Entities.InsertManyAsync(entities);
+            await Collection.InsertManyAsync(entities);
         }
 
         public async Task DeleteMany(string[] ids)
         {
-             await Entities.DeleteManyAsync(e => ids.Contains(e.Id));
+             await Collection.DeleteManyAsync(e => ids.Contains(e.Id));
         }
     }
 }

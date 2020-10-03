@@ -15,8 +15,7 @@ namespace Core.Server.Application
 {
     [Inject]
     public class LoginApplication : 
-        BatchApplication<LoginCreateResource,LoginUpdateResource, LoginResource, LoginEntity>, 
-        ILoginApplication
+        BatchApplication<LoginCreateResource,LoginUpdateResource, LoginResource, LoginEntity>
     {
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
@@ -27,7 +26,7 @@ namespace Core.Server.Application
         public IJwtManager JwtManager { get; set; }
 
         [Dependency]
-        public IRestRepository<UserEntity> UsersRepository { get; set; }
+        public IAlterRepository<UserEntity> UsersRepository { get; set; }
 
         public override async Task<ActionResult<LoginResource>> Get(string id)
         {

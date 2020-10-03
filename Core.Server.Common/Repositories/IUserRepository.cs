@@ -2,7 +2,7 @@
 
 namespace Core.Server.Common.Repositories
 {
-    public interface IUserRepository : IRestRepository<UserEntity>
+    public interface IUserRepository : IAlterRepository<UserEntity>
     {
     }
 }

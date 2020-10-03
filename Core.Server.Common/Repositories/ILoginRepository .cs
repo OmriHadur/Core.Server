@@ -2,7 +2,7 @@
 
 namespace Core.Server.Common.Repositories
 {
-    public interface ILoginRepository  : IRestRepository<LoginEntity>
+    public interface ILoginRepository  : IAlterRepository<LoginEntity>
     {
     }
 }
