@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity;
 
-namespace Core.Server.Application.Mapping
+namespace Core.Server.Application.Mappers
 {
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile(IUnityContainer unityContainer)
         {
-            var mappers = unityContainer.ResolveAll<IResourceMapper>();
+            var mappers = unityContainer.ResolveAll<ResourceValidator>();
             foreach (var mapper in mappers)
-                mapper.AddMapping(this);             
+                mapper.AddAutoMapping(this);             
         }
     }
 }

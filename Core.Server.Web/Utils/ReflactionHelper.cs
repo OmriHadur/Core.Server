@@ -1,4 +1,5 @@
-﻿using Core.Server.Shared.Resources;
+﻿using Core.Server.Common.Entities;
+using Core.Server.Shared.Resources;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -41,9 +42,13 @@ namespace Core.Server.Web.Utils
         private ResourceBoundle GetResourceTypes(Type resourceType)
         {
             var resourceName = GetTypeName(resourceType, typeof(Resource));
-            var createResourceType = GetTypeWithName<CreateResource>(resourceName);
-            var updateResourceType = GetTypeWithName<UpdateResource>(resourceName);
-            return new ResourceBoundle(createResourceType, updateResourceType, resourceType);
+            return new ResourceBoundle()
+            {
+                ResourceType = resourceType,
+                CreateResourceType = GetTypeWithName<CreateResource>(resourceName),
+                UpdateResourceType = GetTypeWithName<UpdateResource>(resourceName),
+                EntityType = GetTypeWithName<Entity>(resourceName)
+            };
         }
 
         public Type MakeGenericType(Type genericType, ResourceBoundle resourceBoundle)

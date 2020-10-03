@@ -11,6 +11,7 @@ using Core.Server.Shared.Resources;
 using Core.Server.Common.Entities;
 using System.Collections.Generic;
 using Core.Server.Common.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace Core.Server.Application
 {
@@ -24,8 +25,8 @@ namespace Core.Server.Application
 
         public UserResource CurrentUser { get; set; }
 
-        //[Dependency]
-        //public ILogger<ApplicationBase> Logger { get; set; }
+        [Dependency]
+        public ILogger<BaseApplication> Logger { get; set; }
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {

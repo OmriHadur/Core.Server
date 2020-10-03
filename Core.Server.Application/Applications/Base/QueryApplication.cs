@@ -9,11 +9,13 @@ using Core.Server.Shared.Resources;
 using Core.Server.Shared.Query;
 using Core.Server.Application.Helpers;
 using Core.Server.Shared.Errors;
+using Core.Server.Common.Mappers;
 
 namespace Core.Server.Application
 {
     public class QueryApplication<TResource, TEntity>
-        : BaseApplication, IQueryApplication< TResource>
+        : BaseApplication,
+        IQueryApplication<TResource>
         where TResource : Resource
         where TEntity : Entity, new()
     {
@@ -23,11 +25,13 @@ namespace Core.Server.Application
         [Dependency]
         public IQueryBuilder QueryBuilder;
 
+        [Dependency]
+        public IResourceMapper<TResource, TEntity> ResourceMapper;
+
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Get()
         {
             var entities = await QueryRepository.Get();
-            var resources = Mapper.Map<IEnumerable<TResource>>(entities);
-            return Ok(resources);
+            return await ResourceMapper.Map(entities);
         }
 
         public virtual async Task<ActionResult<TResource>> Get(string id)
@@ -35,7 +39,7 @@ namespace Core.Server.Application
             var entity = await QueryRepository.Get(id);
             if (entity == null)
                 return NotFound(id);
-            return Map<TResource, TEntity>(entity);
+            return await ResourceMapper.Map(entity);
         }
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
@@ -46,8 +50,7 @@ namespace Core.Server.Application
 
             var query = QueryBuilder.Build<TResource>(queryResource);
             var entities = await QueryRepository.Query(query);
-            var resources = Mapper.Map<IEnumerable<TResource>>(entities);
-            return Ok(resources);
+            return await ResourceMapper.Map(entities);
         }
 
         public virtual async Task<ActionResult> Exists(string id)

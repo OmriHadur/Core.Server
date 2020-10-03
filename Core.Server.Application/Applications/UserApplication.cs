@@ -14,7 +14,6 @@ namespace Core.Server.Application
     [Inject]
     public class UserApplication :
         BatchApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>,
-        IUserApplication
     {
         private IUserRepository _usersRepository => QueryRepository as IUserRepository;
         private PasswordHasher _passwordHasher = new PasswordHasher();

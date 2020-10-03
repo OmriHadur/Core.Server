@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Unity;
 using Core.Server.Shared.Resources;
+using Core.Server.Common.Validators;
+using Core.Server.Common.Mappers;
 
 namespace Core.Server.Application
 {
     public class AlterApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : BaseApplication, 
+        : BaseApplication,
         IAlterApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
@@ -17,69 +19,50 @@ namespace Core.Server.Application
         where TEntity : Entity, new()
     {
         [Dependency]
-        public IAlterRepository<TEntity> RestRepository { get; set; }
+        public IAlterRepository<TEntity> AlterRepository { get; set; }
+
+        [Dependency]
+        public IQueryRepository<TEntity> QueryRepository { get; set; }
+
+        [Dependency]
+        public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator{get;set;}
+
+        [Dependency]
+        public IAlterResourceMapper<TCreateResource, TUpdateResource,TResource, TEntity> ResourceMapper { get; set; }
 
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource createResource)
         {
-            var validation = await Validate(createResource);
+            var validation = await ResourceValidator.Validate(createResource);
             if (!(validation is OkResult))
                 return validation;
-            var entity = GetNewTEntity(createResource);
-            await AddEntity(entity);
-            return await Map(entity);
+            var entityResult = await ResourceMapper.Map(createResource);
+            if (entityResult.Result != null)
+                return entityResult.Result;
+            await AlterRepository.Add(entityResult.Value);
+            return await ResourceMapper.Map(entityResult.Value);
         }
 
         public virtual async Task<ActionResult<TResource>> Update(TUpdateResource updateResource)
         {
-            var entity = await RestRepository.Get(updateResource.Id);
+            var entity = await QueryRepository.Get(updateResource.Id);
             if (entity == null)
                 return NotFound(updateResource.Id);
-            var validation = await Validate(updateResource, entity);
+            var validation = await ResourceValidator.Validate(updateResource, entity);
             if (!(validation is OkResult))
                 return validation;
             Mapper.Map(updateResource, entity);
-            await UpdateEntity(entity);
-            entity = await RestRepository.Get(entity.Id);
-            return await Map(entity);
+            await AlterRepository.Update(entity);
+            entity = await QueryRepository.Get(entity.Id);
+            return await ResourceMapper.Map(entity);
         }
 
         public virtual async Task<ActionResult> Delete(string id)
         {
-            var entity = await RestRepository.Get(id);
+            var entity = await QueryRepository.Get(id);
             if (entity == null)
                 return NotFound(id);
-            return await DeleteEntity(entity);
-        }
-
-        protected virtual async Task<ActionResult> Validate(TCreateResource createResource)
-        {
+            await AlterRepository.Delete(entity);
             return Ok();
-        }
-
-        protected virtual async Task<ActionResult> Validate(TUpdateResource updateResource, TEntity entity)
-        {
-            return Ok();
-        }
-
-        protected virtual TEntity GetNewTEntity(TCreateResource resource)
-        {
-            return Mapper.Map<TEntity>(resource);
-        }
-
-        protected virtual async Task UpdateEntity(TEntity entity)
-        {
-            await RestRepository.Update(entity);
-        }
-
-        protected async virtual Task<ActionResult> DeleteEntity(TEntity entity)
-        {
-            await RestRepository.Delete(entity);
-            return Ok();
-        }
-
-        protected virtual async Task AddEntity(TEntity entity)
-        {
-            await RestRepository.Add(entity);
         }
     }
 }

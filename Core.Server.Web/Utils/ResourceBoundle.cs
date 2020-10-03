@@ -10,19 +10,14 @@ namespace Core.Server.Web.Utils
         public Type CreateResourceType { get; set; }
         public Type UpdateResourceType { get; set; }
         public Type ResourceType { get; set; }
-
-        public ResourceBoundle(Type createResourceType, Type updateResourceType, Type resourceType)
-        {
-            CreateResourceType = createResourceType;
-            UpdateResourceType = updateResourceType;
-            ResourceType = resourceType;
-        }
+        public Type EntityType { get; set; }
 
         public IEnumerable<Type> GetTypes()
         {
             yield return CreateResourceType;
             yield return UpdateResourceType;
             yield return ResourceType;
+            yield return EntityType;
         }
 
         public Type GetSameBaseType(Type type)
