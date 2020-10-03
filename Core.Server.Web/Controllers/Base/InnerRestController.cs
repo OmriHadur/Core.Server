@@ -52,7 +52,7 @@ namespace Core.Server.Web.Controllers
 
         private void SetUser()
         {
-            Application.CurrentUser = GetUser();
+            //Application.CurrentUser = GetUser();
         }
     }
 }

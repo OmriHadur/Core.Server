@@ -3,7 +3,7 @@
 namespace Core.Server.Common.Applications
 {
     public interface IUserApplication : 
-        IRestApplication<UserCreateResource, UserUpdateResource, UserResource>
+        IBatchApplication<UserCreateResource, UserUpdateResource, UserResource>
     {
     }
 }

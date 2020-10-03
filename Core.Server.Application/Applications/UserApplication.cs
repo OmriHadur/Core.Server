@@ -13,7 +13,7 @@ namespace Core.Server.Application
 {
     [Inject]
     public class UserApplication :
-        RestApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>,
+        BatchApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>,
         IUserApplication
     {
         private IUserRepository _usersRepository => QueryRepository as IUserRepository;
