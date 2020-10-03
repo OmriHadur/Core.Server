@@ -43,7 +43,7 @@ namespace Core.Server.Application
 
         public async Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids)
         {
-            var entities = await BatchRepository.Find(e => ids.Contains(e.Id));
+            var entities = await BatchRepository.FindAll(e => ids.Contains(e.Id));
 
             var notFoundId = ids.FirstOrDefault(id => !entities.Any(e => e.Id == id));
             if (notFoundId != null)

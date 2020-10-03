@@ -58,7 +58,7 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult> Exists(string id)
         {
-            return await QueryRepository.IsExists(id) ?
+            return await QueryRepository.Exists(id) ?
                 Ok() :
                 NotFound(id);
         }
@@ -77,7 +77,7 @@ namespace Core.Server.Application
             where TFEntity : Entity
         {
             var repository = UnityContainer.Resolve<IRestRepository<TFEntity>>();
-            return await repository.IsExists(entityId);
+            return await repository.Exists(entityId);
         }
 
         protected async Task<TFEntity> GetEntity<TFEntity>(string entityId)

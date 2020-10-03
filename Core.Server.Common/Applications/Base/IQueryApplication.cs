@@ -8,10 +8,9 @@ using Core.Server.Shared.Resources.Users;
 namespace Core.Server.Common.Applications
 {
     public interface IQueryApplication<TResource>
+        : IApplicationBase
         where TResource : Resource
     {
-        public UserResource CurrentUser { get; set; }
-
         Task<ActionResult<IEnumerable<TResource>>> Get();
 
         Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query);

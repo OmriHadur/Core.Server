@@ -12,13 +12,9 @@ namespace Core.Server.Common.Repositories
     {
         Task Add(TEntity entity);
 
-        Task AddRange(IEnumerable<TEntity> entities);
-
         Task DeleteMany(Expression<Func<TEntity, bool>> predicate);
 
         Task DeleteOne(Expression<Func<TEntity, bool>> predicate);
-
-        Task RemoveRange(IEnumerable<TEntity> entities);
 
         Task Update(TEntity item);
 

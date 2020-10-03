@@ -28,12 +28,6 @@ namespace Core.Server.Persistence.Repositories
             await Entities.InsertOneAsync(entity);
         }
 
-        public async Task AddRange(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-                await Add(entity);
-        }
-
         public async Task Update(Expression<Func<TEntity, bool>> predicate, Action<TEntity> update)
         {
             var entities = await Entities.FindAsync(predicate);
@@ -48,12 +42,6 @@ namespace Core.Server.Persistence.Repositories
         public async Task DeleteOne(Expression<Func<TEntity, bool>> predicate)
         {
             await Entities.DeleteOneAsync(predicate);
-        }
-
-        public async Task RemoveRange(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-                await Delete(entity);
         }
 
         public async Task Update(TEntity entity)

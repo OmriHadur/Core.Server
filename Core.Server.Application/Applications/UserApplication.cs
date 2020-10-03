@@ -12,7 +12,7 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class UsersApplication :
+    public class UserApplication :
         RestApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>,
         IUserApplication
     {
@@ -34,7 +34,7 @@ namespace Core.Server.Application
 
         public async override Task<ActionResult<UserResource>> Create(UserCreateResource createResource)
         {
-            if (await _usersRepository.IsExists(e => e.Email == createResource.Email))
+            if (await _usersRepository.Exists(e => e.Email == createResource.Email))
                 return BadRequest(BadRequestReason.SameExists);
 
             return await base.Create(createResource);

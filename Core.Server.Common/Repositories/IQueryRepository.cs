@@ -14,18 +14,16 @@ namespace Core.Server.Common.Repositories
 
         Task<IEnumerable<TEntity>> GetAll(IEnumerable<string> ids);
 
-        Task<List<TEntity>> Get();
+        Task<IEnumerable<TEntity>> Get();
 
-        Task<List<TEntity>> Query(QueryBase query);
+        Task<IEnumerable<TEntity>> Query(QueryBase query);
 
-        Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> predicate);
 
         Task<TEntity> FindFirst(Expression<Func<TEntity, bool>> predicate);
 
+        Task<bool> Exists(string id);
+
         Task<bool> Exists(Expression<Func<TEntity, bool>> predicate);
-
-        Task<bool> IsExists(string id);
-
-        Task<bool> IsExists(Expression<Func<TEntity, bool>> predicate);
     }
 }

@@ -14,9 +14,9 @@ using System;
 namespace Core.Server.Application
 {
     [Inject]
-    public class LoginsApplication : 
-        RestApplication<LoginCreateResource,LoginUpdateResource, LoginResource, LoginEntity>, 
-        ILoginsApplication
+    public class LoginApplication : 
+        BatchApplication<LoginCreateResource,LoginUpdateResource, LoginResource, LoginEntity>, 
+        ILoginApplication
     {
         private PasswordHasher _passwordHasher = new PasswordHasher();
 

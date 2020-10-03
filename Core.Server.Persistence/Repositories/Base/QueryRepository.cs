@@ -42,19 +42,14 @@ namespace Core.Server.Persistence.Repositories
             get { return GetType().Name.Replace("Repository", string.Empty); }
         }
 
-        public async Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> predicate)
         {
-            return (await Entities.FindAsync(predicate)).ToList();
+            return (await Entities.FindAsync(predicate)).ToEnumerable();
         }
 
         public async Task<TEntity> FindFirst(Expression<Func<TEntity, bool>> predicate)
         {
             return (await Entities.FindAsync(predicate)).FirstOrDefault();
-        }
-
-        public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)
-        {
-            return (await Entities.FindAsync(predicate)).Any();
         }
 
         public async Task<TEntity> Get(string id)
@@ -71,28 +66,28 @@ namespace Core.Server.Persistence.Repositories
         {
             return (await Entities.FindAsync(e => findFunc(e))).ToList();
         }
-        public virtual async Task<List<TEntity>> Get()
+        public virtual async Task<IEnumerable<TEntity>> Get()
         {
             var answer = await Entities.FindAsync(e => true);
-            return answer.ToList();
+            return answer.ToEnumerable();
         }
 
-        public async Task<bool> IsExists(string id)
+        public async Task<bool> Exists(string id)
         {
             var answer = await Entities.FindAsync(e => e.Id == id);
             return answer.FirstOrDefault() != null;
         }
 
-        public async Task<bool> IsExists(Expression<Func<TEntity, bool>> predicate)
+        public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)
         {
             var answer = await Entities.FindAsync(predicate);
             return answer.FirstOrDefault() != null;
         }
 
-        public async Task<List<TEntity>> Query(QueryBase query)
+        public async Task<IEnumerable<TEntity>> Query(QueryBase query)
         {
             var filter = QueryFilterFactory.GetFilter<TEntity>(query);
-            return (await Entities.FindAsync(filter)).ToList();
+            return (await Entities.FindAsync(filter)).ToEnumerable();
         }
     }
 }

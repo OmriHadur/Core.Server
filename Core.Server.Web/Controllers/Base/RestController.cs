@@ -9,31 +9,29 @@ using Core.Server.Shared.Query;
 
 namespace Core.Server.Web.Controllers
 {
-    public class RestController<TCreateResource, TUpdateResource, TResource>
-        : QueryController<TResource>
+    public class RestController<TCreateResource, TUpdateResource, TResource, TApplication>
+        : QueryController<TResource, TApplication>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
+        where TApplication: IRestApplication<TCreateResource, TUpdateResource, TResource>
     {
-        [Dependency]
-        public IRestApplication<TCreateResource, TUpdateResource, TResource> RestApplication { get; set; }
-
         [HttpPost]
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource resource)
         {
-            return await RestApplication.Create(resource);
+            return await Application.Create(resource);
         }
 
         [HttpPut]
         public virtual async Task<ActionResult<TResource>> Update(TUpdateResource resource)
         {
-            return await RestApplication.Update(resource);
+            return await Application.Update(resource);
         }
 
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult<TResource>> Delete(string id)
         {
-            return await RestApplication.Delete(id);
+            return await Application.Delete(id);
         }
     }
 }
