@@ -27,11 +27,11 @@ namespace Core.Server.Application
         public IJwtManager JwtManager { get; set; }
 
         [Dependency]
-        public IRepository<UserEntity> UsersRepository { get; set; }
+        public IRestRepository<UserEntity> UsersRepository { get; set; }
 
         public override async Task<ActionResult<LoginResource>> Get(string id)
         {
-            var loginEntity = await Repository.Get(id);
+            var loginEntity = await QueryRepository.Get(id);
             if (loginEntity == null)
                 return NotFound(id);
             var userEntity = await UsersRepository.Get(loginEntity.UserId);
@@ -58,7 +58,7 @@ namespace Core.Server.Application
 
         public async Task DeleteByUserId(string id)
         {
-            await Repository.DeleteOne(e=>e.UserId==id);
+            await RestRepository.DeleteOne(e=>e.UserId==id);
         }
 
         private ActionResult<LoginResource> GetLoginWithUser(LoginEntity loginEntity, UserEntity userEntity)

@@ -7,7 +7,9 @@ using Core.Server.Common.Errors;
 
 namespace Core.Server.Web.Controllers
 {
-    public class Controller : ControllerBase
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
     {
         [Dependency]
         public IJwtManager JwtManager { get; set; }

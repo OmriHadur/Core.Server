@@ -20,7 +20,7 @@ namespace Core.Server.Application
         where TEntity : Entity
     {
         [Dependency]
-        public IRepository<TParentEntity> Repository { get; set; }
+        public IRestRepository<TParentEntity> Repository { get; set; }
 
         public UserResource CurrentUser { get; set; }
 

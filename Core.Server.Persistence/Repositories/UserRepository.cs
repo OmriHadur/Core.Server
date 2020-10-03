@@ -6,7 +6,7 @@ namespace Core.Server.Persistence.Repositories
 {
     [Inject]
     public class UserRepository : 
-        Repository<UserEntity>, 
+        RestRepository<UserEntity>, 
         IUserRepository
     {
     }

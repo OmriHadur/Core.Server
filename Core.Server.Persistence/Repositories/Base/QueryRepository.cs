@@ -14,14 +14,15 @@ using Unity;
 
 namespace Core.Server.Persistence.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity>
+    public class QueryRepository<TEntity> :
+        IQueryRepository<TEntity>
         where TEntity : Entity
     {
         protected IMongoCollection<TEntity> Entities;
 
         [Dependency]
         public IQueryFilterFactory QueryFilterFactory;
-        
+
         [Dependency]
         public IMongoDBConfig MongoDatabaseSettings
         {
@@ -38,26 +39,7 @@ namespace Core.Server.Persistence.Repositories
 
         private string CollectionName
         {
-            get{ return GetType().Name.Replace("Repository", string.Empty); }
-        }
-
-        public async Task Delete(TEntity entity) {
-            await Entities.DeleteOneAsync(e => e.Id == entity.Id);
-        }
-
-        public async Task Remove(string id) {
-            await Entities.DeleteOneAsync(e => e.Id == id);
-        }
-
-        public async Task Add(TEntity entity)
-        {
-            await Entities.InsertOneAsync(entity);
-        }
-
-        public async Task AddRange(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-                await Add(entity);
+            get { return GetType().Name.Replace("Repository", string.Empty); }
         }
 
         public async Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
@@ -75,22 +57,6 @@ namespace Core.Server.Persistence.Repositories
             return (await Entities.FindAsync(predicate)).Any();
         }
 
-        public async Task Update(Expression<Func<TEntity, bool>> predicate, Action<TEntity> update)
-        {
-            var entities = await Entities.FindAsync(predicate);
-            await entities.ForEachAsync(update);
-        }
-
-        public async Task DeleteMany(Expression<Func<TEntity, bool>> predicate)
-        {
-            await Entities.DeleteManyAsync(predicate);
-        }
-
-        public async Task DeleteOne(Expression<Func<TEntity, bool>> predicate)
-        {
-            await Entities.DeleteOneAsync(predicate);
-        }
-        
         public async Task<TEntity> Get(string id)
         {
             return (await Entities.FindAsync(e => e.Id == id)).FirstOrDefault();
@@ -109,17 +75,6 @@ namespace Core.Server.Persistence.Repositories
         {
             var answer = await Entities.FindAsync(e => true);
             return answer.ToList();
-        }
-
-        public async Task RemoveRange(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-                await Delete(entity);
-        }
-
-        public async Task Update(TEntity entity)
-        {
-            await Entities.ReplaceOneAsync(e => e.Id == entity.Id, entity);
         }
 
         public async Task<bool> IsExists(string id)

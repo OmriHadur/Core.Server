@@ -8,7 +8,7 @@ using Unity;
 namespace Core.Server.Web.Controllers
 {
     public class InnerRestController<TCreateResource, TResource>
-        : Controller
+        : ControllerBase
         where TCreateResource : CreateResource
         where TResource : Resource
     {

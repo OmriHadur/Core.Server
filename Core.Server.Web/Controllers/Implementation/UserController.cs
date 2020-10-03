@@ -7,13 +7,13 @@ namespace Core.Server.Web.Controllers
 {
     [Authorize]
     public class UserController :
-        RestController<UserCreateResource, UserUpdateResource, UserResource>
+        BatchController<UserCreateResource, UserUpdateResource, UserResource>
     {
         [HttpPost]
         [AllowAnonymous]
         public override async Task<ActionResult<UserResource>> Create(UserCreateResource resource)
         {
-            return await Application.Create(resource);
+            return await RestApplication.Create(resource);
         }
     }
 }

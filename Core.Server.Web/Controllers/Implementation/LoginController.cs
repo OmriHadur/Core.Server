@@ -6,7 +6,7 @@ using Core.Server.Shared.Resources.Users;
 namespace Core.Server.Web.Controllers
 {
     public class LoginController :
-        RestController<LoginCreateResource, LoginUpdateResource, LoginResource>
+        BatchController<LoginCreateResource, LoginUpdateResource, LoginResource>
     {
     }
 }

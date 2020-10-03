@@ -16,11 +16,11 @@ namespace Core.Server.Application
         RestApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>,
         IUserApplication
     {
-        private IUserRepository _usersRepository => Repository as IUserRepository;
+        private IUserRepository _usersRepository => QueryRepository as IUserRepository;
         private PasswordHasher _passwordHasher = new PasswordHasher();
 
         [Dependency]
-        public IRepository<LoginEntity> LoginsRepository;
+        public IRestRepository<LoginEntity> LoginsRepository;
 
         protected override UserEntity GetNewTEntity(UserCreateResource resource)
         {
