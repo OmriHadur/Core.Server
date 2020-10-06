@@ -13,13 +13,12 @@ using Core.Server.Common;
 using Unity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Core.Server.Application.Mapping;
 using System.Collections.Generic;
 using Core.Server.Shared.Resources;
 using Core.Server.Application;
 using AutoMapper;
-using Core.Server.Common.Mapping;
 using Core.Server.Web.Utils;
+using Core.Server.Application.Mappers;
 
 namespace Core.Server.Web
 {

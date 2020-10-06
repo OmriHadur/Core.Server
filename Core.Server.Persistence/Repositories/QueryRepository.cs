@@ -14,8 +14,8 @@ using Unity;
 
 namespace Core.Server.Persistence.Repositories
 {
-    public class QueryRepository<TEntity> :
-        BaseRepository<TEntity>
+    public class QueryRepository<TEntity>
+        : BaseRepository<TEntity>,
         IQueryRepository<TEntity>
         where TEntity : Entity
     {

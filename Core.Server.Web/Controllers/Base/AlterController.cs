@@ -9,7 +9,7 @@ using Core.Server.Shared.Query;
 
 namespace Core.Server.Web.Controllers
 {
-    public class RestController<TCreateResource, TUpdateResource, TResource>
+    public class AlterController<TCreateResource, TUpdateResource, TResource>
         : BaseController
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource

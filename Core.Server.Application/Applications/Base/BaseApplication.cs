@@ -1,32 +1,26 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Core.Server.Common.Errors;
 using Core.Server.Shared.Errors;
 using System;
 using Unity;
 using Core.Server.Common.Applications;
 using Core.Server.Shared.Resources.Users;
-using System.Threading.Tasks;
-using Core.Server.Shared.Resources;
-using Core.Server.Common.Entities;
-using System.Collections.Generic;
-using Core.Server.Common.Repositories;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using Core.Server.Common.Entities;
+using Core.Server.Common.Repositories;
 
 namespace Core.Server.Application
 {
     public class BaseApplication: IBaseApplication
     {
         [Dependency]
-        public IMapper Mapper { get; set; }
-
-        [Dependency]
         public IUnityContainer UnityContainer { get; set; }
-
-        public UserResource CurrentUser { get; set; }
 
         [Dependency]
         public ILogger<BaseApplication> Logger { get; set; }
+
+        public UserResource CurrentUser { get; set; }
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {
@@ -61,13 +55,6 @@ namespace Core.Server.Application
         {
             var repository = UnityContainer.Resolve<IQueryRepository<TFEntity>>();
             return await repository.Exists(entityId);
-        }
-
-        protected async Task<TFEntity> GetEntity<TFEntity>(string entityId)
-            where TFEntity : Entity
-        {
-            var repository = UnityContainer.Resolve<IQueryRepository<TFEntity>>();
-            return await repository.Get(entityId);
         }
     }
 }

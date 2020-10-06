@@ -18,19 +18,25 @@ namespace Core.Server.Web.Utils
     {
         public void ConfigureContainer(IUnityContainer container, IReflactionHelper reflactionHelper)
         {
-            var resourcesBoundles = reflactionHelper.GetResourcesBoundles();
-
-            foreach (var resourcesBoundle in resourcesBoundles)
-            {
-                foreach (var genricTypeForBundle in GetGenricTypesForBundle(reflactionHelper))
-                {
-                    var genericType = reflactionHelper.MakeGenericType(genricTypeForBundle, resourcesBoundle);
-                    AddTypesInterfaces(container, genericType);
-                }
-            }
-
+            AddAllTypesForBundles(container, reflactionHelper);
             AddInjectTypes(container, reflactionHelper);
             AddInjectManyClasses(container, reflactionHelper);
+        }
+
+        private static void AddAllTypesForBundles(IUnityContainer container, IReflactionHelper reflactionHelper)
+        {
+            var resourcesBoundles = reflactionHelper.GetResourcesBoundles();
+            var genricTypesForBundle = GetGenricTypesForBundle(reflactionHelper);
+
+            foreach (var genricTypeForBundle in genricTypesForBundle)
+                foreach (var resourcesBoundle in resourcesBoundles)
+                    AddGenricTypeResourcesBoundle(container, reflactionHelper, genricTypeForBundle, resourcesBoundle);
+        }
+
+        private static void AddGenricTypeResourcesBoundle(IUnityContainer container, IReflactionHelper reflactionHelper, Type genricTypeForBundle, ResourceBoundle resourcesBoundle)
+        {
+            var genericType = reflactionHelper.MakeGenericType(genricTypeForBundle, resourcesBoundle);
+            AddTypesInterfaces(container, genericType);
         }
 
         private static IEnumerable<Type> GetGenricTypesForBundle(IReflactionHelper reflactionHelper)

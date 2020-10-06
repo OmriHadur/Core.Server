@@ -35,11 +35,9 @@ namespace Core.Server.Application
             var validation = await ResourceValidator.Validate(createResource);
             if (!(validation is OkResult))
                 return validation;
-            var entityResult = await ResourceMapper.Map(createResource);
-            if (entityResult.Result != null)
-                return entityResult.Result;
-            await AlterRepository.Add(entityResult.Value);
-            return await ResourceMapper.Map(entityResult.Value);
+            var entity = await ResourceMapper.Map(createResource);
+            await AlterRepository.Add(entity);
+            return await ResourceMapper.Map(entity);
         }
 
         public virtual async Task<ActionResult<TResource>> Update(TUpdateResource updateResource)
@@ -50,7 +48,7 @@ namespace Core.Server.Application
             var validation = await ResourceValidator.Validate(updateResource, entity);
             if (!(validation is OkResult))
                 return validation;
-            Mapper.Map(updateResource, entity);
+            await ResourceMapper.Map(updateResource, entity);
             await AlterRepository.Update(entity);
             entity = await QueryRepository.Get(entity.Id);
             return await ResourceMapper.Map(entity);
@@ -61,6 +59,11 @@ namespace Core.Server.Application
             var entity = await QueryRepository.Get(id);
             if (entity == null)
                 return NotFound(id);
+            return await DeleteEntity(entity);
+        }
+
+        protected virtual async Task<ActionResult> DeleteEntity(TEntity entity)
+        {
             await AlterRepository.Delete(entity);
             return Ok();
         }

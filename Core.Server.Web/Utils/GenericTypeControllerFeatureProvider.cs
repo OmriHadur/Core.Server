@@ -1,4 +1,5 @@
 ﻿using Core.Server.Web.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System;
@@ -18,8 +19,8 @@ namespace Core.Server.Web.Utils
         }
         public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
         {
-            var controllerTypes = reflactionHelper.GetDrivenTypesOf<ControllerBase>();
-            var resourcesBoundles = reflactionHelper.GetResourcesBoundles();
+            var controllerTypes = reflactionHelper.GetDrivenTypesOf<BaseController>().ToList();
+            var resourcesBoundles = reflactionHelper.GetResourcesBoundles().ToList();
 
             foreach (var resourcesBoundle in resourcesBoundles)
                 foreach (var controllerType in controllerTypes)
