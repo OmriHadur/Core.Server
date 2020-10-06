@@ -3,12 +3,11 @@ using Core.Server.Common;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
 using Core.Server.Shared.Resources;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Core.Server.Application.Mappers.Base
 {
-    [InjectMany]
+    [Inject]
     public class AlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>
         : ResourceMapper<TResource, TEntity>,
          IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>
@@ -20,15 +19,16 @@ namespace Core.Server.Application.Mappers.Base
         public virtual void AddAutoMapping(Profile profile)
         {
             profile.CreateMap<TCreateResource, TEntity>();
+            profile.CreateMap<TUpdateResource, TEntity>();
             profile.CreateMap<TEntity, TResource>();
         }
 
-        public virtual async Task<ActionResult<TEntity>> Map(TCreateResource resource)
+        public virtual async Task<TEntity> Map(TCreateResource resource)
         {
             return Mapper.Map<TEntity>(resource);
         }
 
-        public virtual async Task<ActionResult<TEntity>> Map(TUpdateResource resource, TEntity entity)
+        public virtual async Task<TEntity> Map(TUpdateResource resource, TEntity entity)
         {
             return Mapper.Map<TEntity>(resource);
         }

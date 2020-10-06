@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Unity;
 using Core.Server.Persistence.Repositories;
+using Core.Server.Application.Mappers.Base;
 
 namespace Core.Server.Web.Utils
 {
@@ -36,7 +37,8 @@ namespace Core.Server.Web.Utils
         {
             var applicationTypes = reflactionHelper.GetDrivenTypesOf<BaseApplication>();
             var repositoryTypes = reflactionHelper.GetDrivenTypesOf(typeof(BaseRepository<>));
-            return applicationTypes.Union(repositoryTypes);
+            var mappers = new Type[] { typeof(AlterResourceMapper<,,,>) };
+            return applicationTypes.Union(repositoryTypes).Union(mappers);
         }
 
         private void AddInjectTypes(IUnityContainer container, IReflactionHelper reflactionHelper)

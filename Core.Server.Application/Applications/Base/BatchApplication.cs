@@ -8,6 +8,8 @@ using Unity;
 using Core.Server.Shared.Resources;
 using System.Linq;
 using System;
+using Core.Server.Common.Mappers;
+using Core.Server.Common.Validators;
 
 namespace Core.Server.Application
 {
@@ -20,20 +22,30 @@ namespace Core.Server.Application
         where TEntity : Entity, new()
     {
         [Dependency]
+        public IQueryRepository<TEntity> QueryRepository;
+
+        [Dependency]
         public IBatchRepository<TEntity> BatchRepository { get; set; }
+
+        [Dependency]
+        public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator { get; set; }
+
+        [Dependency]
+        public IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity> ResourceMapper { get; set; }
 
         public async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
         {
             foreach (var resource in resources)
             {
-                var validation = await Validate(resource);
+                var validation = await ResourceValidator.Validate(resource);
                 if (!(validation is OkResult))
                     return validation;
             }
 
-            var entities = resources.Select(r => GetNewTEntity(r));
+            var entitiesTasks = resources.Select(async resource =>await ResourceMapper.Map(resource));
+            var entities = entitiesTasks.Select(er => er.Result);
             await AddEntites(entities);
-            return await MapMany(entities);
+            return Ok(await ResourceMapper.Map(entities));
         }
 
         private Task AddEntites(IEnumerable<TEntity> entities)
@@ -43,13 +55,13 @@ namespace Core.Server.Application
 
         public async Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids)
         {
-            var entities = await BatchRepository.FindAll(e => ids.Contains(e.Id));
+            var entities = await QueryRepository.FindAll(e => ids.Contains(e.Id));
 
             var notFoundId = ids.FirstOrDefault(id => !entities.Any(e => e.Id == id));
             if (notFoundId != null)
                 return NotFound(notFoundId);
 
-            return await MapMany(entities);
+            return Ok(await ResourceMapper.Map(entities));
         }
         public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
         {

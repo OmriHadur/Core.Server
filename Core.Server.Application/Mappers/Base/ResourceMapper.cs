@@ -10,7 +10,7 @@ using Unity;
 
 namespace Core.Server.Application.Mappers.Base
 {
-    [InjectMany]
+    [Inject]
     public class ResourceMapper<TResource, TEntity>
         : IResourceMapper<TResource, TEntity>
         where TResource : Resource
@@ -19,19 +19,14 @@ namespace Core.Server.Application.Mappers.Base
         [Dependency]
         public IMapper Mapper { get; set; }
 
-        public virtual async Task<ActionResult<TResource>> Map(TEntity entity)
+        public virtual async Task<TResource> Map(TEntity entity)
         {
             return Mapper.Map<TResource>(entity);
         }
 
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> Map(IEnumerable<TEntity> entities)
+        public virtual async Task<IEnumerable<TResource>> Map(IEnumerable<TEntity> entities)
         {
-            return Ok(Mapper.Map<IEnumerable<TResource>>(entities));
-        }
-
-        protected ActionResult Ok(object obj)
-        {
-            return new OkObjectResult(obj);
+            return Mapper.Map<IEnumerable<TResource>>(entities);
         }
     }
 }

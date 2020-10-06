@@ -17,8 +17,6 @@ namespace Core.Server.Application.Mappers.Implementation
     public class LoginResourceMapper
         : AlterResourceMapper<LoginCreateResource,LoginUpdateResource, LoginResource,LoginEntity>
     {
-        private PasswordHasher _passwordHasher = new PasswordHasher();
-
         [Dependency]
         public IOptions<AppSettings> AppSettings { get; set; }
 
@@ -31,12 +29,9 @@ namespace Core.Server.Application.Mappers.Implementation
         [Dependency]
         public IResourceMapper<UserResource, UserEntity> UserResourceMapper { get; set; }
 
-        public async override Task<ActionResult<LoginEntity>> Map(LoginCreateResource resource)
+        public async override Task<LoginEntity> Map(LoginCreateResource resource)
         {
             var userEntity = await UserQueryRepository.FindFirst(e => e.Email == resource.Email);
-            if (userEntity == null || !IsPasswordCurrent(resource, userEntity))
-                return new UnauthorizedResult();
-
             return new LoginEntity()
             {
                 UserId = userEntity.Id,
@@ -46,23 +41,17 @@ namespace Core.Server.Application.Mappers.Implementation
             };
         }
 
-        public override async Task<ActionResult<LoginResource>> Map(LoginEntity entity)
+        public override async Task<LoginResource> Map(LoginEntity entity)
         {
             var loginResource = Mapper.Map<LoginResource>(entity);
             var userEntity = await UserQueryRepository.Get(entity.UserId);
-            var userResult = await UserResourceMapper.Map(userEntity);
-            loginResource.User = userResult.Value;
+            loginResource.User = await UserResourceMapper.Map(userEntity);;
             return loginResource;
         }
 
         private string GetToken(UserEntity user)
         {
             return JwtManager.GenerateToken(Mapper.Map<UserResource>(user), AppSettings.Value.Secret);
-        }
-
-        private bool IsPasswordCurrent(LoginCreateResource resource, UserEntity user)
-        {
-            return _passwordHasher.VerifyPasswordHash(resource.Password, user.PasswordHash, user.PasswordSalt);
         }
     }
 }

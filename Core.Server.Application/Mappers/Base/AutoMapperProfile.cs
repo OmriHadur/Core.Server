@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Core.Server.Common.Mapping;
-using System.Collections.Generic;
-using System.Linq;
+using Core.Server.Common.Mappers;
 using Unity;
 
 namespace Core.Server.Application.Mappers
@@ -10,7 +8,7 @@ namespace Core.Server.Application.Mappers
     {
         public AutoMapperProfile(IUnityContainer unityContainer)
         {
-            var mappers = unityContainer.ResolveAll<ResourceValidator>();
+            var mappers = unityContainer.ResolveAll<IAutoMapperMapping>();
             foreach (var mapper in mappers)
                 mapper.AddAutoMapping(this);             
         }

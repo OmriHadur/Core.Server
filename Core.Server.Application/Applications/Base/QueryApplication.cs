@@ -31,7 +31,7 @@ namespace Core.Server.Application
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Get()
         {
             var entities = await QueryRepository.Get();
-            return await ResourceMapper.Map(entities);
+            return Ok(await ResourceMapper.Map(entities));
         }
 
         public virtual async Task<ActionResult<TResource>> Get(string id)
@@ -50,7 +50,7 @@ namespace Core.Server.Application
 
             var query = QueryBuilder.Build<TResource>(queryResource);
             var entities = await QueryRepository.Query(query);
-            return await ResourceMapper.Map(entities);
+            return Ok(await ResourceMapper.Map(entities));
         }
 
         public virtual async Task<ActionResult> Exists(string id)

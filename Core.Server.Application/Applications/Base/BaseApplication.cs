@@ -56,20 +56,6 @@ namespace Core.Server.Application
             return new OkObjectResult(obj);
         }
 
-        protected ActionResult<TResource> Map<TResource, TEntity>(TEntity entity)
-            where TResource: Resource
-            where TEntity: Entity
-        {
-            return Ok(Mapper.Map<TResource>(entity));
-        }
-
-        protected ActionResult<IEnumerable<TResource>> MapMany<TResource, TEntity>(IEnumerable<TEntity> entities)
-            where TResource : Resource
-            where TEntity : Entity
-        {
-            return Ok(Mapper.Map<IEnumerable<TResource>>(entities));
-        }
-
         protected async Task<bool> IsEntityExists<TFEntity>(string entityId)
             where TFEntity : Entity
         {

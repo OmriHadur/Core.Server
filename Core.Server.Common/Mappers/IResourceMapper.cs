@@ -11,7 +11,7 @@ namespace Core.Server.Common.Mappers
         where TResource : Resource
         where TEntity : Entity, new()
     {
-        Task<ActionResult<TResource>> Map(TEntity entity);
-        Task<ActionResult<IEnumerable<TResource>>> Map(IEnumerable<TEntity> entities);
+        Task<TResource> Map(TEntity entity);
+        Task<IEnumerable<TResource>> Map(IEnumerable<TEntity> entities);
     }
 }
