@@ -14,7 +14,7 @@ namespace Core.Server.Web.Controllers
         [AllowAnonymous]
         public override async Task<ActionResult<UserResource>> Create(UserCreateResource resource)
         {
-            return await Application.Create(resource);
+            return await AlterApplication.Create(resource);
         }
     }
 }

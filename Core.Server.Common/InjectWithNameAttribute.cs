@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Core.Server.Common
 {
-    public class InjectManyAttribute : Attribute
+    public class InjectWithNameAttribute : Attribute
     {
-        public InjectManyAttribute(Type type)
+        public InjectWithNameAttribute(Type type)
         {
             this.Type = type;
         }

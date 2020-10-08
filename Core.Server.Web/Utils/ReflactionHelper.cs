@@ -51,7 +51,7 @@ namespace Core.Server.Web.Utils
             };
         }
 
-        public Type MakeGenericType(Type genericType, ResourceBoundle resourceBoundle)
+        public Type FillGenericType(Type genericType, ResourceBoundle resourceBoundle)
         {
             var genericArguments = GetGenericArguments(genericType, resourceBoundle).ToArray();
             return genericType.MakeGenericType(genericArguments);
@@ -85,6 +85,12 @@ namespace Core.Server.Web.Utils
             where TAttribute : Attribute
         {
             return types.Where(t => t.GetCustomAttribute<TAttribute>() != null);
+        }
+
+        public IEnumerable<Type> GetGenericTypesWithAttribute<TAttribute>()
+            where TAttribute : Attribute
+        {
+            return GetTypesWithAttribute<TAttribute>().Where(t => t.IsGenericType);
         }
 
         public Type GetTypeWithName<T>(string name)

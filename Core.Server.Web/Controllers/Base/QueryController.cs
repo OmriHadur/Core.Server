@@ -14,30 +14,30 @@ namespace Core.Server.Web.Controllers
         where TResource : Resource
     {
         [Dependency]
-        public IQueryApplication<TResource> Application;
+        public IQueryApplication<TResource> QueryApplication;
 
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Get()
         {
-            return await Application.Get();
+            return await QueryApplication.Get();
         }
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TResource>> Get(string id)
         {
-            return await Application.Get(id);
+            return await QueryApplication.Get(id);
         }
 
         [HttpPost("query")]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query)
         {
-            return await Application.Query(query);
+            return await QueryApplication.Query(query);
         }
 
         [HttpHead("{id}")]
         public virtual async Task<ActionResult<TResource>> Exists(string id)
         {
-            return await Application.Exists(id);
+            return await QueryApplication.Exists(id);
         }
     }
 }

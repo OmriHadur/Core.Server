@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Core.Server.Common.Repositories
 {
     public interface IAlterRepository<TEntity>
-        : IBaseRepository
+        : IQueryRepository<TEntity>
         where TEntity : Entity
     {
         Task Add(TEntity entity);

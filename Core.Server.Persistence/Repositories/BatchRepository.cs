@@ -3,14 +3,15 @@ using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Linq;
+using Core.Server.Common;
 
 namespace Core.Server.Persistence.Repositories
 {
+    [InjectBoundle]
     public class BatchRepository<TEntity> :
-        BaseRepository<TEntity>,
+        AlterRepository<TEntity>,
         IBatchRepository<TEntity>
         where TEntity : Entity
     {

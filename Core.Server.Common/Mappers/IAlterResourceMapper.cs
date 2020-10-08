@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 namespace Core.Server.Common.Mappers
 {
     public interface IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>
-        : IResourceMapper<TResource, TEntity>, IAutoMapperMapping
+        : IResourceMapper<TResource, TEntity>, 
+          IAutoMapperMapping
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

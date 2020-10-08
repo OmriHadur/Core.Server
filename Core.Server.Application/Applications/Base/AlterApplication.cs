@@ -7,16 +7,11 @@ using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Common.Validators;
 using Core.Server.Common.Mappers;
-using System;
-using Newtonsoft.Json;
-using System.Text.Json.Serialization;
-using MongoDB.Bson;
-using System.Linq;
 
 namespace Core.Server.Application
 {
     public class AlterApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : BaseApplication,
+        : QueryApplication<TResource,TEntity>,
         IAlterApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
@@ -27,20 +22,17 @@ namespace Core.Server.Application
         public IAlterRepository<TEntity> AlterRepository { get; set; }
 
         [Dependency]
-        public IQueryRepository<TEntity> QueryRepository { get; set; }
-
-        [Dependency]
         public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator{get;set;}
 
         [Dependency]
-        public IAlterResourceMapper<TCreateResource, TUpdateResource,TResource, TEntity> ResourceMapper { get; set; }
+        public IAlterResourceMapper<TCreateResource, TUpdateResource,TResource, TEntity> AlterResourceMapper { get; set; }
 
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource createResource)
         {
             var validation = await ResourceValidator.Validate(createResource);
             if (!(validation is OkResult))
                 return validation;
-            var entity = await ResourceMapper.Map(createResource);
+            var entity = await AlterResourceMapper.Map(createResource);
             await AlterRepository.Add(entity);
             return await ResourceMapper.Map(entity);
         }
@@ -53,7 +45,7 @@ namespace Core.Server.Application
             var validation = await ResourceValidator.Validate(updateResource, entity);
             if (!(validation is OkResult))
                 return validation;
-            await ResourceMapper.Map(updateResource, entity);
+            await AlterResourceMapper.Map(updateResource, entity);
             await AlterRepository.Update(entity);
             entity = await QueryRepository.Get(entity.Id);
             return await ResourceMapper.Map(entity);

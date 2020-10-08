@@ -15,7 +15,7 @@ namespace Core.Server.Application
 {
     public class QueryApplication<TResource, TEntity>
         : BaseApplication,
-        IQueryApplication<TResource>
+          IQueryApplication<TResource>
         where TResource : Resource
         where TEntity : Entity, new()
     {

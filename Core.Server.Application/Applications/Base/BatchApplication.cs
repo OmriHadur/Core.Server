@@ -8,13 +8,13 @@ using Unity;
 using Core.Server.Shared.Resources;
 using System.Linq;
 using System;
-using Core.Server.Common.Mappers;
-using Core.Server.Common.Validators;
+using Core.Server.Common;
 
 namespace Core.Server.Application
 {
+    [InjectBoundle]
     public class BatchApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : BaseApplication,
+        : AlterApplication<TCreateResource, TUpdateResource, TResource,TEntity>,
         IBatchApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
@@ -22,30 +22,28 @@ namespace Core.Server.Application
         where TEntity : Entity, new()
     {
         [Dependency]
-        public IQueryRepository<TEntity> QueryRepository;
-
-        [Dependency]
         public IBatchRepository<TEntity> BatchRepository { get; set; }
-
-        [Dependency]
-        public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator { get; set; }
-
-        [Dependency]
-        public IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity> ResourceMapper { get; set; }
 
         public async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
         {
-            foreach (var resource in resources)
-            {
-                var validation = await ResourceValidator.Validate(resource);
-                if (!(validation is OkResult))
-                    return validation;
-            }
-
-            var entitiesTasks = resources.Select(async resource =>await ResourceMapper.Map(resource));
+            var validationResult =await Validate(resources);
+            if (IsNotOk(validationResult))
+                return validationResult;
+            var entitiesTasks = resources.Select(async resource =>await AlterResourceMapper.Map(resource));
             var entities = entitiesTasks.Select(er => er.Result);
             await AddEntites(entities);
             return Ok(await ResourceMapper.Map(entities));
+        }
+
+        private async Task<ActionResult> Validate(TCreateResource[] resources)
+        {
+            foreach (var resource in resources)
+            {
+                var validationResult = await ResourceValidator.Validate(resource);
+                if (IsNotOk(validationResult))
+                    return validationResult;
+            }
+            return Ok();
         }
 
         private Task AddEntites(IEnumerable<TEntity> entities)

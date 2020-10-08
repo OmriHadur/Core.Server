@@ -10,7 +10,7 @@ using Core.Server.Shared.Query;
 namespace Core.Server.Web.Controllers
 {
     public class BatchController<TCreateResource, TUpdateResource, TResource>
-        : BaseController
+        : AlterController<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

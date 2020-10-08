@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Core.Server.Persistence.Repositories
 {
     public class AlterRepository<TEntity> :
-        BaseRepository<TEntity>,
+        QueryRepository<TEntity>,
         IAlterRepository<TEntity>
         where TEntity : Entity
     {

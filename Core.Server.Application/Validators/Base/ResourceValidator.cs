@@ -1,13 +1,12 @@
 ﻿using Core.Server.Application;
 using Core.Server.Common.Entities;
-using Core.Server.Common.Repositories;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Unity;
 
 namespace Core.Server.Common.Validators
 {
+    [InjectBoundle]
     public class ResourceValidator<TCreateResource, TUpdateResource, TEntity>
         : BaseApplication,
          IResourceValidator<TCreateResource, TUpdateResource, TEntity>

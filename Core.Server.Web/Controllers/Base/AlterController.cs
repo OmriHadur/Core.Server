@@ -10,30 +10,30 @@ using Core.Server.Shared.Query;
 namespace Core.Server.Web.Controllers
 {
     public class AlterController<TCreateResource, TUpdateResource, TResource>
-        : BaseController
+        : QueryController<TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
     {
         [Dependency]
-        public IAlterApplication<TCreateResource, TUpdateResource, TResource> Application;
+        public IAlterApplication<TCreateResource, TUpdateResource, TResource> AlterApplication;
 
         [HttpPost]
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource resource)
         {
-            return await Application.Create(resource);
+            return await AlterApplication.Create(resource);
         }
 
         [HttpPut]
         public virtual async Task<ActionResult<TResource>> Update(TUpdateResource resource)
         {
-            return await Application.Update(resource);
+            return await AlterApplication.Update(resource);
         }
 
         [HttpDelete("{id}")]
         public virtual async Task<ActionResult<TResource>> Delete(string id)
         {
-            return await Application.Delete(id);
+            return await AlterApplication.Delete(id);
         }
     }
 }

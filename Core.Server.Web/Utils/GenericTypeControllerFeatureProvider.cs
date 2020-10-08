@@ -19,7 +19,8 @@ namespace Core.Server.Web.Utils
         }
         public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
         {
-            var controllerTypes = reflactionHelper.GetDrivenTypesOf<BaseController>().ToList();
+            var contollersType = typeof(BatchController<,,>);
+            var controllerTypes = reflactionHelper.GetDrivenTypesOf(contollersType).ToList();
             var resourcesBoundles = reflactionHelper.GetResourcesBoundles().ToList();
 
             foreach (var resourcesBoundle in resourcesBoundles)
@@ -29,7 +30,7 @@ namespace Core.Server.Web.Utils
 
         private void AddContoller(ControllerFeature feature, ResourceBoundle resourceBoundle, Type controllerType)
         {
-            var controllerGenericType = reflactionHelper.MakeGenericType(controllerType, resourceBoundle);
+            var controllerGenericType = reflactionHelper.FillGenericType(controllerType, resourceBoundle);
             var hasDrivenContoller = HasSameContoller(feature, controllerGenericType);
             if (!hasDrivenContoller)
                 feature.Controllers.Add(controllerGenericType.GetTypeInfo());

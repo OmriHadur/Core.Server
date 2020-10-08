@@ -50,6 +50,16 @@ namespace Core.Server.Application
             return new OkObjectResult(obj);
         }
 
+        protected bool IsOk(ActionResult actionResult)
+        {
+            return actionResult is OkResult;
+        }
+
+        protected bool IsNotOk(ActionResult actionResult)
+        {
+            return !IsOk(actionResult);
+        }
+
         protected async Task<bool> IsEntityExists<TFEntity>(string entityId)
             where TFEntity : Entity
         {

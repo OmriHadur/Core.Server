@@ -74,7 +74,7 @@ namespace Core.Server.Web
 
         public virtual void ConfigureContainer(IUnityContainer container)
         {
-            new UnityContainerBuilder().ConfigureContainer(container,reflactionHelper);
+            new UnityContainerBuilder(container, reflactionHelper).ConfigureContainer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

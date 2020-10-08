@@ -11,60 +11,75 @@ using System.Threading.Tasks;
 using Unity;
 using Core.Server.Persistence.Repositories;
 using Core.Server.Application.Mappers.Base;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Core.Server.Web.Utils
 {
     public class UnityContainerBuilder
     {
-        public void ConfigureContainer(IUnityContainer container, IReflactionHelper reflactionHelper)
+        private IUnityContainer container;
+        private IReflactionHelper reflactionHelper;
+        public UnityContainerBuilder(IUnityContainer container, IReflactionHelper reflactionHelper)
         {
-            AddAllTypesForBundles(container, reflactionHelper);
-            AddInjectTypes(container, reflactionHelper);
-            AddInjectManyClasses(container, reflactionHelper);
+            this.container = container;
+            this.reflactionHelper = reflactionHelper;
+        }
+        public void ConfigureContainer()
+        {
+            AddAllTypesForBundles();
+            AddInjectTypes();
+            AddInjectWithNameClasses();
         }
 
-        private static void AddAllTypesForBundles(IUnityContainer container, IReflactionHelper reflactionHelper)
+        private void AddAllTypesForBundles()
         {
             var resourcesBoundles = reflactionHelper.GetResourcesBoundles().ToList();
             var genricTypesForBundle = GetGenricTypesForBundle(reflactionHelper).ToList();
 
             foreach (var genricTypeForBundle in genricTypesForBundle)
                 foreach (var resourcesBoundle in resourcesBoundles)
-                    AddGenricTypeResourcesBoundle(container, reflactionHelper, genricTypeForBundle, resourcesBoundle);
+                    AddGenricTypeResourcesBoundle(genricTypeForBundle, resourcesBoundle);
         }
 
-        private static void AddGenricTypeResourcesBoundle(IUnityContainer container, IReflactionHelper reflactionHelper, Type genricTypeForBundle, ResourceBoundle resourcesBoundle)
+        private void AddGenricTypeResourcesBoundle(Type genricTypeForBundle, ResourceBoundle resourcesBoundle)
         {
-            var genericType = reflactionHelper.MakeGenericType(genricTypeForBundle, resourcesBoundle);
-            AddTypesInterfaces(container, genericType);
+            var filledGenericType = reflactionHelper.FillGenericType(genricTypeForBundle, resourcesBoundle);
+            AddTypesInterfaces(filledGenericType);
+            if (HasInjectWithNameAttribute(genricTypeForBundle))
+                InjectWithName(filledGenericType);
+        }
+
+        private static bool HasInjectWithNameAttribute(Type genricTypeForBundle)
+        {
+            return genricTypeForBundle.GetCustomAttribute<InjectWithNameAttribute>() != null;
         }
 
         private static IEnumerable<Type> GetGenricTypesForBundle(IReflactionHelper reflactionHelper)
         {
-            var applicationTypes = reflactionHelper.GetDrivenTypesOf<BaseApplication>();
-            var repositoryTypes = reflactionHelper.GetSameBaseTypeName(typeof(BaseRepository<>));
-            var mappers = new Type[] { typeof(AlterResourceMapper<,,,>) };
-            return applicationTypes.Union(repositoryTypes).Union(mappers);
+            return reflactionHelper.GetGenericTypesWithAttribute<InjectBoundleAttribute>();
         }
 
-        private void AddInjectTypes(IUnityContainer container, IReflactionHelper reflactionHelper)
+        private void AddInjectTypes()
         {
             var classTypes = reflactionHelper.GetTypesWithAttribute<InjectAttribute>();
             foreach (var injectedType in classTypes)
-                AddTypesInterfaces(container, injectedType);
+                AddTypesInterfaces(injectedType);
         }
 
-        private void AddInjectManyClasses(IUnityContainer container, IReflactionHelper reflactionHelper)
+        private void AddInjectWithNameClasses()
         {
-            var classTypes = reflactionHelper.GetTypesWithAttribute<InjectManyAttribute>();
-            foreach (var classType in classTypes)
-            {
-                var injectMany= classType.GetCustomAttribute<InjectManyAttribute>();
-                container.RegisterType(injectMany.Type, classType, classType.Name);
-            }      
+            var classTypes = reflactionHelper.GetTypesWithAttribute<InjectWithNameAttribute>();
+            foreach (var classType in classTypes.Where(t => !t.IsGenericType))
+                InjectWithName(classType);
         }
 
-        private static void AddTypesInterfaces(IUnityContainer container, Type type)
+        private void InjectWithName(Type type)
+        {
+            var injectMany = type.GetCustomAttribute<InjectWithNameAttribute>();
+            container.RegisterType(injectMany.Type, type, type.Name);
+        }
+
+        private void AddTypesInterfaces(Type type)
         {
             foreach (var interfaceType in type.GetInterfaces())
                 container.RegisterType(interfaceType, type);
