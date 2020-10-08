@@ -25,8 +25,8 @@ namespace Core.Server.Web.Utils
 
         private static void AddAllTypesForBundles(IUnityContainer container, IReflactionHelper reflactionHelper)
         {
-            var resourcesBoundles = reflactionHelper.GetResourcesBoundles();
-            var genricTypesForBundle = GetGenricTypesForBundle(reflactionHelper);
+            var resourcesBoundles = reflactionHelper.GetResourcesBoundles().ToList();
+            var genricTypesForBundle = GetGenricTypesForBundle(reflactionHelper).ToList();
 
             foreach (var genricTypeForBundle in genricTypesForBundle)
                 foreach (var resourcesBoundle in resourcesBoundles)
@@ -42,7 +42,7 @@ namespace Core.Server.Web.Utils
         private static IEnumerable<Type> GetGenricTypesForBundle(IReflactionHelper reflactionHelper)
         {
             var applicationTypes = reflactionHelper.GetDrivenTypesOf<BaseApplication>();
-            var repositoryTypes = reflactionHelper.GetDrivenTypesOf(typeof(BaseRepository<>));
+            var repositoryTypes = reflactionHelper.GetSameBaseTypeName(typeof(BaseRepository<>));
             var mappers = new Type[] { typeof(AlterResourceMapper<,,,>) };
             return applicationTypes.Union(repositoryTypes).Union(mappers);
         }
@@ -58,8 +58,10 @@ namespace Core.Server.Web.Utils
         {
             var classTypes = reflactionHelper.GetTypesWithAttribute<InjectManyAttribute>();
             foreach (var classType in classTypes)
-                foreach (var interfaceType in classType.GetInterfaces())
-                    container.RegisterType(interfaceType, classType, classType.Name);
+            {
+                var injectMany= classType.GetCustomAttribute<InjectManyAttribute>();
+                container.RegisterType(injectMany.Type, classType, classType.Name);
+            }      
         }
 
         private static void AddTypesInterfaces(IUnityContainer container, Type type)

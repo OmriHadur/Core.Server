@@ -7,6 +7,11 @@ using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Common.Validators;
 using Core.Server.Common.Mappers;
+using System;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+using MongoDB.Bson;
+using System.Linq;
 
 namespace Core.Server.Application
 {

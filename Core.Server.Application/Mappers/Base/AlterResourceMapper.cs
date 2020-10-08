@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Core.Server.Application.Mappers.Base
 {
     [Inject]
+    //[InjectMany(typeof(IAutoMapperMapping))]
     public class AlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>
         : ResourceMapper<TResource, TEntity>,
          IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>

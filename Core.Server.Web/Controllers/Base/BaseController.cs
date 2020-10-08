@@ -12,7 +12,7 @@ namespace Core.Server.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BaseController: ControllerBase
+    public abstract class BaseController: ControllerBase
     {
         [Dependency]
         public IJwtManager JwtManager { get; set; }

@@ -7,6 +7,7 @@ namespace Core.Server.Web.Utils
     {
         IEnumerable<Type> GetDrivenTypesOf<T>();
         IEnumerable<Type> GetDrivenTypesOf(Type type);
+        IEnumerable<Type> GetSameBaseTypeName(Type type);
         IEnumerable<ResourceBoundle> GetResourcesBoundles();
         string GetTypeName(Type drivenType, Type subType);
         Type GetTypeWithName<T>(string name);

@@ -76,6 +76,11 @@ namespace Core.Server.Web.Utils
             return types.Where(t => t.BaseType == type);
         }
 
+        public IEnumerable<Type> GetSameBaseTypeName(Type type)
+        {
+            return types.Where(t => t.BaseType?.Name == type.Name);
+        }
+
         public IEnumerable<Type> GetTypesWithAttribute<TAttribute>()
             where TAttribute : Attribute
         {
