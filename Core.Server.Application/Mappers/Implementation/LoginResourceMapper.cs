@@ -15,7 +15,7 @@ using Unity;
 namespace Core.Server.Application.Mappers.Implementation
 {
     [Inject]
-    public class LoginAlterResourceMapper
+    public class LoginResourceMapper
         : AlterResourceMapper<LoginCreateResource,LoginUpdateResource, LoginResource,LoginEntity>
     {
         [Dependency]

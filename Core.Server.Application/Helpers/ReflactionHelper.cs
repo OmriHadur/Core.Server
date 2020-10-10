@@ -104,5 +104,18 @@ namespace Core.Server.Application.Helpers
             var updateResourceName = name + typeof(T).Name;
             return types.FirstOrDefault(t => t.Name == updateResourceName);
         }
+
+        public IEnumerable<PropertyInfo> GetProperiesWithAttribute<T, TAttribute>()
+            where TAttribute : Attribute
+        {
+            return typeof(T).GetProperties()
+                     .Where(p => p.GetCustomAttribute<TAttribute>() != null);
+        }
+
+        public void ForEachPropertyValue(object obj, Action<PropertyInfo, object> action)
+        {
+            foreach (var property in obj.GetType().GetProperties())
+                action(property, property.GetValue(obj));
+        }
     }
 }

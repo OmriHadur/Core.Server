@@ -9,7 +9,7 @@ using Core.Server.Common.Attributes;
 namespace Core.Server.Application.Mappers.Implementation
 {
     [Inject]
-    public class UserAlterResourceMapper
+    public class UserResourceMapper
         : AlterResourceMapper<UserCreateResource,UserUpdateResource, UserResource,UserEntity>
     {
         private PasswordHasher _passwordHasher = new PasswordHasher();
@@ -21,18 +21,23 @@ namespace Core.Server.Application.Mappers.Implementation
             return userEntity;
         }
 
-        private void AddPassword(string password, UserEntity userEntity)
+        public async override Task Map(UserCreateResource resource, UserEntity entity)
         {
-            byte[] passwordHash, passwordSalt;
-            _passwordHasher.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            userEntity.PasswordHash = passwordHash;
-            userEntity.PasswordSalt = passwordSalt;
+            AddPassword(resource.Password, entity);
         }
 
         public async override Task Map(UserUpdateResource resource, UserEntity entity)
         {
             await base.Map(resource, entity);
             AddPassword(resource.Password, entity);
+        }
+
+        private void AddPassword(string password, UserEntity userEntity)
+        {
+            byte[] passwordHash, passwordSalt;
+            _passwordHasher.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            userEntity.PasswordHash = passwordHash;
+            userEntity.PasswordSalt = passwordSalt;
         }
     }
 }

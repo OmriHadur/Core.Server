@@ -67,7 +67,7 @@ namespace Core.Server.Application
             if (entity == null)
                 await AlterResourceMapper.Map(resource);
             else
-                await AlterResourceMapper.Map(resource, entity);
+                 await AlterResourceMapper.Map(resource, entity);
         }
 
         private async Task<ActionResult> Validate(TCreateResource resource, TEntity entity)

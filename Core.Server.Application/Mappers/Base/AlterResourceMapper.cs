@@ -25,9 +25,9 @@ namespace Core.Server.Application.Mappers.Base
             return Mapper.Map<TEntity>(resource);
         }
 
-        public virtual async Task<TEntity> Map(TCreateResource resource, TEntity entity)
+        public virtual async Task Map(TCreateResource resource, TEntity entity)
         {
-            return Mapper.Map<TEntity>(resource);
+            Mapper.Map(resource, entity);
         }
 
         public virtual async Task Map(TUpdateResource resource, TEntity entity)

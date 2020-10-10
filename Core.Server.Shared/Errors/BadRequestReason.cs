@@ -7,6 +7,7 @@
         InvalidToken,
         InvalidGuid,
         PropertyNotFound,
-        PropertyNotCurectType
+        PropertyNotCurectType,
+        Unchangeable
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Core.Server.Common;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Core.Server.Application.Helpers
 {
@@ -17,6 +18,11 @@ namespace Core.Server.Application.Helpers
         IEnumerable<Type> GetTypesWithAttribute<TAttribute>() 
             where TAttribute : Attribute;
         Type GetTypeWithName<T>(string name);
-        bool HasAttribute<TAttribute>(object obj) where TAttribute : Attribute;
+        bool HasAttribute<TAttribute>(object obj) 
+            where TAttribute : Attribute;
+        IEnumerable<PropertyInfo> GetProperiesWithAttribute<T, TAttribute>()
+            where TAttribute : Attribute;
+
+        void ForEachPropertyValue(object obj, Action<PropertyInfo, object> action);
     }
 }

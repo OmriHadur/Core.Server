@@ -4,8 +4,8 @@ using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Core.Server.Common.Attributes;
-using System.Reflection;
-using Core.Server.Shared.Attributes;
+using Unity;
+using Core.Server.Application.Helpers;
 
 namespace Core.Server.Common.Validators
 {
@@ -17,6 +17,9 @@ namespace Core.Server.Common.Validators
         where TUpdateResource : UpdateResource
         where TEntity : Entity
     {
+        [Dependency]
+        public IReflactionHelper ReflactionHelper;
+
         public virtual async Task<ActionResult> Validate(TCreateResource createResource)
         {
             return Ok();
@@ -24,10 +27,6 @@ namespace Core.Server.Common.Validators
 
         public virtual async Task<ActionResult> Validate(TCreateResource createResource, TEntity entity)
         {
-            foreach (var attr in createResource.GetType().GetCustomAttributes<Unchangeable>())
-            {
-
-            }
             return Ok();
         }
 
