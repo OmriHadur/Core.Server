@@ -29,7 +29,7 @@ namespace Core.Server.Persistence.Repositories
 
         protected string CollectionName
         {
-            get { return GetType().Name.Replace("Repository", string.Empty); }
+            get { return typeof(TEntity).Name.Replace(nameof(Entity), string.Empty); }
         }
     }
 }

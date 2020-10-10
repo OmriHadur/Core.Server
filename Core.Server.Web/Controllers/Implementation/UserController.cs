@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Core.Server.Shared.Resources.Users;
 using System.Threading.Tasks;
-using Core.Server.Common.Applications;
 
 namespace Core.Server.Web.Controllers
 {
