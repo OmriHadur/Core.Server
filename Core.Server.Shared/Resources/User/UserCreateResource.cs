@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Core.Server.Shared.Attributes;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Resources.Users
@@ -7,6 +8,7 @@ namespace Core.Server.Shared.Resources.Users
     {
         [Required]
         [EmailAddress]
+        [Unchangeable]
         public string Email { get; set; }
 
         [Required]

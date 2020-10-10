@@ -24,10 +24,10 @@ namespace Core.Server.Web.Controllers
             return await AlterApplication.Create(resource);
         }
 
-        [HttpPut]
-        public virtual async Task<ActionResult<TResource>> Update(TUpdateResource resource)
+        [HttpPut("{id}")]
+        public virtual async Task<ActionResult<TResource>> CreateOrUpdate(string id,TCreateResource resource)
         {
-            return await AlterApplication.Update(resource);
+            return await AlterApplication.CreateOrUpdate(id,resource);
         }
 
         [HttpDelete("{id}")]

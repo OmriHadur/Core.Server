@@ -12,7 +12,8 @@ namespace Core.Server.Common.Mappers
         where TEntity : Entity, new()
     {
         Task<TEntity> Map(TCreateResource resource);
+        Task<TEntity> Map(TCreateResource resource, TEntity entity);
 
-        Task<TEntity> Map(TUpdateResource resource, TEntity entity);
+        Task Map(TUpdateResource resource, TEntity entity);
     }
 }

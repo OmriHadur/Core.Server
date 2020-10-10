@@ -1,7 +1,5 @@
 ﻿
-using Core.Server.Common;
-
-namespace Core.Server.Web
+namespace Core.Server.Common.Config
 {
     public class MongoDBConfig : IMongoDBConfig
     {

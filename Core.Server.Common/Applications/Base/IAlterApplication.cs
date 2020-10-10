@@ -12,7 +12,7 @@ namespace Core.Server.Common.Applications
     {
         Task<ActionResult<TResource>> Create(TCreateResource resource);
 
-        Task<ActionResult<TResource>> Update(TUpdateResource resource);
+        Task<ActionResult<TResource>> CreateOrUpdate(string id,TCreateResource resource);
 
         Task<ActionResult> Delete(string id);
     }

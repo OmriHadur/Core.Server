@@ -22,12 +22,23 @@ namespace Core.Server.Application.Mappers.Base
 
         public virtual async Task<TEntity> Map(TCreateResource resource)
         {
-            return Mapper.Map<TCreateResource, TEntity>(resource);
+            return Mapper.Map<TEntity>(resource);
         }
 
-        public virtual async Task<TEntity> Map(TUpdateResource resource, TEntity entity)
+        public virtual async Task<TEntity> Map(TCreateResource resource, TEntity entity)
         {
-            return Mapper.Map<TUpdateResource, TEntity>(resource);
+            return Mapper.Map<TEntity>(resource);
+        }
+
+        public virtual async Task Map(TUpdateResource resource, TEntity entity)
+        {
+            var updatedEntity = Mapper.Map<TEntity>(resource);
+            foreach (var property in typeof(TEntity).GetProperties())
+            {
+                var value = property.GetValue(updatedEntity);
+                if (value != null)
+                    property.SetValue(entity, value);
+            }
         }
 
         public virtual async Task<TResource> Map(TEntity entity)

@@ -1,4 +1,6 @@
-﻿using Core.Server.Common.Entities;
+﻿using Core.Server.Common;
+using Core.Server.Common.Config;
+using Core.Server.Common.Entities;
 using Core.Server.Shared.Resources;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -6,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Core.Server.Web.Utils
+namespace Core.Server.Application.Helpers
 {
     public class ReflactionHelper : IReflactionHelper
     {
@@ -92,6 +94,11 @@ namespace Core.Server.Web.Utils
             return GetTypesWithAttribute<TAttribute>().Where(t => t.IsGenericType);
         }
 
+        public bool HasAttribute<TAttribute>(object obj)
+            where TAttribute : Attribute
+        {
+            return obj.GetType().GetCustomAttributes<TAttribute>() != null;
+        }
         public Type GetTypeWithName<T>(string name)
         {
             var updateResourceName = name + typeof(T).Name;

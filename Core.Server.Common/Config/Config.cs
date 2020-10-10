@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Core.Server.Web
+﻿
+namespace Core.Server.Common.Config
 {
     public class Config
     {

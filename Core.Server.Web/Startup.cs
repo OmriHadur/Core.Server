@@ -19,14 +19,14 @@ using Core.Server.Application;
 using AutoMapper;
 using Core.Server.Web.Utils;
 using Core.Server.Application.Mappers;
+using Core.Server.Application.Helpers;
+using Core.Server.Common.Config;
 
 namespace Core.Server.Web
 {
     public class Startup
     {
         private IReflactionHelper reflactionHelper;
-
-        private IServiceCollection services;
 
         public Startup(IConfiguration configuration)
         {
@@ -58,16 +58,16 @@ namespace Core.Server.Web
                     m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider(reflactionHelper)
                 ))
                  .AddControllersAsServices();
-            this.services = services;
         }
 
         public virtual void ConfigureContainer(IUnityContainer container)
         {
             new UnityContainerBuilder(container, reflactionHelper).ConfigureContainer();
-            AddAutoMapper(services, container);
+            AddAutoMapper(container);
+            container.RegisterInstance(typeof(IReflactionHelper), reflactionHelper);
         }
 
-        private void AddAutoMapper(IServiceCollection services, IUnityContainer container)
+        private void AddAutoMapper(IUnityContainer container)
         {
             var config = new MapperConfiguration(cfg =>
             {
@@ -77,7 +77,6 @@ namespace Core.Server.Web
             var mapper = config.CreateMapper();
             container.RegisterInstance(typeof(IMapper), mapper);
         }
-
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

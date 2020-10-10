@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Core.Server.Web.Utils
+namespace Core.Server.Common
 {
     public class ResourceBoundle
     {

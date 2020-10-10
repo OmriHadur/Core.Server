@@ -17,11 +17,22 @@ namespace Core.Server.Application.Mappers.Implementation
         public async override Task<UserEntity> Map(UserCreateResource resource)
         {
             var userEntity = await base.Map(resource);
+            AddPassword(resource.Password, userEntity);
+            return userEntity;
+        }
+
+        private void AddPassword(string password, UserEntity userEntity)
+        {
             byte[] passwordHash, passwordSalt;
-            _passwordHasher.CreatePasswordHash(resource.Password, out passwordHash, out passwordSalt);
+            _passwordHasher.CreatePasswordHash(password, out passwordHash, out passwordSalt);
             userEntity.PasswordHash = passwordHash;
             userEntity.PasswordSalt = passwordSalt;
-            return userEntity;
+        }
+
+        public async override Task Map(UserUpdateResource resource, UserEntity entity)
+        {
+            await base.Map(resource, entity);
+            AddPassword(resource.Password, entity);
         }
     }
 }
