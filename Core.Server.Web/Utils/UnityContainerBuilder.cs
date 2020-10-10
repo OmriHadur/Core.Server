@@ -1,17 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Core.Server.Application;
-using Core.Server.Common;
-using Core.Server.Shared.Resources;
+﻿using Core.Server.Common;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Unity;
-using Core.Server.Persistence.Repositories;
-using Core.Server.Application.Mappers.Base;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Core.Server.Web.Utils
 {
@@ -76,7 +68,10 @@ namespace Core.Server.Web.Utils
         private void InjectWithName(Type type)
         {
             var injectMany = type.GetCustomAttribute<InjectWithNameAttribute>();
-            container.RegisterType(injectMany.Type, type, type.Name);
+            var argsNames = type.GetGenericArguments().Select(t => t.Name);
+            var argsNamesAsString= string.Join(",", argsNames);
+            var name = $"{type.Name}<{argsNamesAsString}>";
+            container.RegisterType(injectMany.Type, type, name);
         }
 
         private void AddTypesInterfaces(Type type)

@@ -6,7 +6,7 @@ namespace Core.Server.Application.Mappers
 {
     public class AutoMapperProfile : Profile
     {
-        public AutoMapperProfile(IUnityContainer unityContainer)
+        public void AddProfiles(IUnityContainer unityContainer)
         {
             var mappers = unityContainer.ResolveAll<IAutoMapperMapping>();
             foreach (var mapper in mappers)

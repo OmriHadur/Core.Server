@@ -25,6 +25,9 @@ namespace Core.Server.Web
     public class CoreServerStartup
     {
         private IReflactionHelper reflactionHelper;
+
+        private AutoMapperProfile profile;
+
         public CoreServerStartup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -42,11 +45,10 @@ namespace Core.Server.Web
             services.AddSingleton<IMongoDBConfig>(sp =>
                 sp.GetRequiredService<IOptions<MongoDBConfig>>().Value);
 
-            AddAutoMapper(services);
-
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
 
+            AddAutoMapper(services);
             ConfigureJwtAuthentication(services);
 
             services.
@@ -61,20 +63,17 @@ namespace Core.Server.Web
 
         private void AddAutoMapper(IServiceCollection services)
         {
-            services.AddSingleton(provider => new MapperConfiguration(cfg =>
+            var config = new AutoMapper.MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(GetProfile(provider));
-            }).CreateMapper());
-        }
-
-        protected virtual AutoMapperProfile GetProfile(IServiceProvider provider)
-        {
-            return new AutoMapperProfile(provider.GetService<IUnityContainer>());
+                profile = new AutoMapperProfile();
+                cfg.AddProfile(profile); });
+            services.AddSingleton(config.CreateMapper());
         }
 
         public virtual void ConfigureContainer(IUnityContainer container)
         {
             new UnityContainerBuilder(container, reflactionHelper).ConfigureContainer();
+            profile.AddProfiles(container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
