@@ -1,12 +1,12 @@
 ﻿using Core.Server.Application.Helper;
 using Core.Server.Application.Mappers.Base;
 using Core.Server.Common;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Entities.Helpers;
 using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
 using Core.Server.Shared.Resources.Users;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
@@ -14,6 +14,7 @@ using Unity;
 
 namespace Core.Server.Application.Mappers.Implementation
 {
+    [Inject]
     public class LoginAlterResourceMapper
         : AlterResourceMapper<LoginCreateResource,LoginUpdateResource, LoginResource,LoginEntity>
     {

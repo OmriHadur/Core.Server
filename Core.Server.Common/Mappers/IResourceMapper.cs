@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Core.Server.Common.Entities;
+﻿using Core.Server.Common.Entities;
 using Core.Server.Shared.Resources;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

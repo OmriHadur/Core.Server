@@ -22,13 +22,13 @@ using Core.Server.Application.Mappers;
 
 namespace Core.Server.Web
 {
-    public class CoreServerStartup
+    public class Startup
     {
         private IReflactionHelper reflactionHelper;
 
-        private AutoMapperProfile profile;
+        private IServiceCollection services;
 
-        public CoreServerStartup(IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
             reflactionHelper = new ReflactionHelper(configuration);
@@ -48,7 +48,6 @@ namespace Core.Server.Web
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
 
-            AddAutoMapper(services);
             ConfigureJwtAuthentication(services);
 
             services.
@@ -59,22 +58,26 @@ namespace Core.Server.Web
                     m.FeatureProviders.Add(new GenericTypeControllerFeatureProvider(reflactionHelper)
                 ))
                  .AddControllersAsServices();
-        }
-
-        private void AddAutoMapper(IServiceCollection services)
-        {
-            var config = new AutoMapper.MapperConfiguration(cfg =>
-            {
-                profile = new AutoMapperProfile();
-                cfg.AddProfile(profile); });
-            services.AddSingleton(config.CreateMapper());
+            this.services = services;
         }
 
         public virtual void ConfigureContainer(IUnityContainer container)
         {
             new UnityContainerBuilder(container, reflactionHelper).ConfigureContainer();
-            profile.AddProfiles(container);
+            AddAutoMapper(services, container);
         }
+
+        private void AddAutoMapper(IServiceCollection services, IUnityContainer container)
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                var profile = new AutoMapperProfile(container);
+                cfg.AddProfile(profile);
+            });
+            var mapper = config.CreateMapper();
+            container.RegisterInstance(typeof(IMapper), mapper);
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

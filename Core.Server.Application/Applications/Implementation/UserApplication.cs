@@ -2,7 +2,7 @@
 using Core.Server.Common.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Core.Server.Common;
+using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Shared.Errors;
 using Unity;

@@ -8,7 +8,7 @@ using Unity;
 using Core.Server.Shared.Resources;
 using System.Linq;
 using System;
-using Core.Server.Common;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application
 {

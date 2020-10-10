@@ -1,4 +1,5 @@
 ﻿using Core.Server.Common;
+using Core.Server.Common.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,35 +21,45 @@ namespace Core.Server.Web.Utils
         {
             AddAllTypesForBundles();
             AddInjectTypes();
-            AddInjectWithNameClasses();
+            //AddInjectWithNameClasses();
         }
 
         private void AddAllTypesForBundles()
         {
-            var resourcesBoundles = reflactionHelper.GetResourcesBoundles().ToList();
-            var genricTypesForBundle = GetGenricTypesForBundle(reflactionHelper).ToList();
+            var resourcesBoundles = reflactionHelper.GetResourcesBoundles();
+            var genricTypesForBundle = GetGenricTypesForBundle();
+            var genricTypesWithNameForBundle = GetInjectBoundleWithNameForBundle();
 
-            foreach (var genricTypeForBundle in genricTypesForBundle)
-                foreach (var resourcesBoundle in resourcesBoundles)
+            foreach (var resourcesBoundle in resourcesBoundles) 
+            {
+                foreach (var genricTypeForBundle in genricTypesForBundle)
                     AddGenricTypeResourcesBoundle(genricTypeForBundle, resourcesBoundle);
+                foreach (var genricTypeWithNameForBundle in genricTypesWithNameForBundle)
+                    AddGenricTypeWithNameForBundle(genricTypeWithNameForBundle, resourcesBoundle);
+            }
         }
 
         private void AddGenricTypeResourcesBoundle(Type genricTypeForBundle, ResourceBoundle resourcesBoundle)
         {
             var filledGenericType = reflactionHelper.FillGenericType(genricTypeForBundle, resourcesBoundle);
             AddTypesInterfaces(filledGenericType);
-            if (HasInjectWithNameAttribute(genricTypeForBundle))
-                InjectWithName(filledGenericType);
         }
 
-        private static bool HasInjectWithNameAttribute(Type genricTypeForBundle)
+        private void AddGenricTypeWithNameForBundle(Type genricTypeForBundle, ResourceBoundle resourcesBoundle)
         {
-            return genricTypeForBundle.GetCustomAttribute<InjectWithNameAttribute>() != null;
+            var filledGenericType = reflactionHelper.FillGenericType(genricTypeForBundle, resourcesBoundle);
+            foreach (var interfaceType in filledGenericType.GetInterfaces())
+                InjectWithName(filledGenericType, interfaceType);
         }
 
-        private static IEnumerable<Type> GetGenricTypesForBundle(IReflactionHelper reflactionHelper)
+        private IEnumerable<Type> GetGenricTypesForBundle()
         {
             return reflactionHelper.GetGenericTypesWithAttribute<InjectBoundleAttribute>();
+        }
+
+        private IEnumerable<Type> GetInjectBoundleWithNameForBundle()
+        {
+            return reflactionHelper.GetGenericTypesWithAttribute<InjectBoundleWithNameAttribute>();
         }
 
         private void AddInjectTypes()
@@ -58,20 +69,12 @@ namespace Core.Server.Web.Utils
                 AddTypesInterfaces(injectedType);
         }
 
-        private void AddInjectWithNameClasses()
+        private void InjectWithName(Type type,Type interfaceType)
         {
-            var classTypes = reflactionHelper.GetTypesWithAttribute<InjectWithNameAttribute>();
-            foreach (var classType in classTypes.Where(t => !t.IsGenericType))
-                InjectWithName(classType);
-        }
-
-        private void InjectWithName(Type type)
-        {
-            var injectMany = type.GetCustomAttribute<InjectWithNameAttribute>();
             var argsNames = type.GetGenericArguments().Select(t => t.Name);
             var argsNamesAsString= string.Join(",", argsNames);
             var name = $"{type.Name}<{argsNamesAsString}>";
-            container.RegisterType(injectMany.Type, type, name);
+            container.RegisterType(interfaceType, type, name);
         }
 
         private void AddTypesInterfaces(Type type)
