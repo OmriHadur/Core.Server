@@ -4,12 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Core.Server.Common.Applications;
 using Unity;
 using Core.Server.Shared.Resources;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Web.Controllers
 {
-    public class BatchController<TApplication,TCreateResource, TUpdateResource, TResource>
-        : AlterController<TApplication,TCreateResource, TUpdateResource, TResource>
-        where TApplication : IBatchApplication<TCreateResource, TUpdateResource, TResource>
+    [InjectBoundleController]
+    public class BatchController<TCreateResource, TUpdateResource, TResource>
+        : BaseController<IBatchApplication<TCreateResource, TUpdateResource, TResource>>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

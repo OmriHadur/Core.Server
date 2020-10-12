@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Core.Server.Common.Applications;
 using Core.Server.Shared.Resources;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Web.Controllers
 {
-    public class AlterController<TApplication, TCreateResource, TUpdateResource, TResource>
-        : QueryController<TApplication,TResource>
-        where TApplication : IAlterApplication<TCreateResource, TUpdateResource, TResource>
+    [InjectBoundleController]
+    public class AlterController<TCreateResource, TUpdateResource, TResource>
+        : BaseController<IAlterApplication<TCreateResource, TUpdateResource, TResource>>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

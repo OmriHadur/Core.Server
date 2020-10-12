@@ -10,22 +10,32 @@ namespace Core.Server.Web.Controllers
     [Route("[controller]")]
     public abstract class BaseController<TApplication> 
         : ControllerBase
-        where TApplication: IBaseApplication
+        where TApplication : IBaseApplication
     {
+        private TApplication application;
+
         [Dependency]
         public IJwtManager JwtManager { get; set; }
 
         [Dependency]
-        public TApplication Application;
+        public TApplication Application
+        {
+            get => application;
+            set
+            {
+                application = value;
+                SetUser(value);
+            }
+        }
 
         protected UserResource GetUser()
         {
             return JwtManager.GetUser(User);
         }
 
-        protected void SetUser()
+        protected void SetUser(IBaseApplication application)
         {
-            Application.GetCurrentUser = () => GetUser();
+            application.GetCurrentUser = () => GetUser();
         }
     }
 }

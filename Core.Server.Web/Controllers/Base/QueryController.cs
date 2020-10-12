@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Core.Server.Common.Applications;
 using Core.Server.Shared.Resources;
 using Core.Server.Shared.Query;
+using Unity;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Web.Controllers
 {
-    public class QueryController<TApplication, TResource>
-        : BaseController<TApplication>
-        where TApplication : IQueryApplication<TResource>
+    [InjectBoundleController]
+    public class QueryController<TResource>
+        : BaseController<IQueryApplication<TResource>>
         where TResource : Resource
     {
         [HttpGet]

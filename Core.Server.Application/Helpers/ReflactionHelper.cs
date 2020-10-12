@@ -12,7 +12,7 @@ namespace Core.Server.Application.Helpers
 {
     public class ReflactionHelper : IReflactionHelper
     {
-        private List<Type> types;
+        private readonly List<Type> types;
 
         public ReflactionHelper(IConfiguration configuration)
         {
