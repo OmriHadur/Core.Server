@@ -6,7 +6,7 @@ using Core.Server.Shared.Resources;
 namespace Core.Server.Common.Applications
 {
     public interface IBatchApplication<TCreateResource, TUpdateResource, TResource>
-        : IBaseApplication
+        : IAlterApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

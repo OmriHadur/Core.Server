@@ -14,13 +14,25 @@ namespace Core.Server.Application
 {
     public class BaseApplication: IBaseApplication
     {
+        private UserResource currentUser;
+
         [Dependency]
         public IUnityContainer UnityContainer { get; set; }
 
         [Dependency]
         public ILogger<BaseApplication> Logger { get; set; }
 
-        public UserResource CurrentUser { get; set; }
+        public UserResource CurrentUser
+        {
+            get
+            {
+                if (currentUser == null)
+                    currentUser = GetCurrentUser();
+                return currentUser;
+            }
+        }
+
+        public virtual Func<UserResource> GetCurrentUser { get; set; }
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {
@@ -48,6 +60,11 @@ namespace Core.Server.Application
         public ActionResult Ok(object obj)
         {
             return new OkObjectResult(obj);
+        }
+
+        public ActionResult Unauthorized()
+        {
+            return new UnauthorizedResult();
         }
 
         protected bool IsOk(ActionResult actionResult)

@@ -14,8 +14,8 @@ using Core.Server.Common.Mappers;
 namespace Core.Server.Application
 {
     public class QueryApplication<TResource, TEntity>
-        : BaseApplication,
-          IQueryApplication<TResource>
+        : BaseApplication
+          ,IQueryApplication<TResource>
         where TResource : Resource
         where TEntity : Entity, new()
     {

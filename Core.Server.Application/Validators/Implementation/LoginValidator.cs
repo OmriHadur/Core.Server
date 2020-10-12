@@ -27,7 +27,7 @@ namespace Core.Server.Application.Validators.Implementation
         {
             var userEntity = await UserQueryRepository.FindFirst(e => e.Email == createResource.Email);
             if (userEntity == null || !IsPasswordCurrent(createResource, userEntity))
-                return new UnauthorizedResult();
+                return Unauthorized();
             return await base.Validate(createResource);
         }
         private bool IsPasswordCurrent(LoginCreateResource resource, UserEntity user)

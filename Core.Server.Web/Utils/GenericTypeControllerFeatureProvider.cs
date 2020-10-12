@@ -28,7 +28,7 @@ namespace Core.Server.Web.Utils
 
         private void AddboundleContollers(ControllerFeature feature)
         {
-            var contollersType = typeof(BatchController<,,>);
+            var contollersType = typeof(BatchController<,,,>);
             var resourcesBoundles = reflactionHelper.GetResourcesBoundles().ToList();
 
             foreach (var resourcesBoundle in resourcesBoundles)

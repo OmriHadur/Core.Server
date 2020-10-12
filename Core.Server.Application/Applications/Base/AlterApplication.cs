@@ -7,6 +7,8 @@ using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Common.Validators;
 using Core.Server.Common.Mappers;
+using Core.Server.Shared.Resources.Users;
+using System;
 
 namespace Core.Server.Application
 {
@@ -27,6 +29,15 @@ namespace Core.Server.Application
         [Dependency]
         public IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity> AlterResourceMapper { get; set; }
 
+        public override Func<UserResource> GetCurrentUser 
+        { 
+            set
+            {
+                base.GetCurrentUser = value;
+                ResourceValidator.GetCurrentUser = value;
+            }
+        }
+
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource resource)
         {
             var validation = await ResourceValidator.Validate(resource);
@@ -40,10 +51,23 @@ namespace Core.Server.Application
         public virtual async Task<ActionResult<TResource>> CreateOrUpdate(string id, TCreateResource resource)
         {
             var entity = await QueryRepository.Get(id);
-            ActionResult validation = await Validate(resource, entity);
+            var validation = await Validate(resource, entity);
             if (!(validation is OkResult))
                 return validation;
             await Map(resource, entity);
+            await AlterRepository.Update(entity);
+            return await ResourceMapper.Map(entity);
+        }
+
+        public virtual async Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
+        {
+            var entity = await QueryRepository.Get(id);
+            if (entity == null)
+                return NotFound(id);
+            var validation = await ResourceValidator.Validate(resource, entity);
+            if (!(validation is OkResult))
+                return validation;
+            await AlterResourceMapper.Map(resource, entity);
             await AlterRepository.Update(entity);
             return await ResourceMapper.Map(entity);
         }

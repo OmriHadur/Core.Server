@@ -17,6 +17,8 @@ namespace Core.Server.Application.Validators.Implementation
         {
             if (createResource.Email != entity.Email)
                 return BadRequest(BadRequestReason.Unchangeable);
+            if (createResource.Email != CurrentUser.Email)
+                return Unauthorized();
             return Ok();
         }
     }

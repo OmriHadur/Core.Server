@@ -8,13 +8,15 @@ namespace Core.Server.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public abstract class BaseController: ControllerBase
+    public abstract class BaseController<TApplication> 
+        : ControllerBase
+        where TApplication: IBaseApplication
     {
         [Dependency]
         public IJwtManager JwtManager { get; set; }
 
         [Dependency]
-        public IBaseApplication ApplicationBase;
+        public TApplication Application;
 
         protected UserResource GetUser()
         {
@@ -23,7 +25,7 @@ namespace Core.Server.Web.Controllers
 
         protected void SetUser()
         {
-            ApplicationBase.CurrentUser = GetUser();
+            Application.GetCurrentUser = () => GetUser();
         }
     }
 }
