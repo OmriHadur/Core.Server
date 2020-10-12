@@ -4,12 +4,14 @@ using Core.Server.Common.Repositories;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Persistence.Repositories
 {
-    public class AlterRepository<TEntity> :
-        QueryRepository<TEntity>,
-        IAlterRepository<TEntity>
+    [InjectBoundle]
+    public class AlterRepository<TEntity>
+        : BaseRepository<TEntity>,
+          IAlterRepository<TEntity>
         where TEntity : Entity
     {
         public async Task Delete(TEntity entity)

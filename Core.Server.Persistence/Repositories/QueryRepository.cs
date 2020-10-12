@@ -1,5 +1,4 @@
 ﻿using MongoDB.Driver;
-using Core.Server.Common;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Query;
 using Core.Server.Common.Repositories;
@@ -8,15 +7,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 using Unity;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Persistence.Repositories
 {
+    [InjectBoundle]
     public class QueryRepository<TEntity>
         : BaseRepository<TEntity>,
-        IQueryRepository<TEntity>
+          IQueryRepository<TEntity>
         where TEntity : Entity
     {
         [Dependency]

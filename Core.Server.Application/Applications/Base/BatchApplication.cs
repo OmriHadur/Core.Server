@@ -1,35 +1,46 @@
 ﻿using Core.Server.Common.Applications;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
+using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
+using Core.Server.Common.Validators;
+using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Shared.Resources;
-using System.Linq;
-using System;
-using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application
 {
     [InjectBoundle]
     public class BatchApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : AlterApplication<TCreateResource, TUpdateResource, TResource,TEntity>,
-        IBatchApplication<TCreateResource, TUpdateResource, TResource>
+        : BaseApplication,
+          IBatchApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
         where TEntity : Entity, new()
     {
         [Dependency]
-        public IBatchRepository<TEntity> BatchRepository { get; set; }
+        public IQueryRepository<TEntity> QueryRepository { get; set; }
+
+        [Dependency]
+        public IBatchRepository<TEntity> BatchRepository;
+
+        [Dependency]
+        public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator;
+
+        [Dependency]
+        public IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity> ResourceMapper;
 
         public async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
         {
             var validationResult =await Validate(resources);
             if (IsNotOk(validationResult))
                 return validationResult;
-            var entitiesTasks = resources.Select(async resource =>await AlterResourceMapper.Map(resource));
+            var entitiesTasks = resources.Select(async resource =>await ResourceMapper.Map(resource));
             var entities = entitiesTasks.Select(er => er.Result);
             await AddEntites(entities);
             return Ok(await ResourceMapper.Map(entities));

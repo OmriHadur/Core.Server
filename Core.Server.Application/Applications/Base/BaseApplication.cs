@@ -9,18 +9,19 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
+using Core.Server.Common.Mappers;
 
 namespace Core.Server.Application
 {
-    public class BaseApplication: IBaseApplication
+    public class BaseApplication
     {
         private UserResource currentUser;
 
         [Dependency]
-        public IUnityContainer UnityContainer { get; set; }
+        public IUnityContainer UnityContainer;
 
         [Dependency]
-        public ILogger<BaseApplication> Logger { get; set; }
+        public ILogger<BaseApplication> Logger;
 
         public UserResource CurrentUser
         {

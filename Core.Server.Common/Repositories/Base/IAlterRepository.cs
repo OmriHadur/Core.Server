@@ -1,13 +1,12 @@
 ﻿using Core.Server.Common.Entities;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Core.Server.Common.Repositories
 {
     public interface IAlterRepository<TEntity>
-        : IQueryRepository<TEntity>
+        : IBaseRepository
         where TEntity : Entity
     {
         Task Add(TEntity entity);

@@ -15,7 +15,7 @@ namespace Core.Server.Application.Validators.Implementation
     public class LoginValidator
         : ResourceValidator<LoginCreateResource,LoginUpdateResource,LoginEntity>
     {
-        private PasswordHasher _passwordHasher = new PasswordHasher();
+        private readonly PasswordHasher _passwordHasher = new PasswordHasher();
 
         [Dependency]
         public IQueryRepository<UserEntity> UserQueryRepository { get; set; }

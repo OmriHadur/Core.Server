@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Common.Repositories
 {
-    public interface IQueryRepository<TEntity>
-        : IBaseRepository
+    public interface IQueryRepository<TEntity> : IBaseRepository
         where TEntity : Entity
     {
         Task<TEntity> Get(string id);

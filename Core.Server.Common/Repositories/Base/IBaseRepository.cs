@@ -1,6 +1,4 @@
-﻿using Core.Server.Common;
-
-namespace Core.Server.Common.Repositories
+﻿namespace Core.Server.Common.Repositories
 {
     public interface IBaseRepository
     {

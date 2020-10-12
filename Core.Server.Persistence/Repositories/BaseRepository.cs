@@ -8,7 +8,7 @@ using Unity;
 namespace Core.Server.Persistence.Repositories
 {
     public class BaseRepository<TEntity> 
-        : IBaseRepository 
+        : IBaseRepository
         where TEntity : Entity
     {
         protected IMongoCollection<TEntity> Collection;

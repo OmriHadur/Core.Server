@@ -10,6 +10,7 @@ namespace Core.Server.Common.Mappers
         where TEntity : Entity, new()
     {
         Task<TResource> Map(TEntity entity);
+
         Task<IEnumerable<TResource>> Map(IEnumerable<TEntity> entities);
     }
 }

@@ -5,7 +5,7 @@ using Core.Server.Shared.Resources;
 namespace Core.Server.Common.Applications
 {
     public interface IAlterApplication<TCreateResource, TUpdateResource, TResource>:
-        IQueryApplication<TResource>
+        IBaseApplication
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

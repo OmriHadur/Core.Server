@@ -10,9 +10,9 @@ using Core.Server.Common.Attributes;
 namespace Core.Server.Persistence.Repositories
 {
     [InjectBoundle]
-    public class BatchRepository<TEntity> :
-        AlterRepository<TEntity>,
-        IBatchRepository<TEntity>
+    public class BatchRepository<TEntity>
+        : BaseRepository<TEntity>,
+          IBatchRepository<TEntity>
         where TEntity : Entity
     {
         public async Task AddMany(IEnumerable<TEntity> entities)
@@ -22,7 +22,7 @@ namespace Core.Server.Persistence.Repositories
 
         public async Task DeleteMany(string[] ids)
         {
-             await Collection.DeleteManyAsync(e => ids.Contains(e.Id));
+            await Collection.DeleteManyAsync(e => ids.Contains(e.Id));
         }
     }
 }

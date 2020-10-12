@@ -10,12 +10,14 @@ using Core.Server.Shared.Query;
 using Core.Server.Application.Helpers;
 using Core.Server.Shared.Errors;
 using Core.Server.Common.Mappers;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application
 {
+    [InjectBoundle]
     public class QueryApplication<TResource, TEntity>
-        : BaseApplication
-          ,IQueryApplication<TResource>
+        : BaseApplication,
+          IQueryApplication<TResource>
         where TResource : Resource
         where TEntity : Entity, new()
     {
