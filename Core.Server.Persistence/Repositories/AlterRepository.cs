@@ -8,7 +8,7 @@ using Core.Server.Common.Attributes;
 
 namespace Core.Server.Persistence.Repositories
 {
-    [InjectBoundle]
+    [Inject]
     public class AlterRepository<TEntity>
         : BaseRepository<TEntity>,
           IAlterRepository<TEntity>

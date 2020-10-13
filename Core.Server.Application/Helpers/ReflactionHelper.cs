@@ -46,9 +46,9 @@ namespace Core.Server.Application.Helpers
             return new ResourceBoundle()
             {
                 ResourceType = resourceType,
-                CreateResourceType = GetTypeWithName<CreateResource>(resourceName),
-                UpdateResourceType = GetTypeWithName<UpdateResource>(resourceName),
-                EntityType = GetTypeWithName<Entity>(resourceName)
+                CreateResourceType = GetTypeWithPrefix<CreateResource>(resourceName),
+                UpdateResourceType = GetTypeWithPrefix<UpdateResource>(resourceName),
+                EntityType = GetTypeWithPrefix<Entity>(resourceName)
             };
         }
 
@@ -99,10 +99,15 @@ namespace Core.Server.Application.Helpers
         {
             return obj.GetType().GetCustomAttributes<TAttribute>() != null;
         }
-        public Type GetTypeWithName<T>(string name)
+        public Type GetTypeWithPrefix<T>(string prefix)
         {
-            var updateResourceName = name + typeof(T).Name;
-            return types.FirstOrDefault(t => t.Name == updateResourceName);
+            var typeName = prefix + typeof(T).Name;
+            return types.FirstOrDefault(t => t.Name == typeName);
+        }
+
+        public Type GetTypeWithName(string name)
+        {
+            return types.FirstOrDefault(t => t.Name == name);
         }
 
         public IEnumerable<PropertyInfo> GetProperiesWithAttribute<T, TAttribute>()
@@ -116,6 +121,11 @@ namespace Core.Server.Application.Helpers
         {
             foreach (var property in obj.GetType().GetProperties())
                 action(property, property.GetValue(obj));
+        }
+
+        public string GetPrefixName(Type type)
+        {
+            return type.Name.Replace(type.BaseType.Name, string.Empty);
         }
     }
 }

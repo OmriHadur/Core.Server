@@ -4,7 +4,7 @@ using Core.Server.Shared.Resources;
 
 namespace Core.Server.Common.Applications
 {
-    public interface IAlterApplication<TCreateResource, TUpdateResource, TResource>:
+    public interface IAlterApplication<TCreateResource, TUpdateResource, TResource> :
         IBaseApplication
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
@@ -12,7 +12,7 @@ namespace Core.Server.Common.Applications
     {
         Task<ActionResult<TResource>> Create(TCreateResource resource);
 
-        Task<ActionResult<TResource>> CreateOrUpdate(string id,TCreateResource resource);
+        Task<ActionResult<TResource>> CreateOrUpdate(string id, TCreateResource resource);
 
         Task<ActionResult<TResource>> Update(string id, TUpdateResource resource);
 

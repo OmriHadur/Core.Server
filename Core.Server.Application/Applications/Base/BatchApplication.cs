@@ -14,7 +14,7 @@ using Unity;
 
 namespace Core.Server.Application
 {
-    [InjectBoundle]
+    [Inject]
     public class BatchApplication<TCreateResource, TUpdateResource, TResource, TEntity>
         : BaseApplication,
           IBatchApplication<TCreateResource, TUpdateResource, TResource>

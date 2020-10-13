@@ -9,7 +9,7 @@ using Core.Server.Common.Attributes;
 
 namespace Core.Server.Persistence.Repositories
 {
-    [InjectBoundle]
+    [Inject]
     public class BatchRepository<TEntity>
         : BaseRepository<TEntity>,
           IBatchRepository<TEntity>

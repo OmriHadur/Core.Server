@@ -9,7 +9,7 @@ using Unity;
 
 namespace Core.Server.Application.Mappers.Base
 {
-    [InjectBoundle]
+    [Inject]
     public class AlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>
         : IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>
         where TCreateResource : CreateResource

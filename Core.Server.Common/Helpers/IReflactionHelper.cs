@@ -17,7 +17,10 @@ namespace Core.Server.Application.Helpers
         string GetTypeName(Type drivenType, Type subType);
         IEnumerable<Type> GetTypesWithAttribute<TAttribute>() 
             where TAttribute : Attribute;
-        Type GetTypeWithName<T>(string name);
+        Type GetTypeWithPrefix<T>(string prefix);
+        Type GetTypeWithName(string name);
+        string GetPrefixName(Type type);
+
         bool HasAttribute<TAttribute>(object obj) 
             where TAttribute : Attribute;
         IEnumerable<PropertyInfo> GetProperiesWithAttribute<T, TAttribute>()

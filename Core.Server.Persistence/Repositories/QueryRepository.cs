@@ -13,7 +13,7 @@ using Core.Server.Common.Attributes;
 
 namespace Core.Server.Persistence.Repositories
 {
-    [InjectBoundle]
+    [Inject]
     public class QueryRepository<TEntity>
         : BaseRepository<TEntity>,
           IQueryRepository<TEntity>

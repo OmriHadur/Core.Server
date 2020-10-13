@@ -14,7 +14,7 @@ using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application
 {
-    [InjectBoundle]
+    [Inject]
     public class QueryApplication<TResource, TEntity>
         : BaseApplication,
           IQueryApplication<TResource>

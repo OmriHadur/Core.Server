@@ -1,6 +1,7 @@
 ﻿using Core.Server.Application.Helpers;
 using Core.Server.Common;
 using Core.Server.Common.Attributes;
+using Core.Server.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,22 +29,13 @@ namespace Core.Server.Web.Utils
         private void AddAllTypesForBundles()
         {
             var resourcesBoundles = reflactionHelper.GetResourcesBoundles();
-            var genricTypesForBundle = GetGenricTypesForBundle();
             var genricTypesWithNameForBundle = GetInjectBoundleWithNameForBundle();
 
             foreach (var resourcesBoundle in resourcesBoundles) 
             {
-                foreach (var genricTypeForBundle in genricTypesForBundle)
-                    AddGenricTypeResourcesBoundle(genricTypeForBundle, resourcesBoundle);
                 foreach (var genricTypeWithNameForBundle in genricTypesWithNameForBundle)
                     AddGenricTypeWithNameForBundle(genricTypeWithNameForBundle, resourcesBoundle);
             }
-        }
-
-        private void AddGenricTypeResourcesBoundle(Type genricTypeForBundle, ResourceBoundle resourcesBoundle)
-        {
-            var filledGenericType = reflactionHelper.FillGenericType(genricTypeForBundle, resourcesBoundle);
-            AddTypesInterfaces(filledGenericType);
         }
 
         private void AddGenricTypeWithNameForBundle(Type genricTypeForBundle, ResourceBoundle resourcesBoundle)
@@ -51,11 +43,6 @@ namespace Core.Server.Web.Utils
             var filledGenericType = reflactionHelper.FillGenericType(genricTypeForBundle, resourcesBoundle);
             foreach (var interfaceType in filledGenericType.GetInterfaces())
                 InjectWithName(filledGenericType, interfaceType);
-        }
-
-        private IEnumerable<Type> GetGenricTypesForBundle()
-        {
-            return reflactionHelper.GetGenericTypesWithAttribute<InjectBoundleAttribute>();
         }
 
         private IEnumerable<Type> GetInjectBoundleWithNameForBundle()
@@ -80,8 +67,31 @@ namespace Core.Server.Web.Utils
 
         private void AddTypesInterfaces(Type type)
         {
-            foreach (var interfaceType in type.GetInterfaces())
-                container.RegisterType(interfaceType, type);
+            foreach (var interType in type.GetInterfaces())
+            {
+                if (!interType.IsGenericType)
+                    container.RegisterType(interType, type);
+                else if (type.IsGenericType)
+                {
+                    var typeArgs = type.GetGenericArguments();
+                    var interArgs= interType.GetGenericArguments();
+                   if (typeArgs.Length== interArgs.Length)
+                        container.RegisterType(interType, type);
+                    else
+                    {
+                        container.RegisterFactory(interType, (uc, interTypeWithGeneric, obj) =>
+                        {
+                            var firstGen = interTypeWithGeneric.GetGenericArguments().First();
+                            var prefix = reflactionHelper.GetPrefixName(firstGen);
+                            var entityType = reflactionHelper.GetTypeWithPrefix<Entity>(prefix);
+                            var args = interArgs.Union(new Type[] { entityType }).ToArray();
+                            var typeGenericType = type.MakeGenericType(args);
+                            return uc.Resolve(typeGenericType);
+                        });
+                    }
+                }
+            }
+                
         }
     }
 }

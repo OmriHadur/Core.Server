@@ -7,7 +7,7 @@ using Core.Server.Common.Attributes;
 
 namespace Core.Server.Common.Validators
 {
-    [InjectBoundle]
+    [Inject]
     public class ResourceValidator<TCreateResource, TUpdateResource, TEntity>
         : BaseApplication,
           IResourceValidator<TCreateResource, TUpdateResource, TEntity>

@@ -13,7 +13,7 @@ using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application
 {
-    [InjectBoundle]
+    [Inject]
     public class AlterApplication<TCreateResource, TUpdateResource, TResource, TEntity>
         : BaseApplication,
           IAlterApplication<TCreateResource, TUpdateResource, TResource>
