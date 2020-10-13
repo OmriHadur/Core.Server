@@ -13,20 +13,13 @@ namespace Core.Server.Application.Helpers
         IEnumerable<Type> GetGenericTypesWithAttribute<TAttribute>() 
             where TAttribute : Attribute;
         IEnumerable<ResourceBoundle> GetResourcesBoundles();
-        IEnumerable<Type> GetSameBaseTypeName(Type type);
         string GetTypeName(Type drivenType, Type subType);
         Type GetTypeByName(string typeName);
         IEnumerable<Type> GetTypesWithAttribute<TAttribute>() 
             where TAttribute : Attribute;
         Type GetTypeWithPrefix<T>(string prefix);
-        Type GetTypeWithName(string name);
         string GetPrefixName(Type type);
 
-        bool HasAttribute<TAttribute>(object obj) 
-            where TAttribute : Attribute;
-        IEnumerable<PropertyInfo> GetProperiesWithAttribute<T, TAttribute>()
-            where TAttribute : Attribute;
-
-        void ForEachPropertyValue(object obj, Action<PropertyInfo, object> action);
+        bool IsSameType(TypeInfo parent, Type child);
     }
 }

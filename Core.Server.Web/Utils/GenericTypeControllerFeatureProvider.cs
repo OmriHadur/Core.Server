@@ -45,17 +45,7 @@ namespace Core.Server.Web.Utils
 
         private bool HasSameContoller(ControllerFeature feature, Type controllerType)
         {
-            foreach (var cotroller in feature.Controllers)
-            {
-                if (cotroller.BaseType.Name == controllerType.Name)
-                {
-                    var firstGenericArgument = cotroller.BaseType.GetGenericArguments().FirstOrDefault();
-                    var firstControllerGenericArgument = controllerType.GetGenericArguments().First();
-                    if (firstGenericArgument == firstControllerGenericArgument)
-                        return true;
-                }
-            }
-            return false;
+            return feature.Controllers.Any(c => reflactionHelper.IsSameType(c, controllerType));
         }
     }
 }

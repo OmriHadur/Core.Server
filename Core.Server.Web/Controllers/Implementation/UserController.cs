@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Core.Server.Shared.Resources.Users;
 using System.Threading.Tasks;
-using Core.Server.Common.Applications;
-using Core.Server.Common.Entities;
 
 namespace Core.Server.Web.Controllers
 {
@@ -15,6 +13,7 @@ namespace Core.Server.Web.Controllers
         {
 
         }
+
         [HttpPost]
         [AllowAnonymous]
         public override async Task<ActionResult<UserResource>> Create(UserCreateResource resource)

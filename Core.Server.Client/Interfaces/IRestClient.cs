@@ -1,5 +1,4 @@
-﻿
-using Core.Server.Client.Results;
+﻿using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ namespace Core.Server.Client.Interfaces
         Task<ActionResult<IEnumerable<TResource>>> Get();
 
         Task<ActionResult<TResource>> Get(string id);
-
         Task<ActionResult<TResource>> Create(TCreateResource resource);
 
         Task<ActionResult<TResource>> Update(string id, TUpdateResource resource);
