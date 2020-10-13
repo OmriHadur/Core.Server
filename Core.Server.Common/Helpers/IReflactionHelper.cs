@@ -15,6 +15,7 @@ namespace Core.Server.Application.Helpers
         IEnumerable<ResourceBoundle> GetResourcesBoundles();
         IEnumerable<Type> GetSameBaseTypeName(Type type);
         string GetTypeName(Type drivenType, Type subType);
+        Type GetTypeByName(string typeName);
         IEnumerable<Type> GetTypesWithAttribute<TAttribute>() 
             where TAttribute : Attribute;
         Type GetTypeWithPrefix<T>(string prefix);

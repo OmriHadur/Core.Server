@@ -1,23 +1,23 @@
 ﻿using Core.Server.Application.Helpers;
 using Core.Server.Common;
 using Core.Server.Common.Attributes;
-using Core.Server.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Unity;
 
 namespace Core.Server.Web.Utils
 {
     public class UnityContainerBuilder
     {
-        private IUnityContainer container;
-        private IReflactionHelper reflactionHelper;
+        private readonly Dictionary<Type, Type> interfaceToType;
+        private readonly IUnityContainer container;
+        private readonly IReflactionHelper reflactionHelper;
         public UnityContainerBuilder(IUnityContainer container, IReflactionHelper reflactionHelper)
         {
             this.container = container;
             this.reflactionHelper = reflactionHelper;
+            interfaceToType = new Dictionary<Type, Type>();
         }
         public void ConfigureContainer()
         {
@@ -32,10 +32,8 @@ namespace Core.Server.Web.Utils
             var genricTypesWithNameForBundle = GetInjectBoundleWithNameForBundle();
 
             foreach (var resourcesBoundle in resourcesBoundles) 
-            {
                 foreach (var genricTypeWithNameForBundle in genricTypesWithNameForBundle)
                     AddGenricTypeWithNameForBundle(genricTypeWithNameForBundle, resourcesBoundle);
-            }
         }
 
         private void AddGenricTypeWithNameForBundle(Type genricTypeForBundle, ResourceBoundle resourcesBoundle)
@@ -69,29 +67,50 @@ namespace Core.Server.Web.Utils
         {
             foreach (var interType in type.GetInterfaces())
             {
-                if (!interType.IsGenericType)
+                if (!interType.IsGenericType || !type.IsGenericType)
                     container.RegisterType(interType, type);
-                else if (type.IsGenericType)
+                else
                 {
+                    var interGenericType = interType.GetGenericTypeDefinition();
                     var typeArgs = type.GetGenericArguments();
                     var interArgs= interType.GetGenericArguments();
                    if (typeArgs.Length== interArgs.Length)
-                        container.RegisterType(interType, type);
+                        container.RegisterType(interGenericType, type);
                     else
-                    {
-                        container.RegisterFactory(interType, (uc, interTypeWithGeneric, obj) =>
-                        {
-                            var firstGen = interTypeWithGeneric.GetGenericArguments().First();
-                            var prefix = reflactionHelper.GetPrefixName(firstGen);
-                            var entityType = reflactionHelper.GetTypeWithPrefix<Entity>(prefix);
-                            var args = interArgs.Union(new Type[] { entityType }).ToArray();
-                            var typeGenericType = type.MakeGenericType(args);
-                            return uc.Resolve(typeGenericType);
-                        });
-                    }
+                        RegisterFactory(type, interGenericType, typeArgs);
                 }
             }
                 
+        }
+
+        private void RegisterFactory(Type type, Type interGenericType, Type[] typeArgs)
+        {
+            container.RegisterFactory(interGenericType, (uc, interTypeWithGeneric, obj) =>
+            {
+                var typeGenericType = GetTypeGenericType(type, typeArgs, interTypeWithGeneric);
+                return uc.Resolve(typeGenericType);
+            });
+        }
+
+        private Type GetTypeGenericType(Type type, Type[] typeArgs, Type interTypeWithGeneric)
+        {
+            if (interfaceToType.ContainsKey(interTypeWithGeneric))
+                return interfaceToType[interTypeWithGeneric];
+            var firstGen = interTypeWithGeneric.GetGenericArguments().First();
+            var prefix = reflactionHelper.GetPrefixName(firstGen);
+            var args = GetArguments(typeArgs, prefix).ToArray();
+            var typeGenericType = type.MakeGenericType(args);
+            interfaceToType.Add(interTypeWithGeneric, typeGenericType);
+            return typeGenericType;
+        }
+
+        private IEnumerable<Type> GetArguments(Type[] typeArgs, string prefix)
+        {
+            foreach (var type in typeArgs)
+            {
+                var typeName = prefix + type.Name.Substring(1);
+                yield return reflactionHelper.GetTypeByName(typeName);
+            }
         }
     }
 }

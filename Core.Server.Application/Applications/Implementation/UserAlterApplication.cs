@@ -10,7 +10,7 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class UserApplication
+    public class UserAlterApplication
         : AlterApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>
     {
         [Dependency]

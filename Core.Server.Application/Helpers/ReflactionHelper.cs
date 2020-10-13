@@ -67,6 +67,11 @@ namespace Core.Server.Application.Helpers
             return drivenType.Name.Replace(subType.Name, string.Empty);
         }
 
+        public Type GetTypeByName(string typeName)
+        {
+            return types.FirstOrDefault(t => t.Name == typeName);
+        }
+
         public IEnumerable<Type> GetDrivenTypesOf<T>()
         {
             return GetDrivenTypesOf(typeof(T));
