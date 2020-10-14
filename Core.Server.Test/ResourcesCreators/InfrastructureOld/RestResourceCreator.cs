@@ -1,5 +1,4 @@
-﻿using Core.Server.Client.Interfaces;
-using Core.Server.Client.Results;
+﻿using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Unity;
@@ -24,7 +23,7 @@ namespace Core.Server.Tests.ResourceCreators
 
         public ActionResult<TResource> Create(TCreateResource createResource)
         {
-            return RestClient.Create(createResource as TCreateResource).Result;
+            return RestClient.Create(createResource).Result;
         }
 
         public ActionResult Delete(string id)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Server.Client.Results
+﻿namespace Core.Server.Client.Results
 {
     public class ActionResult<T> : ActionResult
     {
@@ -17,6 +13,9 @@ namespace Core.Server.Client.Results
         {
             Value = value;
         }
-        
+
+        public bool IsSuccess => Value != null;
+        public bool IsFail => Result != null;
+
     }
 }

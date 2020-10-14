@@ -14,7 +14,7 @@ namespace Core.Server.Tests.ResourceTests
     public abstract class TestsBase
     {
         protected Random Random;
-        protected IResourcesHolder ResourcesHolder;
+        protected IResourcesIdHolder ResourcesHolder;
         protected ITestsUnityContainer TestsUnityContainer;
         protected ITokenHandler TokenHandler;
         protected IConfigHandler ConfigHandler;
@@ -22,7 +22,7 @@ namespace Core.Server.Tests.ResourceTests
         {
             Random = new Random();
             TestsUnityContainer = new TestsUnityContainer();
-            ResourcesHolder = TestsUnityContainer.Resolve<IResourcesHolder>();
+            ResourcesHolder = TestsUnityContainer.Resolve<IResourcesIdHolder>();
             TokenHandler = TestsUnityContainer.Resolve<ITokenHandler>();
             ConfigHandler = TestsUnityContainer.Resolve<IConfigHandler>();
         }

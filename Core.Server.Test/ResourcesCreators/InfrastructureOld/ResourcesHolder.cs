@@ -11,7 +11,7 @@ using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Tests.ResourceCreators
 {
-    public class ResourcesHolder : IResourcesHolder
+    public class ResourcesHolder : IResourcesIdHolder
     {
         private IDictionary<Type, IList<string>> _resourcesIdsPerType;
 
@@ -173,10 +173,10 @@ namespace Core.Server.Tests.ResourceCreators
             return unityContainer.Resolve<IResourceCreator<TCreateResource, TUpdateResource,TResource>>();
         }
 
-        private IResourceGetter<TResource> GetGetter<TResource>()
+        private IResourcerHandler<TResource> GetGetter<TResource>()
                 where TResource : Resource
         {
-            return unityContainer.Resolve<IResourceGetter<TResource>>();
+            return unityContainer.Resolve<IResourcerHandler<TResource>>();
         }
 
         private IResourceDeleter GetDeleter(Type type)

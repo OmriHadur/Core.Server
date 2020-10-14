@@ -11,7 +11,7 @@ namespace Core.Server.Tests.Utils
         private bool logginin;
 
         [Dependency]
-        public IResourcesHolder ResourcesHolder;
+        public IResourcesIdHolder ResourcesHolder;
 
         [Dependency]
         public IConfigHandler ConfigHandler;

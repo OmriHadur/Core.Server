@@ -64,7 +64,7 @@ namespace Core.Server.Tests.Unity
 
         private static bool IsResourceGetter(Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IResourceGetter<>);
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IResourcerHandler<>);
         }
     }
 }

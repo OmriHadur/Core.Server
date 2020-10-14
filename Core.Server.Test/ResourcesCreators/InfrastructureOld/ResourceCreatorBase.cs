@@ -12,7 +12,7 @@ namespace Core.Server.Tests.ResourceCreators
         protected Random Random;
 
         [Dependency]
-        public IResourcesHolder ResourcesHolder;
+        public IResourcesIdHolder ResourcesHolder;
 
         [Dependency]
         public IObjectRandomizer ObjectRandomizer;
