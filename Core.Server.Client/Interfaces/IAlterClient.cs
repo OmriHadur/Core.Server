@@ -1,23 +1,20 @@
 ﻿using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Core.Server.Client.Interfaces
 {
-    public interface IRestClient<TCreateResource, TUpdateResource, TResource> :
-        IClientBase
+    public interface IAlterClient<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
     {
-        Task<ActionResult<IEnumerable<TResource>>> Get();
-
-        Task<ActionResult<TResource>> Get(string id);
         Task<ActionResult<TResource>> Create(TCreateResource resource);
 
-        Task<ActionResult<TResource>> Update(string id, TUpdateResource resource);
+        Task<ActionResult<TResource>> CreateOrUpdate(string id, TCreateResource resource);
 
         Task<ActionResult<TResource>> Delete(string id);
+
+        Task<ActionResult<TResource>> Update(string id, TUpdateResource resource);
     }
 }

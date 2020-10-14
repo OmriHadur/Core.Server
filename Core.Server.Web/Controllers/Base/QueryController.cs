@@ -32,7 +32,7 @@ namespace Core.Server.Web.Controllers
         }
 
         [HttpHead("{id}")]
-        public virtual async Task<ActionResult<TResource>> Exists(string id)
+        public virtual async Task<ActionResult> Exists(string id)
         {
             return await Application.Exists(id);
         }

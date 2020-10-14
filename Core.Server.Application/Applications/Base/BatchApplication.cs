@@ -77,10 +77,10 @@ namespace Core.Server.Application
             throw new NotImplementedException();
         }
 
-        public async Task<ActionResult> BatchDelete(string[] ids)
+        public async Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids)
         {
             await BatchRepository.DeleteMany(ids);
-            return Ok();
+            return Ok(ids);
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Core.Server.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<TResource>> CreateOrUpdate(string id,TCreateResource resource)
+        public virtual async Task<ActionResult<TResource>> CreateOrUpdate(string id, TCreateResource resource)
         {
-            return await Application.CreateOrUpdate(id,resource);
+            return await Application.CreateOrUpdate(id, resource);
         }
 
         [HttpPatch("{id}")]

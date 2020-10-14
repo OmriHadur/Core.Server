@@ -34,7 +34,7 @@ namespace Core.Server.Web.Controllers
         }
 
         [HttpDelete("batch")]
-        public virtual async Task<ActionResult> BatchDelete(string[] ids)
+        public virtual async Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids)
         {
             return await Application.BatchDelete(ids);
         }

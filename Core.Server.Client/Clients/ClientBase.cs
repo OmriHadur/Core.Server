@@ -1,16 +1,18 @@
 ﻿using Newtonsoft.Json;
 using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
-using Core.Server.Shared.Errors;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Core.Server.Shared.Resources;
 
 namespace Core.Server.Client.Clients
 {
-    public class ClientBase : IClientBase
+    public class ClientBase<TResource>
+        : IClientBase
+        where TResource : Resource
     {
         private const string Authorization = "Authorization";
         private string _token;
@@ -30,9 +32,9 @@ namespace Core.Server.Client.Clients
         }
         protected string ApiUrl => string.Format("{0}/api/{1}/", ServerUrl, _apiRoute);
 
-        protected ClientBase(string apiRoute)
+        protected ClientBase()
         {
-            _apiRoute = apiRoute;
+            _apiRoute = GetApiRoute();
             Client = new HttpClient(GetInsecureHandler());
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -50,45 +52,69 @@ namespace Core.Server.Client.Clients
             }
         }
 
-        protected async Task<ActionResult<T>> GetAsync<T>(string url)
+        private string GetApiRoute()
         {
-            var response = await Client.GetAsync(url);
+            return nameof(TResource).Replace("Resource", string.Empty);
+        }
+
+        protected Task<ActionResult<T>> SendMethod<T>(HttpMethod httpMethod)
+        {
+            return SendMethod<T>(string.Empty, httpMethod, null);
+        }
+
+        protected Task<ActionResult<T>> SendMethod<T>(string urlSubfix, HttpMethod httpMethod)
+        {
+            return SendMethod<T>(urlSubfix, httpMethod, null);
+        }
+
+        protected Task<ActionResult<T>> SendMethod<T>(HttpMethod httpMethod, object content)
+        {
+            return SendMethod<T>(string.Empty, httpMethod, content);
+        }
+
+        protected async Task<ActionResult<T>> SendMethod<T>(string urlSubfix, HttpMethod httpMethod, object content)
+        {
+            var request = new HttpRequestMessage(httpMethod, ApiUrl + urlSubfix);
+            if (content != null)
+                request.Content = new StringContent(JsonConvert.SerializeObject(content));
+            var response = await Client.SendAsync(request);
             return await GetResult<T>(response);
         }
 
-        protected async Task<ActionResult<T>> DeleteAsync<T>(string url)
+        protected Task<ActionResult> SendMethod(HttpMethod httpMethod)
         {
-            var response = await Client.DeleteAsync(url);
-            return await GetResult<T>(response);
+            return SendMethod(string.Empty, httpMethod, null);
         }
 
-        protected async Task<ActionResult<T>> PostAsync<T>(string url, object content)
+        protected Task<ActionResult> SendMethod(string urlSubfix, HttpMethod httpMethod)
         {
-            var response = await Client.PostAsJsonAsync(url, content);
-            return await GetResult<T>(response);
+            return SendMethod(urlSubfix, httpMethod, null);
         }
 
-        protected async Task<ActionResult<T>> PutAsync<T>(string url, object content)
+        protected async Task<ActionResult> SendMethod(string urlSubfix, HttpMethod httpMethod, object content)
         {
-            var response = await Client.PutAsJsonAsync(url, content);
-            return await GetResult<T>(response);
+            var request = new HttpRequestMessage(httpMethod, ApiUrl + urlSubfix);
+            if (content != null)
+                request.Content = new StringContent(JsonConvert.SerializeObject(content));
+            var response = await Client.SendAsync(request);
+            return await GetResult(response);
         }
 
-        protected async Task<ActionResult> GetOkResult(HttpResponseMessage response)
+        private async Task<ActionResult> GetOkResult(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
                 return new OkResult();
             return await GetResult(response);
         }
 
-        protected async Task<ActionResult<T>> GetResult<T>(HttpResponseMessage response)
+        private async Task<ActionResult<T>> GetResult<T>(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
                 return new OkResultWithObject<T>(await response.Content.ReadAsAsync<T>());
             return new OkResultWithObject<T>(await GetResult(response));
         }
 
-        protected async Task<ActionResult> GetResult(HttpResponseMessage response)
+        private async Task<ActionResult> GetResult(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
                 return await response.Content.ReadAsAsync<ActionResult>();
@@ -106,7 +132,7 @@ namespace Core.Server.Client.Clients
             }
         }
 
-        private static async Task<ActionResult> GetBadRequestResult(HttpResponseMessage response)
+        private async Task<ActionResult> GetBadRequestResult(HttpResponseMessage response)
         {
             var jsonValue = await response.Content.ReadAsStringAsync();
             var reason = JsonConvert.DeserializeAnonymousType(jsonValue, new { reason = "" }).reason;

@@ -12,9 +12,12 @@ namespace Core.Server.Common.Applications
         where TResource : Resource
     {
         Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids);
+
         Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources);
+
         Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources);
-        Task<ActionResult> BatchDelete(string[] ids);
+
+        Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids);
 
     }
 }
