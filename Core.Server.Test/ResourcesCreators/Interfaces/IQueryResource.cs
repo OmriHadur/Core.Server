@@ -4,12 +4,9 @@ using System.Collections.Generic;
 
 namespace Core.Server.Tests.ResourceCreators.Interfaces
 {
-    public interface IResourceHandler<TResource> 
-        : IResourceDeleter
+    public interface IQueryResource<TResource> 
         where TResource : Resource
     {
-        ActionResult<TResource> Create();
-        TResource Get();
         ActionResult<TResource> Get(string id);
         IEnumerable<TResource> GetAll();
     }

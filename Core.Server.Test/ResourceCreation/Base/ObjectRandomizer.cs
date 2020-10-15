@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Core.Server.Tests.ResourceCreation.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
-namespace Core.Server.Tests.Utils
+namespace Core.Server.Test.ResourceCreation
 {
     public class ObjectRandomizer : IObjectRandomizer
     {

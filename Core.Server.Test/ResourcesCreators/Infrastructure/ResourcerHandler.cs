@@ -8,13 +8,13 @@ using Unity;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     public class ResourcerHandler<TCreateResource, TUpdateResource, TResource>
-        : IResourceHandler<TResource>
+        : IAlterResource<TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
     {
         [Dependency]
-        public IResourceIdsHolder ResourceIdsHolder;
+        public IResourcesIdsHolder ResourceIdsHolder;
 
         [Dependency]
         public IQueryClient<TResource> QueryClient;
@@ -48,14 +48,14 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
                 Delete(id);
         }
 
-        public TResource Get()
+        public TResource GetOrCreate()
         {
             string resourceId;
             if (ResourceIdsHolder.IsEmpty<TResource>())
                 resourceId = Create().Value?.Id;
             else
                 resourceId = ResourceIdsHolder.GetLast<TResource>();
-            return QueryClient.Get(resourceId).Result.Value;
+            return Get(resourceId).Value;
         }
 
         public ActionResult<TResource> Get(string id)

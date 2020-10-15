@@ -1,4 +1,4 @@
-﻿namespace Core.Server.Tests.Utils
+﻿namespace Core.Server.Tests.ResourceCreation.Interfaces
 {
     public interface IObjectRandomizer
     {

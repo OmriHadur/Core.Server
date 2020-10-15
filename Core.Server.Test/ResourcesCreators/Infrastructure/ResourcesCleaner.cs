@@ -1,8 +1,5 @@
 ﻿using Core.Server.Test.ResourcesCreators.Interfaces;
 using Core.Server.Tests.ResourceCreators.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Unity;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
@@ -14,14 +11,14 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public IUnityContainer UnityContainer;
 
         [Dependency]
-        public IResourceIdsHolder ResourceIdsHolder;
+        public IResourcesIdsHolder ResourceIdsHolder;
 
         public void Clean()
         {
             var types = ResourceIdsHolder.GetAllTypes();
             foreach (var type in types)
             {
-                var resourceHandlerType = typeof(IResourceHandler<>);
+                var resourceHandlerType = typeof(IAlterResource<>);
                 var resourceHandlerGenericType= resourceHandlerType.MakeGenericType(type);
                 var resourcehandler = UnityContainer.Resolve(resourceHandlerGenericType);
                 (resourcehandler as IResourceDeleter).DeleteAll();

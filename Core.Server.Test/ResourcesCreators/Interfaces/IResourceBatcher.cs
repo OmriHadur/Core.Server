@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Core.Server.Tests.ResourceCreators.Interfaces
 {
     public interface IResourceBatcher<TCreateResource, TUpdateResource,TResource>
-        where TCreateResource : CreateResource, new()
+        where TCreateResource : CreateResource
         where TUpdateResource: UpdateResource
         where TResource : Resource
     {

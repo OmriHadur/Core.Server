@@ -3,7 +3,7 @@ using Core.Server.Test.ResourcesCreators.Infrastructure;
 using Core.Server.Tests.Utils;
 using Unity;
 
-namespace Core.Server.Test.ResourcesCreators.Implementation
+namespace Core.Server.Test.ResourceCreation
 {
     public class UserRandomResourceCreator
         : RandomResourceCreator<UserCreateResource, UserUpdateResource>

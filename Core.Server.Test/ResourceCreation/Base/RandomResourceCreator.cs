@@ -1,10 +1,11 @@
 ﻿using Core.Server.Shared.Resources;
+using Core.Server.Tests.ResourceCreation.Interfaces;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Tests.Utils;
 using System;
 using Unity;
 
-namespace Core.Server.Test.ResourcesCreators.Infrastructure
+namespace Core.Server.Test.ResourceCreation
 {
     public class RandomResourceCreator<TCreateResource, TUpdateResource>
         : IRandomResourceCreator<TCreateResource, TUpdateResource>

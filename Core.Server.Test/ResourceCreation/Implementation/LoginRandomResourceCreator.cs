@@ -4,7 +4,7 @@ using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Tests.Utils;
 using Unity;
 
-namespace Core.Server.Test.ResourcesCreators.Implementation
+namespace Core.Server.Test.ResourceCreation
 {
     public class LoginRandomResourceCreator
         : RandomResourceCreator<LoginCreateResource, LoginUpdateResource>
@@ -13,11 +13,11 @@ namespace Core.Server.Test.ResourcesCreators.Implementation
         public IConfigHandler ConfigHandler;
 
         [Dependency]
-        public IResourceHandler<UserResource> userResourceHandler;
+        public IAlterResource<UserResource> userResourceHandler;
 
         protected override void AddRandomValues(LoginCreateResource createResource)
         {
-            createResource.Email = userResourceHandler.Get().Email;
+            createResource.Email = userResourceHandler.GetOrCreate().Email;
             createResource.Password = ConfigHandler.Config.UserPassword;
         }
     }
