@@ -5,7 +5,7 @@ using Unity;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     public class ResourcesCleaner
-        : IResourcesCleaner
+        : IResourcesClean
     {
         [Dependency]
         public IUnityContainer UnityContainer;
@@ -18,10 +18,10 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             var types = ResourceIdsHolder.GetAllTypes();
             foreach (var type in types)
             {
-                var resourceHandlerType = typeof(IAlterResource<>);
+                var resourceHandlerType = typeof(IResourceCreate<>);
                 var resourceHandlerGenericType= resourceHandlerType.MakeGenericType(type);
                 var resourcehandler = UnityContainer.Resolve(resourceHandlerGenericType);
-                (resourcehandler as IResourceDeleter).DeleteAll();
+                (resourcehandler as IResourceDelete).DeleteAll();
             }
         }
     }

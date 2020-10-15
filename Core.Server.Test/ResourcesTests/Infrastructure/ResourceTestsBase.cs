@@ -13,10 +13,10 @@ namespace Core.Server.Tests.ResourceTests
         where TResource : Resource
     {
         protected TResource CreatedResource;
-        protected IResourceCreator<TCreateResource, TUpdateResource,TResource> ResourceCreator;
+        protected IResourceCreate<TCreateResource, TUpdateResource,TResource> ResourceCreator;
         public ResourceTestsBase()
         {
-            ResourceCreator = TestsUnityContainer.Resolve<IResourceCreator<TCreateResource, TUpdateResource,TResource>>();
+            ResourceCreator = TestsUnityContainer.Resolve<IResourceCreate<TCreateResource, TUpdateResource,TResource>>();
         }
 
         [TestInitialize]

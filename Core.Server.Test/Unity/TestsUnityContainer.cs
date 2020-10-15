@@ -57,7 +57,7 @@ namespace Core.Server.Tests.Unity
                 if (genericArguments?.Length > 0)
                 {
                     var resourceName = genericArguments[1].Name;
-                    _unityContainer.RegisterSingleton(typeof(IResourceDeleter), resourceGetterClassTypes, resourceName);
+                    _unityContainer.RegisterSingleton(typeof(IResourceDelete), resourceGetterClassTypes, resourceName);
                 }
             }
         }

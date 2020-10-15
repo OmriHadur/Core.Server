@@ -1,7 +1,7 @@
 ﻿
 namespace Core.Server.Test.ResourcesCreators.Interfaces
 {
-    public interface IResourcesCleaner
+    public interface IResourcesClean
     {
         void Clean();
     }

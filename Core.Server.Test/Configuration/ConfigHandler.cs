@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Core.Server.Tests.Utils
+namespace Core.Server.Tests.Configuration
 {
     public class ConfigHandler : IConfigHandler
     {

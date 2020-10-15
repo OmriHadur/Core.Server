@@ -102,7 +102,7 @@ namespace Core.Server.Tests.ResourceTests
             where TUpdateResource : UpdateResource
             where TResource : Resource
         {
-            var creator = TestsUnityContainer.Resolve<IResourceCreator<TCreateResource, TUpdateResource,TResource>>();
+            var creator = TestsUnityContainer.Resolve<IResourceCreate<TCreateResource, TUpdateResource,TResource>>();
             return creator.GetRandomCreateResource();
         }
 

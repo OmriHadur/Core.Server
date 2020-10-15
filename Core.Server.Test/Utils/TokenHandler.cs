@@ -1,4 +1,5 @@
 ﻿using Core.Server.Shared.Resources.Users;
+using Core.Server.Tests.Configuration;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using System;
 using Unity;

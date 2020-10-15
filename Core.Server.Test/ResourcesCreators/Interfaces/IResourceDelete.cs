@@ -2,7 +2,7 @@
 
 namespace Core.Server.Tests.ResourceCreators.Interfaces
 {
-    public interface IResourceDeleter
+    public interface IResourceDelete
     {
         ActionResult Delete(string id);
         void DeleteAll();

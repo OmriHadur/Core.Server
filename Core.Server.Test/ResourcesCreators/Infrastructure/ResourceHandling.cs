@@ -1,16 +1,13 @@
 ﻿using Core.Server.Client.Interfaces;
-using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
+using Core.Server.Tests.Configuration;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Tests.Utils;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Unity;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
-    public class ResourceHandlingBase<TClient, TResource>
+    public abstract class ResourceHandling<TClient, TResource>
         where TClient : IClientBase
         where TResource : Resource
     {

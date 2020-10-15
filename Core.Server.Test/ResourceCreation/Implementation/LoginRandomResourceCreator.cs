@@ -13,7 +13,7 @@ namespace Core.Server.Test.ResourceCreation
         public IConfigHandler ConfigHandler;
 
         [Dependency]
-        public IAlterResource<UserResource> userResourceHandler;
+        public IResourceAlter<UserResource> userResourceHandler;
 
         protected override void AddRandomValues(LoginCreateResource createResource)
         {
