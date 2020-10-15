@@ -5,13 +5,12 @@ using System.Collections.Generic;
 namespace Core.Server.Tests.ResourceCreators.Interfaces
 {
     public interface IResourceHandler<TResource> 
+        : IResourceDeleter
         where TResource : Resource
     {
         ActionResult<TResource> Create();
         TResource Get();
         ActionResult<TResource> Get(string id);
         IEnumerable<TResource> GetAll();
-        ActionResult Delete(string id);
-        void DeleteAll();
     }
 }

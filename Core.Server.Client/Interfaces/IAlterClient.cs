@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 namespace Core.Server.Client.Interfaces
 {
     public interface IAlterClient<TCreateResource, TUpdateResource, TResource>
+        : IClientBase
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

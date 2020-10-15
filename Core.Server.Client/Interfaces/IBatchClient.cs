@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace Core.Server.Client.Interfaces
 {
     public interface IBatchClient<TCreateResource, TUpdateResource, TResource>
+        : IClientBase
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource

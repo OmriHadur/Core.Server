@@ -1,21 +1,23 @@
 ﻿using Core.Server.Shared.Resources;
+using System;
 using System.Collections.Generic;
 
 namespace Core.Server.Tests.ResourceCreators.Interfaces
 {
-    public interface IResourceIdsHolder<TResouce>
-        where TResouce:Resource
+    public interface IResourceIdsHolder
     {
-        bool IsEmpty();
+        bool IsEmpty<T>();
 
-        string GetLast();
+        string GetLast<T>();
 
-        IEnumerable<string> GetAll();
+        IEnumerable<string> GetAll<T>();
 
-        void Add(string id);
+        IEnumerable<Type> GetAllTypes();
 
-        void Remove(string id);
+        void Add<T>(string id);
 
-        void Clean();
+        void Remove<T>(string id);
+
+        void Clean<T>();
     }
 }

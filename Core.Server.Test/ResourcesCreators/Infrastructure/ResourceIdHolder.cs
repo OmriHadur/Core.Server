@@ -1,49 +1,70 @@
-﻿using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreators.Interfaces;
+﻿using Core.Server.Tests.ResourceCreators.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
-    public class ResourceIdHolder<TResouce>
-        : IResourceIdsHolder<TResouce>
-        where TResouce : Resource
+    public class ResourceIdHolder: IResourceIdsHolder
     {
-        private readonly List<string> ids;
+        private readonly Dictionary<Type, List<string>> idsbyType;
 
         public ResourceIdHolder()
         {
-            ids = new List<string>();
+            idsbyType = new Dictionary<Type, List<string>>();
         }
 
-        public void Add(string id)
+        public void Add<T>(string id)
         {
-            ids.Add(id);
+            var type = typeof(T);
+            if (!idsbyType.ContainsKey(type))
+                idsbyType.Add(type, new List<string>());
+            idsbyType[type].Add(id);
         }
 
-        public void Clean()
+        public void Clean<T>()
         {
-            ids.Clear();
+            var type = typeof(T);
+            if (idsbyType.ContainsKey(type))
+                idsbyType.Remove(type);
         }
 
-        public IEnumerable<string> GetAll()
+        public IEnumerable<string> GetAll<T>()
         {
-            return ids;
+            var type = typeof(T);
+            if (idsbyType.ContainsKey(type))
+                return idsbyType[type];
+            return new string[0];
         }
 
-        public string GetLast()
+        public IEnumerable<Type> GetAllTypes()
         {
-            return ids.Last();
+            return idsbyType.Keys;
         }
 
-        public bool IsEmpty()
+        public string GetLast<T>()
         {
-            return ids.Count == 0;
+            var type = typeof(T);
+            if (idsbyType.ContainsKey(type))
+                idsbyType[type].Last();
+            return string.Empty;
         }
 
-        public void Remove(string id)
+        public bool IsEmpty<T>()
         {
-            ids.Remove(id);
+            var type = typeof(T);
+            if (idsbyType.ContainsKey(type))
+                return idsbyType[type].Count == 0;
+            return true;
+        }
+
+        public void Remove<T>(string id)
+        {
+            var type = typeof(T);
+            if (idsbyType.ContainsKey(type))
+                idsbyType[type].Remove(id);
+            if (idsbyType[type].Count == 0)
+                idsbyType.Remove(type);
         }
     }
 }

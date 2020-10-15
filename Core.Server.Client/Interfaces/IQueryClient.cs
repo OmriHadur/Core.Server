@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Core.Server.Client.Interfaces
 {
     public interface IQueryClient<TResource>
+        : IClientBase
         where TResource : Resource
     {
         Task<ActionResult> Exists(string id);

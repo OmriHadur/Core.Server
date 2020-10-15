@@ -19,15 +19,25 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public TCreateResource GetRandomCreateResource()
         {
             var createResource = new TCreateResource();
-            ObjectRandomizer.AddRandomValues(createResource);
+            AddRandomValues(createResource);
             return createResource;
         }
 
         public TUpdateResource GetRandomUpdateResource()
         {
             var updateResource = new TUpdateResource();
-            ObjectRandomizer.AddRandomValues(updateResource);
+            AddRandomValues(updateResource);
             return updateResource;
+        }
+
+        protected virtual void AddRandomValues(TCreateResource createResource)
+        {
+            ObjectRandomizer.AddRandomValues(createResource);
+        }
+
+        protected virtual void AddRandomValues(TUpdateResource updateResource)
+        {
+            ObjectRandomizer.AddRandomValues(updateResource);
         }
     }
 }

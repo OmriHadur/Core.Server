@@ -14,7 +14,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         where TResource : Resource
     {
         [Dependency]
-        public IResourceIdsHolder<TResource> ResourceIdsHolder;
+        public IResourceIdsHolder ResourceIdsHolder;
 
         [Dependency]
         public IQueryClient<TResource> QueryClient;
@@ -30,7 +30,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             var createResource = RandomResourceCreator.GetRandomCreateResource();
             var result = AlterClient.Create(createResource).Result;
             if (result.IsSuccess)
-                ResourceIdsHolder.Add(result.Value.Id);
+                ResourceIdsHolder.Add<TResource>(result.Value.Id);
             return result;
         }
 
@@ -38,23 +38,23 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         {
             var result = AlterClient.Delete(id).Result;
             if (result.IsSuccess)
-                ResourceIdsHolder.Remove(id);
+                ResourceIdsHolder.Remove<TResource>(id);
             return result;
         }
 
         public void DeleteAll()
         {
-            foreach (var id in ResourceIdsHolder.GetAll())
+            foreach (var id in ResourceIdsHolder.GetAll<TResource>())
                 Delete(id);
         }
 
         public TResource Get()
         {
             string resourceId;
-            if (ResourceIdsHolder.IsEmpty())
+            if (ResourceIdsHolder.IsEmpty<TResource>())
                 resourceId = Create().Value?.Id;
             else
-                resourceId = ResourceIdsHolder.GetLast();
+                resourceId = ResourceIdsHolder.GetLast<TResource>();
             return QueryClient.Get(resourceId).Result.Value;
         }
 
@@ -65,7 +65,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         public IEnumerable<TResource> GetAll()
         {
-            foreach (var id in ResourceIdsHolder.GetAll())
+            foreach (var id in ResourceIdsHolder.GetAll<TResource>())
                 yield return Get(id).Value;
         }
     }
