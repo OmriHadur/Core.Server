@@ -53,18 +53,29 @@ namespace Core.Server.Application
             return await ResourceMapper.Map(entity);
         }
 
-        public virtual async Task<ActionResult<TResource>> CreateOrUpdate(string id, TCreateResource resource)
+        public virtual async Task<ActionResult<TResource>> Replace(string id, TUpdateResource resource)
         {
-            var entity = await QueryRepository.Get(id);
-            var validation = await Validate(resource, entity);
-            if (!(validation is OkResult))
-                return validation;
-            await Map(resource, entity);
-            await AlterRepository.Update(entity);
+            var getEntityResult = await GetEntity(id, resource);
+            if (getEntityResult.Result != null)
+                return getEntityResult.Result;
+            var entity = getEntityResult.Value;
+            await ResourceMapper.Map(resource, entity);
+            await AlterRepository.Replace(entity);
             return await ResourceMapper.Map(entity);
         }
 
         public virtual async Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
+        {
+            var getEntityResult = await GetEntity(id, resource);
+            if (getEntityResult.Result != null)
+                return getEntityResult.Result;
+            var entity = getEntityResult.Value;
+            await ResourceMapper.Map(resource, entity);
+            await AlterRepository.Update(entity);
+            return await ResourceMapper.Map(entity);
+        }
+
+        private async Task<ActionResult<TEntity>> GetEntity(string id, TUpdateResource resource)
         {
             var entity = await QueryRepository.Get(id);
             if (entity == null)
@@ -72,11 +83,8 @@ namespace Core.Server.Application
             var validation = await ResourceValidator.Validate(resource, entity);
             if (!(validation is OkResult))
                 return validation;
-            await ResourceMapper.Map(resource, entity);
-            await AlterRepository.Update(entity);
-            return await ResourceMapper.Map(entity);
+            return entity;
         }
-
         public virtual async Task<ActionResult> Delete(string id)
         {
             var entity = await QueryRepository.Get(id);
@@ -89,21 +97,6 @@ namespace Core.Server.Application
         {
             await AlterRepository.Delete(entity);
             return Ok();
-        }
-
-        private async Task Map(TCreateResource resource, TEntity entity)
-        {
-            if (entity == null)
-                await ResourceMapper.Map(resource);
-            else
-                 await ResourceMapper.Map(resource, entity);
-        }
-
-        private async Task<ActionResult> Validate(TCreateResource resource, TEntity entity)
-        {
-            return entity == null
-             ? await ResourceValidator.Validate(resource)
-             : await ResourceValidator.Validate(resource, entity);
         }
     }
 }

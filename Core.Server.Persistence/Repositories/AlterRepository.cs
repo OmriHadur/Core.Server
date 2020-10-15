@@ -49,5 +49,10 @@ namespace Core.Server.Persistence.Repositories
         {
             await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
         }
+
+        public async Task Replace(TEntity entity)
+        {
+            await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
+        }
     }
 }

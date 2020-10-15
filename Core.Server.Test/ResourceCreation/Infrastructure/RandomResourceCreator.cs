@@ -1,16 +1,15 @@
 ﻿using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreation.Interfaces;
-using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Tests.Utils;
 using System;
 using Unity;
 
 namespace Core.Server.Test.ResourceCreation
 {
-    public class RandomResourceCreator<TCreateResource, TUpdateResource>
-        : IRandomResourceCreator<TCreateResource, TUpdateResource>
+    public class RandomResourceCreator<TCreateResource, TUpdateResource, TResource>
+        : IRandomResourceCreator<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource, new()
         where TUpdateResource : UpdateResource, new()
+        where TResource: Resource
     {
         protected Random Random;
 
@@ -24,7 +23,7 @@ namespace Core.Server.Test.ResourceCreation
             return createResource;
         }
 
-        public TUpdateResource GetRandomUpdateResource()
+        public TUpdateResource GetRandomUpdateResource(TResource resource)
         {
             var updateResource = new TUpdateResource();
             AddRandomValues(updateResource);
@@ -36,7 +35,7 @@ namespace Core.Server.Test.ResourceCreation
             ObjectRandomizer.AddRandomValues(createResource);
         }
 
-        protected virtual void AddRandomValues(TUpdateResource updateResource)
+        protected virtual void AddRandomValues(TUpdateResource updateResource, TResource existingResource)
         {
             ObjectRandomizer.AddRandomValues(updateResource);
         }

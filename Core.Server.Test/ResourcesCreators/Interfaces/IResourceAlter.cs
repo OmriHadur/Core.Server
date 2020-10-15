@@ -11,7 +11,8 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
     {
         ActionResult<TResource> Create();
         ActionResult<TResource> Create(Action<TCreateResource> editFunc);
-        ActionResult<TResource> Update();
+        ActionResult<TResource> Replace();
+        ActionResult<TResource> Replace(Action<TUpdateResource> editFunc);
         ActionResult<TResource> Update(Action<TUpdateResource> editFunc);
     }
 }

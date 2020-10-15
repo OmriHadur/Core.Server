@@ -17,7 +17,7 @@ namespace Core.Server.Client.Clients
             return SentPost(resource);
         }
 
-        public Task<ActionResult<TResource>> CreateOrUpdate(string id, TCreateResource resource)
+        public Task<ActionResult<TResource>> Replace(string id, TUpdateResource resource)
         {
             return SentPut(id,resource);
         }

@@ -17,6 +17,8 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
     {
         [Dependency]
         public IRandomResourceCreator<TCreateResource, TUpdateResource, TResource> RandomResourceCreator;
+        [Dependency]
+        public IResourceCreate<TResource> ResourceCreate;
 
         public ActionResult<TResource> Create()
         {
@@ -33,19 +35,25 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return response;
         }
 
-        public ActionResult<TResource> Update()
+        public ActionResult<TResource> Replace()
         {
-            var result = Create();
-            if (result.IsFail)
-                return result;
-            var id = ResourceIdsHolder.GetLast<TResource>();
-            var updateResource = RandomResourceCreator.GetRandomUpdateResource(result.Value);
-            Client.CreateOrUpdate(id, updateResource);
+            return Replace(r => { });
+        }
+
+        public ActionResult<TResource> Replace(Action<TUpdateResource> editFunc)
+        {
+            var resource = ResourceCreate.GetOrCreate();
+            var updateResource = RandomResourceCreator.GetRandomUpdateResource(resource);
+            editFunc(updateResource);
+            return Client.Replace(resource.Id, updateResource).Result;
         }
 
         public ActionResult<TResource> Update(Action<TUpdateResource> editFunc)
         {
-            throw new NotImplementedException();
+            var resource = ResourceCreate.GetOrCreate();
+            var updateResource = RandomResourceCreator.GetRandomUpdateResource(resource);
+            editFunc(updateResource);
+            return Client.Update(resource.Id, updateResource).Result;
         }
     }
 }

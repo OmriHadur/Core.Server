@@ -15,6 +15,8 @@ namespace Core.Server.Common.Repositories
 
         Task DeleteOne(Expression<Func<TEntity, bool>> predicate);
 
+        Task Replace(TEntity item);
+
         Task Update(TEntity item);
 
         Task Delete(TEntity entity);

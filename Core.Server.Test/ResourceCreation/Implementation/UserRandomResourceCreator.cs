@@ -1,12 +1,11 @@
 ﻿using Core.Server.Shared.Resources.Users;
-using Core.Server.Test.ResourcesCreators.Infrastructure;
-using Core.Server.Tests.Utils;
+using Core.Server.Tests.Configuration;
 using Unity;
 
 namespace Core.Server.Test.ResourceCreation
 {
     public class UserRandomResourceCreator
-        : RandomResourceCreator<UserCreateResource, UserUpdateResource>
+        : RandomResourceCreator<UserCreateResource, UserUpdateResource, UserResource>
     {
         [Dependency]
         public IConfigHandler ConfigHandler;
