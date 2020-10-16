@@ -13,10 +13,8 @@ namespace Core.Server.Client.Interfaces
     {
         Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources);
 
-        Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids);
-
-        Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids);
-
         Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources);
+
+        Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids);
     }
 }

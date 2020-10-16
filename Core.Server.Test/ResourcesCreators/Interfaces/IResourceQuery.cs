@@ -8,6 +8,7 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
         where TResource : Resource
     {
         ActionResult<TResource> Get(string id);
-        IEnumerable<TResource> GetAll();
+        IEnumerable<TResource> Get(string[] ids);
+        IEnumerable<TResource> Get();
     }
 }

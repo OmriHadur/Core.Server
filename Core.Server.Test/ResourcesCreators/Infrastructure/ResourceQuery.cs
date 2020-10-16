@@ -16,9 +16,14 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return Client.Get(id).Result;
         }
 
-        public IEnumerable<TResource> GetAll()
+        public IEnumerable<TResource> Get()
         {
             return Client.Get().Result.Value;
+        }
+
+        public IEnumerable<TResource> Get(string[] ids)
+        {
+            return Client.Get(ids).Result.Value;
         }
     }
 }

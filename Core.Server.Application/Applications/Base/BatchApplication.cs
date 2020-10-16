@@ -62,16 +62,6 @@ namespace Core.Server.Application
             return BatchRepository.AddMany(entities);
         }
 
-        public async Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids)
-        {
-            var entities = await QueryRepository.FindAll(e => ids.Contains(e.Id));
-
-            var notFoundId = ids.FirstOrDefault(id => !entities.Any(e => e.Id == id));
-            if (notFoundId != null)
-                return NotFound(notFoundId);
-
-            return Ok(await ResourceMapper.Map(entities));
-        }
         public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
         {
             throw new NotImplementedException();

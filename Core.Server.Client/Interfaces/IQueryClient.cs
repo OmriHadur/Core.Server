@@ -14,6 +14,8 @@ namespace Core.Server.Client.Interfaces
 
         Task<ActionResult<IEnumerable<TResource>>> Get();
 
+        Task<ActionResult<IEnumerable<TResource>>> Get(string[] ids);
+
         Task<ActionResult<TResource>> Get(string id);
 
         Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query);

@@ -15,12 +15,6 @@ namespace Core.Server.Web.Controllers
         where TUpdateResource : UpdateResource
         where TResource : Resource
     {
-        [HttpGet("batch")]
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids)
-        {
-            return await Application.BatchGet(ids);
-        }
-
         [HttpPost("batch")]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
         {

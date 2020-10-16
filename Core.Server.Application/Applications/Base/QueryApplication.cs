@@ -11,6 +11,7 @@ using Core.Server.Application.Helpers;
 using Core.Server.Shared.Errors;
 using Core.Server.Common.Mappers;
 using Core.Server.Common.Attributes;
+using System.Linq;
 
 namespace Core.Server.Application
 {
@@ -30,13 +31,22 @@ namespace Core.Server.Application
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
             var entities = await QueryRepository.Get();
             return Ok(await ResourceMapper.Map(entities));
         }
 
-        public virtual async Task<ActionResult<TResource>> Get(string id)
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> GetByIds(string[] ids)
+        {
+            var entities = await QueryRepository.Get(ids);
+            var notFoundId = ids.FirstOrDefault(id => !entities.Any(e => e.Id == id));
+            if (notFoundId != null)
+                return NotFound(notFoundId);
+            return Ok(await ResourceMapper.Map(entities));
+        }
+
+        public virtual async Task<ActionResult<TResource>> GetById(string id)
         {
             var entity = await QueryRepository.Get(id);
             if (entity == null)

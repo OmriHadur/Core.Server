@@ -22,13 +22,13 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         public ActionResult<TResource> Create()
         {
-            return Create(r => { });
+            return Create(null);
         }
 
         public ActionResult<TResource> Create(Action<TCreateResource> editFunc)
         {
             var createResource = RandomResourceCreator.GetRandomCreateResource();
-            editFunc(createResource);
+            editFunc?.Invoke(createResource);
             var response = Client.Create(createResource).Result;
             if (response.IsSuccess)
                 ResourceIdsHolder.Add<TResource>(response.Value.Id);
@@ -37,14 +37,14 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         public ActionResult<TResource> Replace()
         {
-            return Replace(r => { });
+            return Replace(null);
         }
 
         public ActionResult<TResource> Replace(Action<TUpdateResource> editFunc)
         {
             var resource = ResourceCreate.GetOrCreate();
             var updateResource = RandomResourceCreator.GetRandomUpdateResource(resource);
-            editFunc(updateResource);
+            editFunc?.Invoke(updateResource);
             return Client.Replace(resource.Id, updateResource).Result;
         }
 

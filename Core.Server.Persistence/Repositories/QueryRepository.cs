@@ -37,7 +37,7 @@ namespace Core.Server.Persistence.Repositories
             return (await Collection.FindAsync(e => e.Id == id)).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll(IEnumerable<string> ids)
+        public async Task<IEnumerable<TEntity>> Get(string[] ids)
         {
             return (await Collection.FindAsync(e => ids.Contains(e.Id))).ToList();
         }

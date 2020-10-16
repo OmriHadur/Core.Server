@@ -11,8 +11,6 @@ namespace Core.Server.Common.Applications
         where TUpdateResource : UpdateResource
         where TResource : Resource
     {
-        Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids);
-
         Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources);
 
         Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources);

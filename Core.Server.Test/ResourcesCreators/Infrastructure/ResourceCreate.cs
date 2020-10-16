@@ -19,6 +19,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         [Dependency]
         public IResourceQuery<TResource> ResourceQuery;
+
         [Dependency]
         public IResourceAlter<TCreateResource, TUpdateResource, TResource> ResourceAlter;
         

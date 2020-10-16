@@ -26,7 +26,7 @@ namespace Core.Server.Tests.ResourceTests
         public virtual void TestCreateAddedToList()
         {
             var originalListCount = GetAllExistingCount();
-            ResourcesHolder.Create<TResource>();
+            CreateResource();
             var newListCount = GetAllExistingCount();
             Assert.AreEqual(originalListCount + 1, newListCount);
         }

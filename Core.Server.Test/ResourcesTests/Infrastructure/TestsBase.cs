@@ -1,43 +1,20 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System;
-using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Tests.Unity;
-using Core.Server.Tests.Utils;
-using Core.Server.Client.Interfaces;
-using Core.Server.Shared.Resources;
 using Core.Server.Client.Results;
-using Core.Server.Shared.Errors;
 
 namespace Core.Server.Tests.ResourceTests
 {
     public abstract class TestsBase
     {
         protected Random Random;
-        protected IResourcesIdHolder ResourcesHolder;
         protected ITestsUnityContainer TestsUnityContainer;
-        protected ITokenHandler TokenHandler;
-        protected IConfigHandler ConfigHandler;
+
         public TestsBase()
         {
             Random = new Random();
             TestsUnityContainer = new TestsUnityContainer();
-            ResourcesHolder = TestsUnityContainer.Resolve<IResourcesIdHolder>();
-            TokenHandler = TestsUnityContainer.Resolve<ITokenHandler>();
-            ConfigHandler = TestsUnityContainer.Resolve<IConfigHandler>();
-        }
-
-        protected TIClient GetClient<TIClient>() where TIClient : IClientBase
-        {
-            var client = TestsUnityContainer.Resolve<TIClient>();
-            if (client.ServerUrl == null)
-                client.ServerUrl = ConfigHandler.Config.ServerUrl;
-            if (client.Token == null)
-            {
-                TokenHandler.OnTokenChange += (s, t) => client.Token = t;
-                client.Token = TokenHandler.Token;
-            }
-            return client;
         }
 
         protected void Validate(object expected, object actual)
@@ -62,16 +39,11 @@ namespace Core.Server.Tests.ResourceTests
             }
         }
 
-        protected TFResource GetExistingOrNew<TFResource>()
-            where TFResource : Resource
-        {
-            return ResourcesHolder.GetLastOrCreate<TFResource>().Value;
-        }
-
         protected void AssertUnauthorized<T>(ActionResult<T> response)
         {
             Assert.IsInstanceOfType(response.Result, typeof(UnauthorizedResult));
         }
+
         protected void AssertNotFound(ActionResult response)
         {
             Assert.IsInstanceOfType(response, typeof(NotFoundResult));
@@ -95,15 +67,6 @@ namespace Core.Server.Tests.ResourceTests
                 Random.NextBytes(buffer);
                 return string.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
             }
-        }
-
-        protected TCreateResource GetRandomCreateResource<TCreateResource, TUpdateResource, TResource>() 
-            where TCreateResource : CreateResource, new()
-            where TUpdateResource : UpdateResource
-            where TResource : Resource
-        {
-            var creator = TestsUnityContainer.Resolve<IResourceCreate<TCreateResource, TUpdateResource,TResource>>();
-            return creator.GetRandomCreateResource();
         }
 
         protected void AssertBadRequestReason<T, TReson>(ActionResult<T> response, TReson badRequestReason)

@@ -3,20 +3,27 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Client.Results;
+using Core.Server.Test.ResourcesCreators.Interfaces;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public abstract class ResourceTestsBase<TCreateResource, TUpdateResource,TResource> :
-        TestsBase
-        where TCreateResource : CreateResource, new()
+    public abstract class ResourceTestsBase<TCreateResource, TUpdateResource,TResource>
+        : TestsBase
+        where TCreateResource : CreateResource
         where TUpdateResource: UpdateResource
         where TResource : Resource
     {
+        private readonly IResourcesClean resourcesClean;
+
         protected TResource CreatedResource;
-        protected IResourceCreate<TCreateResource, TUpdateResource,TResource> ResourceCreator;
+        protected readonly IResourceCreate<TResource> ResourceCreate;
+        protected readonly IResourcesIdsHolder ResourcesIdsHolder;
+
         public ResourceTestsBase()
         {
-            ResourceCreator = TestsUnityContainer.Resolve<IResourceCreate<TCreateResource, TUpdateResource,TResource>>();
+            ResourceCreate = TestsUnityContainer.Resolve<IResourceCreate<TResource>>();
+            ResourcesIdsHolder= TestsUnityContainer.Resolve<IResourcesIdsHolder>();
+            resourcesClean = TestsUnityContainer.Resolve<IResourcesClean>();
         }
 
         [TestInitialize]
@@ -28,17 +35,16 @@ namespace Core.Server.Tests.ResourceTests
         [TestCleanup]
         public void Cleanup()
         {
-            ResourcesHolder.DeleteAll();
-            ResourcesHolder.DeleteAll();
+            resourcesClean.Clean();
         }
         protected void CreateResource()
         {
-            CreatedResource = ResourcesHolder.Create<TResource>().Value;
+            CreatedResource = ResourceCreate.Create().Value;
         }
 
         protected int GetAllExistingCount()
         {
-            return ResourcesHolder.GetAllExisting<TResource>().Count();
+            return ResourcesIdsHolder.GetAll<TResource>().Count();
         }
 
         protected void AssertActionResult<T>(ActionResult<TResource> response)

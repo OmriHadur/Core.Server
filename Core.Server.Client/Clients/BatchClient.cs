@@ -19,19 +19,14 @@ namespace Core.Server.Client.Clients
             return SentPostMany("batch", resources);
         }
 
-        public Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids)
-        {
-            return SendDeleteMany("batch", ids);
-        }
-
-        public Task<ActionResult<IEnumerable<TResource>>> BatchGet(string[] ids)
-        {
-            return SendGetMany("batch");
-        }
-
         public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
         {
             return SentPutMany("batch", resources);
+        }
+
+        public Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids)
+        {
+            return SendDeleteMany("batch", ids);
         }
     }
 }

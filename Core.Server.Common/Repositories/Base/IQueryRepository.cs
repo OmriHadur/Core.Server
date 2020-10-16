@@ -12,7 +12,7 @@ namespace Core.Server.Common.Repositories
     {
         Task<TEntity> Get(string id);
 
-        Task<IEnumerable<TEntity>> GetAll(IEnumerable<string> ids);
+        Task<IEnumerable<TEntity>> Get(string[] ids);
 
         Task<IEnumerable<TEntity>> Get();
 
