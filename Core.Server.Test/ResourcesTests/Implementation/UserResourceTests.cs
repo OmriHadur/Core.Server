@@ -5,7 +5,7 @@ using Core.Server.Shared.Resources.Users;
 namespace Core.Server.Tests.ResourceTests
 {
     [TestClass]
-    public class UserResourceTests : ResourceTests<UserCreateResource,UserUpdateResource, UserResource>
+    public class UserResourceTests : ResourceQueryTests<UserCreateResource,UserUpdateResource, UserResource>
     {
         [TestMethod]
         public override void TestList()

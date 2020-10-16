@@ -3,12 +3,15 @@ using Core.Server.Shared.Resources;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public abstract class ResourceTests<TCreateResource, TUpdateResource, TResource> :
-        ResourceTestsBase<TCreateResource, TUpdateResource, TResource>
+    public abstract class ResourceAlterTests<TCreateResource, TUpdateResource, TResource> :
+        ResourceTestsBase<TResource>
         where TCreateResource : CreateResource, new()
         where TUpdateResource: UpdateResource
         where TResource : Resource
     {
+
+        ResourceAlter = TestsUnityContainer.Resolve<IResourceAlter<TCreateResource, TUpdateResource, TResource>>();
+
 
         [TestMethod]
         public virtual void TestCreateAndRemove()

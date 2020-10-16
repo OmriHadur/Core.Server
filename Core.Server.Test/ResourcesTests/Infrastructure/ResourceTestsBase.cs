@@ -7,22 +7,24 @@ using Core.Server.Test.ResourcesCreators.Interfaces;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public abstract class ResourceTestsBase<TCreateResource, TUpdateResource,TResource>
+    public abstract class ResourceTestsBase<TResource>
         : TestsBase
-        where TCreateResource : CreateResource
-        where TUpdateResource: UpdateResource
         where TResource : Resource
     {
         private readonly IResourcesClean resourcesClean;
 
         protected TResource CreatedResource;
+        protected readonly IResourceQuery<TResource> ResourceQuery;
         protected readonly IResourceCreate<TResource> ResourceCreate;
+        
         protected readonly IResourcesIdsHolder ResourcesIdsHolder;
 
         public ResourceTestsBase()
         {
             ResourceCreate = TestsUnityContainer.Resolve<IResourceCreate<TResource>>();
             ResourcesIdsHolder= TestsUnityContainer.Resolve<IResourcesIdsHolder>();
+            ResourceQuery = TestsUnityContainer.Resolve<IResourceQuery<TResource>>();
+            ResourceQuery = TestsUnityContainer.Resolve<IResourceQuery<TResource>>();
             resourcesClean = TestsUnityContainer.Resolve<IResourcesClean>();
         }
 
@@ -37,6 +39,7 @@ namespace Core.Server.Tests.ResourceTests
         {
             resourcesClean.Clean();
         }
+
         protected void CreateResource()
         {
             CreatedResource = ResourceCreate.Create().Value;

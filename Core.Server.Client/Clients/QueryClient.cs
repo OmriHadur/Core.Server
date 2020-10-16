@@ -22,7 +22,7 @@ namespace Core.Server.Client.Clients
             return SendGetMany();
         }
 
-        public Task<ActionResult<IEnumerable<TResource>>> Get(string[] ids)
+        public Task<ActionResult<IEnumerable<TResource>>> Get(IEnumerable<string> ids)
         {
             return SentPostMany("ids", ids);
         }
