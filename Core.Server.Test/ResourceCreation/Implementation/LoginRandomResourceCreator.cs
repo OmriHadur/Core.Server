@@ -9,15 +9,15 @@ namespace Core.Server.Test.ResourceCreation
         : RandomResourceCreator<LoginCreateResource, LoginUpdateResource, LoginResource>
     {
         [Dependency]
-        public IConfigHandler ConfigHandler;
+        public TestConfig Config;
 
         [Dependency]
         public IResourceCreate<UserResource> userResourceHandler;
 
-        protected override void AddRandomValues(LoginUpdateResource updateResource,LoginResource existingResource)
+        protected override void AddRandomValues(LoginUpdateResource updateResource)
         {
             updateResource.Email = userResourceHandler.GetOrCreate().Email;
-            updateResource.Password = ConfigHandler.Config.UserPassword;
+            updateResource.Password = Config.UserPassword;
         }
     }
 }

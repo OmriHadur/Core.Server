@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Core.Server.Shared.Resources.Users;
-using Core.Server.Common.Attributes;
+using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Application.Helper
 {

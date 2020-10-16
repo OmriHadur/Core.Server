@@ -9,7 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Common.Attributes;
+using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Persistence.Repositories
 {

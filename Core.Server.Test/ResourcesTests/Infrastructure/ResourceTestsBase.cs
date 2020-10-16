@@ -4,6 +4,7 @@ using System.Linq;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Client.Results;
 using Core.Server.Test.ResourcesCreators.Interfaces;
+using Unity;
 
 namespace Core.Server.Tests.ResourceTests
 {

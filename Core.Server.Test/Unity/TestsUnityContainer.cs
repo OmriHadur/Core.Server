@@ -1,6 +1,11 @@
 ﻿using Core.Server.Client.Clients;
+using Core.Server.Common.Config;
+using Core.Server.Injection.Reflaction;
+using Core.Server.Injection.Unity;
+using Core.Server.Tests.Configuration;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Tests.Utils;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +14,26 @@ using Unity;
 
 namespace Core.Server.Tests.Unity
 {
-    public class TestsUnityContainer : ITestsUnityContainer
+    public class TestsUnityContainer
     {
-        private IUnityContainer unityContainer;
+        public IUnityContainer UnityContainer { get; private set; }
 
         public TestsUnityContainer()
         {
-            unityContainer = new UnityContainer();
+            UnityContainer = new UnityContainer();
+            var config = GetTestConfig();
+            UnityContainer.RegisterInstance(typeof(TestConfig), config);
+            var reflactionHelper = new ReflactionHelper(config.Assemblies);
+            var unityContainerBuilder = new UnityContainerBuilder(UnityContainer, reflactionHelper);
+            unityContainerBuilder.ConfigureContainer();
         }
 
-        public T Resolve<T>()
+        public TestConfig GetTestConfig()
         {
-            return unityContainer.Resolve<T>();
-        }
-
-        public T Resolve<T>(string name)
-        {
-            return unityContainer.Resolve<T>(name);
+            var config = new ConfigurationBuilder()
+                    .AddJsonFile(".\\appsettings.json")
+                    .Build().Get<TestConfig>();
+            return config;
         }
     }
 }

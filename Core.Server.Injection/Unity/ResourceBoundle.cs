@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Core.Server.Common
+namespace Core.Server.Injection.Unity
 {
     public class ResourceBoundle
     {

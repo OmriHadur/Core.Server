@@ -1,9 +1,9 @@
-﻿using Core.Server.Common;
+﻿using Core.Server.Injection.Unity;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Core.Server.Application.Helpers
+namespace Core.Server.Injection.Interfaces
 {
     public interface IReflactionHelper
     {

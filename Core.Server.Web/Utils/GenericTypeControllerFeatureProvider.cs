@@ -1,6 +1,6 @@
-﻿using Core.Server.Application.Helpers;
-using Core.Server.Common;
-using Core.Server.Common.Attributes;
+﻿using Core.Server.Injection.Attributes;
+using Core.Server.Injection.Interfaces;
+using Core.Server.Injection.Unity;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System;

@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreators.Interfaces;
+using Unity;
 
 namespace Core.Server.Tests.ResourceTests
 {

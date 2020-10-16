@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core.Server.Common\Core.Server.Common.csproj" />
+    <ProjectReference Include="..\Core.Server.Injection\Core.Server.Injection.csproj" />
     <ProjectReference Include="..\Core.Server.Shared\Core.Server.Shared.csproj" />
   </ItemGroup>
 

@@ -20,7 +20,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public ICurrentUser TokenHandler;
 
         [Dependency]
-        public IConfigHandler ConfigHandler;
+        public TestConfig Config;
 
         [Dependency]
         public TClient Client
@@ -28,7 +28,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             get
             {
                 if (_client.ServerUrl == null)
-                    _client.ServerUrl = ConfigHandler.Config.ServerUrl;
+                    _client.ServerUrl = Config.ServerUrl;
                 if (_client.Token == null)
                 {
                     TokenHandler.OnTokenChange += (s, t) => _client.Token = t;

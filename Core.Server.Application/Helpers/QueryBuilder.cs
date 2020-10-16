@@ -4,7 +4,7 @@ using Core.Server.Shared.Query;
 using Core.Server.Shared.Resources;
 using System.Linq;
 using System.Reflection;
-using Core.Server.Common.Attributes;
+using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Application.Helpers
 {

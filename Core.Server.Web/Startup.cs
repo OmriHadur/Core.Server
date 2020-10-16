@@ -21,17 +21,21 @@ using Core.Server.Web.Utils;
 using Core.Server.Application.Mappers;
 using Core.Server.Application.Helpers;
 using Core.Server.Common.Config;
+using Core.Server.Injection.Interfaces;
+using Core.Server.Injection.Unity;
+using Core.Server.Injection.Reflaction;
 
 namespace Core.Server.Web
 {
     public class Startup
     {
-        private IReflactionHelper reflactionHelper;
+        private readonly IReflactionHelper reflactionHelper;
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            reflactionHelper = new ReflactionHelper(configuration);
+            var assembliesName = configuration.GetSection(Config.AssembliesSection).Get<string[]>();
+            reflactionHelper = new ReflactionHelper(assembliesName);
         }
 
         public IConfiguration Configuration { get; }

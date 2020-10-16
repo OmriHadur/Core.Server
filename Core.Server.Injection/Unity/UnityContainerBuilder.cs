@@ -1,12 +1,11 @@
-﻿using Core.Server.Application.Helpers;
-using Core.Server.Common;
-using Core.Server.Common.Attributes;
+﻿using Core.Server.Injection.Attributes;
+using Core.Server.Injection.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;
 
-namespace Core.Server.Web.Utils
+namespace Core.Server.Injection.Unity
 {
     public class UnityContainerBuilder
     {

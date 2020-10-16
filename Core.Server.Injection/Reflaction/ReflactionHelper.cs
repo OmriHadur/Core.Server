@@ -1,26 +1,23 @@
-﻿using Core.Server.Common;
-using Core.Server.Common.Config;
-using Core.Server.Common.Entities;
+﻿using Core.Server.Common.Entities;
+using Core.Server.Injection.Interfaces;
+using Core.Server.Injection.Unity;
 using Core.Server.Shared.Resources;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Core.Server.Application.Helpers
+namespace Core.Server.Injection.Reflaction
 {
     public class ReflactionHelper : IReflactionHelper
     {
         private readonly List<Type> types;
         private readonly Dictionary<Type, Type> interfaceToType;
 
-        public ReflactionHelper(IConfiguration configuration)
+        public ReflactionHelper(string[] assembliesName)
         {
             interfaceToType = new Dictionary<Type, Type>();
             types = new List<Type>();
-            var assembliesName = configuration.GetSection(Config.AssembliesSection).Get<string[]>();
-
             foreach (Assembly assembly in GetAssemblies(assembliesName))
                 types.AddRange(assembly.GetExportedTypes());
         }

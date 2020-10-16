@@ -1,11 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using Core.Server.Common;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Query;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Core.Server.Common.Attributes;
+using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Persistence.Filters
 {
@@ -50,8 +49,9 @@ namespace Core.Server.Persistence.Filters
                     return Builders<TEntity>.Filter.Eq(numberQuery.Field, numberQuery.Value);
                 case Shared.Query.NumberQueryOperands.GreaterThen:
                     return Builders<TEntity>.Filter.Gt(numberQuery.Field, numberQuery.Value);
+                default:
+                    return null;
             }
-            return null;
         }
     }
 }

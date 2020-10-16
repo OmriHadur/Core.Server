@@ -15,7 +15,7 @@ namespace Core.Server.Tests.ResourceTests
         public TestsBase()
         {
             Random = new Random();
-            UnityContainer = new TestsUnityContainer();
+            UnityContainer = new TestsUnityContainer().UnityContainer;
         }
 
         protected void Validate(object expected, object actual)

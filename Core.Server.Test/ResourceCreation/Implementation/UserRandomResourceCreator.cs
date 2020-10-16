@@ -8,12 +8,12 @@ namespace Core.Server.Test.ResourceCreation
         : RandomResourceCreator<UserCreateResource, UserUpdateResource, UserResource>
     {
         [Dependency]
-        public IConfigHandler ConfigHandler;
+        public TestConfig Config;
 
         protected override void AddRandomValues(UserCreateResource createResource)
         {
             base.AddRandomValues(createResource);
-            createResource.Password = ConfigHandler.Config.UserPassword;
+            createResource.Password = Config.UserPassword;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Core.Server.Tests.Utils
         public IResourcesIdsHolder ResourcesHolder;
 
         [Dependency]
-        public IConfigHandler ConfigHandler;
+        public TestConfig Config;
 
         [Dependency]
         public IResourceCreate<UserResource> UserResourceCreate;

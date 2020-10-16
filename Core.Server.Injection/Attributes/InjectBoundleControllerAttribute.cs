@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Server.Common.Attributes
+namespace Core.Server.Injection.Attributes
 {
     public class InjectBoundleControllerAttribute : Attribute
     {

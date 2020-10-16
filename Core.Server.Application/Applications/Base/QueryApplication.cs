@@ -10,8 +10,8 @@ using Core.Server.Shared.Query;
 using Core.Server.Application.Helpers;
 using Core.Server.Shared.Errors;
 using Core.Server.Common.Mappers;
-using Core.Server.Common.Attributes;
 using System.Linq;
+using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Application
 {

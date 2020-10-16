@@ -9,7 +9,7 @@ using Core.Server.Common.Validators;
 using Core.Server.Common.Mappers;
 using Core.Server.Shared.Resources.Users;
 using System;
-using Core.Server.Common.Attributes;
+using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Application
 {

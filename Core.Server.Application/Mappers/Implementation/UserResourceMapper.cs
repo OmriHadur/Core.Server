@@ -4,7 +4,7 @@ using Core.Server.Common.Entities;
 using Core.Server.Shared.Resources.Users;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Common.Attributes;
+using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Application.Mappers.Implementation
 {
@@ -12,7 +12,7 @@ namespace Core.Server.Application.Mappers.Implementation
     public class UserResourceMapper
         : AlterResourceMapper<UserCreateResource,UserUpdateResource, UserResource,UserEntity>
     {
-        private PasswordHasher _passwordHasher = new PasswordHasher();
+        private readonly PasswordHasher _passwordHasher = new PasswordHasher();
 
         public async override Task<UserEntity> Map(UserCreateResource resource)
         {
@@ -34,8 +34,7 @@ namespace Core.Server.Application.Mappers.Implementation
 
         private void AddPassword(string password, UserEntity userEntity)
         {
-            byte[] passwordHash, passwordSalt;
-            _passwordHasher.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            _passwordHasher.CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
             userEntity.PasswordHash = passwordHash;
             userEntity.PasswordSalt = passwordSalt;
         }
