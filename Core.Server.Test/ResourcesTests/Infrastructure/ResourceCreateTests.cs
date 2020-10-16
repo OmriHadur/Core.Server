@@ -28,16 +28,16 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public void TestGetNotFoundAfterDelete()
         {
-            ResourcesHolder.Delete<TResource>(CreatedResource.Id);
-            var response = ResourcesHolder.Get<TResource>(CreatedResource.Id);
+            ResourceCreate.Delete(CreatedResource.Id);
+            var response = ResourceQuery.Get(CreatedResource.Id);
             AssertNotFound(response);
         }
 
         [TestMethod]
         public virtual void TestDeleteNotFoundDelete()
         {
-            ResourcesHolder.Delete<TResource>(CreatedResource.Id);
-            var response = ResourcesHolder.Delete<TResource>(CreatedResource.Id);
+            ResourceCreate.Delete(CreatedResource.Id);
+            var response = ResourceCreate.Delete(CreatedResource.Id);
             AssertNotFound(response);
         }
     }

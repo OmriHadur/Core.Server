@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Core.Server.Tests.Utils
 {
-    public interface ITokenHandler
+    public interface ICurrentUser
     {
         event EventHandler<string> OnTokenChange;
         string Token { get; }

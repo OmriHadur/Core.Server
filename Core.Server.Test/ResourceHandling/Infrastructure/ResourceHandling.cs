@@ -17,7 +17,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public IResourcesIdsHolder ResourceIdsHolder;
 
         [Dependency]
-        public ITokenHandler TokenHandler;
+        public ICurrentUser TokenHandler;
 
         [Dependency]
         public IConfigHandler ConfigHandler;

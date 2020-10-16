@@ -59,6 +59,12 @@ namespace Core.Server.Tests.ResourceTests
             Assert.IsNull(response.Result);
         }
 
+        protected void AssertOk<T>(ActionResult<T> response)
+        {
+            Assert.IsTrue(response is OkResult);
+            Assert.IsTrue(response.Value != null);
+        }
+
         protected string RandomId
         {
             get

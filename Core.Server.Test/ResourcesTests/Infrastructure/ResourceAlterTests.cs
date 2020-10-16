@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
+using Core.Server.Tests.ResourceCreators.Interfaces;
 
 namespace Core.Server.Tests.ResourceTests
 {
@@ -10,85 +11,18 @@ namespace Core.Server.Tests.ResourceTests
         where TResource : Resource
     {
 
-        ResourceAlter = TestsUnityContainer.Resolve<IResourceAlter<TCreateResource, TUpdateResource, TResource>>();
+        private readonly IResourceAlter<TCreateResource, TUpdateResource, TResource> resourceAlter;
 
-
-        [TestMethod]
-        public virtual void TestCreateAndRemove()
+        public ResourceAlterTests()
         {
-            Assert.IsNotNull(CreatedResource);
+            resourceAlter = TestsUnityContainer.Resolve<IResourceAlter<TCreateResource, TUpdateResource, TResource>>();
         }
 
         [TestMethod]
-        public virtual void TestList()
+        public void Update()
         {
-            Assert.AreEqual(1, GetAllExistingCount());
-        }
-
-        [TestMethod]
-        public virtual void TestCreateAddedToList()
-        {
-            var originalListCount = GetAllExistingCount();
-            CreateResource();
-            var newListCount = GetAllExistingCount();
-            Assert.AreEqual(originalListCount + 1, newListCount);
-        }
-
-        [TestMethod]
-        public virtual void TestGet()
-        {
-            var resourceResult = ResourcesHolder.GetLastOrCreate<TResource>();
-            Assert.IsNotNull(resourceResult.Value);
-            Validate(CreatedResource, resourceResult.Value);
-        }
-
-        [TestMethod]
-        public virtual void TestGetNotFound()
-        {
-            var response = ResourcesHolder.Get<TResource>(RandomId);
-            AssertNotFound(response);
-        }
-
-        [TestMethod]
-        public virtual void TestUpdate()
-        {
-            var resourceToUpdate = ResourceCreator.GetRandomUpdateResource();
-            var updatedItemResult = ResourceCreator.Update(CreatedResource.Id, resourceToUpdate);
-            Assert.IsNotNull(updatedItemResult.Value);
-            Validate(resourceToUpdate, updatedItemResult.Value);
-        }
-
-        [TestMethod]
-        public virtual void TestUpdateNotFound()
-        {
-            var resourceToUpdate = ResourceCreator.GetRandomUpdateResource();
-            var updatedItemResult = ResourceCreator.Update(RandomId, resourceToUpdate);
-            AssertNotFound(updatedItemResult);
-        }
-
-        [TestMethod]
-        public virtual void TestDelete()
-        {
-            var originalListCount = GetAllExistingCount();
-            ResourcesHolder.Delete<TResource>(CreatedResource.Id);
-            var deletedListCount = GetAllExistingCount();
-            Assert.AreEqual(originalListCount - 1, deletedListCount);
-        }
-
-        [TestMethod]
-        public void TestGetNotFoundAfterDelete()
-        {
-            ResourcesHolder.Delete<TResource>(CreatedResource.Id);
-            var response = ResourcesHolder.Get<TResource>(CreatedResource.Id);
-            AssertNotFound(response);
-        }
-
-        [TestMethod]
-        public virtual void TestDeleteNotFoundDelete()
-        {
-            ResourcesHolder.Delete<TResource>(CreatedResource.Id);
-            var response = ResourcesHolder.Delete<TResource>(CreatedResource.Id);
-            AssertNotFound(response);
+            var response = resourceAlter.Replace();
+            AssertOk(response);
         }
     }
 }

@@ -4,41 +4,41 @@ using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    [TestClass]
-    public class LoginResourceTests : ResourceQueryTests<LoginCreateResource,LoginUpdateResource, LoginResource>
-    {
-        [TestMethod]
-        public override void TestList()
-        {
-            Assert.AreEqual(2, GetAllExistingCount());
-        }
+    //[TestClass]
+    //public class LoginResourceTests : ResourceQueryTests<LoginCreateResource,LoginUpdateResource, LoginResource>
+    //{
+    //    [TestMethod]
+    //    public override void TestList()
+    //    {
+    //        Assert.AreEqual(2, GetAllExistingCount());
+    //    }
 
-        public override void TestUpdate() { }
-        [TestMethod]
-        public void TestLoginWithBadEmail()
-        {
-            var response = ResourcesHolder.EditAndCreate<LoginCreateResource, LoginUpdateResource, LoginResource >((r) => r.Email = "a" + r.Email);
+    //    public override void TestUpdate() { }
+    //    [TestMethod]
+    //    public void TestLoginWithBadEmail()
+    //    {
+    //        var response = ResourcesHolder.EditAndCreate<LoginCreateResource, LoginUpdateResource, LoginResource >((r) => r.Email = "a" + r.Email);
 
-            Assert.IsTrue(response.Result is UnauthorizedResult);
-        }
+    //        Assert.IsTrue(response.Result is UnauthorizedResult);
+    //    }
 
-        [TestMethod]
-        public void TestLoginWithBadPassword()
-        {
-            var response = ResourcesHolder.EditAndCreate<LoginCreateResource, LoginUpdateResource, LoginResource >((r) => r.Password = "a" + r.Password);
+    //    [TestMethod]
+    //    public void TestLoginWithBadPassword()
+    //    {
+    //        var response = ResourcesHolder.EditAndCreate<LoginCreateResource, LoginUpdateResource, LoginResource >((r) => r.Password = "a" + r.Password);
 
-            Assert.IsTrue(response.Result is UnauthorizedResult);
-        }
+    //        Assert.IsTrue(response.Result is UnauthorizedResult);
+    //    }
 
-        [TestMethod]
-        public void TestLoginAfterUserDelete()
-        {
-            var loginCreateResource = ResourceCreator.GetRandomCreateResource();
-            ResourcesHolder.DeleteAll<UserResource>();
+    //    [TestMethod]
+    //    public void TestLoginAfterUserDelete()
+    //    {
+    //        var loginCreateResource = ResourceCreator.GetRandomCreateResource();
+    //        ResourcesHolder.DeleteAll<UserResource>();
 
-            var response = ResourcesHolder.Create<LoginCreateResource, LoginUpdateResource, LoginResource >(loginCreateResource);
+    //        var response = ResourcesHolder.Create<LoginCreateResource, LoginUpdateResource, LoginResource >(loginCreateResource);
 
-            Assert.IsTrue(response.Result is UnauthorizedResult);
-        }
-    }
+    //        Assert.IsTrue(response.Result is UnauthorizedResult);
+    //    }
+    //}
 }

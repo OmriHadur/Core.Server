@@ -6,16 +6,22 @@ using Unity;
 
 namespace Core.Server.Tests.Utils
 {
-    public class TokenHandler : ITokenHandler
+    public class CurrentUser : ICurrentUser
     {
         private string token;
         private bool logginin;
 
         [Dependency]
-        public IResourcesIdHolder ResourcesHolder;
+        public IResourcesIdsHolder ResourcesHolder;
 
         [Dependency]
         public IConfigHandler ConfigHandler;
+
+        [Dependency]
+        public IResourceCreate<UserResource> UserResourceCreate;
+
+        [Dependency]
+        public IResourceCreate<LoginResource> LoginResourceCreate;
 
         public event EventHandler<string> OnTokenChange;
 
@@ -31,19 +37,21 @@ namespace Core.Server.Tests.Utils
 
         public void Login()
         {
-            if (string.IsNullOrEmpty(token))
-                LoginWithNewUser();
+            if (!string.IsNullOrEmpty(token))
+                return;
+
+            logginin = true;
+            var login = LoginResourceCreate.GetOrCreate();
+            token = login.Token;
+            logginin = false;
+            OnTokenChange?.Invoke(this, token);
         }
 
         public void LoginWithNewUser()
         {
-            logginin = true;
-            var user = ResourcesHolder.Create<UserResource>().Value;
-            var loginCreateResource = new LoginCreateResource() { Email = user.Email, Password = ConfigHandler.Config.UserPassword };
-            var login = ResourcesHolder.Create<LoginCreateResource,LoginUpdateResource, LoginResource>(loginCreateResource).Value;
-            token = login.Token;
-            logginin = false;
-            OnTokenChange?.Invoke(this, token);
+            Logout();
+            LoginResourceCreate.Create();
+            Login();
         }
 
 

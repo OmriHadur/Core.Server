@@ -27,9 +27,9 @@ namespace Core.Server.Tests.ResourceTests
         public virtual void TestGet()
         {
             var id = ResourcesIdsHolder.GetLast<TResource>();
-            var resourceResult = ResourceQuery.Get(id);
-            Assert.IsNotNull(resourceResult.Value);
-            Validate(CreatedResource, resourceResult.Value);
+            var result = ResourceQuery.Get(id);
+            AssertOk(result);
+            Validate(CreatedResource, result.Value);
         }
 
         [TestMethod]
