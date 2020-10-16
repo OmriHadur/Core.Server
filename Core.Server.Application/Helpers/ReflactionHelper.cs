@@ -13,9 +13,11 @@ namespace Core.Server.Application.Helpers
     public class ReflactionHelper : IReflactionHelper
     {
         private readonly List<Type> types;
+        private readonly Dictionary<Type, Type> interfaceToType;
 
         public ReflactionHelper(IConfiguration configuration)
         {
+            interfaceToType = new Dictionary<Type, Type>();
             types = new List<Type>();
             var assembliesName = configuration.GetSection(Config.AssembliesSection).Get<string[]>();
 
@@ -85,6 +87,27 @@ namespace Core.Server.Application.Helpers
             {
                 var path = $"{AppDomain.CurrentDomain.BaseDirectory}\\{assemblyName}.dll";
                 yield return Assembly.LoadFrom(path);
+            }
+        }
+
+        public Type GetTypeGenericType(Type type, Type[] typeArgs, Type interTypeWithGeneric)
+        {
+            if (interfaceToType.ContainsKey(interTypeWithGeneric))
+                return interfaceToType[interTypeWithGeneric];
+            var firstGen = interTypeWithGeneric.GetGenericArguments().First();
+            var prefix = GetPrefixName(firstGen);
+            var args = GetArguments(typeArgs, prefix).ToArray();
+            var typeGenericType = type.MakeGenericType(args);
+            interfaceToType.Add(interTypeWithGeneric, typeGenericType);
+            return typeGenericType;
+        }
+
+        private IEnumerable<Type> GetArguments(Type[] typeArgs, string prefix)
+        {
+            foreach (var type in typeArgs)
+            {
+                var typeName = prefix + type.Name.Substring(1);
+                yield return GetTypeByName(typeName);
             }
         }
 

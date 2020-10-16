@@ -3,18 +3,19 @@ using System.Linq;
 using System;
 using Core.Server.Tests.Unity;
 using Core.Server.Client.Results;
+using Unity;
 
 namespace Core.Server.Tests.ResourceTests
 {
     public abstract class TestsBase
     {
         protected Random Random;
-        protected ITestsUnityContainer TestsUnityContainer;
+        protected IUnityContainer UnityContainer;
 
         public TestsBase()
         {
             Random = new Random();
-            TestsUnityContainer = new TestsUnityContainer();
+            UnityContainer = new TestsUnityContainer();
         }
 
         protected void Validate(object expected, object actual)

@@ -21,11 +21,11 @@ namespace Core.Server.Tests.ResourceTests
 
         public ResourceTestsBase()
         {
-            ResourceCreate = TestsUnityContainer.Resolve<IResourceCreate<TResource>>();
-            ResourcesIdsHolder= TestsUnityContainer.Resolve<IResourcesIdsHolder>();
-            ResourceQuery = TestsUnityContainer.Resolve<IResourceQuery<TResource>>();
-            ResourceQuery = TestsUnityContainer.Resolve<IResourceQuery<TResource>>();
-            resourcesClean = TestsUnityContainer.Resolve<IResourcesClean>();
+            ResourceCreate = UnityContainer.Resolve<IResourceCreate<TResource>>();
+            ResourcesIdsHolder= UnityContainer.Resolve<IResourcesIdsHolder>();
+            ResourceQuery = UnityContainer.Resolve<IResourceQuery<TResource>>();
+            ResourceQuery = UnityContainer.Resolve<IResourceQuery<TResource>>();
+            resourcesClean = UnityContainer.Resolve<IResourcesClean>();
         }
 
         [TestInitialize]

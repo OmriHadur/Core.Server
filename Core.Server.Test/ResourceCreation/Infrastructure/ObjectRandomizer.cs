@@ -9,24 +9,24 @@ namespace Core.Server.Test.ResourceCreation
 {
     public class ObjectRandomizer : IObjectRandomizer
     {
-        private Random _random;
+        private readonly Random random;
 
         public ObjectRandomizer()
         {
-            _random = new Random();
+            random = new Random();
         }
 
         public string GetRandomId()
         {
             var buffer = new byte[12];
-            _random.NextBytes(buffer);
+            random.NextBytes(buffer);
             return string.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
         }
         public void AddRandomValues(object resource)
         {
             var properties = resource.GetType().GetProperties();
             foreach (var property in properties)
-                property.SetValue(resource, GetNewValue(resource, property));
+                property.SetValue(resource, GetNewValue(property));
         }
 
         public string GetRandomString(int length)
@@ -34,16 +34,16 @@ namespace Core.Server.Test.ResourceCreation
             if (length <= 0) return string.Empty;
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[_random.Next(s.Length)]).ToArray());
+              .Select(s => s[random.Next(s.Length)]).ToArray());
 
         }
 
-        private object GetNewValue(object resource, PropertyInfo property)
+        private object GetNewValue(PropertyInfo property)
         {
             var type = property.PropertyType;
 
             if (type == typeof(bool))
-                return _random.Next(2) == 0;
+                return random.Next(2) == 0;
             if (type == typeof(string))
                 return GetStringValue(property);
             else if (type == typeof(int))
@@ -55,9 +55,9 @@ namespace Core.Server.Test.ResourceCreation
             else if (type == typeof(decimal))
                 return GetDecimalInRange(property);
             else if (type == typeof(DateTime))
-                return DateTime.Now.AddHours(_random.Next(240));
+                return DateTime.Now.AddHours(random.Next(240));
             else if (type.IsEnum)
-                return _random.Next(Enum.GetValues(type).Length);
+                return random.Next(Enum.GetValues(type).Length);
             return null;
         }
 
@@ -65,17 +65,17 @@ namespace Core.Server.Test.ResourceCreation
         {
             var range = GetRangeAttribute(property);
             return range == null ?
-                _random.Next(100) :
-                _random.Next((int)range.Maximum - (int)range.Minimum) + (int)range.Minimum;
+                random.Next(100) :
+                random.Next((int)range.Maximum - (int)range.Minimum) + (int)range.Minimum;
         }
 
         private long GetLongInRange(PropertyInfo property)
         {
             var range = GetRangeAttribute(property);
             if (range == null)
-                return _random.Next(1000);
+                return random.Next(1000);
 
-            var rangeValue = _random.NextDouble() * ((double)range.Maximum - (double)range.Minimum);
+            var rangeValue = random.NextDouble() * ((double)range.Maximum - (double)range.Minimum);
             rangeValue += (double)range.Minimum;
             rangeValue = Math.Round(rangeValue, 0);
             return (long)rangeValue;
@@ -83,7 +83,7 @@ namespace Core.Server.Test.ResourceCreation
         private double GetDoubleInRange(PropertyInfo property)
         {
             var range = GetRangeAttribute(property);
-            var doubleValue = _random.NextDouble();
+            var doubleValue = random.NextDouble();
             if (range != null)
             {
                 doubleValue *= ((double)range.Maximum - (double)range.Minimum);
@@ -113,7 +113,7 @@ namespace Core.Server.Test.ResourceCreation
             var name = GetObjectName(property);
             if (maxLength != null && name.Length > maxLength)
                 name = name.Substring(0, (int)maxLength);
-            var stringValueLength = _random.Next(Math.Max(name.Length+2, minLength ?? 10), maxLength ?? 20);
+            var stringValueLength = random.Next(Math.Max(name.Length+2, minLength ?? 10), maxLength ?? 20);
             var randomStringLength = stringValueLength - name.Length - 1;
             if (randomStringLength <= 0)
                 return name;

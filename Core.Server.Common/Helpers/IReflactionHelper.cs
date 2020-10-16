@@ -21,5 +21,6 @@ namespace Core.Server.Application.Helpers
         string GetPrefixName(Type type);
 
         bool IsSameType(TypeInfo parent, Type child);
+        Type GetTypeGenericType(Type type, Type[] typeArgs, Type interTypeWithGeneric);
     }
 }

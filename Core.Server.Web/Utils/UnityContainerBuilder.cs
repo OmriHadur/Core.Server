@@ -10,14 +10,12 @@ namespace Core.Server.Web.Utils
 {
     public class UnityContainerBuilder
     {
-        private readonly Dictionary<Type, Type> interfaceToType;
         private readonly IUnityContainer container;
         private readonly IReflactionHelper reflactionHelper;
         public UnityContainerBuilder(IUnityContainer container, IReflactionHelper reflactionHelper)
         {
             this.container = container;
             this.reflactionHelper = reflactionHelper;
-            interfaceToType = new Dictionary<Type, Type>();
         }
         public void ConfigureContainer()
         {
@@ -87,30 +85,9 @@ namespace Core.Server.Web.Utils
         {
             container.RegisterFactory(interGenericType, (uc, interTypeWithGeneric, obj) =>
             {
-                var typeGenericType = GetTypeGenericType(type, typeArgs, interTypeWithGeneric);
+                var typeGenericType = reflactionHelper.GetTypeGenericType(type, typeArgs, interTypeWithGeneric);
                 return uc.Resolve(typeGenericType);
             });
-        }
-
-        private Type GetTypeGenericType(Type type, Type[] typeArgs, Type interTypeWithGeneric)
-        {
-            if (interfaceToType.ContainsKey(interTypeWithGeneric))
-                return interfaceToType[interTypeWithGeneric];
-            var firstGen = interTypeWithGeneric.GetGenericArguments().First();
-            var prefix = reflactionHelper.GetPrefixName(firstGen);
-            var args = GetArguments(typeArgs, prefix).ToArray();
-            var typeGenericType = type.MakeGenericType(args);
-            interfaceToType.Add(interTypeWithGeneric, typeGenericType);
-            return typeGenericType;
-        }
-
-        private IEnumerable<Type> GetArguments(Type[] typeArgs, string prefix)
-        {
-            foreach (var type in typeArgs)
-            {
-                var typeName = prefix + type.Name.Substring(1);
-                yield return reflactionHelper.GetTypeByName(typeName);
-            }
         }
     }
 }

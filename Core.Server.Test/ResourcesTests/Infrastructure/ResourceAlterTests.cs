@@ -15,7 +15,7 @@ namespace Core.Server.Tests.ResourceTests
 
         public ResourceAlterTests()
         {
-            resourceAlter = TestsUnityContainer.Resolve<IResourceAlter<TCreateResource, TUpdateResource, TResource>>();
+            resourceAlter = UnityContainer.Resolve<IResourceAlter<TCreateResource, TUpdateResource, TResource>>();
         }
 
         [TestMethod]
