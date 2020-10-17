@@ -8,6 +8,7 @@ namespace Core.Server.Tests.ResourceCreation.Interfaces
         where TResource: Resource
     {
         TCreateResource GetRandomCreateResource();
+        TCreateResource GetRandomCreateResource(TResource existingResource);
         TUpdateResource GetRandomUpdateResource(TResource existingResource);
     }
 }

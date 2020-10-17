@@ -14,18 +14,21 @@ namespace Core.Server.Web.Controllers
         where TResource : Resource
     {
         [HttpGet]
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAll([FromQuery] string ids)
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
-            if (ids == null)
-                return await Application.GetAll();
-            else
-                return await Application.GetByIds(ids.Split(','));
+            return await Application.GetAll();
         }
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TResource>> GetById(string id)
         {
             return await Application.GetById(id);
+        }
+
+        [HttpGet("inline")]
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> GetByIds([FromQuery] string ids)
+        {
+            return await Application.GetByIds(ids.Split(','));
         }
 
         [HttpPost("ids")]

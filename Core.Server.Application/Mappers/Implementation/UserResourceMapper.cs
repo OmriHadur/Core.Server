@@ -23,6 +23,7 @@ namespace Core.Server.Application.Mappers.Implementation
 
         public async override Task Map(UserCreateResource resource, UserEntity entity)
         {
+            await base.Map(resource, entity);
             AddPassword(resource.Password, entity);
         }
 

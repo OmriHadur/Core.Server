@@ -20,13 +20,19 @@ namespace Core.Server.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<TResource>> Replace(string id, TUpdateResource resource)
+        public virtual async Task<ActionResult<TResource>> Replace(string id, TCreateResource resource)
         {
             return await Application.Replace(id, resource);
         }
 
         [HttpPatch("{id}")]
-        public virtual async Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
+        public virtual async Task<ActionResult<TResource>> UpdateFromBody(string id, TUpdateResource resource)
+        {
+            return await Application.Update(id, resource);
+        }
+
+        [HttpPatch("{id}/inline")]
+        public virtual async Task<ActionResult<TResource>> UpdateFromQuery(string id, [FromQuery] TUpdateResource resource)
         {
             return await Application.Update(id, resource);
         }

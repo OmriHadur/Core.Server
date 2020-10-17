@@ -40,10 +40,10 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return Replace(null);
         }
 
-        public ActionResult<TResource> Replace(Action<TUpdateResource> editFunc)
+        public ActionResult<TResource> Replace(Action<TCreateResource> editFunc)
         {
             var resource = ResourceCreate.GetOrCreate();
-            var updateResource = RandomResourceCreator.GetRandomUpdateResource(resource);
+            var updateResource = RandomResourceCreator.GetRandomCreateResource(resource);
             editFunc?.Invoke(updateResource);
             return Client.Replace(resource.Id, updateResource).Result;
         }
