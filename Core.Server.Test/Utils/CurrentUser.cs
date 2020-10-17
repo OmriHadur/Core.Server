@@ -1,4 +1,5 @@
-﻿using Core.Server.Shared.Resources.Users;
+﻿using Core.Server.Injection.Attributes;
+using Core.Server.Shared.Resources.Users;
 using Core.Server.Tests.Configuration;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using System;
@@ -6,6 +7,7 @@ using Unity;
 
 namespace Core.Server.Tests.Utils
 {
+    [Inject]
     public class CurrentUser : ICurrentUser
     {
         private string token;
@@ -18,10 +20,10 @@ namespace Core.Server.Tests.Utils
         public TestConfig Config;
 
         [Dependency]
-        public IResourceCreate<UserResource> UserResourceCreate;
+        public Lazy<IResourceCreate<UserResource>> UserResourceCreate;
 
         [Dependency]
-        public IResourceCreate<LoginResource> LoginResourceCreate;
+        public Lazy<IResourceCreate<LoginResource>> LoginResourceCreate;
 
         public event EventHandler<string> OnTokenChange;
 
@@ -41,7 +43,7 @@ namespace Core.Server.Tests.Utils
                 return;
 
             logginin = true;
-            var login = LoginResourceCreate.GetOrCreate();
+            var login = LoginResourceCreate.Value.GetOrCreate();
             token = login.Token;
             logginin = false;
             OnTokenChange?.Invoke(this, token);
@@ -49,8 +51,9 @@ namespace Core.Server.Tests.Utils
 
         public void LoginWithNewUser()
         {
+            logginin = true;
             Logout();
-            LoginResourceCreate.Create();
+            UserResourceCreate.Value.Create();
             Login();
         }
 

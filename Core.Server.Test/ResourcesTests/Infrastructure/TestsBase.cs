@@ -1,21 +1,17 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System;
-using Core.Server.Tests.Unity;
 using Core.Server.Client.Results;
-using Unity;
 
 namespace Core.Server.Tests.ResourceTests
 {
     public abstract class TestsBase
     {
         protected Random Random;
-        protected IUnityContainer UnityContainer;
 
         public TestsBase()
         {
             Random = new Random();
-            UnityContainer = new TestsUnityContainer().UnityContainer;
         }
 
         protected void Validate(object expected, object actual)

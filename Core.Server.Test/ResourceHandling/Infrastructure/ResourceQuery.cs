@@ -1,11 +1,13 @@
 ﻿using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
+using Core.Server.Injection.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using System.Collections.Generic;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
+    [Inject]
     public class ResourceQuery<TResource>
         : ResourceHandling<IQueryClient<TResource>, TResource>
         , IResourceQuery<TResource>

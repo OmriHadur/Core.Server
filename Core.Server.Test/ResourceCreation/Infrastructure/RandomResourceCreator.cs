@@ -1,18 +1,18 @@
-﻿using Core.Server.Shared.Resources;
+﻿using Core.Server.Injection.Attributes;
+using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreation.Interfaces;
 using System;
 using Unity;
 
 namespace Core.Server.Test.ResourceCreation
 {
+    [Inject]
     public class RandomResourceCreator<TCreateResource, TUpdateResource, TResource>
         : IRandomResourceCreator<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource, new()
         where TUpdateResource : UpdateResource, new()
         where TResource: Resource
     {
-        protected Random Random;
-
         [Dependency]
         public IObjectRandomizer ObjectRandomizer;
 

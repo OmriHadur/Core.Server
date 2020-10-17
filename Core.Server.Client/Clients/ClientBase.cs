@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Core.Server.Shared.Resources;
+using System.Text;
 
 namespace Core.Server.Client.Clients
 {
@@ -16,7 +17,6 @@ namespace Core.Server.Client.Clients
     {
         private const string Authorization = "Authorization";
         private string _token;
-        private readonly string _apiRoute;
         private string _server;
 
         protected HttpClient Client;
@@ -30,11 +30,10 @@ namespace Core.Server.Client.Clients
                 _server = value;
             }
         }
-        protected string ApiUrl => string.Format("{0}/api/{1}/", ServerUrl, _apiRoute);
+        protected string ApiUrl => ServerUrl + GetApiRoute();
 
         protected ClientBase()
         {
-            _apiRoute = GetApiRoute();
             Client = new HttpClient(GetInsecureHandler());
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -54,7 +53,7 @@ namespace Core.Server.Client.Clients
 
         private string GetApiRoute()
         {
-            return nameof(TResource).Replace("Resource", string.Empty);
+            return typeof(TResource).Name.Replace("Resource", string.Empty);
         }
 
         protected Task<ActionResult<T>> SendMethod<T>(HttpMethod httpMethod)
@@ -76,7 +75,7 @@ namespace Core.Server.Client.Clients
         {
             var request = new HttpRequestMessage(httpMethod, ApiUrl + urlSubfix);
             if (content != null)
-                request.Content = new StringContent(JsonConvert.SerializeObject(content));
+                request.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
             var response = await Client.SendAsync(request);
             return await GetResult<T>(response);
         }

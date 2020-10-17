@@ -1,5 +1,6 @@
 ﻿using Core.Server.Client.Clients;
 using Core.Server.Common.Config;
+using Core.Server.Injection.Interfaces;
 using Core.Server.Injection.Reflaction;
 using Core.Server.Injection.Unity;
 using Core.Server.Tests.Configuration;
@@ -17,14 +18,15 @@ namespace Core.Server.Tests.Unity
     public class TestsUnityContainer
     {
         public IUnityContainer UnityContainer { get; private set; }
+        public IReflactionHelper ReflactionHelper { get; private set; }
 
         public TestsUnityContainer()
         {
             UnityContainer = new UnityContainer();
             var config = GetTestConfig();
             UnityContainer.RegisterInstance(typeof(TestConfig), config);
-            var reflactionHelper = new ReflactionHelper(config.Assemblies);
-            var unityContainerBuilder = new UnityContainerBuilder(UnityContainer, reflactionHelper);
+            ReflactionHelper = new ReflactionHelper(config.Assemblies);
+            var unityContainerBuilder = new UnityContainerBuilder(UnityContainer, ReflactionHelper);
             unityContainerBuilder.ConfigureContainer();
         }
 

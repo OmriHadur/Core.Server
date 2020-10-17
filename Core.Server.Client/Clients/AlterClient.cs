@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
+using Core.Server.Injection.Attributes;
 using Core.Server.Shared.Resources;
 
 namespace Core.Server.Client.Clients
 {
-    public abstract class AlterClient<TCreateResource, TUpdateResource, TResource>
+    [Inject]
+    public class AlterClient<TCreateResource, TUpdateResource, TResource>
         : ClientSender<TResource>,
           IAlterClient<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource

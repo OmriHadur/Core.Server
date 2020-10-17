@@ -17,7 +17,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public IResourcesIdsHolder ResourceIdsHolder;
 
         [Dependency]
-        public ICurrentUser TokenHandler;
+        public ICurrentUser CurrentUser;
 
         [Dependency]
         public TestConfig Config;
@@ -31,8 +31,8 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
                     _client.ServerUrl = Config.ServerUrl;
                 if (_client.Token == null)
                 {
-                    TokenHandler.OnTokenChange += (s, t) => _client.Token = t;
-                    _client.Token = TokenHandler.Token;
+                    CurrentUser.OnTokenChange += (s, t) => _client.Token = t;
+                    _client.Token = CurrentUser.Token;
                 }
 
                 return _client;

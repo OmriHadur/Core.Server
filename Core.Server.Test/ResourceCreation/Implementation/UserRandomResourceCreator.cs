@@ -1,9 +1,11 @@
-﻿using Core.Server.Shared.Resources.Users;
+﻿using Core.Server.Injection.Attributes;
+using Core.Server.Shared.Resources.Users;
 using Core.Server.Tests.Configuration;
 using Unity;
 
 namespace Core.Server.Test.ResourceCreation
 {
+    [Inject]
     public class UserRandomResourceCreator
         : RandomResourceCreator<UserCreateResource, UserUpdateResource, UserResource>
     {

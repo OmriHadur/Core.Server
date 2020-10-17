@@ -1,4 +1,5 @@
-﻿using Core.Server.Tests.ResourceCreation.Interfaces;
+﻿using Core.Server.Injection.Attributes;
+using Core.Server.Tests.ResourceCreation.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,7 @@ using System.Reflection;
 
 namespace Core.Server.Test.ResourceCreation
 {
+    [Inject]
     public class ObjectRandomizer : IObjectRandomizer
     {
         private readonly Random random;

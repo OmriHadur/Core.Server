@@ -1,9 +1,11 @@
-﻿using Core.Server.Test.ResourcesCreators.Interfaces;
+﻿using Core.Server.Injection.Attributes;
+using Core.Server.Test.ResourcesCreators.Interfaces;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Unity;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
+    [Inject]
     public class ResourcesCleaner
         : IResourcesClean
     {

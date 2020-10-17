@@ -57,7 +57,7 @@ namespace Core.Server.Injection.Unity
             var argsNames = type.GetGenericArguments().Select(t => t.Name);
             var argsNamesAsString= string.Join(",", argsNames);
             var name = $"{type.Name}<{argsNamesAsString}>";
-            container.RegisterType(interfaceType, type, name);
+            container.RegisterSingleton(interfaceType, type, name);
         }
 
         private void AddTypesInterfaces(Type type)
@@ -65,14 +65,14 @@ namespace Core.Server.Injection.Unity
             foreach (var interType in type.GetInterfaces())
             {
                 if (!interType.IsGenericType || !type.IsGenericType)
-                    container.RegisterType(interType, type);
+                    container.RegisterSingleton(interType, type);
                 else
                 {
                     var interGenericType = interType.GetGenericTypeDefinition();
                     var typeArgs = type.GetGenericArguments();
                     var interArgs= interType.GetGenericArguments();
                    if (typeArgs.Length== interArgs.Length)
-                        container.RegisterType(interGenericType, type);
+                        container.RegisterSingleton(interGenericType, type);
                     else
                         RegisterFactory(type, interGenericType, typeArgs);
                 }

@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
+using Core.Server.Injection.Attributes;
 using Core.Server.Shared.Resources;
 
 namespace Core.Server.Client.Clients
 {
-    public abstract class BatchClient<TCreateResource, TUpdateResource, TResource>
+    [Inject]
+    public class BatchClient<TCreateResource, TUpdateResource, TResource>
         : ClientSender<TResource>,
           IBatchClient<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource

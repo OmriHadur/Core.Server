@@ -5,6 +5,7 @@ using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Client.Results;
 using Core.Server.Test.ResourcesCreators.Interfaces;
 using Unity;
+using System;
 
 namespace Core.Server.Tests.ResourceTests
 {
@@ -12,25 +13,22 @@ namespace Core.Server.Tests.ResourceTests
         : TestsBase
         where TResource : Resource
     {
-        private readonly IResourcesClean resourcesClean;
-
         protected TResource CreatedResource;
-        protected readonly IResourceQuery<TResource> ResourceQuery;
-        protected readonly IResourceCreate<TResource> ResourceCreate;
-        
-        protected readonly IResourcesIdsHolder ResourcesIdsHolder;
 
-        public ResourceTestsBase()
-        {
-            ResourceCreate = UnityContainer.Resolve<IResourceCreate<TResource>>();
-            ResourcesIdsHolder= UnityContainer.Resolve<IResourcesIdsHolder>();
-            ResourceQuery = UnityContainer.Resolve<IResourceQuery<TResource>>();
-            ResourceQuery = UnityContainer.Resolve<IResourceQuery<TResource>>();
-            resourcesClean = UnityContainer.Resolve<IResourcesClean>();
-        }
+        [Dependency]
+        public IResourcesClean ResourcesClean;
+
+        [Dependency]
+        public IResourceQuery<TResource> ResourceQuery;
+
+        [Dependency]
+        public IResourceCreate<TResource> ResourceCreate;
+
+        [Dependency]
+        public IResourcesIdsHolder ResourcesIdsHolder;
 
         [TestInitialize]
-        public void TestInitAsync()
+        public void TestInit()
         {
             CreateResource();
         }
@@ -38,7 +36,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestCleanup]
         public void Cleanup()
         {
-            resourcesClean.Clean();
+            ResourcesClean.Clean();
         }
 
         protected void CreateResource()

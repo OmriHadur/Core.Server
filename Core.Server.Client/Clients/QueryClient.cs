@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
+using Core.Server.Injection.Attributes;
 using Core.Server.Shared.Query;
 using Core.Server.Shared.Resources;
 
 namespace Core.Server.Client.Clients
 {
-    public abstract class QueryClient<TResource>
+    [Inject]
+    public class QueryClient<TResource>
         : ClientSender<TResource>,
           IQueryClient<TResource>
         where TResource : Resource

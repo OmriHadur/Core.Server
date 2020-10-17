@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 namespace Core.Server.Web.Controllers
 {
     [Authorize]
-    public class UserController :
+    public class UserAlterController :
         AlterController<UserCreateResource, UserUpdateResource, UserResource>
     {
-        public UserController()
-        {
-
-        }
-
         [HttpPost]
         [AllowAnonymous]
         public override async Task<ActionResult<UserResource>> Create(UserCreateResource resource)

@@ -1,10 +1,12 @@
-﻿using Core.Server.Tests.ResourceCreators.Interfaces;
+﻿using Core.Server.Injection.Attributes;
+using Core.Server.Tests.ResourceCreators.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
+    [Inject]
     public class ResourcesIdsHolder: IResourcesIdsHolder
     {
         private readonly Dictionary<Type, List<string>> idsbyType;
@@ -46,7 +48,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         {
             var type = typeof(TResource);
             if (idsbyType.ContainsKey(type))
-                idsbyType[type].Last();
+                return idsbyType[type].Last();
             return string.Empty;
         }
 

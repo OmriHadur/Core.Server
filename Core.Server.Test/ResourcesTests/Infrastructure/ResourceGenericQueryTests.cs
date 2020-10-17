@@ -1,11 +1,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
-using System.Linq;
+using Core.Server.Tests.ResourceTests.Interfaces;
+using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public class ResourceQueryTests<TResource> :
-        ResourceTestsBase< TResource>
+    [Inject]
+    public class ResourceGenericQueryTests<TResource>
+        : ResourceTestsBase<TResource>
+        , IResourceGenericQueryTests
         where TResource : Resource
     {
         [TestMethod]

@@ -1,12 +1,15 @@
 ﻿using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
+using Core.Server.Injection.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreation.Interfaces;
 using Core.Server.Tests.ResourceCreators.Interfaces;
+using System;
 using Unity;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
+    [Inject]
     public class ResourceCreate<TCreateResource, TUpdateResource, TResource>
         : ResourceHandling<IAlterClient<TCreateResource, TUpdateResource, TResource>, TResource>
         , IResourceCreate<TResource>
@@ -19,13 +22,14 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         [Dependency]
         public IResourceQuery<TResource> ResourceQuery;
-
-        [Dependency]
-        public IResourceAlter<TCreateResource, TUpdateResource, TResource> ResourceAlter;
         
         public ActionResult<TResource> Create()
         {
-            return ResourceAlter.Create();
+            var createResource = RandomResourceCreator.GetRandomCreateResource();
+            var response = Client.Create(createResource).Result;
+            if (response.IsSuccess)
+                ResourceIdsHolder.Add<TResource>(response.Value.Id);
+            return response;
         }
 
         public ActionResult Delete(string id)
