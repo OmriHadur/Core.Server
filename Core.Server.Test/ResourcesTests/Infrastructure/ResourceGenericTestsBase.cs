@@ -9,7 +9,7 @@ using System;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public abstract class ResourceTestsBase<TResource>
+    public abstract class ResourceGenericTestsBase<TResource>
         : TestsBase
         where TResource : Resource
     {
@@ -27,13 +27,11 @@ namespace Core.Server.Tests.ResourceTests
         [Dependency]
         public IResourcesIdsHolder ResourcesIdsHolder;
 
-        [TestInitialize]
         public void TestInit()
         {
             CreateResource();
         }
 
-        [TestCleanup]
         public void Cleanup()
         {
             ResourcesClean.Clean();

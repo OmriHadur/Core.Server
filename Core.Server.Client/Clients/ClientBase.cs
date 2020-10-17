@@ -30,7 +30,7 @@ namespace Core.Server.Client.Clients
                 _server = value;
             }
         }
-        protected string ApiUrl => ServerUrl + GetApiRoute();
+        protected string ApiUrl => ServerUrl + GetApiRoute() + "/";
 
         protected ClientBase()
         {

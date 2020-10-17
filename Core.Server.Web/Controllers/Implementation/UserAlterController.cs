@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace Core.Server.Web.Controllers
 {
     [Authorize]
+    [Route("user")]
     public class UserAlterController :
         AlterController<UserCreateResource, UserUpdateResource, UserResource>
     {

@@ -58,7 +58,6 @@ namespace Core.Server.Tests.ResourceTests
 
         protected void AssertOk<T>(ActionResult<T> response)
         {
-            Assert.IsTrue(response is OkResult);
             Assert.IsTrue(response.Value != null);
         }
 

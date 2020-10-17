@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Core.Server.Shared.Resources.Users;
+﻿using Core.Server.Shared.Resources.Users;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Server.Web.Controllers
 {
     [Authorize]
-    public class UserQueryController : QueryController< UserResource>
+    [Route("user")]
+    public class UserQueryController 
+        : QueryController<UserResource>
     {
     }
 }

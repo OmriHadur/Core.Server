@@ -26,6 +26,7 @@ namespace Core.Server.Tests.Utils
         public Lazy<IResourceCreate<LoginResource>> LoginResourceCreate;
 
         public event EventHandler<string> OnTokenChange;
+        public string Email { get; private set; }
 
         public string Token
         {
@@ -39,10 +40,11 @@ namespace Core.Server.Tests.Utils
 
         public void Login()
         {
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(token) | logginin)
                 return;
 
             logginin = true;
+            Email = UserResourceCreate.Value.GetOrCreate().Email;
             var login = LoginResourceCreate.Value.GetOrCreate();
             token = login.Token;
             logginin = false;
@@ -53,7 +55,6 @@ namespace Core.Server.Tests.Utils
         {
             logginin = true;
             Logout();
-            UserResourceCreate.Value.Create();
             Login();
         }
 

@@ -2,12 +2,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceTests.Interfaces;
 using Core.Server.Injection.Attributes;
+using System;
 
 namespace Core.Server.Tests.ResourceTests
 {
     [Inject]
     public class ResourceGenericQueryTests<TResource>
-        : ResourceTestsBase<TResource>
+        : ResourceGenericTestsBase<TResource>
         , IResourceGenericQueryTests
         where TResource : Resource
     {

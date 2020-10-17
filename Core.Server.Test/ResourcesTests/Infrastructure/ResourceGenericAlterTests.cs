@@ -7,8 +7,8 @@ using Core.Server.Injection.Attributes;
 namespace Core.Server.Tests.ResourceTests
 {
     [InjectBoundleTest]
-    public class ResourceAlterTests<TCreateResource, TUpdateResource, TResource> :
-        ResourceTestsBase<TResource>
+    public class ResourceGenericAlterTests<TCreateResource, TUpdateResource, TResource> :
+        ResourceGenericTestsBase<TResource>
         where TCreateResource : CreateResource, new()
         where TUpdateResource: UpdateResource
         where TResource : Resource

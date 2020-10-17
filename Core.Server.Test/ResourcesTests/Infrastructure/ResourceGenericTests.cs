@@ -1,11 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
-using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public class ResourceTests<TCreateResource, TUpdateResource, TResource> :
-        ResourceTestsBase<TResource>
+    public class ResourceGenericTests<TCreateResource, TUpdateResource, TResource> :
+        ResourceGenericTestsBase<TResource>
         where TCreateResource : CreateResource
         where TUpdateResource: UpdateResource
         where TResource : Resource

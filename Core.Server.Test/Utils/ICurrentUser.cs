@@ -5,6 +5,7 @@ namespace Core.Server.Tests.Utils
     {
         event EventHandler<string> OnTokenChange;
         string Token { get; }
+        string Email { get; }
         void Login();
         void LoginWithNewUser();
         void Logout();
