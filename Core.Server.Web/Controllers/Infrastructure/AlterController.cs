@@ -38,7 +38,7 @@ namespace Core.Server.Web.Controllers
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<ActionResult<TResource>> Delete(string id)
+        public virtual async Task<ActionResult> Delete(string id)
         {
             return await Application.Delete(id);
         }

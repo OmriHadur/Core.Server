@@ -3,18 +3,17 @@ using Core.Server.Common.Errors;
 using Core.Server.Shared.Errors;
 using System;
 using Unity;
-using Core.Server.Common.Applications;
 using Core.Server.Shared.Resources.Users;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
-using Core.Server.Common.Mappers;
 
 namespace Core.Server.Application
 {
     public class BaseApplication
     {
+
         private UserResource currentUser;
 
         [Dependency]

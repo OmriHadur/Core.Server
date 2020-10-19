@@ -5,19 +5,25 @@ namespace Core.Server.Tests.ResourceTests
 {
     [TestClass]
     public class ResourceQueryTests
-        : ResourceTestsBase<IResourceGenericQueryTests>
-        , IResourceGenericQueryTests
+        : ResourceTestsBase<IResourceGenericRestTests>
+        , IResourceGenericRestTests
     {
         [TestMethod]
-        public virtual void TestList()
+        public void TestCreateAddedToList()
         {
-            RunTest(t => t.TestList());
+            RunTest(t => t.TestCreateAddedToList());
         }
 
         [TestMethod]
-        public virtual void TestCreateAddedToList()
+        public void TestDelete()
         {
-            RunTest(t => t.TestCreateAddedToList());
+            RunTest(t => t.TestDelete());
+        }
+
+        [TestMethod]
+        public void TestDeleteNotFoundAfterDelete()
+        {
+            RunTest(t => t.TestDeleteNotFoundAfterDelete());
         }
 
         [TestMethod]
@@ -30,6 +36,12 @@ namespace Core.Server.Tests.ResourceTests
         public virtual void TestGetNotFound()
         {
             RunTest(t => t.TestGetNotFound());
+        }
+
+        [TestMethod]
+        public virtual void TestGetNotFoundAfterDelete()
+        {
+            RunTest(t => t.TestGetNotFoundAfterDelete());
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Core.Server.Client.Clients
             return SentPut(id,resource);
         }
 
-        public Task<ActionResult<TResource>> Delete(string id)
+        public Task<ActionResult> Delete(string id)
         {
             return SendDelete(id);
         }

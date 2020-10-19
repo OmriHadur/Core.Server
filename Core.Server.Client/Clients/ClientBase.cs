@@ -116,7 +116,7 @@ namespace Core.Server.Client.Clients
         private async Task<ActionResult> GetResult(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
-                return await response.Content.ReadAsAsync<ActionResult>();
+                return new OkResult();
 
             switch (response.StatusCode)
             {

@@ -9,8 +9,7 @@ using System;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public abstract class ResourceGenericTestsBase<TResource>
-        : TestsBase
+    public abstract class ResourceGenericTestsBase<TResource> : TestsBase
         where TResource : Resource
     {
         protected TResource CreatedResource;
@@ -27,9 +26,9 @@ namespace Core.Server.Tests.ResourceTests
         [Dependency]
         public IResourcesIdsHolder ResourcesIdsHolder;
 
-        public void TestInit()
-        {
-            CreateResource();
+        public virtual void TestInit()
+        { 
+
         }
 
         public void Cleanup()
@@ -45,12 +44,6 @@ namespace Core.Server.Tests.ResourceTests
         protected int GetAllExistingCount()
         {
             return ResourcesIdsHolder.GetAll<TResource>().Count();
-        }
-
-        protected void AssertActionResult<T>(ActionResult<TResource> response)
-            where T : ActionResult
-        {
-            Assert.IsInstanceOfType(response.Result, typeof(T));
         }
     }
 }

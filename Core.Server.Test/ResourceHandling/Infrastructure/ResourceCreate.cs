@@ -5,6 +5,7 @@ using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreation.Interfaces;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using System;
+using System.Linq;
 using Unity;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
@@ -35,14 +36,15 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public ActionResult Delete(string id)
         {
             var response = Client.Delete(id).Result;
-            if (response.IsSuccess)
+            if (response is OkResult)
                 ResourceIdsHolder.Remove<TResource>(id);
             return response;
         }
 
         public void DeleteAll()
         {
-            foreach (var id in ResourceIdsHolder.GetAll<TResource>())
+            var ids = ResourceIdsHolder.GetAll<TResource>().ToList();
+            foreach (var id in ids)
                 Delete(id);
         }
 

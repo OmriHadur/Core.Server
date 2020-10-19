@@ -4,14 +4,8 @@ using Core.Server.Shared.Resources.Users;
 namespace Core.Server.Tests.ResourceTests
 {
     public class UserQueryTests
-        : ResourceGenericQueryTests<UserResource>
+        : ResourceGenericRestTests<UserResource>
     {
-        [TestMethod]
-        public override void TestList()
-        {
-            Assert.AreEqual(2, GetAllExistingCount());
-        }
-
         //[TestMethod]
         //public void TestReCreate()
         //{

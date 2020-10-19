@@ -4,13 +4,8 @@ using Core.Server.Shared.Resources.Users;
 namespace Core.Server.Tests.ResourceTests
 {
     public class LoginQueryTests
-        : ResourceGenericQueryTests<LoginResource>
+        : ResourceGenericRestTests<LoginResource>
     {
-        [TestMethod]
-        public override void TestList()
-        {
-            Assert.AreEqual(2, GetAllExistingCount());
-        }
 
         //    public override void TestUpdate() { }
         //    [TestMethod]

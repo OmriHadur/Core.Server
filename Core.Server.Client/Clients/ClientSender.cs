@@ -45,9 +45,9 @@ namespace Core.Server.Client.Clients
             return SendMethod<TResource>(HttpMethod.Delete);
         }
 
-        protected Task<ActionResult<TResource>> SendDelete(string urlSubfix)
+        protected Task<ActionResult> SendDelete(string urlSubfix)
         {
-            return SendMethod<TResource>(urlSubfix, HttpMethod.Delete);
+            return SendMethod(urlSubfix, HttpMethod.Delete);
         }
 
         protected Task<ActionResult<IEnumerable<string>>> SendDeleteMany(string urlSubfix, object content)

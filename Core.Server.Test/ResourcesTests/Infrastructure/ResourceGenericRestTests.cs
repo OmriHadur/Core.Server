@@ -2,20 +2,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceTests.Interfaces;
 using Core.Server.Injection.Attributes;
-using System;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    [Inject]
-    public class ResourceGenericQueryTests<TResource>
+    public class ResourceGenericRestTests<TResource>
         : ResourceGenericTestsBase<TResource>
-        , IResourceGenericQueryTests
+        , IResourceGenericRestTests
         where TResource : Resource
     {
-        [TestMethod]
-        public virtual void TestList()
+        public override void TestInit()
         {
-            Assert.AreEqual(1, GetAllExistingCount());
+            CreateResource();
         }
 
         [TestMethod]
@@ -32,7 +29,7 @@ namespace Core.Server.Tests.ResourceTests
         {
             var id = ResourcesIdsHolder.GetLast<TResource>();
             var result = ResourceQuery.Get(id);
-            AssertOk(result);
+            AssertNoError(result);
             Validate(CreatedResource, result.Value);
         }
 
@@ -40,6 +37,29 @@ namespace Core.Server.Tests.ResourceTests
         public virtual void TestGetNotFound()
         {
             var response = ResourceQuery.Get(RandomId);
+            AssertNotFound(response);
+        }
+
+        [TestMethod]
+        public virtual void TestDelete()
+        {
+            var response = ResourceCreate.Delete(CreatedResource.Id);
+            AssertOk(response);
+        }
+
+        [TestMethod]
+        public virtual void TestGetNotFoundAfterDelete()
+        {
+            ResourceCreate.Delete(CreatedResource.Id);
+            var response = ResourceQuery.Get(CreatedResource.Id);
+            AssertNotFound(response);
+        }
+
+        [TestMethod]
+        public virtual void TestDeleteNotFoundAfterDelete()
+        {
+            ResourceCreate.Delete(CreatedResource.Id);
+            var response = ResourceCreate.Delete(CreatedResource.Id);
             AssertNotFound(response);
         }
     }
