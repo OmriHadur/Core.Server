@@ -7,6 +7,7 @@ namespace Core.Server.Injection.Interfaces
 {
     public interface IReflactionHelper
     {
+        Type GetClassForInterface<TInterface>();
         Type FillGenericType(Type genericType, ResourceBoundle resourceBoundle);
         IEnumerable<Type> GetDrivenTypesOf(Type type);
         IEnumerable<Type> GetDrivenTypesOf<T>();

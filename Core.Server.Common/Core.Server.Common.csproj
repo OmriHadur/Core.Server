@@ -23,10 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Enums\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Core.Server.Shared\Core.Server.Shared.csproj" />
   </ItemGroup>
 

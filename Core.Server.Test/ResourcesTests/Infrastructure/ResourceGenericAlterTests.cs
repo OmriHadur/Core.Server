@@ -3,14 +3,16 @@ using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Unity;
 using Core.Server.Injection.Attributes;
+using Core.Server.Tests.ResourceTests.Interfaces;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    [InjectBoundleTest]
-    public class ResourceGenericAlterTests<TCreateResource, TUpdateResource, TResource> :
-        ResourceGenericTestsBase<TResource>
+    [Inject]
+    public class ResourceGenericAlterTests<TCreateResource, TUpdateResource, TResource>
+        : ResourceGenericTestsBase<TResource>
+        , IResourceGenericAlterTests
         where TCreateResource : CreateResource, new()
-        where TUpdateResource: UpdateResource
+        where TUpdateResource : UpdateResource
         where TResource : Resource
     {
 
@@ -18,7 +20,7 @@ namespace Core.Server.Tests.ResourceTests
         public IResourceAlter<TCreateResource, TUpdateResource, TResource> resourceAlter;
 
         [TestMethod]
-        public void Update()
+        public void TestUpdate()
         {
             var response = resourceAlter.Replace();
             AssertOk(response);

@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\Output\Server\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Unity" Version="5.11.7" />
   </ItemGroup>

@@ -48,12 +48,23 @@ namespace Core.Server.Tests.ResourceTests
             Tests = new List<TResourceGenericTests>();
             var boundles = ReflactionHelper.GetResourcesBoundles().ToList();
 
-            var type = typeof(ResourceGenericQueryTests<>);
+            var type = ReflactionHelper.GetClassForInterface<TResourceGenericTests>();
+            var overideTests = ReflactionHelper.GetDrivenTypesOf(type);
 
             foreach (var boundle in boundles)
             {
                 var genericType = ReflactionHelper.FillGenericType(type, boundle);
-                var obj = UnityContainer.Resolve(genericType);
+                var hasoveride = overideTests.Any(test => test.BaseType == genericType);
+                if (!hasoveride)
+                {
+                    var obj = UnityContainer.Resolve(genericType);
+                    Tests.Add((TResourceGenericTests)obj);
+                }
+            }
+
+            foreach (var overideTest in overideTests)
+            {
+                var obj = UnityContainer.Resolve(overideTest);
                 Tests.Add((TResourceGenericTests)obj);
             }
         }

@@ -36,6 +36,16 @@ namespace Core.Server.Injection.Reflaction
             return genericType.MakeGenericType(genericArguments);
         }
 
+        public Type GetClassForInterface<TInterface>()
+        {
+            return types.FirstOrDefault(t => HasInterafce<TInterface>(t));
+        }
+
+        private static bool HasInterafce<TInterface>(Type t)
+        {
+            return t.IsClass && t.IsGenericType && t.GetInterfaces().Any(i => i == typeof(TInterface));
+        }
+
         public string GetTypeName(Type drivenType, Type subType)
         {
             return drivenType.Name.Replace(subType.Name, string.Empty);
@@ -53,7 +63,7 @@ namespace Core.Server.Injection.Reflaction
 
         public IEnumerable<Type> GetDrivenTypesOf(Type type)
         {
-            return types.Where(t => t.BaseType == type);
+            return types.Where(t => t.BaseType?.Name == type.Name);
         }
 
         public IEnumerable<Type> GetTypesWithAttribute<TAttribute>()
