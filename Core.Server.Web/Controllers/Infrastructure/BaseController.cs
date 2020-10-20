@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Unity;
 using Core.Server.Shared.Resources.Users;
-using System;
 using Core.Server.Common.Applications;
 
 namespace Core.Server.Web.Controllers
@@ -19,6 +18,9 @@ namespace Core.Server.Web.Controllers
         public IJwtManager JwtManager { get; set; }
 
         [Dependency]
+        public IUnityContainer UnityContainer { get; set; }
+
+        [Dependency]
         public TApplication Application
         {
             get
@@ -32,13 +34,10 @@ namespace Core.Server.Web.Controllers
             }
         }
 
-        [Dependency]
-        public IUnityContainer UnityContainer { get; set; }
-
         protected void SetUser()
         {
             var user = JwtManager.GetUser(User);
-            application.CurrentUser = user;
+            UnityContainer.RegisterInstance(typeof(UserResource), user);
         }
     }
 }

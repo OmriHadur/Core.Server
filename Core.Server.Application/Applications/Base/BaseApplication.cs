@@ -12,10 +12,13 @@ namespace Core.Server.Application
     public class BaseApplication
         : IBaseApplication
     {
-        public virtual UserResource CurrentUser { get; set; }
+        public UserResource CurrentUser => UnityContainer.Resolve<UserResource>();
 
         [Dependency]
         public ILogger<BaseApplication> Logger { get; set; }
+
+        [Dependency]
+        public IUnityContainer UnityContainer { get; set; }
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {

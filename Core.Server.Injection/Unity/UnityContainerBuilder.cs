@@ -65,19 +65,18 @@ namespace Core.Server.Injection.Unity
             foreach (var interType in type.GetInterfaces())
             {
                 if (!interType.IsGenericType || !type.IsGenericType)
-                    container.RegisterSingleton(interType, type);
+                    container.RegisterType(interType, type);
                 else
                 {
                     var interGenericType = interType.GetGenericTypeDefinition();
                     var typeArgs = type.GetGenericArguments();
                     var interArgs= interType.GetGenericArguments();
                    if (typeArgs.Length== interArgs.Length)
-                        container.RegisterSingleton(interGenericType, type);
+                        container.RegisterType(interGenericType, type);
                     else
                         RegisterFactory(type, interGenericType, typeArgs);
                 }
-            }
-                
+            }    
         }
 
         private void RegisterFactory(Type type, Type interGenericType, Type[] typeArgs)
