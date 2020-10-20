@@ -7,9 +7,8 @@ using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Common.Validators;
 using Core.Server.Common.Mappers;
-using Core.Server.Shared.Resources.Users;
-using System;
 using Core.Server.Injection.Attributes;
+using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Application
 {
@@ -34,12 +33,13 @@ namespace Core.Server.Application
         [Dependency]
         public IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity> ResourceMapper { get; set; }
 
-        public override Func<UserResource> GetCurrentUser 
-        { 
+        public override UserResource CurrentUser
+        {
+            get => base.CurrentUser;
             set
             {
-                base.GetCurrentUser = value;
-                ResourceValidator.GetCurrentUser = value;
+                base.CurrentUser = value;
+                ResourceValidator.CurrentUser = value;
             }
         }
 

@@ -5,34 +5,17 @@ using System;
 using Unity;
 using Core.Server.Shared.Resources.Users;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Core.Server.Common.Entities;
-using Core.Server.Common.Repositories;
+using Core.Server.Common.Applications;
 
 namespace Core.Server.Application
 {
     public class BaseApplication
+        : IBaseApplication
     {
-
-        private UserResource currentUser;
-
-        [Dependency]
-        public IUnityContainer UnityContainer;
+        public virtual UserResource CurrentUser { get; set; }
 
         [Dependency]
-        public ILogger<BaseApplication> Logger;
-
-        public UserResource CurrentUser
-        {
-            get
-            {
-                if (currentUser == null)
-                    currentUser = GetCurrentUser();
-                return currentUser;
-            }
-        }
-
-        public virtual Func<UserResource> GetCurrentUser { get; set; }
+        public ILogger<BaseApplication> Logger { get; set; }
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {
@@ -75,13 +58,6 @@ namespace Core.Server.Application
         protected bool IsNotOk(ActionResult actionResult)
         {
             return !IsOk(actionResult);
-        }
-
-        protected async Task<bool> IsEntityExists<TFEntity>(string entityId)
-            where TFEntity : Entity
-        {
-            var repository = UnityContainer.Resolve<IQueryRepository<TFEntity>>();
-            return await repository.Exists(entityId);
         }
     }
 }

@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Unity;
 using Core.Server.Shared.Resources.Users;
+using System;
 using Core.Server.Common.Applications;
 
 namespace Core.Server.Web.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public abstract class BaseController<TApplication> 
+    public abstract class BaseController<TApplication>
         : ControllerBase
         where TApplication : IBaseApplication
     {
@@ -20,22 +21,24 @@ namespace Core.Server.Web.Controllers
         [Dependency]
         public TApplication Application
         {
-            get => application;
+            get
+            {
+                SetUser();
+                return application;
+            }
             set
             {
                 application = value;
-                SetUser(value);
             }
         }
 
-        protected UserResource GetUser()
-        {
-            return JwtManager.GetUser(User);
-        }
+        [Dependency]
+        public IUnityContainer UnityContainer { get; set; }
 
-        protected void SetUser(IBaseApplication application)
+        protected void SetUser()
         {
-            application.GetCurrentUser = () => GetUser();
+            var user = JwtManager.GetUser(User);
+            application.CurrentUser = user;
         }
     }
 }
