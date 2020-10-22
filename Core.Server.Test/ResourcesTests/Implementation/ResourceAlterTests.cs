@@ -9,6 +9,12 @@ namespace Core.Server.Tests.ResourceTests
         , IResourceGenericAlterTests
     {
         [TestMethod]
+        public virtual void TestReplace()
+        {
+            RunTest(t => t.TestReplace());
+        }
+
+        [TestMethod]
         public virtual void TestUpdate()
         {
             RunTest(t => t.TestUpdate());

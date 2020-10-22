@@ -4,7 +4,7 @@ using Core.Server.Tests.ResourceTests.Interfaces;
 namespace Core.Server.Tests.ResourceTests
 {
     [TestClass]
-    public class ResourceQueryTests
+    public class ResourceRestTests
         : ResourceTestsBase<IResourceGenericRestTests>
         , IResourceGenericRestTests
     {

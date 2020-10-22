@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;
+using Unity.Lifetime;
 
 namespace Core.Server.Injection.Unity
 {
@@ -11,10 +12,13 @@ namespace Core.Server.Injection.Unity
     {
         private readonly IUnityContainer container;
         private readonly IReflactionHelper reflactionHelper;
+        private readonly Dictionary<Type, object> factoryObjects;
+
         public UnityContainerBuilder(IUnityContainer container, IReflactionHelper reflactionHelper)
         {
             this.container = container;
             this.reflactionHelper = reflactionHelper;
+            factoryObjects = new Dictionary<Type, object>();
         }
         public void ConfigureContainer()
         {
@@ -65,26 +69,31 @@ namespace Core.Server.Injection.Unity
             foreach (var interType in type.GetInterfaces())
             {
                 if (!interType.IsGenericType || !type.IsGenericType)
-                    container.RegisterType(interType, type);
+                    container.RegisterSingleton(interType, type);
                 else
                 {
                     var interGenericType = interType.GetGenericTypeDefinition();
                     var typeArgs = type.GetGenericArguments();
-                    var interArgs= interType.GetGenericArguments();
-                   if (typeArgs.Length== interArgs.Length)
-                        container.RegisterType(interGenericType, type);
+                    var interArgs = interType.GetGenericArguments();
+                    if (typeArgs.Length == interArgs.Length)
+                        container.RegisterSingleton(interGenericType, type);
                     else
                         RegisterFactory(type, interGenericType, typeArgs);
                 }
-            }    
+            }
         }
 
         private void RegisterFactory(Type type, Type interGenericType, Type[] typeArgs)
         {
             container.RegisterFactory(interGenericType, (uc, interTypeWithGeneric, obj) =>
             {
+                if (factoryObjects.ContainsKey(interTypeWithGeneric))
+                    return factoryObjects[interTypeWithGeneric];
+
                 var typeGenericType = reflactionHelper.GetTypeGenericType(type, typeArgs, interTypeWithGeneric);
-                return uc.Resolve(typeGenericType);
+                var resolvedObject = uc.Resolve(typeGenericType);
+                factoryObjects.Add(interTypeWithGeneric, resolvedObject);
+                return resolvedObject;
             });
         }
     }

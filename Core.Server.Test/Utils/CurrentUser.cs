@@ -53,7 +53,6 @@ namespace Core.Server.Tests.Utils
 
         public void LoginWithNewUser()
         {
-            logginin = true;
             Logout();
             Login();
         }

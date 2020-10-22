@@ -37,7 +37,7 @@ namespace Core.Server.Web.Controllers
         protected void SetUser()
         {
             var user = JwtManager.GetUser(User);
-            UnityContainer.RegisterInstance(typeof(UserResource), user);
+            application.CurrentUser = user;
         }
     }
 }

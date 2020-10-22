@@ -5,6 +5,6 @@ namespace Core.Server.Common.Applications
 {
     public interface IBaseApplication
     {
-        public UserResource CurrentUser { get; }
+        UserResource CurrentUser { get; set; }
     }
 }

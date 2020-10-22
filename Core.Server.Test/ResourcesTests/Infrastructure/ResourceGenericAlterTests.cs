@@ -4,6 +4,9 @@ using Core.Server.Tests.ResourceCreators.Interfaces;
 using Unity;
 using Core.Server.Injection.Attributes;
 using Core.Server.Tests.ResourceTests.Interfaces;
+using System;
+using Core.Server.Tests.ResourceCreation.Interfaces;
+using System.Reflection;
 
 namespace Core.Server.Tests.ResourceTests
 {
@@ -19,11 +22,34 @@ namespace Core.Server.Tests.ResourceTests
         [Dependency]
         public IResourceAlter<TCreateResource, TUpdateResource, TResource> resourceAlter;
 
+        [Dependency]
+        public IObjectRandomizer ObjectRandomizer;
+
         [TestMethod]
-        public void TestUpdate()
+        public void TestReplace()
         {
             var response = resourceAlter.Replace();
             AssertOk(response);
+        }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            var randomProperty = GetRandomProperty();
+            if (randomProperty == null) return;
+            CreateResource();
+
+            var response = resourceAlter.Update(r => ObjectRandomizer.SetRandomValue(r, randomProperty));
+
+            AssertOk(response);
+            Assert.AreNotEqual(randomProperty.GetValue(response.Value), randomProperty.GetValue(CreatedResource));
+        }
+
+        private PropertyInfo GetRandomProperty()
+        {
+            var properties = typeof(TUpdateResource).GetProperties();
+            if (properties.Length == 0) return null;
+            return properties[Random.Next(properties.Length)];
         }
     }
 }

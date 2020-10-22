@@ -3,6 +3,7 @@
     public interface IResourceGenericAlterTests
         : IResourceGenericTests
     {
+        void TestReplace();
         void TestUpdate();
     }
 }

@@ -28,7 +28,12 @@ namespace Core.Server.Test.ResourceCreation
         {
             var properties = resource.GetType().GetProperties();
             foreach (var property in properties)
-                property.SetValue(resource, GetNewValue(property));
+                SetRandomValue(resource, property);
+        }
+
+        public void SetRandomValue(object resource, PropertyInfo property)
+        {
+            property.SetValue(resource, GetRandomValue(property));
         }
 
         public string GetRandomString(int length)
@@ -40,7 +45,7 @@ namespace Core.Server.Test.ResourceCreation
 
         }
 
-        private object GetNewValue(PropertyInfo property)
+        private object GetRandomValue(PropertyInfo property)
         {
             var type = property.PropertyType;
 

@@ -30,7 +30,8 @@ namespace Core.Server.Tests.ResourceTests
         [TestCleanup]
         public void Cleanup()
         {
-
+            foreach (var test in Tests)
+                test.Cleanup();
         }
 
         public void RunTest(Action<TResourceGenericTests> testRun)
