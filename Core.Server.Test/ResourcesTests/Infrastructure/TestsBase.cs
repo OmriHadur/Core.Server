@@ -63,7 +63,7 @@ namespace Core.Server.Tests.ResourceTests
 
         protected void AssertOk<T>(ActionResult<T> response)
         {
-            Assert.IsTrue(response is OkResultWithObject<T>);
+            Assert.IsTrue(response.IsSuccess);
         }
 
         protected void AssertOk(ActionResult response)

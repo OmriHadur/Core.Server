@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceTests.Interfaces;
-using Core.Server.Injection.Attributes;
 
 namespace Core.Server.Tests.ResourceTests
 {

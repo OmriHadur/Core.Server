@@ -2,6 +2,7 @@
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreation.Interfaces;
 using System;
+using System.Reflection;
 using Unity;
 
 namespace Core.Server.Test.ResourceCreation
@@ -49,7 +50,9 @@ namespace Core.Server.Test.ResourceCreation
 
         protected virtual void AddRandomValues(TUpdateResource updateResource)
         {
-            ObjectRandomizer.AddRandomValues(updateResource);
+            var randomProperty = ObjectRandomizer.GetRandomProperty<TUpdateResource>();
+            if (randomProperty != null)
+                ObjectRandomizer.SetRandomValue(updateResource, randomProperty);
         }
     }
 }

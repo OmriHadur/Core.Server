@@ -33,23 +33,28 @@ namespace Core.Server.Tests.ResourceTests
         }
 
         [TestMethod]
-        public void TestUpdate()
+        public void TestReplaceCreated()
         {
-            var randomProperty = GetRandomProperty();
-            if (randomProperty == null) return;
-            CreateResource();
-
-            var response = resourceAlter.Update(r => ObjectRandomizer.SetRandomValue(r, randomProperty));
-
-            AssertOk(response);
-            Assert.AreNotEqual(randomProperty.GetValue(response.Value), randomProperty.GetValue(CreatedResource));
+            var replaceResponse = resourceAlter.Replace();
+            var getResponse = ResourceQuery.Get(replaceResponse.Value.Id);
+            AssertOk(getResponse);
+            Validate(replaceResponse.Value, getResponse.Value);
         }
 
-        private PropertyInfo GetRandomProperty()
+        [TestMethod]
+        public void TestUpdate()
         {
-            var properties = typeof(TUpdateResource).GetProperties();
-            if (properties.Length == 0) return null;
-            return properties[Random.Next(properties.Length)];
+            var response = resourceAlter.Update();
+
+            AssertOk(response);
+        }
+
+        [TestMethod]
+        public void TestGetAfterUpdate()
+        {
+            var updateResponse = resourceAlter.Update();
+            var getResponse = ResourceQuery.Get(updateResponse.Value.Id);
+            Validate(updateResponse, getResponse);
         }
     }
 }

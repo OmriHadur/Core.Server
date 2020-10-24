@@ -8,6 +8,6 @@ namespace Core.Server.Tests.ResourceCreation.Interfaces
         string GetRandomId();
         string GetRandomString(int length);
         void SetRandomValue(object resource, PropertyInfo property);
-
+        PropertyInfo GetRandomProperty<T>();
     }
 }

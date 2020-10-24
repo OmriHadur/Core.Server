@@ -51,11 +51,16 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return Client.Replace(resource.Id, updateResource).Result;
         }
 
+        public ActionResult<TResource> Update()
+        {
+            return Update(null);
+        }
+
         public ActionResult<TResource> Update(Action<TUpdateResource> editFunc)
         {
             var resource = ResourceCreate.GetOrCreate();
             var updateResource = RandomResourceCreator.GetRandomUpdateResource(resource);
-            editFunc(updateResource);
+            editFunc?.Invoke(updateResource);
             return Client.Update(resource.Id, updateResource).Result;
         }
     }

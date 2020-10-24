@@ -15,9 +15,21 @@ namespace Core.Server.Tests.ResourceTests
         }
 
         [TestMethod]
+        public void TestReplaceCreated()
+        {
+            RunTest(t => t.TestReplaceCreated());
+        }
+
+        [TestMethod]
         public virtual void TestUpdate()
         {
             RunTest(t => t.TestUpdate());
+        }
+
+        [TestMethod]
+        public void TestGetAfterUpdate()
+        {
+            RunTest(t => t.TestGetAfterUpdate());
         }
     }
 }

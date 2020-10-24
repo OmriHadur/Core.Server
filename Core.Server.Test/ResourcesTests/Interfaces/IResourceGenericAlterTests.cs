@@ -4,6 +4,12 @@
         : IResourceGenericTests
     {
         void TestReplace();
+
+        void TestReplaceCreated();
+
         void TestUpdate();
+
+        void TestGetAfterUpdate();
+
     }
 }

@@ -3,6 +3,7 @@ using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Tests.ResourceTests
 {
+    [TestClass]
     public class UserQueryTests
         : ResourceGenericRestTests<UserResource>
     {
