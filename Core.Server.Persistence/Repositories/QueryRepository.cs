@@ -58,6 +58,13 @@ namespace Core.Server.Persistence.Repositories
             return answer.FirstOrDefault() != null;
         }
 
+
+        public async Task<bool> Any( )
+        {
+            var answer = await Collection.FindAsync(e => true);
+            return answer.FirstOrDefault() != null;
+        }
+
         public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)
         {
             var answer = await Collection.FindAsync(predicate);

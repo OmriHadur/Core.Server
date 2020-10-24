@@ -19,19 +19,19 @@ namespace Core.Server.Application
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
-        where TEntity : Entity, new()
+        where TEntity : Entity
     {
         [Dependency]
-        public IQueryRepository<TEntity> QueryRepository { get; set; }
+        public IQueryRepository<TEntity> QueryRepository;
 
         [Dependency]
-        public IAlterRepository<TEntity> AlterRepository { get; set; }
+        public IAlterRepository<TEntity> AlterRepository;
 
         [Dependency]
-        public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator { get; set; }
+        public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator;
 
         [Dependency]
-        public IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity> ResourceMapper { get; set; }
+        public IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity> ResourceMapper;
 
         public override UserResource CurrentUser
         {

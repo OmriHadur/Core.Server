@@ -48,5 +48,11 @@ namespace Core.Server.Web.Controllers
         {
             return await Application.Exists(id);
         }
+
+        [HttpHead()]
+        public virtual async Task<ActionResult> Any()
+        {
+            return await Application.Any();
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Core.Server.Application.Mappers.Base
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
-        where TEntity : Entity, new()
+        where TEntity : Entity
     {
         [Dependency]
         public IMapper Mapper { get; set; }

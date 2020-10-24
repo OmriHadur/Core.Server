@@ -19,5 +19,7 @@ namespace Core.Server.Common.Applications
         Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query);
 
         Task<ActionResult> Exists(string id);
+
+        Task<ActionResult> Any();
     }
 }

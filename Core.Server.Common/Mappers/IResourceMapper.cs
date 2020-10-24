@@ -7,7 +7,7 @@ namespace Core.Server.Common.Mappers
 {
     public interface IResourceMapper<TResource, TEntity>
         where TResource : Resource
-        where TEntity : Entity, new()
+        where TEntity : Entity
     {
         Task<TResource> Map(TEntity entity);
 

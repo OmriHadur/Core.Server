@@ -31,9 +31,14 @@ namespace Core.Server.Application
                 Enum.GetName(typeof(TReson), badRequestReason));
         }
 
+        public ActionResult NotFound()
+        {
+            return new NotFoundResult();
+        }
+
         public ActionResult NotFound(string obj)
         {
-            return new NotFoundApplicationResult(obj);
+            return new NotFoundObjectResult(obj);
         }
 
         public ActionResult Ok()

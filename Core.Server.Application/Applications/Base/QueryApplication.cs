@@ -20,10 +20,10 @@ namespace Core.Server.Application
         : BaseApplication,
           IQueryApplication<TResource>
         where TResource : Resource
-        where TEntity : Entity, new()
+        where TEntity : Entity
     {
         [Dependency]
-        public IQueryRepository<TEntity> QueryRepository { get; set; }
+        public IQueryRepository<TEntity> QueryRepository;
 
         [Dependency]
         public IQueryBuilder QueryBuilder;
@@ -70,6 +70,13 @@ namespace Core.Server.Application
             return await QueryRepository.Exists(id) ?
                 Ok() :
                 NotFound(id);
+        }
+
+        public virtual async Task<ActionResult> Any()
+        {
+            return await QueryRepository.Any() ?
+                Ok() :
+                NotFound();
         }
     }
 }

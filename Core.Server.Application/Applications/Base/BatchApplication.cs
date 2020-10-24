@@ -24,9 +24,6 @@ namespace Core.Server.Application
         where TEntity : Entity, new()
     {
         [Dependency]
-        public IQueryRepository<TEntity> QueryRepository { get; set; }
-
-        [Dependency]
         public IBatchRepository<TEntity> BatchRepository;
 
         [Dependency]
