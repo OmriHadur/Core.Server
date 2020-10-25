@@ -3,18 +3,16 @@ using Core.Server.Injection.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
 using Core.Server.Shared.Resources;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity;
 
 namespace Core.Server.Application.Mappers.Base
 {
     [Inject]
-    public class AlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>
-        : IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity>
+    public class AlterResourceMapper<TCreateResource, TUpdateResource, TEntity>
+        : IAlterResourceMapper<TCreateResource, TUpdateResource, TEntity>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
-        where TResource : Resource
         where TEntity : Entity
     {
         [Dependency]
@@ -39,16 +37,6 @@ namespace Core.Server.Application.Mappers.Base
                 if (value != null)
                     property.SetValue(entity, value);
             }
-        }
-
-        public virtual async Task<TResource> Map(TEntity entity)
-        {
-            return Mapper.Map<TResource>(entity);
-        }
-
-        public virtual async Task<IEnumerable<TResource>> Map(IEnumerable<TEntity> entities)
-        {
-            return Mapper.Map<IEnumerable<TResource>>(entities);
         }
     }
 }

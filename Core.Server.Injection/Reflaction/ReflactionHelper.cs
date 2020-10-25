@@ -27,7 +27,7 @@ namespace Core.Server.Injection.Reflaction
             var resourceTypes = GetDrivenTypesOf<Resource>();
 
             foreach (var resourceType in resourceTypes)
-                yield return GetResourceTypes(resourceType);
+                yield return GetResourceBoundles(resourceType);
         }
 
         public Type FillGenericType(Type genericType, ResourceBoundle resourceBoundle)
@@ -94,6 +94,7 @@ namespace Core.Server.Injection.Reflaction
         {
             return type.Name.Replace(type.BaseType.Name, string.Empty);
         }
+
         protected virtual IEnumerable<Assembly> GetAssemblies(string[] assembliesName)
         {
             foreach (var assemblyName in assembliesName)
@@ -115,6 +116,20 @@ namespace Core.Server.Injection.Reflaction
             return typeGenericType;
         }
 
+        public IEnumerable<Type> GetDirectInterfaces(Type type)
+        {
+            var allInterfaces = new List<Type>();
+            var childInterfaces = new List<Type>();
+
+            foreach (var i in type.GetInterfaces())
+            {
+                allInterfaces.Add(i);
+                foreach (var ii in i.GetInterfaces())
+                    childInterfaces.Add(ii);
+            }
+            return allInterfaces.Except(childInterfaces);
+        }
+
         private IEnumerable<Type> GetArguments(Type[] typeArgs, string prefix)
         {
             foreach (var type in typeArgs)
@@ -124,7 +139,7 @@ namespace Core.Server.Injection.Reflaction
             }
         }
 
-        private ResourceBoundle GetResourceTypes(Type resourceType)
+        private ResourceBoundle GetResourceBoundles(Type resourceType)
         {
             var resourceName = GetTypeName(resourceType, typeof(Resource));
             return new ResourceBoundle()
@@ -135,6 +150,7 @@ namespace Core.Server.Injection.Reflaction
                 EntityType = GetTypeWithPrefix<Entity>(resourceName)
             };
         }
+
         private IEnumerable<Type> GetGenericArguments(Type genericType, ResourceBoundle resourceBoundle)
         {
             return genericType.GetGenericArguments()

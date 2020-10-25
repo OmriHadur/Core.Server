@@ -30,17 +30,25 @@ namespace Core.Server.Application
         public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator;
 
         [Dependency]
-        public IAlterResourceMapper<TCreateResource, TUpdateResource, TResource, TEntity> ResourceMapper;
+        public IAlterResourceMapper<TCreateResource, TUpdateResource, TEntity> AlterResourceMapper;
+
+        [Dependency]
+        public IResourceMapper<TResource, TEntity> ResourceMapper;
 
         public async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
         {
-            var validationResult =await Validate(resources);
+            var validationResult = await Validate(resources);
             if (IsNotOk(validationResult))
                 return validationResult;
-            var entitiesTasks = resources.Select(async resource =>await ResourceMapper.Map(resource));
+            var entitiesTasks = resources.Select(async resource => await Map(resource));
             var entities = entitiesTasks.Select(er => er.Result);
             await AddEntites(entities);
             return Ok(await ResourceMapper.Map(entities));
+        }
+
+        private async Task<TEntity> Map(TCreateResource resource)
+        {
+            return await AlterResourceMapper.Map(resource);
         }
 
         private async Task<ActionResult> Validate(TCreateResource[] resources)

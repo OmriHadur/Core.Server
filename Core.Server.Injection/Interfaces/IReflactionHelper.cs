@@ -22,7 +22,7 @@ namespace Core.Server.Injection.Interfaces
             where TAttribute : Attribute;
         Type GetTypeWithPrefix<T>(string prefix);
         string GetPrefixName(Type type);
-
+        IEnumerable<Type> GetDirectInterfaces(Type type);
         bool IsSameType(TypeInfo parent, Type child);
         Type GetTypeGenericType(Type type, Type[] typeArgs, Type interTypeWithGeneric);
     }

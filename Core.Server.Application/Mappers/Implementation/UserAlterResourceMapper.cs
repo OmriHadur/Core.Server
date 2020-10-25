@@ -9,8 +9,8 @@ using Core.Server.Injection.Attributes;
 namespace Core.Server.Application.Mappers.Implementation
 {
     [Inject]
-    public class UserResourceMapper
-        : AlterResourceMapper<UserCreateResource,UserUpdateResource, UserResource,UserEntity>
+    public class UserAlterResourceMapper
+        : AlterResourceMapper<UserCreateResource,UserUpdateResource,UserEntity>
     {
         private readonly PasswordHasher _passwordHasher = new PasswordHasher();
 

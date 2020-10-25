@@ -66,15 +66,16 @@ namespace Core.Server.Injection.Unity
 
         private void AddTypesInterfaces(Type type)
         {
-            foreach (var interType in type.GetInterfaces())
+            var interfacesType= reflactionHelper.GetDirectInterfaces(type);
+            foreach (var interfaceType in interfacesType)
             {
-                if (!interType.IsGenericType || !type.IsGenericType)
-                    container.RegisterSingleton(interType, type);
+                if (!interfaceType.IsGenericType || !type.IsGenericType)
+                    container.RegisterSingleton(interfaceType, type);
                 else
                 {
-                    var interGenericType = interType.GetGenericTypeDefinition();
+                    var interGenericType = interfaceType.GetGenericTypeDefinition();
                     var typeArgs = type.GetGenericArguments();
-                    var interArgs = interType.GetGenericArguments();
+                    var interArgs = interfaceType.GetGenericArguments();
                     if (typeArgs.Length == interArgs.Length)
                         container.RegisterSingleton(interGenericType, type);
                     else

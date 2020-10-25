@@ -41,10 +41,10 @@ namespace Core.Server.Persistence.Repositories
         {
             return (await Collection.FindAsync(e => findFunc(e))).ToList();
         }
+
         public virtual async Task<IEnumerable<TEntity>> Get()
         {
-            var answer = await Collection.FindAsync(e => true);
-            return answer.ToEnumerable();
+            return (await Collection.FindAsync(e => true)).ToList();
         }
 
         public async Task<bool> Exists(string id)
