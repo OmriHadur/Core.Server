@@ -22,6 +22,9 @@ namespace Core.Server.Application
         where TEntity : Entity
     {
         [Dependency]
+        public IAlterCachedRepository<TEntity> AlterRepository;
+
+        [Dependency]
         public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator;
 
         [Dependency]

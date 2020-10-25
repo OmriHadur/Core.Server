@@ -1,81 +1,81 @@
-﻿using Core.Server.Common.Entities;
-using Core.Server.Common.Repositories;
+﻿using Core.Server.Common.Cache;
+using Core.Server.Common.Entities;
 using Core.Server.Injection.Attributes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Unity;
 
 namespace Core.Server.Persistence.Cache
 {
     [Inject]
-    public class IdCache<TEntity>
-        : BaseCache
-       , ILookupCachedRepository<TEntity>
+    public class Cache<TEntity>
+       : ICache<TEntity>
         where TEntity : Entity
     {
-        private readonly Dictionary<string, TEntity> idChahe;
+        private readonly Dictionary<string, TEntity> cache;
 
-        [Dependency]
-        public ILookupRepository<TEntity> LookupRepository;
-
-        public IdCache()
+        public Cache()
         {
-            idChahe = new Dictionary<string, TEntity>();
+            cache = new Dictionary<string, TEntity>();
         }
 
-        public Task<bool> Any()
+        public TEntity Get(string id)
         {
-            return LookupRepository.Any();
+            return cache.ContainsKey(id) 
+                ? cache[id] 
+                : null;
         }
 
-        public async Task<bool> Exists(string id)
+        public IEnumerable<TEntity> Get(IEnumerable<string> ids)
         {
-            if (idChahe.ContainsKey(id))
-                return true;
-            return await LookupRepository.Exists(id);
+            foreach (var id in ids)
+                yield return Get(id);
         }
 
-        public Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> Get( )
         {
-            throw new NotImplementedException();
+            return cache.Values;
         }
 
-        public Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> predicate)
+        public void AddOrSet(TEntity entity)
         {
-            throw new NotImplementedException();
+            if (cache.ContainsKey(entity.Id))
+                cache[entity.Id] = entity;
+            else
+                cache.Add(entity.Id, entity);
         }
 
-        public Task<TEntity> FindFirst(Expression<Func<TEntity, bool>> predicate)
+        public void AddOrSet(IEnumerable<TEntity> entities)
         {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+                AddOrSet(entity);
         }
 
-        public Task<TEntity> Get(string id)
+        public void Delete(string id)
         {
-            throw new NotImplementedException();
+            if (cache.ContainsKey(id))
+                cache.Remove(id);
         }
 
-        public Task<IEnumerable<TEntity>> Get(string[] ids)
+        public void Delete(IEnumerable<string> ids)
         {
-            throw new NotImplementedException();
+            foreach (var id in ids)
+                Delete(id);
         }
 
-        public Task<IEnumerable<TEntity>> Get()
+        public bool IsCached(string id)
         {
-            throw new NotImplementedException();
+            return cache.ContainsKey(id);
         }
 
-        public void Set(TEntity entity)
+        public void Clear()
         {
-            throw new NotImplementedException();
+            cache.Clear();
         }
 
-        public void Set(TEntity[] entities)
+        public bool Any()
         {
-            throw new NotImplementedException();
+            return cache.Any();
         }
     }
 }

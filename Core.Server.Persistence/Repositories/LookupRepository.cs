@@ -53,7 +53,6 @@ namespace Core.Server.Persistence.Repositories
             return answer.FirstOrDefault() != null;
         }
 
-
         public async Task<bool> Any( )
         {
             var answer = await Collection.FindAsync(e => true);

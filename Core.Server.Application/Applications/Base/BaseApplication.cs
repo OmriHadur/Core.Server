@@ -18,16 +18,13 @@ namespace Core.Server.Application
         public virtual UserResource CurrentUser { get; set; }
 
         [Dependency]
-        public ILogger<BaseApplication<TEntity>> Logger { get; set; }
+        public ILogger<BaseApplication<TEntity>> Logger;
 
         [Dependency]
         public IQueryRepository<TEntity> QueryRepository;
 
         [Dependency]
         public ILookupCachedRepository<TEntity> LookupRepository;
-
-        [Dependency]
-        public IAlterRepository<TEntity> AlterRepository;
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {

@@ -2,8 +2,8 @@
 
 namespace Core.Server.Common.Repositories
 {
-    public interface ILookupCachedRepository<TEntity> 
-        : ILookupRepository<TEntity>
+    public interface IAlterCachedRepository<TEntity> 
+        : IAlterRepository<TEntity>
         where TEntity : Entity
     {
     }
