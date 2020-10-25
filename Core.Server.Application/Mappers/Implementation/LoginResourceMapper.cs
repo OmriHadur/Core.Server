@@ -25,14 +25,14 @@ namespace Core.Server.Application.Mappers.Implementation
         public IJwtManager JwtManager { get; set; }
 
         [Dependency]
-        public IQueryRepository<UserEntity> UserQueryRepository { get; set; }
+        public ILookupRepository<UserEntity> UserLookupRepository { get; set; }
 
         [Dependency]
         public IResourceMapper<UserResource, UserEntity> UserResourceMapper { get; set; }
 
         public async override Task<LoginEntity> Map(LoginCreateResource resource)
         {
-            var userEntity = await UserQueryRepository.FindFirst(e => e.Email == resource.Email);
+            var userEntity = await UserLookupRepository.FindFirst(e => e.Email == resource.Email);
             return new LoginEntity()
             {
                 UserId = userEntity.Id,
@@ -45,7 +45,7 @@ namespace Core.Server.Application.Mappers.Implementation
         public override async Task<LoginResource> Map(LoginEntity entity)
         {
             var loginResource = Mapper.Map<LoginResource>(entity);
-            var userEntity = await UserQueryRepository.Get(entity.UserId);
+            var userEntity = await UserLookupRepository.Get(entity.UserId);
             loginResource.User = await UserResourceMapper.Map(userEntity);;
             return loginResource;
         }

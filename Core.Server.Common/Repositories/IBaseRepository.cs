@@ -2,6 +2,6 @@
 {
     public interface IBaseRepository
     {
-        IMongoDBConfig MongoDatabaseSettings { set; }
+        
     }
 }

@@ -14,19 +14,13 @@ namespace Core.Server.Application
 {
     [Inject]
     public class AlterApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : BaseApplication,
+        : BaseApplication<TEntity>,
           IAlterApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
         where TEntity : Entity
     {
-        [Dependency]
-        public IQueryRepository<TEntity> QueryRepository;
-
-        [Dependency]
-        public IAlterRepository<TEntity> AlterRepository;
-
         [Dependency]
         public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator;
 
@@ -55,7 +49,7 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult<TResource>> Replace(string id, TCreateResource resource)
         {
-            var entity = await QueryRepository.Get(id);
+            var entity = await LookupRepository.Get(id);
             if (entity == null)
                 entity = await ResourceMapper.Map(resource);
             var validation = await ResourceValidator.Validate(resource, entity);
@@ -68,7 +62,7 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
         {
-            var entity = await QueryRepository.Get(id);
+            var entity = await LookupRepository.Get(id);
             if (entity == null)
                 return NotFound(id);
             var validation = await ResourceValidator.Validate(resource, entity);
@@ -81,7 +75,7 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult> Delete(string id)
         {
-            var entity = await QueryRepository.Get(id);
+            var entity = await LookupRepository.Get(id);
             if (entity == null)
                 return NotFound(id);
             return await DeleteEntity(entity);

@@ -72,6 +72,12 @@ namespace Core.Server.Injection.Reflaction
             return types.Where(t => t.GetCustomAttribute<TAttribute>() != null);
         }
 
+        public IEnumerable<PropertyInfo> GetPropertiesWithAttribute<TAttribute>(object obj)
+                where TAttribute : Attribute
+        {
+            return obj.GetType().GetProperties().Where(p => p.GetCustomAttribute<TAttribute>() != null);
+        }
+
         public IEnumerable<Type> GetGenericTypesWithAttribute<TAttribute>()
             where TAttribute : Attribute
         {

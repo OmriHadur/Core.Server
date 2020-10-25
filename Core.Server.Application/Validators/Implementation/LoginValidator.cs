@@ -18,18 +18,17 @@ namespace Core.Server.Application.Validators.Implementation
         private readonly PasswordHasher _passwordHasher = new PasswordHasher();
 
         [Dependency]
-        public IQueryRepository<UserEntity> UserQueryRepository { get; set; }
+        public ILookupRepository<UserEntity> UserLookupRepository { get; set; }
 
-        [Dependency]
-        public IResourceMapper<UserResource, UserEntity> UserResourceMapper { get; set; }
 
         public override async Task<ActionResult> Validate(LoginCreateResource createResource)
         {
-            var userEntity = await UserQueryRepository.FindFirst(e => e.Email == createResource.Email);
+            var userEntity = await UserLookupRepository.FindFirst(e => e.Email == createResource.Email);
             if (userEntity == null || !IsPasswordCurrent(createResource, userEntity))
                 return Unauthorized();
             return await base.Validate(createResource);
         }
+
         private bool IsPasswordCurrent(LoginCreateResource resource, UserEntity user)
         {
             return _passwordHasher.VerifyPasswordHash(resource.Password, user.PasswordHash, user.PasswordSalt);

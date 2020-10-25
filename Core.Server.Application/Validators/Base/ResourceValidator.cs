@@ -4,12 +4,13 @@ using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Core.Server.Injection.Attributes;
+using Unity;
 
 namespace Core.Server.Common.Validators
 {
     [Inject]
     public class ResourceValidator<TCreateResource, TUpdateResource, TEntity>
-        : BaseApplication,
+        : BaseApplication<TEntity>,
           IResourceValidator<TCreateResource, TUpdateResource, TEntity>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource

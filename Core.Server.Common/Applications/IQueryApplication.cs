@@ -10,16 +10,6 @@ namespace Core.Server.Common.Applications
         : IBaseApplication
         where TResource : Resource
     {
-        Task<ActionResult<IEnumerable<TResource>>> GetAll();
-
-        Task<ActionResult<IEnumerable<TResource>>> GetByIds(string[] ids);
-
-        Task<ActionResult<TResource>> GetById(string id);
-
         Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query);
-
-        Task<ActionResult> Exists(string id);
-
-        Task<ActionResult> Any();
     }
 }

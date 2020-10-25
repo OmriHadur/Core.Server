@@ -18,6 +18,8 @@ namespace Core.Server.Injection.Interfaces
         Type GetTypeByName(string typeName);
         IEnumerable<Type> GetTypesWithAttribute<TAttribute>() 
             where TAttribute : Attribute;
+        IEnumerable<PropertyInfo> GetPropertiesWithAttribute<TAttribute>(object obj)
+            where TAttribute : Attribute;
         Type GetTypeWithPrefix<T>(string prefix);
         string GetPrefixName(Type type);
 

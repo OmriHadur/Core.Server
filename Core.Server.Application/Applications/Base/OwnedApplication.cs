@@ -13,26 +13,23 @@ namespace Core.Server.Application
 {
     [Inject]
     public class OwnedApplication<TResource, TEntity>
-        : BaseApplication,
+        : BaseApplication<TEntity>,
           IOwnedApplication<TResource>
         where TResource : Resource
         where TEntity : OwnedEntity
     {
         [Dependency]
-        public IQueryRepository<TEntity> QueryRepository;
-
-        [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAllOwned()
         {
-            var entities = await QueryRepository.FindAll(e => e.UserId == CurrentUser.Id);
+            var entities = await LookupRepository.FindAll(e => e.UserId == CurrentUser.Id);
             return Ok(await ResourceMapper.Map(entities));
         }
 
         public virtual async Task<ActionResult> Any()
         {
-            return await QueryRepository.Exists(e => e.UserId == CurrentUser.Id) ?
+            return await LookupRepository.Exists(e => e.UserId == CurrentUser.Id) ?
                 Ok() :
                 NotFound();
         }

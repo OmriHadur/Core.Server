@@ -6,17 +6,28 @@ using Unity;
 using Core.Server.Shared.Resources.Users;
 using Microsoft.Extensions.Logging;
 using Core.Server.Common.Applications;
+using Core.Server.Common.Repositories;
+using Core.Server.Common.Entities;
 
 namespace Core.Server.Application
 {
-    public class BaseApplication
+    public class BaseApplication<TEntity>
         : IBaseApplication
+        where TEntity: Entity
     {
         public virtual UserResource CurrentUser { get; set; }
 
         [Dependency]
-        public ILogger<BaseApplication> Logger { get; set; }
+        public ILogger<BaseApplication<TEntity>> Logger { get; set; }
 
+        [Dependency]
+        public IQueryRepository<TEntity> QueryRepository;
+
+        [Dependency]
+        public ILookupCachedRepository<TEntity> LookupRepository;
+
+        [Dependency]
+        public IAlterRepository<TEntity> AlterRepository;
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {

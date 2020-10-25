@@ -18,7 +18,7 @@ namespace Core.Server.Application
 
         public async override Task<ActionResult<UserResource>> Create(UserCreateResource createResource)
         {
-            if (await QueryRepository.Exists(e => e.Email == createResource.Email))
+            if (await LookupRepository.Exists(e => e.Email == createResource.Email))
                 return BadRequest(BadRequestReason.SameExists);
 
             return await base.Create(createResource);

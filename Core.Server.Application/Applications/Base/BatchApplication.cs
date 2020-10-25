@@ -16,7 +16,7 @@ namespace Core.Server.Application
 {
     [Inject]
     public class BatchApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : BaseApplication,
+        : BaseApplication<TEntity>,
           IBatchApplication<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
