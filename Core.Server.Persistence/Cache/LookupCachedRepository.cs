@@ -11,9 +11,9 @@ using Unity;
 
 namespace Core.Server.Persistence.Cache
 {
-    [Inject]
+    [InjectOverrid]
     public class LookupCachedRepository<TEntity>
-        :ILookupCachedRepository<TEntity>
+        :ILookupRepository<TEntity>
         where TEntity : Entity
     {
         private bool isHaveAll;
@@ -21,9 +21,8 @@ namespace Core.Server.Persistence.Cache
         [Dependency]
         public IEntityCache<TEntity> Cache;
 
-        [Dependency]
+        [Dependency("LookupRepository")]
         public ILookupRepository<TEntity> LookupRepository;
-        
 
         public async Task<bool> Any()
         {

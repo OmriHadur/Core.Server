@@ -24,7 +24,7 @@ namespace Core.Server.Application
         public IQueryRepository<TEntity> QueryRepository;
 
         [Dependency]
-        public ILookupCachedRepository<TEntity> LookupRepository;
+        public ILookupRepository<TEntity> LookupRepository;
 
         protected ActionResult BadRequest(BadRequestReason badRequestReason)
         {

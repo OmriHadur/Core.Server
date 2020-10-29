@@ -8,15 +8,15 @@ using Unity;
 
 namespace Core.Server.Persistence.Cache
 {
-    [Inject]
+    [InjectOverrid]
     public class BatchCachedRepository<TEntity>
-        : IBatchCachedRepository<TEntity>
+        : IBatchRepository<TEntity>
         where TEntity : Entity
     {
         [Dependency]
         public IEntityCache<TEntity> Cache;
 
-        [Dependency]
+        [Dependency("BatchRepository")]
         public IBatchRepository<TEntity> BatchRepository;
 
         public async Task AddMany(IEnumerable<TEntity> entities)

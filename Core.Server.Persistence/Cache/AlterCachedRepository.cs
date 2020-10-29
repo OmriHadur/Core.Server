@@ -3,23 +3,21 @@ using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Injection.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Unity;
 
 namespace Core.Server.Persistence.Cache
 {
-    [Inject]
+    [InjectOverrid]
     public class AlterCachedRepository<TEntity>
-        :IAlterCachedRepository<TEntity>
+        :IAlterRepository<TEntity>
         where TEntity : Entity
     {
         [Dependency]
         public IEntityCache<TEntity> Cache;
 
-        [Dependency]
+        [Dependency("AlterRepository")]
         public IAlterRepository<TEntity> AlterRepository;
 
         public async Task Add(TEntity entity)

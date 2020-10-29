@@ -24,7 +24,7 @@ namespace Core.Server.Application
         where TEntity : Entity, new()
     {
         [Dependency]
-        public IBatchCachedRepository<TEntity> BatchRepository;
+        public IBatchRepository<TEntity> BatchRepository;
 
         [Dependency]
         public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator;
