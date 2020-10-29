@@ -12,12 +12,12 @@ using Unity;
 namespace Core.Server.Persistence.Cache
 {
     [Inject]
-    public class AlterCache<TEntity>
+    public class AlterCachedRepository<TEntity>
         :IAlterCachedRepository<TEntity>
         where TEntity : Entity
     {
         [Dependency]
-        public ICache<TEntity> Cache;
+        public IEntityCache<TEntity> Cache;
 
         [Dependency]
         public IAlterRepository<TEntity> AlterRepository;

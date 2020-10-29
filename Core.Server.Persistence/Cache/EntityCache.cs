@@ -8,13 +8,15 @@ using Unity;
 namespace Core.Server.Persistence.Cache
 {
     [Inject]
-    public class Cache<TEntity>
-       : ICache<TEntity>
+    public class EntityCache<TEntity>
+       : IEntityCache<TEntity>
         where TEntity : Entity
     {
+        private readonly int maxCount = 5;
+
         private readonly Dictionary<string, TEntity> cache;
 
-        public Cache()
+        public EntityCache()
         {
             cache = new Dictionary<string, TEntity>();
         }
@@ -42,7 +44,12 @@ namespace Core.Server.Persistence.Cache
             if (cache.ContainsKey(entity.Id))
                 cache[entity.Id] = entity;
             else
+            {
                 cache.Add(entity.Id, entity);
+                if (cache.Count > maxCount)
+                    cache.Remove(cache.First().Key);
+            }
+                
         }
 
         public void AddOrSet(IEnumerable<TEntity> entities)

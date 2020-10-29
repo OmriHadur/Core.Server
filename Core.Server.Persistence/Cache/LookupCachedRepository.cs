@@ -12,14 +12,14 @@ using Unity;
 namespace Core.Server.Persistence.Cache
 {
     [Inject]
-    public class LookupCache<TEntity>
+    public class LookupCachedRepository<TEntity>
         :ILookupCachedRepository<TEntity>
         where TEntity : Entity
     {
         private bool isHaveAll;
 
         [Dependency]
-        public ICache<TEntity> Cache;
+        public IEntityCache<TEntity> Cache;
 
         [Dependency]
         public ILookupRepository<TEntity> LookupRepository;

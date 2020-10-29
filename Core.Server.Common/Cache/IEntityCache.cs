@@ -1,11 +1,9 @@
 ﻿using Core.Server.Common.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Core.Server.Common.Cache
 {
-    public interface ICache<TEntity>
+    public interface IEntityCache<TEntity>
         where TEntity : Entity
     {
         bool IsCached(string id);
