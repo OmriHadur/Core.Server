@@ -21,23 +21,24 @@ namespace Core.Server.Application
         where TEntity : Entity
     {
         [Dependency]
-        public IQueringBuilder QueringBuilder;
+        public IQueryResourceToEntityMapper QueryResourceToEntityMapper;
 
         [Dependency]
-        public IQueringValidator QueringValidator;
+        public IQueryBaseValidator QueringValidator;
 
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryPropertyResource queryResource)
         {
+
             var validationError = QueringValidator.Validate<TResource>(queryResource);
             if (validationError != null)
                 return BadRequest((BadRequestReason)validationError);
 
-            var query = QueringBuilder.Build<TResource>(queryResource);
+            var query = QueryResourceToEntityMapper.Map<TResource>(queryResource);
             var entities = await QueryRepository.Query(query);
-            return Ok(await ResourceMapper.Map(entities));
+            return Ok((object)await ResourceMapper.Map((IEnumerable<TEntity>)entities));
         }
     }
 }

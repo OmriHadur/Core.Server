@@ -1,6 +1,6 @@
 ﻿namespace Core.Server.Shared.Query
 {
-    public enum NumberQueryOperands
+    public enum NumberPropertyQueryOperands
     {
         LessThen,
         Equals,

@@ -9,23 +9,23 @@ namespace Core.Server.Application.Query
     [Inject]
     public class QueringBuilder
         : QueringBase
-        , IQueringBuilder
+        , IQueryResourceToEntityMapper
     {
-        public QueryBase Build<TResource>(QueryResource queryResource)
+        public QueryEntityBase Map<TResource>(QueryPropertyResource queryResource)
             where TResource : Resource
         {
             if (queryResource is StringQueryResource)
                 return GetStringQuery<TResource>(queryResource as StringQueryResource);
-            if (queryResource is NumberQueryResource)
-                return GetNumberQuery<TResource>(queryResource as NumberQueryResource);
+            if (queryResource is NumberPropertyQueryResource)
+                return GetNumberQuery<TResource>(queryResource as NumberPropertyQueryResource);
             else if (queryResource is LogicQueryResource)
                 return GetLogicQuery<TResource>(queryResource as LogicQueryResource);
             return null;
         }
 
-        private QueryBase GetNumberQuery<TResource>(NumberQueryResource numberQueryResource) where TResource : Resource
+        private QueryEntityBase GetNumberQuery<TResource>(NumberPropertyQueryResource numberQueryResource) where TResource : Resource
         {
-            return new NumberQuery()
+            return new NumberEntityQuery()
             {
                 Field = GetPropertyName<TResource>(numberQueryResource.PropertyName),
                 Value = numberQueryResource.Value,
@@ -33,18 +33,18 @@ namespace Core.Server.Application.Query
             };
         }
 
-        private QueryBase GetLogicQuery<TResource>(LogicQueryResource logicQueryResource) where TResource : Resource
+        private QueryEntityBase GetLogicQuery<TResource>(LogicQueryResource logicQueryResource) where TResource : Resource
         {
-            return new LogicQuery()
+            return new LogicEntityQuery()
             {
                 IsAnd = logicQueryResource.Operand == 0,
-                Queries = logicQueryResource.QueryResources.Select(r => Build<TResource>(r))
+                Queries = logicQueryResource.QueryResources.Select(r => Map<TResource>(r))
             };
         }
 
-        private QueryBase GetStringQuery<TResource>(StringQueryResource queryResource) where TResource : Resource
+        private QueryEntityBase GetStringQuery<TResource>(StringQueryResource queryResource) where TResource : Resource
         {
-            var stringQuery = new StringQuery()
+            var stringQuery = new StringEntityQuery()
             {
                 Field = GetPropertyName<TResource>(queryResource.PropertyName),
                 Regex = queryResource.Value

@@ -11,9 +11,9 @@ namespace Core.Server.Application.Query
     [Inject]
     public class QueringValidator
         : QueringBase
-        , IQueringValidator
+        , IQueryBaseValidator
     {
-        public BadRequestReason? Validate<TResource>(QueryResource queryResource)
+        public BadRequestReason? Validate<TResource>(QueryPropertyResource queryResource)
             where TResource : Resource
         {
             if (queryResource is LogicQueryResource)
@@ -37,7 +37,7 @@ namespace Core.Server.Application.Query
                     if (propertyInfo.PropertyType != typeof(string))
                         return BadRequestReason.PropertyNotCurectType;
                 }
-                else if (queryResource is NumberQueryResource)
+                else if (queryResource is NumberPropertyQueryResource)
                 {
                     if (propertyInfo.PropertyType != typeof(int))
                         return BadRequestReason.PropertyNotCurectType;
@@ -46,7 +46,7 @@ namespace Core.Server.Application.Query
             }
         }
 
-        private PropertyInfo GetPropertyNameInfo<TResource>(QueryResource queryResource) where TResource : Resource
+        private PropertyInfo GetPropertyNameInfo<TResource>(QueryPropertyResource queryResource) where TResource : Resource
         {
             var propertyNameValue = (queryResource as PropertyQueryResource).PropertyName;
             return GetPropertyInfo<TResource>(propertyNameValue);

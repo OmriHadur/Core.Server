@@ -2,9 +2,9 @@
 
 namespace Core.Server.Common.Query
 {
-    public class LogicQuery : QueryBase
+    public class LogicEntityQuery : QueryEntityBase
     {
         public bool IsAnd{ get; set; }
-        public IEnumerable<QueryBase> Queries{ get; set; }
+        public IEnumerable<QueryEntityBase> Queries{ get; set; }
     }
 }

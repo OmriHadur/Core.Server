@@ -14,7 +14,7 @@ namespace Core.Server.Web.Controllers
         where TResource : Resource
     {
         [HttpPost("query")]
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query)
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryPropertyResource query)
         {
             return await Application.Query(query);
         }

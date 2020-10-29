@@ -1,7 +1,7 @@
 ﻿
 namespace Core.Server.Common.Query
 {
-    public class QueryBase
+    public class QueryEntityBase
     {
 
     }

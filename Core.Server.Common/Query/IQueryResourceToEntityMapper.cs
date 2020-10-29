@@ -4,9 +4,9 @@ using Core.Server.Shared.Resources;
 
 namespace Core.Server.Application.Query
 {
-    public interface IQueringBuilder
+    public interface IQueryResourceToEntityMapper
     {
-        QueryBase Build<TResource>(QueryResource queryResource)
+        QueryEntityBase Map<TResource>(QueryPropertyResource queryResource)
             where TResource : Resource;
     }
 }

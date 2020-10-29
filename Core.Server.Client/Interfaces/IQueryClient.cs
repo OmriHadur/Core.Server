@@ -18,6 +18,6 @@ namespace Core.Server.Client.Interfaces
 
         Task<ActionResult<TResource>> Get(string id);
 
-        Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query);
+        Task<ActionResult<IEnumerable<TResource>>> Query(QueryPropertyResource query);
     }
 }

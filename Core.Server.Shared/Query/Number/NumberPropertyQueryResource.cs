@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Query
 {
-    public class NumberQueryResource : PropertyQueryResource
+    public class NumberPropertyQueryResource : PropertyQueryResource
     {
         [Required]
         public double Value { get; set; }
 
         [Required]
-        public NumberQueryOperands Operand { get; set; }
+        public NumberPropertyQueryOperands Operand { get; set; }
     }
 }

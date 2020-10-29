@@ -2,10 +2,10 @@
 
 namespace Core.Server.Common.Query
 {
-    public class NumberQuery : QueryBase
+    public class NumberEntityQuery : QueryEntityBase
     {
         public string Field { get; set; }
         public double Value { get; set; }
-        public NumberQueryOperands Operand { get; set; }
+        public NumberPropertyQueryOperands Operand { get; set; }
     }
 }

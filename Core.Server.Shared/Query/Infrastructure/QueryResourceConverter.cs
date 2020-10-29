@@ -5,9 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Core.Server.Shared.Query
 {
-    public class QueryResourceConverter : JsonConverter<QueryResource>
+    public class QueryResourceConverter : JsonConverter<QueryPropertyResource>
     {
-        public override QueryResource ReadJson(JsonReader reader, Type objectType, [AllowNull] QueryResource existingValue, bool hasExistingValue, Newtonsoft.Json.JsonSerializer serializer)
+        public override QueryPropertyResource ReadJson(JsonReader reader, Type objectType, [AllowNull] QueryPropertyResource existingValue, bool hasExistingValue, Newtonsoft.Json.JsonSerializer serializer)
         {
             var jObject = JToken.ReadFrom(reader);
             var resourceObject = GetResourceObject(jObject);
@@ -16,28 +16,28 @@ namespace Core.Server.Shared.Query
             return resourceObject;
         }
 
-        private static QueryResource GetResourceObject(JToken jObject)
+        private static QueryPropertyResource GetResourceObject(JToken jObject)
         {
             var json = jObject.ToString();
             Type resourceType = GetResourceType(jObject);
             var resourceObject = System.Text.Json.JsonSerializer.Deserialize(json, resourceType);
-            return (QueryResource)resourceObject;
+            return (QueryPropertyResource)resourceObject;
         }
 
         private static Type GetResourceType(JToken jObject)
         {
-            var typeName = jObject[nameof(QueryResource.Type)].ToString();
-            var queryResourceType = typeof(QueryResource);
+            var typeName = jObject[nameof(QueryPropertyResource.Type)].ToString();
+            var queryResourceType = typeof(QueryPropertyResource);
             return Type.GetType($"{queryResourceType.Namespace}.{typeName},{queryResourceType.Assembly}");
         }
 
-        private static void DeserializeQueryResources(JToken jObject, QueryResource resourceObject)
+        private static void DeserializeQueryResources(JToken jObject, QueryPropertyResource resourceObject)
         {
             var jsonArray = jObject[nameof(LogicQueryResource.QueryResources)].ToString();
-            (resourceObject as LogicQueryResource).QueryResources = JsonConvert.DeserializeObject<QueryResource[]>(jsonArray);
+            (resourceObject as LogicQueryResource).QueryResources = JsonConvert.DeserializeObject<QueryPropertyResource[]>(jsonArray);
         }
 
-        public override void WriteJson(JsonWriter writer, [AllowNull] QueryResource value, Newtonsoft.Json.JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, [AllowNull] QueryPropertyResource value, Newtonsoft.Json.JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }

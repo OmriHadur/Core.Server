@@ -34,7 +34,7 @@ namespace Core.Server.Client.Clients
             return SendGet(id);
         }
 
-        public Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource query)
+        public Task<ActionResult<IEnumerable<TResource>>> Query(QueryPropertyResource query)
         {
             return SentPostMany("query", query);
         }

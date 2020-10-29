@@ -4,9 +4,9 @@ using Core.Server.Shared.Resources;
 
 namespace Core.Server.Application.Query
 {
-    public interface IQueringValidator
+    public interface IQueryBaseValidator
     {
-        BadRequestReason? Validate<TResource>(QueryResource queryResource) 
+        BadRequestReason? Validate<TResource>(QueryPropertyResource queryResource) 
             where TResource : Resource;
     }
 }

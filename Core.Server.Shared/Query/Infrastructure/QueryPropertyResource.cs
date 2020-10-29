@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Query
 {
-    public class PropertyQueryResource : QueryPropertyResource
+    [JsonConverter(typeof(QueryResourceConverter))]
+    public class QueryPropertyResource
     {
         [Required]
-        [MinLength(2)]
-        public string PropertyName { get; set; }
+        public string Type { get; set; }
     }
 }

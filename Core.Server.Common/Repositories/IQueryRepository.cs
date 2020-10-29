@@ -9,6 +9,6 @@ namespace Core.Server.Common.Repositories
         : IBaseRepository
         where TEntity : Entity
     {
-        Task<IEnumerable<TEntity>> Query(QueryBase query);
+        Task<IEnumerable<TEntity>> Query(QueryEntityBase query);
     }
 }
