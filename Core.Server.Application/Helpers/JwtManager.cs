@@ -9,7 +9,7 @@ using System.Text;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Injection.Attributes;
 
-namespace Core.Server.Application.Helper
+namespace Core.Server.Application.Helpers
 {
     [Inject]
     public class JwtManager : IJwtManager

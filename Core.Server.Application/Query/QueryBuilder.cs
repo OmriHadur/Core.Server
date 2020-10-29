@@ -1,45 +1,16 @@
 ﻿using Core.Server.Common.Query;
-using Core.Server.Shared.Errors;
 using Core.Server.Shared.Query;
 using Core.Server.Shared.Resources;
 using System.Linq;
-using System.Reflection;
 using Core.Server.Injection.Attributes;
 
-namespace Core.Server.Application.Helpers
+namespace Core.Server.Application.Query
 {
     [Inject]
-    public class QueryBuilder : IQueryBuilder
+    public class QueringBuilder
+        : QueringBase
+        , IQueringBuilder
     {
-        public BadRequestReason? Validate<TResource>(QueryResource queryResource)
-            where TResource : Resource
-        {
-            if (queryResource is LogicQueryResource)
-            {
-                var validations = (queryResource as LogicQueryResource)
-                    .QueryResources.Select(qr => Validate<TResource>(qr));
-                return validations.FirstOrDefault(v => v != null);
-            }
-            else
-            {
-                var propertyName = (queryResource as PropertyQueryResource).PropertyName;
-                var propertyInfo = GetPropertyInfo<TResource>(propertyName);
-                if (propertyInfo == null)
-                    return BadRequestReason.PropertyNotFound;
-                if (queryResource is StringQueryResource)
-                {
-                    if (propertyInfo.PropertyType != typeof(string))
-                        return BadRequestReason.PropertyNotCurectType;
-                }
-                else if (queryResource is NumberQueryResource)
-                {
-                    if (propertyInfo.PropertyType != typeof(int))
-                        return BadRequestReason.PropertyNotCurectType;
-                }
-                return null;
-            }
-        }
-
         public QueryBase Build<TResource>(QueryResource queryResource)
             where TResource : Resource
         {
@@ -92,18 +63,5 @@ namespace Core.Server.Application.Helpers
             }
             return stringQuery;
         }
-
-        private static PropertyInfo GetPropertyInfo<TResource>(string propertyName) 
-            where TResource : Resource
-        {
-            return typeof(TResource).GetProperties().FirstOrDefault(p => p.Name.ToLower() == propertyName);
-        }
-
-        private static string GetPropertyName<TResource>(string propertyName)
-            where TResource : Resource
-        {
-            return GetPropertyInfo<TResource>(propertyName).Name;
-        }
-
     }
 }

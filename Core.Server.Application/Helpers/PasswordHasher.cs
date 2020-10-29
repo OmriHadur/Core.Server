@@ -1,7 +1,7 @@
 ﻿
 using Core.Server.Common.Helpers;
 
-namespace Core.Server.Application.Helper
+namespace Core.Server.Application.Helpers
 {
     public class PasswordHasher: IPasswordHasher
     {

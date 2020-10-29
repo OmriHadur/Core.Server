@@ -1,4 +1,4 @@
-﻿using Core.Server.Application.Helper;
+﻿using Core.Server.Application.Helpers;
 using Core.Server.Injection.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Shared.Query;
-using Core.Server.Application.Helpers;
 using Core.Server.Shared.Errors;
 using Core.Server.Common.Mappers;
 using Core.Server.Injection.Attributes;
+using Core.Server.Application.Query;
 
 namespace Core.Server.Application
 {
@@ -21,18 +21,21 @@ namespace Core.Server.Application
         where TEntity : Entity
     {
         [Dependency]
-        public IQueryBuilder QueryBuilder;
+        public IQueringBuilder QueringBuilder;
+
+        [Dependency]
+        public IQueringValidator QueringValidator;
 
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
         {
-            var validationError = QueryBuilder.Validate<TResource>(queryResource);
+            var validationError = QueringValidator.Validate<TResource>(queryResource);
             if (validationError != null)
                 return BadRequest((BadRequestReason)validationError);
 
-            var query = QueryBuilder.Build<TResource>(queryResource);
+            var query = QueringBuilder.Build<TResource>(queryResource);
             var entities = await QueryRepository.Query(query);
             return Ok(await ResourceMapper.Map(entities));
         }

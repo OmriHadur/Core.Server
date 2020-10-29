@@ -41,6 +41,8 @@ namespace Core.Server.Persistence.Cache
 
         public void AddOrSet(TEntity entity)
         {
+            if (entity == null) 
+                return;
             if (cache.ContainsKey(entity.Id))
                 cache[entity.Id] = entity;
             else

@@ -8,6 +8,7 @@
         InvalidGuid,
         PropertyNotFound,
         PropertyNotCurectType,
+        EnumNotInRange,
         Unchangeable
     }
 }
