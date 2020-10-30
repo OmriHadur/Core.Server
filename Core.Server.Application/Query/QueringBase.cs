@@ -15,7 +15,7 @@ namespace Core.Server.Application.Query
 
         protected PropertyInfo GetPropertyInfo(string propertyName, Type type)
         {
-            return type.GetProperties().FirstOrDefault(p => p.Name.ToLower() == propertyName);
+            return type.GetProperties().FirstOrDefault(p => p.Name == propertyName);
         }
 
         protected string GetPropertyName<TResource>(string propertyName)

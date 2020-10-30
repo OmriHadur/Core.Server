@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Query;
 using Core.Server.Shared.Errors;
 using Core.Server.Common.Mappers;
 using Core.Server.Injection.Attributes;
 using Core.Server.Application.Query;
+using Core.Server.Common.Query;
+using Core.Server.Shared.Query;
 
 namespace Core.Server.Application
 {
@@ -21,7 +22,7 @@ namespace Core.Server.Application
         where TEntity : Entity
     {
         [Dependency]
-        public IQueryResourceToEntityMapper QueryResourceToEntityMapper;
+        public IQueryMapper QueryResourceToEntityMapper;
 
         [Dependency]
         public IQueryBaseValidator QueringValidator;
@@ -29,16 +30,15 @@ namespace Core.Server.Application
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryPropertyResource queryResource)
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
         {
-
-            var validationError = QueringValidator.Validate<TResource>(queryResource);
+            var query = QueryResourceToEntityMapper.Map<TResource>(queryResource.Query);
+            var validationError = QueringValidator.Validate<TResource>(query);
             if (validationError != null)
                 return BadRequest((BadRequestReason)validationError);
 
-            var query = QueryResourceToEntityMapper.Map<TResource>(queryResource);
             var entities = await QueryRepository.Query(query);
-            return Ok((object)await ResourceMapper.Map((IEnumerable<TEntity>)entities));
+            return Ok(await ResourceMapper.Map(entities));
         }
     }
 }

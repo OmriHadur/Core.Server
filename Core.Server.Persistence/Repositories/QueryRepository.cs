@@ -22,7 +22,7 @@ namespace Core.Server.Persistence.Repositories
         [Dependency]
         public IQueryFilterFactory QueryFilterFactory;
 
-        public async Task<IEnumerable<TEntity>> Query(QueryEntityBase query)
+        public async Task<IEnumerable<TEntity>> Query(QueryBase query)
         {
             var filter = QueryFilterFactory.GetFilter<TEntity>(query);
             return (await Collection.FindAsync(filter)).ToEnumerable();

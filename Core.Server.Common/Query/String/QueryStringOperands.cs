@@ -1,7 +1,7 @@
 ﻿
-namespace Core.Server.Shared.Query
+namespace Core.Server.Common.Query
 {
-    public enum StringQueryOperands
+    public enum QueryStringOperands
     {
         StartsWith,
         EndsWith,

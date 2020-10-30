@@ -1,10 +1,10 @@
 ﻿using Core.Server.Shared.Errors;
-using Core.Server.Shared.Query;
 using Core.Server.Shared.Resources;
 using System.Linq;
 using Core.Server.Injection.Attributes;
 using System;
 using System.Reflection;
+using Core.Server.Common.Query;
 
 namespace Core.Server.Application.Query
 {
@@ -13,31 +13,31 @@ namespace Core.Server.Application.Query
         : QueringBase
         , IQueryBaseValidator
     {
-        public BadRequestReason? Validate<TResource>(QueryPropertyResource queryResource)
+        public BadRequestReason? Validate<TResource>(QueryBase queryBase)
             where TResource : Resource
         {
-            if (queryResource is LogicQueryResource)
+            if (queryBase is QueryUnion)
             {
-                var validations = (queryResource as LogicQueryResource)
-                    .QueryResources.Select(qr => Validate<TResource>(qr));
+                var validations = (queryBase as QueryUnion)
+                    .Queries.Select(qr => Validate<TResource>(qr));
                 return validations.FirstOrDefault(v => v != null);
             }
             else
             {
-                var propertyInfo = GetPropertyNameInfo<TResource>(queryResource);
+                var propertyInfo = GetPropertyNameInfo<TResource>(queryBase);
                 if (propertyInfo == null)
                     return BadRequestReason.PropertyNotFound;
 
-                var inRange = IsEnumInRange(queryResource);
+                var inRange = IsEnumInRange(queryBase);
                 if (!inRange)
                     return BadRequestReason.EnumNotInRange;
 
-                if (queryResource is StringQueryResource)
+                if (queryBase is QueryString)
                 {
                     if (propertyInfo.PropertyType != typeof(string))
                         return BadRequestReason.PropertyNotCurectType;
                 }
-                else if (queryResource is NumberPropertyQueryResource)
+                else if (queryBase is QueryNumber)
                 {
                     if (propertyInfo.PropertyType != typeof(int))
                         return BadRequestReason.PropertyNotCurectType;
@@ -46,9 +46,10 @@ namespace Core.Server.Application.Query
             }
         }
 
-        private PropertyInfo GetPropertyNameInfo<TResource>(QueryPropertyResource queryResource) where TResource : Resource
+        private PropertyInfo GetPropertyNameInfo<TResource>(QueryBase queryResource)
+            where TResource : Resource
         {
-            var propertyNameValue = (queryResource as PropertyQueryResource).PropertyName;
+            var propertyNameValue = (queryResource as QueryField).Field;
             return GetPropertyInfo<TResource>(propertyNameValue);
         }
 

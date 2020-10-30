@@ -6,7 +6,7 @@ namespace Core.Server.Persistence.Filters
 {
     public interface IQueryFilterFactory
     {
-        FilterDefinition<TEntity> GetFilter<TEntity>(QueryEntityBase query)
+        FilterDefinition<TEntity> GetFilter<TEntity>(QueryBase query)
              where TEntity : Entity;
     }
 }

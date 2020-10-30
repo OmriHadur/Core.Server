@@ -1,12 +1,11 @@
 ﻿using Core.Server.Common.Query;
-using Core.Server.Shared.Query;
 using Core.Server.Shared.Resources;
 
 namespace Core.Server.Application.Query
 {
-    public interface IQueryResourceToEntityMapper
+    public interface IQueryMapper
     {
-        QueryEntityBase Map<TResource>(QueryPropertyResource queryResource)
+        QueryBase Map<TResource>(string query)
             where TResource : Resource;
     }
 }

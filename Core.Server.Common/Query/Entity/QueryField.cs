@@ -1,9 +1,8 @@
 ﻿
 namespace Core.Server.Common.Query
 {
-    public class StringEntityQuery : QueryEntityBase
+    public class QueryField : QueryBase
     {
         public string Field { get; set; }
-        public string Regex { get; set; }
     }
 }

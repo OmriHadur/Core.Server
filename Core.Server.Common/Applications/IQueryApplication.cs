@@ -10,6 +10,6 @@ namespace Core.Server.Common.Applications
         : IBaseApplication
         where TResource : Resource
     {
-        Task<ActionResult<IEnumerable<TResource>>> Query(QueryPropertyResource query);
+        Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource);
     }
 }

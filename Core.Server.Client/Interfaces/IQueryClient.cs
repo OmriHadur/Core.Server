@@ -10,14 +10,6 @@ namespace Core.Server.Client.Interfaces
         : IClientBase
         where TResource : Resource
     {
-        Task<ActionResult> Exists(string id);
-
-        Task<ActionResult<IEnumerable<TResource>>> Get();
-
-        Task<ActionResult<IEnumerable<TResource>>> Get(IEnumerable<string> ids);
-
-        Task<ActionResult<TResource>> Get(string id);
-
-        Task<ActionResult<IEnumerable<TResource>>> Query(QueryPropertyResource query);
+        Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource);
     }
 }

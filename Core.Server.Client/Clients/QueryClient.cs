@@ -14,29 +14,9 @@ namespace Core.Server.Client.Clients
           IQueryClient<TResource>
         where TResource : Resource
     {
-        public Task<ActionResult> Exists(string id)
+        public Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
         {
-            return SendHead(id);
-        }
-
-        public Task<ActionResult<IEnumerable<TResource>>> Get()
-        {
-            return SendGetMany();
-        }
-
-        public Task<ActionResult<IEnumerable<TResource>>> Get(IEnumerable<string> ids)
-        {
-            return SentPostMany("ids", ids);
-        }
-
-        public Task<ActionResult<TResource>> Get(string id)
-        {
-            return SendGet(id);
-        }
-
-        public Task<ActionResult<IEnumerable<TResource>>> Query(QueryPropertyResource query)
-        {
-            return SentPostMany("query", query);
+            return SentPostMany("query", queryResource);
         }
     }
 }
