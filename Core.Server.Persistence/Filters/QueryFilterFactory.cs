@@ -35,22 +35,27 @@ namespace Core.Server.Persistence.Filters
 
         private FilterDefinition<TEntity> GetFilter<TEntity>(QueryString queryString)
         {
-            var regex = queryString.Value;
-            switch (queryString.Operand)
-            {
-                case QueryStringOperands.StartsWith:
-                    regex = $"^{regex}";
-                    break;
-                case QueryStringOperands.EndsWith:
-                    regex += "$";
-                    break;
-                case QueryStringOperands.Empty:
-                    regex = "^$";
-                    break;
-            }
+            var regex = GetRegex(queryString);
 
             var queryExpr = new BsonRegularExpression(new Regex(regex, RegexOptions.IgnoreCase));
             return Builders<TEntity>.Filter.Regex(queryString.Field, queryExpr);
+        }
+
+        private static string GetRegex(QueryString queryString)
+        {
+            var regex = queryString.Value;
+            switch (queryString.Operand)
+            {
+                case QueryStringOperands.Starts:
+                    return '^' + regex;
+                case QueryStringOperands.Ends:
+                    return regex + "$";
+                case QueryStringOperands.Empty:
+                    return "^$";
+                case QueryStringOperands.NotEmpty:
+                    return "$";
+            }
+            return regex;
         }
 
         private FilterDefinition<TEntity> GetFilter<TEntity>(QueryNumber queryNumber)
@@ -59,10 +64,14 @@ namespace Core.Server.Persistence.Filters
             {
                 case QueryNumberOperands.LessThen:
                     return Builders<TEntity>.Filter.Lt(queryNumber.Field, queryNumber.Value);
+                case QueryNumberOperands.LessThenOrEquals:
+                    return Builders<TEntity>.Filter.Lte(queryNumber.Field, queryNumber.Value);
                 case QueryNumberOperands.Equals:
                     return Builders<TEntity>.Filter.Eq(queryNumber.Field, queryNumber.Value);
                 case QueryNumberOperands.GreaterThen:
                     return Builders<TEntity>.Filter.Gt(queryNumber.Field, queryNumber.Value);
+                case QueryNumberOperands.GreaterThenOrEquals:
+                    return Builders<TEntity>.Filter.Gte(queryNumber.Field, queryNumber.Value);
                 default:
                     return null;
             }

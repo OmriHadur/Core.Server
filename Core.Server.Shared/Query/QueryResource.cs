@@ -5,7 +5,7 @@ namespace Core.Server.Shared.Query
     public class QueryResource
     {
         [Required]
-        public string Query { get; set; }
+        public string QueryPhrase { get; set; }
 
         public string OrderBy { get; set; }
 

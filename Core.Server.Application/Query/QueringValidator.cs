@@ -22,44 +22,44 @@ namespace Core.Server.Application.Query
                     .Queries.Select(qr => Validate<TResource>(qr));
                 return validations.FirstOrDefault(v => v != null);
             }
-            else
+            if (queryBase is QueryField)
             {
-                var propertyInfo = GetPropertyNameInfo<TResource>(queryBase);
+                var propertyInfo = GetPropertyNameInfo<TResource>(queryBase as QueryField);
                 if (propertyInfo == null)
                     return BadRequestReason.PropertyNotFound;
 
-                var inRange = IsEnumInRange(queryBase);
-                if (!inRange)
-                    return BadRequestReason.EnumNotInRange;
-
-                if (queryBase is QueryString)
-                {
-                    if (propertyInfo.PropertyType != typeof(string))
-                        return BadRequestReason.PropertyNotCurectType;
-                }
-                else if (queryBase is QueryNumber)
-                {
-                    if (propertyInfo.PropertyType != typeof(int))
-                        return BadRequestReason.PropertyNotCurectType;
-                }
-                return null;
+                if (queryBase is QueryString && propertyInfo.PropertyType != typeof(string))
+                    return BadRequestReason.PropertyNotCurectType;
+                if (queryBase is QueryNumber && !IsNumeric(propertyInfo.PropertyType))
+                    return BadRequestReason.PropertyNotCurectType;
             }
+
+            var inRange = IsEnumInRange(queryBase);
+            if (!inRange)
+                return BadRequestReason.EnumNotInRange;
+
+            return null;
         }
 
-        private PropertyInfo GetPropertyNameInfo<TResource>(QueryBase queryResource)
+        private bool IsNumeric(Type type)
+        {
+            return type.IsPrimitive && type != typeof(char) && type != typeof(bool);
+        }
+
+        private PropertyInfo GetPropertyNameInfo<TResource>(QueryField queryField)
             where TResource : Resource
         {
-            var propertyNameValue = (queryResource as QueryField).Field;
+            var propertyNameValue = queryField.Field;
             return GetPropertyInfo<TResource>(propertyNameValue);
         }
 
-        private bool IsEnumInRange(object obj)
+        private bool IsEnumInRange(QueryBase obj)
         {
-            var propertyInfo = GetPropertyInfo("operand", obj.GetType());
+            var propertyInfo = GetPropertyInfo("Operand", obj.GetType());
             if (propertyInfo == null) return true;
             var maxValue = Enum.GetValues(propertyInfo.PropertyType).Length;
             var value = (int)(propertyInfo.GetValue(obj));
-            return 0 < value && value < maxValue;
+            return 0 <= value && value < maxValue;
         }
     }
 }

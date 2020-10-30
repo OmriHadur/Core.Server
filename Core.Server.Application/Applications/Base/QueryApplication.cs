@@ -22,7 +22,7 @@ namespace Core.Server.Application
         where TEntity : Entity
     {
         [Dependency]
-        public IQueryMapper QueryResourceToEntityMapper;
+        public IQueryPhraseMapper QueryResourceToEntityMapper;
 
         [Dependency]
         public IQueryBaseValidator QueringValidator;
@@ -32,7 +32,7 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
         {
-            var query = QueryResourceToEntityMapper.Map<TResource>(queryResource.Query);
+            var query = QueryResourceToEntityMapper.Map<TResource>(queryResource.QueryPhrase);
             var validationError = QueringValidator.Validate<TResource>(query);
             if (validationError != null)
                 return BadRequest((BadRequestReason)validationError);

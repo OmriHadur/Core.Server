@@ -3,9 +3,10 @@ namespace Core.Server.Common.Query
 {
     public enum QueryStringOperands
     {
-        StartsWith,
-        EndsWith,
+        Starts,
+        Ends,
         Contains,
-        Empty
+        Empty,
+        NotEmpty
     }
 }
