@@ -28,11 +28,6 @@ namespace Core.Server.Application.Query.PhraseBuilders
             return (TOperand)Enum.Parse(typeof(TOperand), value);
         }
 
-        private string ToStartUpper(string str)
-        {
-            return str[0].ToString().ToUpper() + str[1..];
-        }
-
         protected abstract TValue GetValue(string value);
     }
 }

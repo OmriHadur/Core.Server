@@ -8,9 +8,9 @@ using Core.Server.Shared.Resources;
 using Core.Server.Shared.Errors;
 using Core.Server.Common.Mappers;
 using Core.Server.Injection.Attributes;
-using Core.Server.Application.Query;
 using Core.Server.Common.Query;
 using Core.Server.Shared.Query;
+using Core.Server.Common.Query.Infrastructure;
 
 namespace Core.Server.Application
 {
@@ -22,23 +22,34 @@ namespace Core.Server.Application
         where TEntity : Entity
     {
         [Dependency]
-        public IQueryPhraseMapper QueryResourceToEntityMapper;
+        public IQueryValidator QueryValidator;
 
         [Dependency]
-        public IQueryBaseValidator QueringValidator;
+        public IQueryResourceValidator QueryResourceValidator;
 
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
+        [Dependency]
+        public IQueryResourceMapper QueryResourceMapper;
+
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
         {
-            var query = QueryResourceToEntityMapper.Map<TResource>(queryResource.QueryPhrase);
-            var validationError = QueringValidator.Validate<TResource>(query);
-            if (validationError != null)
-                return BadRequest((BadRequestReason)validationError);
+            var queryRequest = QueryResourceMapper.Map<TResource>(queryResource);
 
-            var entities = await QueryRepository.Query(query);
+            var validateResult = Validate(queryRequest);
+            if (validateResult != null)
+                return BadRequest((BadRequestReason)validateResult);
+
+            var entities = await QueryRepository.Query(queryRequest);
             return Ok(await ResourceMapper.Map(entities));
+        }
+
+        private BadRequestReason? Validate(QueryRequest queryRequest)
+        {
+            var queryResourceValidation = QueryResourceValidator.Validate<TResource>(queryRequest);
+            var queryPhraseValidation = QueryValidator.Validate<TResource>(queryRequest.Query);
+            return queryResourceValidation ?? queryPhraseValidation;
         }
     }
 }

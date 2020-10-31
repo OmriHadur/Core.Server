@@ -14,9 +14,9 @@ namespace Core.Server.Persistence.Repositories
           IAlterRepository<TEntity>
         where TEntity : Entity
     {
-        public async Task Delete(TEntity entity)
+        public async Task Delete(string id)
         {
-            await Collection.DeleteOneAsync(e => e.Id == entity.Id);
+            await Collection.DeleteOneAsync(e => e.Id == id);
         }
 
         public async Task Remove(string id)

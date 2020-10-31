@@ -16,8 +16,6 @@ namespace Core.Server.Persistence.Cache
         :ILookupRepository<TEntity>
         where TEntity : Entity
     {
-        private bool isHaveAll;
-
         [Dependency]
         public IEntityCache<TEntity> Cache;
 
@@ -79,11 +77,8 @@ namespace Core.Server.Persistence.Cache
 
         public async Task<IEnumerable<TEntity>> Get()
         {
-            if (isHaveAll)
-                return Cache.Get();
             var entities = await LookupRepository.Get();
             Cache.AddOrSet(entities);
-            isHaveAll = true;
             return entities;
         }
     }

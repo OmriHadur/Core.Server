@@ -50,10 +50,10 @@ namespace Core.Server.Persistence.Cache
             Cache.Delete(entity.Id);
         }
 
-        public async Task Delete(TEntity entity)
+        public async Task Delete(string id)
         {
-            await AlterRepository.Delete(entity);
-            Cache.Delete(entity.Id);
+            await AlterRepository.Delete(id);
+            Cache.Delete(id);
         }
     }
 }

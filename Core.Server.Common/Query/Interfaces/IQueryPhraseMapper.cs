@@ -1,7 +1,7 @@
 ﻿using Core.Server.Common.Query;
 using Core.Server.Shared.Resources;
 
-namespace Core.Server.Application.Query
+namespace Core.Server.Common.Query
 {
     public interface IQueryPhraseMapper
     {

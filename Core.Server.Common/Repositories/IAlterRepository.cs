@@ -19,6 +19,6 @@ namespace Core.Server.Common.Repositories
 
         Task Update(TEntity entity);
 
-        Task Delete(TEntity entity);
+        Task Delete(string id);
     }
 }

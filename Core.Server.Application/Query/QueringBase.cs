@@ -17,11 +17,5 @@ namespace Core.Server.Application.Query
         {
             return type.GetProperties().FirstOrDefault(p => p.Name == propertyName);
         }
-
-        protected string GetPropertyName<TResource>(string propertyName)
-            where TResource : Resource
-        {
-            return GetPropertyInfo<TResource>(propertyName).Name;
-        }
     }
 }

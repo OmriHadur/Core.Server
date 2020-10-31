@@ -9,6 +9,7 @@
         PropertyNotFound,
         PropertyNotCurectType,
         EnumNotInRange,
+        PageSizeNotSet,
         Unchangeable
     }
 }

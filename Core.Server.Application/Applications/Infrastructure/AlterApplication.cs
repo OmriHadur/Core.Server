@@ -81,16 +81,16 @@ namespace Core.Server.Application
 
         public virtual async Task<ActionResult> Delete(string id)
         {
-            var entity = await LookupRepository.Get(id);
-            if (entity == null)
+            var exists = await LookupRepository.Exists(id);
+            if (!exists)
                 return NotFound(id);
-            return await DeleteEntity(entity);
+            await DeleteEntity(id);
+            return Ok();
         }
 
-        protected virtual async Task<ActionResult> DeleteEntity(TEntity entity)
+        protected virtual Task DeleteEntity(string id)
         {
-            await AlterRepository.Delete(entity);
-            return Ok();
+            return AlterRepository.Delete(id);
         }
     }
 }

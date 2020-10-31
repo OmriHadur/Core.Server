@@ -39,6 +39,12 @@ namespace Core.Server.Application.Query.PhraseBuilders
         {
             return Regex.IsMatch(queryPhrase, MappingRegex);
         }
+
+        protected string ToStartUpper(string str)
+        {
+            return str[0].ToString().ToUpper() + str[1..];
+        }
+
         protected abstract string MappingRegex { get; }
 
         protected abstract QueryBase InnerMap(string queryPhrase, IEnumerable<IQueryPhrasePipelineMapper> mappers);

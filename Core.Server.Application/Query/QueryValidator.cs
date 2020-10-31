@@ -9,9 +9,7 @@ using Core.Server.Common.Query;
 namespace Core.Server.Application.Query
 {
     [Inject]
-    public class QueringValidator
-        : QueringBase
-        , IQueryBaseValidator
+    public class QueryValidator : QueringBase, IQueryValidator
     {
         public BadRequestReason? Validate<TResource>(QueryBase queryBase)
             where TResource : Resource
