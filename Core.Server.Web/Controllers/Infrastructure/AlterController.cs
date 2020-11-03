@@ -42,5 +42,11 @@ namespace Core.Server.Web.Controllers
         {
             return await Application.Delete(id);
         }
+
+        [HttpDelete()]
+        public virtual async Task<ActionResult> DeleteAll()
+        {
+            return await Application.DeleteAll();
+        }
     }
 }

@@ -55,5 +55,11 @@ namespace Core.Server.Persistence.Cache
             await AlterRepository.Delete(id);
             Cache.Delete(id);
         }
+
+        public async Task DeleteAll()
+        {
+            await AlterRepository.DeleteAll();
+            Cache.Clear();
+        }
     }
 }

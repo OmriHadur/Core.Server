@@ -17,5 +17,7 @@ namespace Core.Server.Common.Applications
         Task<ActionResult<TResource>> Update(string id, TUpdateResource resource);
 
         Task<ActionResult> Delete(string id);
+
+        Task<ActionResult> DeleteAll();
     }
 }

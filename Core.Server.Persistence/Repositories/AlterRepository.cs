@@ -14,19 +14,24 @@ namespace Core.Server.Persistence.Repositories
           IAlterRepository<TEntity>
         where TEntity : Entity
     {
-        public async Task Delete(string id)
+        public Task Delete(string id)
         {
-            await Collection.DeleteOneAsync(e => e.Id == id);
+            return Collection.DeleteOneAsync(e => e.Id == id);
         }
 
-        public async Task Remove(string id)
+        public Task DeleteAll()
         {
-            await Collection.DeleteOneAsync(e => e.Id == id);
+            return Collection.DeleteManyAsync(e => true);
         }
 
-        public async Task Add(TEntity entity)
+        public Task Remove(string id)
         {
-            await Collection.InsertOneAsync(entity);
+            return Collection.DeleteOneAsync(e => e.Id == id);
+        }
+
+        public Task Add(TEntity entity)
+        {
+            return Collection.InsertOneAsync(entity);
         }
 
         public async Task Update(Expression<Func<TEntity, bool>> predicate, Action<TEntity> update)
@@ -35,24 +40,24 @@ namespace Core.Server.Persistence.Repositories
             await entities.ForEachAsync(update);
         }
 
-        public async Task DeleteMany(Expression<Func<TEntity, bool>> predicate)
+        public Task DeleteMany(Expression<Func<TEntity, bool>> predicate)
         {
-            await Collection.DeleteManyAsync(predicate);
+            return Collection.DeleteManyAsync(predicate);
         }
 
-        public async Task DeleteOne(Expression<Func<TEntity, bool>> predicate)
+        public Task DeleteOne(Expression<Func<TEntity, bool>> predicate)
         {
-            await Collection.DeleteOneAsync(predicate);
+            return Collection.DeleteOneAsync(predicate);
         }
 
-        public async Task Update(TEntity entity)
+        public Task Update(TEntity entity)
         {
-            await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
+            return Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
         }
 
-        public async Task Replace(TEntity entity)
+        public Task Replace(TEntity entity)
         {
-            await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
+            return Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
         }
     }
 }

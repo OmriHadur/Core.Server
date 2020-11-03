@@ -16,7 +16,7 @@ namespace Core.Server.Persistence.Cache
         where TEntity : Entity
     {
         private int MAX_CACHED = 3;
-        private Dictionary<QueryRequest, IEnumerable<string>> queryRequestToIds;
+        private Dictionary<QueryRequest, IList<string>> queryRequestToIdsCache;
 
         [Dependency]
         public IEntityCache<TEntity> Cache;
@@ -24,17 +24,21 @@ namespace Core.Server.Persistence.Cache
         [Dependency("QueryRepository")]
         public IQueryRepository<TEntity> QueryRepository;     
 
-        public QueryCachedRepository()
+        public QueryCachedRepository([Dependency] IEntityCache<TEntity> cache)
         {
-            queryRequestToIds = new Dictionary<QueryRequest, IEnumerable<string>>();
+            Cache = cache;
+            queryRequestToIdsCache = new Dictionary<QueryRequest, IList<string>>();
+            Cache.CacheChangedEvent += (s, e) => queryRequestToIdsCache.Clear();
         }
 
         public async Task<IEnumerable<TEntity>> Query(QueryRequest queryRequest)
         {
-            if (queryRequestToIds.ContainsKey(queryRequest))
+            if (queryRequestToIdsCache.ContainsKey(queryRequest))
             {
-                var ids = queryRequestToIds[queryRequest];
-                return Cache.Get(ids);
+                var ids = queryRequestToIdsCache[queryRequest];
+                var cahcedCount = ids.Where(id => Cache.IsCached(id)).Count();
+                if (cahcedCount >= ids.Count() - 1)
+                    return Cache.Get(ids);
             }
             var entities = (await QueryRepository.Query(queryRequest)).ToList();
             AddToCache(queryRequest, entities);
@@ -44,9 +48,9 @@ namespace Core.Server.Persistence.Cache
         private void AddToCache(QueryRequest queryRequest, List<TEntity> entities)
         {
             Cache.AddOrSet(entities);
-            if (queryRequestToIds.Count > MAX_CACHED)
-                queryRequestToIds.Remove(queryRequestToIds.First().Key);
-            queryRequestToIds.Add(queryRequest, entities.Select(e => e.Id));
+            if (queryRequestToIdsCache.Count > MAX_CACHED)
+                queryRequestToIdsCache.Remove(queryRequestToIdsCache.First().Key);
+            queryRequestToIdsCache.Add(queryRequest, entities.Select(e => e.Id).ToList());
         }
     }
 }

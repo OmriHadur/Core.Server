@@ -1,6 +1,7 @@
 ﻿using Core.Server.Common.Cache;
 using Core.Server.Common.Entities;
 using Core.Server.Injection.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;
@@ -16,6 +17,8 @@ namespace Core.Server.Persistence.Cache
 
         private readonly Dictionary<string, TEntity> cache;
 
+        public event EventHandler<EntityCacheChangedEventArgs> CacheChangedEvent;
+
         public EntityCache()
         {
             cache = new Dictionary<string, TEntity>();
@@ -23,8 +26,8 @@ namespace Core.Server.Persistence.Cache
 
         public TEntity Get(string id)
         {
-            return cache.ContainsKey(id) 
-                ? cache[id] 
+            return cache.ContainsKey(id)
+                ? cache[id]
                 : null;
         }
 
@@ -34,15 +37,14 @@ namespace Core.Server.Persistence.Cache
                 yield return Get(id);
         }
 
-        public IEnumerable<TEntity> Get( )
+        public IEnumerable<TEntity> Get()
         {
             return cache.Values;
         }
 
         public void AddOrSet(TEntity entity)
         {
-            if (entity == null) 
-                return;
+            if (entity == null) return;
             if (cache.ContainsKey(entity.Id))
                 cache[entity.Id] = entity;
             else
@@ -51,7 +53,7 @@ namespace Core.Server.Persistence.Cache
                 if (cache.Count > MAX_CACHED)
                     cache.Remove(cache.First().Key);
             }
-                
+            CacheChangedEvent?.Invoke(this, new EntityCacheChangedEventArgs() { Id = entity.Id, IsAltered = true });
         }
 
         public void AddOrSet(IEnumerable<TEntity> entities)
@@ -63,7 +65,10 @@ namespace Core.Server.Persistence.Cache
         public void Delete(string id)
         {
             if (cache.ContainsKey(id))
+            {
                 cache.Remove(id);
+                CacheChangedEvent?.Invoke(this, new EntityCacheChangedEventArgs() { Id = id, IsDeleted = true });
+            }
         }
 
         public void Delete(IEnumerable<string> ids)
@@ -80,6 +85,7 @@ namespace Core.Server.Persistence.Cache
         public void Clear()
         {
             cache.Clear();
+            CacheChangedEvent?.Invoke(this, new EntityCacheChangedEventArgs() { IsClear = true });
         }
 
         public bool Any()

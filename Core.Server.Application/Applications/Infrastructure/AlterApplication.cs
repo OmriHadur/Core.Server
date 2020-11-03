@@ -88,6 +88,12 @@ namespace Core.Server.Application
             return Ok();
         }
 
+        public async virtual Task<ActionResult> DeleteAll()
+        {
+            await AlterRepository.DeleteAll();
+            return Ok();
+        }
+
         protected virtual Task DeleteEntity(string id)
         {
             return AlterRepository.Delete(id);

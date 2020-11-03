@@ -1,4 +1,5 @@
 ﻿using Core.Server.Common.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Core.Server.Common.Cache
@@ -6,6 +7,8 @@ namespace Core.Server.Common.Cache
     public interface IEntityCache<TEntity>
         where TEntity : Entity
     {
+        event EventHandler<EntityCacheChangedEventArgs> CacheChangedEvent;
+
         bool IsCached(string id);
 
         TEntity Get(string id);

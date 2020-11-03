@@ -20,5 +20,7 @@ namespace Core.Server.Common.Repositories
         Task Update(TEntity entity);
 
         Task Delete(string id);
+
+        Task DeleteAll();
     }
 }
