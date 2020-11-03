@@ -41,7 +41,7 @@ namespace Core.Server.Application
             if (IsNotOk(validationResult))
                 return validationResult;
             var entitiesTasks = resources.Select(async resource => await Map(resource));
-            var entities = entitiesTasks.Select(er => er.Result);
+            var entities = entitiesTasks.Select(er => er.Result).ToList();
             await AddEntites(entities);
             return Ok(await ResourceMapper.Map(entities));
         }

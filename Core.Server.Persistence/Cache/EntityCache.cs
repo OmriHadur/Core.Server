@@ -12,7 +12,7 @@ namespace Core.Server.Persistence.Cache
        : IEntityCache<TEntity>
         where TEntity : Entity
     {
-        private readonly int maxCount = 5;
+        private readonly int MAX_CACHED = 5;
 
         private readonly Dictionary<string, TEntity> cache;
 
@@ -48,7 +48,7 @@ namespace Core.Server.Persistence.Cache
             else
             {
                 cache.Add(entity.Id, entity);
-                if (cache.Count > maxCount)
+                if (cache.Count > MAX_CACHED)
                     cache.Remove(cache.First().Key);
             }
                 

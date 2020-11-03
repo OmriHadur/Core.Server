@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Server.Common.Query.Infrastructure
+﻿namespace Core.Server.Common.Query.Infrastructure
 {
     public class QueryRequest
     {
@@ -14,5 +10,34 @@ namespace Core.Server.Common.Query.Infrastructure
 
         public bool HasOrdering => !string.IsNullOrEmpty(OrderBy);
         public bool HasPaging => Page != 0;
+
+        public override bool Equals(object obj)
+        {
+            var queryRequest = obj as QueryRequest;
+            if (queryRequest == null) return false;
+
+            return Query.Equals(queryRequest.Query)
+                && IsPageEquls(queryRequest)
+                && IsOrderingEquls(queryRequest);
+        }
+
+        private bool IsOrderingEquls(QueryRequest queryRequest)
+        {
+            return (!HasOrdering && !queryRequest.HasOrdering) || (OrderBy == queryRequest.OrderBy && IsDecending == queryRequest.IsDecending);
+        }
+
+        private bool IsPageEquls(QueryRequest queryRequest)
+        {
+            return (!HasPaging && !queryRequest.HasPaging) || (Page == queryRequest.Page && PageSize == queryRequest.PageSize);
+        }
+
+        public override int GetHashCode()
+        {
+            return Query.GetHashCode()
+                + (HasOrdering ? OrderBy.GetHashCode() : 0)
+                + (IsDecending ? 1 : 2)
+                + Page
+                + PageSize;
+        }
     }
 }
