@@ -10,6 +10,9 @@ namespace Core.Server.Common.Cache
         : ICacheEntityConfig<TEntity>
         where TEntity:Entity
     {
+        private int maxEntities;
+        private int maxQueries;
+
         [Dependency]
         public CacheConfig CacheConfig;
 
@@ -17,10 +20,14 @@ namespace Core.Server.Common.Cache
         {
             get
             {
-                var entityOverride = GetCacheTypeConfig();
-                return entityOverride == null ?
-                    CacheConfig.MaxEntities :
-                    entityOverride.MaxEntities;
+                if (maxEntities == 0)
+                {
+                    var entityOverride = GetCacheTypeConfig();
+                    maxEntities = entityOverride == null ?
+                        CacheConfig.MaxEntities :
+                        entityOverride.MaxEntities;
+                }
+                return maxEntities;
             }
         }
 
@@ -28,17 +35,21 @@ namespace Core.Server.Common.Cache
         {
             get
             {
-                var entityOverride = GetCacheTypeConfig();
-                return entityOverride == null ?
-                    CacheConfig.MaxQueries :
-                    entityOverride.MaxQueries;
+                if (maxQueries == 0)
+                {
+                    var entityOverride = GetCacheTypeConfig();
+                    maxQueries = entityOverride == null ?
+                        CacheConfig.MaxQueries :
+                        entityOverride.MaxQueries;
+                }
+                return maxQueries;
             }
         }
 
         private CacheTypeConfig GetCacheTypeConfig()
         {
             return CacheConfig.Overrides
-                .FirstOrDefault(ovride => ovride.Type == typeof(TEntity).Name);
+                .FirstOrDefault(ovride => ovride.Type == typeof(TEntity).Name + nameof(Entity));
         }
     }
 }
