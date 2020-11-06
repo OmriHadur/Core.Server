@@ -1,4 +1,5 @@
 ﻿using Core.Server.Injection.Attributes;
+using Core.Server.Injection.Cache;
 using Core.Server.Injection.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Core.Server.Injection.Unity
         }
         public void ConfigureContainer()
         {
+            new UnityCacheBuilder().AddCache(container);
             AddAllTypesForBundles();
             AddInjectTypes<InjectAttribute>();
             AddInjectTypes<InjectOverridAttribute>();

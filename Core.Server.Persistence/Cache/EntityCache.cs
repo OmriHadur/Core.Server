@@ -1,4 +1,5 @@
 ﻿using Core.Server.Common.Cache;
+using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
 using Core.Server.Injection.Attributes;
 using System;
@@ -13,7 +14,8 @@ namespace Core.Server.Persistence.Cache
        : IEntityCache<TEntity>
         where TEntity : Entity
     {
-        private readonly int MAX_CACHED = 5;
+        [Dependency]
+        public ICacheEntityConfig<TEntity> EntityConfig;
 
         private readonly Dictionary<string, TEntity> cache;
 
@@ -50,7 +52,7 @@ namespace Core.Server.Persistence.Cache
             else
             {
                 cache.Add(entity.Id, entity);
-                if (cache.Count > MAX_CACHED)
+                if (cache.Count > EntityConfig.MaxEntities)
                     cache.Remove(cache.First().Key);
             }
             CacheChangedEvent?.Invoke(this, new EntityCacheChangedEventArgs() { Id = entity.Id, IsAltered = true });

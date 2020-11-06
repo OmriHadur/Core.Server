@@ -22,7 +22,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public IRandomResourceCreator<TCreateResource, TUpdateResource, TResource> RandomResourceCreator;
 
         [Dependency]
-        public IResourceQuery<TResource> ResourceQuery;
+        public IResourceLookup<TResource> ResourceQuery;
         
         public ActionResult<TResource> Create()
         {

@@ -4,6 +4,7 @@ using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using System.Security.Authentication;
 using Unity;
+using Core.Server.Common.Config;
 
 namespace Core.Server.Persistence.Repositories
 {
@@ -14,7 +15,7 @@ namespace Core.Server.Persistence.Repositories
         protected IMongoCollection<TEntity> Collection;
 
         [Dependency]
-        public IMongoDBConfig MongoDatabaseSettings
+        public MongoDBConfig MongoDatabaseSettings
         {
             set
             {

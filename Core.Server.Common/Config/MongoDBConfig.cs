@@ -1,7 +1,7 @@
 ﻿
 namespace Core.Server.Common.Config
 {
-    public class MongoDBConfig : IMongoDBConfig
+    public class MongoDBConfig
     {
         public string Database { get; set; }
         public string Host { get; set; }

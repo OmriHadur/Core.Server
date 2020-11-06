@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 using Unity;
+using Core.Server.Common.Config;
 
 namespace Core.Server.Application.Mappers.Implementation
 {
@@ -19,7 +20,7 @@ namespace Core.Server.Application.Mappers.Implementation
         : AlterResourceMapper<LoginCreateResource,LoginUpdateResource,LoginEntity>
     {
         [Dependency]
-        public IOptions<AppSettings> AppSettings { get; set; }
+        public AppConfig AppConfig { get; set; }
 
         [Dependency]
         public IJwtManager JwtManager { get; set; }
@@ -41,7 +42,7 @@ namespace Core.Server.Application.Mappers.Implementation
 
         private string GetToken(UserEntity user)
         {
-            return JwtManager.GenerateToken(Mapper.Map<UserResource>(user), AppSettings.Value.Secret);
+            return JwtManager.GenerateToken(Mapper.Map<UserResource>(user), AppConfig.Secret);
         }
     }
 }

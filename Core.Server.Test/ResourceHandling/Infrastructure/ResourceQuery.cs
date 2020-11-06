@@ -9,8 +9,8 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     [Inject]
     public class ResourceQuery<TResource>
-        : ResourceHandling<IQueryClient<TResource>, TResource>
-        , IResourceQuery<TResource>
+        : ResourceHandling<ILookupClient<TResource>, TResource>
+        , IResourceLookup<TResource>
         where TResource : Resource
     {
         public ActionResult<TResource> Get(string id)

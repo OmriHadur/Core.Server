@@ -23,23 +23,20 @@ namespace Core.Server.Web
     {
         private readonly IReflactionHelper reflactionHelper;
 
+        public Config Config { get; }
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
-            var assembliesName = configuration.GetSection(Config.AssembliesSection).Get<string[]>();
-            reflactionHelper = new ReflactionHelper(assembliesName);
+            Config = configuration.Get<Config>();
+            reflactionHelper = new ReflactionHelper(Config.Assemblies);
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoDBConfig>(
-                Configuration.GetSection(Config.MongoDbSection));
-
-            services.AddSingleton<IMongoDBConfig>(sp =>
-                sp.GetRequiredService<IOptions<MongoDBConfig>>().Value);
+            services.AddSingleton(Config.MongoDB);
+            services.AddSingleton(Config.AppSettings);
+            services.AddSingleton(Config.Cache);
 
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
@@ -102,13 +99,8 @@ namespace Core.Server.Web
 
         private void ConfigureJwtAuthentication(IServiceCollection services)
         {
-            // configure strongly typed settings objects
-            var appSettingsSection = Configuration.GetSection(Config.AppSettingsSection);
-            services.Configure<AppSettings>(appSettingsSection);
-
             // configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(Config.AppSettings.Secret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
