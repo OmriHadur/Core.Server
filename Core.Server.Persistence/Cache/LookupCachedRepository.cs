@@ -13,7 +13,7 @@ namespace Core.Server.Persistence.Cache
 {
     [InjectOverrid]
     public class LookupCachedRepository<TEntity>
-        :ILookupRepository<TEntity>
+        : ILookupRepository<TEntity>
         where TEntity : Entity
     {
         [Dependency]
@@ -24,15 +24,19 @@ namespace Core.Server.Persistence.Cache
 
         public async Task<bool> Any()
         {
-            if (Cache.Any())
-                return true;
+            var hasAny = Cache.Any();
+            if (Cache.IsAllCached | hasAny)
+                return hasAny;
+
             return await LookupRepository.Any();
         }
 
         public async Task<bool> Exists(string id)
         {
-            if (Cache.IsCached(id))
-                return true;
+            var isCached= Cache.IsCached(id);
+            if (Cache.IsAllCached | isCached)
+                return isCached;
+
             return await LookupRepository.Exists(id);
         }
 
@@ -70,6 +74,9 @@ namespace Core.Server.Persistence.Cache
         {
             var entitiesHave = Cache.Get(ids);
             var idsNotHave = ids.Except(entitiesHave.Select(e => e.Id)).ToArray();
+            if (idsNotHave.Count() == 0)
+                return entitiesHave;
+
             var entities = await LookupRepository.Get(idsNotHave);
             Cache.AddOrSet(entities);
             return entities.Union(entitiesHave);
@@ -77,8 +84,11 @@ namespace Core.Server.Persistence.Cache
 
         public async Task<IEnumerable<TEntity>> Get()
         {
+            if (Cache.IsAllCached)
+                return Cache.GetAll();
             var entities = await LookupRepository.Get();
             Cache.AddOrSet(entities);
+            Cache.IsAllCached = true;
             return entities;
         }
     }

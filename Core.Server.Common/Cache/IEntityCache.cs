@@ -9,13 +9,15 @@ namespace Core.Server.Common.Cache
     {
         event EventHandler<EntityCacheChangedEventArgs> CacheChangedEvent;
 
+        bool IsAllCached { get; set; }
+
         bool IsCached(string id);
 
         TEntity Get(string id);
 
         IEnumerable<TEntity> Get(IEnumerable<string> ids);
 
-        IEnumerable<TEntity> Get();
+        IEnumerable<TEntity> GetAll();
 
         void Clear();
 

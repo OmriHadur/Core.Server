@@ -15,42 +15,20 @@ namespace Core.Server.Persistence.Cache
         : IQueryRepository<TEntity>
         where TEntity : Entity
     {
-        private int MAX_CACHED = 3;
-        private Dictionary<QueryRequest, IList<string>> queryRequestToIdsCache;
+        [Dependency("QueryRepository")]
+        public IQueryRepository<TEntity> QueryRepository;
 
         [Dependency]
-        public IEntityCache<TEntity> Cache;
-
-        [Dependency("QueryRepository")]
-        public IQueryRepository<TEntity> QueryRepository;     
-
-        public QueryCachedRepository([Dependency] IEntityCache<TEntity> cache)
-        {
-            Cache = cache;
-            queryRequestToIdsCache = new Dictionary<QueryRequest, IList<string>>();
-            Cache.CacheChangedEvent += (s, e) => queryRequestToIdsCache.Clear();
-        }
+        public IQueryCache<TEntity> QueryCache;
 
         public async Task<IEnumerable<TEntity>> Query(QueryRequest queryRequest)
         {
-            if (queryRequestToIdsCache.ContainsKey(queryRequest))
-            {
-                var ids = queryRequestToIdsCache[queryRequest];
-                var cahcedCount = ids.Where(id => Cache.IsCached(id)).Count();
-                if (cahcedCount >= ids.Count() - 1)
-                    return Cache.Get(ids);
-            }
-            var entities = (await QueryRepository.Query(queryRequest)).ToList();
-            AddToCache(queryRequest, entities);
+            var entities = QueryCache.GetEntities(queryRequest);
+            if (entities != null) 
+                return entities;
+            entities=(await QueryRepository.Query(queryRequest)).ToList();
+            QueryCache.Add(queryRequest, entities);
             return entities;
-        }
-
-        private void AddToCache(QueryRequest queryRequest, List<TEntity> entities)
-        {
-            Cache.AddOrSet(entities);
-            if (queryRequestToIdsCache.Count > MAX_CACHED)
-                queryRequestToIdsCache.Remove(queryRequestToIdsCache.First().Key);
-            queryRequestToIdsCache.Add(queryRequest, entities.Select(e => e.Id).ToList());
         }
     }
 }

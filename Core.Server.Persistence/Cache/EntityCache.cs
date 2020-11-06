@@ -17,9 +17,14 @@ namespace Core.Server.Persistence.Cache
         [Dependency]
         public ICacheEntityConfig<TEntity> EntityConfig;
 
+        [Dependency]
+        public CacheConfig CacheConfig;
+
         private readonly Dictionary<string, TEntity> cache;
 
         public event EventHandler<EntityCacheChangedEventArgs> CacheChangedEvent;
+
+        public bool IsAllCached { get; set; }
 
         public EntityCache()
         {
@@ -39,7 +44,7 @@ namespace Core.Server.Persistence.Cache
                 yield return Get(id);
         }
 
-        public IEnumerable<TEntity> Get()
+        public IEnumerable<TEntity> GetAll()
         {
             return cache.Values;
         }
@@ -86,6 +91,7 @@ namespace Core.Server.Persistence.Cache
 
         public void Clear()
         {
+            IsAllCached = false;
             cache.Clear();
             CacheChangedEvent?.Invoke(this, new EntityCacheChangedEventArgs() { IsClear = true });
         }

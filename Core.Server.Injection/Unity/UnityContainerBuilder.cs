@@ -22,10 +22,11 @@ namespace Core.Server.Injection.Unity
         }
         public void ConfigureContainer()
         {
-            new UnityCacheBuilder().AddCache(container);
             AddAllTypesForBundles();
             AddInjectTypes<InjectAttribute>();
             AddInjectTypes<InjectOverridAttribute>();
+
+            new UnityCacheBuilder().AddCache(container, reflactionHelper);
         }
 
         private void AddAllTypesForBundles()
