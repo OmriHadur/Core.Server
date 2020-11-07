@@ -2,13 +2,14 @@
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Injection.Attributes;
+using Core.Server.Persistence.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity;
 
 namespace Core.Server.Persistence.Cache
 {
-    [InjectOverrid]
+    [Inject(2)]
     public class BatchCachedRepository<TEntity>
         : IBatchRepository<TEntity>
         where TEntity : Entity
@@ -16,8 +17,8 @@ namespace Core.Server.Persistence.Cache
         [Dependency]
         public IEntityCache<TEntity> Cache;
 
-        [Dependency("BatchRepository")]
-        public IBatchRepository<TEntity> BatchRepository;
+        [Dependency]
+        public BatchRepository<TEntity> BatchRepository;
 
         public async Task AddMany(IEnumerable<TEntity> entities)
         {

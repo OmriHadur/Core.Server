@@ -2,6 +2,7 @@
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Injection.Attributes;
+using Core.Server.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using Unity;
 
 namespace Core.Server.Persistence.Cache
 {
-    [InjectOverrid]
+    [Inject(2)]
     public class LookupCachedRepository<TEntity>
         : ILookupRepository<TEntity>
         where TEntity : Entity
@@ -19,8 +20,8 @@ namespace Core.Server.Persistence.Cache
         [Dependency]
         public IEntityCache<TEntity> Cache;
 
-        [Dependency("LookupRepository")]
-        public ILookupRepository<TEntity> LookupRepository;
+        [Dependency]
+        public LookupRepository<TEntity> LookupRepository;
 
         public async Task<bool> Any()
         {

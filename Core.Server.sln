@@ -23,14 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Test", "Core.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Utils.ResourceCreator", "Core.Server.Utils.ResourceCreator\Core.Server.Utils.ResourceCreator.csproj", "{EA343CE6-960E-4759-93AC-B4CF101BF131}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD7F6D6C-36D5-4D42-9EF1-A3C3E4792EEC}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Web", "Core.Server.Web\Core.Server.Web.csproj", "{DE6D5F69-0560-4D3C-9A04-4BF46F02340B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Server.Injection", "Core.Server.Injection\Core.Server.Injection.csproj", "{D367FDC9-D6E1-4170-88DC-27D8E859E355}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Injection", "Core.Server.Injection\Core.Server.Injection.csproj", "{D367FDC9-D6E1-4170-88DC-27D8E859E355}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

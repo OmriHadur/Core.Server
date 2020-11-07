@@ -4,6 +4,7 @@ using Core.Server.Injection.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Unity;
 
 namespace Core.Server.Injection.Unity
@@ -24,7 +25,6 @@ namespace Core.Server.Injection.Unity
         {
             AddAllTypesForBundles();
             AddInjectTypes<InjectAttribute>();
-            AddInjectTypes<InjectOverridAttribute>();
 
             new UnityCacheBuilder().AddCache(container, reflactionHelper);
         }
@@ -52,9 +52,11 @@ namespace Core.Server.Injection.Unity
         }
 
         private void AddInjectTypes<TAttribute>()
-            where TAttribute : Attribute
+            where TAttribute : PriorityAttribute
         {
             var classTypes = reflactionHelper.GetTypesWithAttribute<TAttribute>();
+            classTypes = classTypes.OrderBy(c => c.GetCustomAttribute<PriorityAttribute>().Priority);
+            classTypes = classTypes.ToList();
             foreach (var injectedType in classTypes)
                 AddTypesInterfaces(injectedType);
         }
@@ -90,10 +92,6 @@ namespace Core.Server.Injection.Unity
         private void RegisterType(Type type, Type interfaceType)
         {
             container.RegisterSingleton(interfaceType, type);
-            var name = type.Name;
-            var indexOf = name.IndexOf('`');
-            name = indexOf == -1 ? name : name.Substring(0, indexOf);
-            container.RegisterSingleton(interfaceType, type, name);
         }
 
         private void RegisterFactory(Type type, Type interGenericType, Type[] typeArgs)

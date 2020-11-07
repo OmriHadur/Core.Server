@@ -2,6 +2,7 @@
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Injection.Attributes;
+using Core.Server.Persistence.Repositories;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using Unity;
 
 namespace Core.Server.Persistence.Cache
 {
-    [InjectOverrid]
+    [Inject(2)]
     public class AlterCachedRepository<TEntity>
         :IAlterRepository<TEntity>
         where TEntity : Entity
@@ -17,8 +18,8 @@ namespace Core.Server.Persistence.Cache
         [Dependency]
         public IEntityCache<TEntity> Cache;
 
-        [Dependency("AlterRepository")]
-        public IAlterRepository<TEntity> AlterRepository;
+        [Dependency]
+        public AlterRepository<TEntity> AlterRepository;
 
         public async Task Add(TEntity entity)
         {

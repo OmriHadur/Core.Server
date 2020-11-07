@@ -3,6 +3,7 @@ using Core.Server.Common.Entities;
 using Core.Server.Common.Query.Infrastructure;
 using Core.Server.Common.Repositories;
 using Core.Server.Injection.Attributes;
+using Core.Server.Persistence.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,13 +11,13 @@ using Unity;
 
 namespace Core.Server.Persistence.Cache
 {
-    [InjectOverrid]
+    [Inject(2)]
     public class QueryCachedRepository<TEntity>
         : IQueryRepository<TEntity>
         where TEntity : Entity
     {
-        [Dependency("QueryRepository")]
-        public IQueryRepository<TEntity> QueryRepository;
+        [Dependency]
+        public QueryRepository<TEntity> QueryRepository;
 
         [Dependency]
         public IQueryCache<TEntity> QueryCache;
