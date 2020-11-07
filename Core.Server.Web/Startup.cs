@@ -35,6 +35,7 @@ namespace Core.Server.Web
             services.AddSingleton(Config.MongoDB);
             services.AddSingleton(Config.AppSettings);
             services.AddSingleton(Config.Cache);
+            services.AddSingleton(Config.Logging);
 
             services.AddCors();
             services.AddControllers().AddNewtonsoftJson();

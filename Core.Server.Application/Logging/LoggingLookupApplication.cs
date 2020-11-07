@@ -2,7 +2,6 @@
 using Core.Server.Common.Entities;
 using Core.Server.Injection.Attributes;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,42 +11,46 @@ namespace Core.Server.Application.Logging
 {
     [Inject(2)]
     public class LoggingLookupApplication<TResource, TEntity>
-        : ILookupApplication<TResource>
+        : LoggingApplication<LookupApplication<TResource, TEntity>>
+        , ILookupApplication<TResource>
         where TResource : Resource
         where TEntity : Entity
     {
-        [Dependency]
-        public LookupApplication<TResource, TEntity> LookupApplication;
+        //[Dependency]
+        //public LookupApplication<TResource, TEntity> Application;
 
-        public UserResource CurrentUser
-        {
-            get => LookupApplication.CurrentUser;
-            set { LookupApplication.CurrentUser = value; }
-        }
+        //[Dependency]
+        //public IMethodLogger MethodLogger;
+
+        //public UserResource CurrentUser
+        //{
+        //    get => Application.CurrentUser;
+        //    set { Application.CurrentUser = value; }
+        //}
 
         public Task<ActionResult> Any()
         {
-            return LookupApplication.Any();
+            return Application.Any();
         }
 
         public Task<ActionResult> Exists(string id)
         {
-            return LookupApplication.Exists(id);
+            return Application.Exists(id);
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
-            return LookupApplication.GetAll();
+            return Application.GetAll();
         }
 
         public Task<ActionResult<TResource>> GetById(string id)
         {
-            return LookupApplication.GetById(id);
+            return CallApplicationWithLog(() => Application.GetById(id), id);
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> GetByIds(string[] ids)
         {
-            return LookupApplication.GetByIds(ids);
+            return CallApplicationWithLog(() => Application.GetByIds(ids), ids);
         }
     }
 }

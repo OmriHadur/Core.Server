@@ -25,7 +25,8 @@ namespace Core.Server.Application
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
             var entities = await LookupRepository.Get();
-            return Ok(await ResourceMapper.Map(entities));
+            var response = await ResourceMapper.Map(entities);
+            return response.ToList();
         }
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetByIds(string[] ids)
@@ -34,7 +35,8 @@ namespace Core.Server.Application
             var notFoundId = ids.FirstOrDefault(id => !entities.Any(e => e.Id == id));
             if (notFoundId != null)
                 return NotFound(notFoundId);
-            return Ok(await ResourceMapper.Map(entities));
+            var response = await ResourceMapper.Map(entities);
+            return response.ToList();
         }
 
         public virtual async Task<ActionResult<TResource>> GetById(string id)
