@@ -2,17 +2,17 @@
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Common.Attributes;
-using Core.Server.Persistence.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Unity;
+using Core.Server.Persistence.Logging;
 
 namespace Core.Server.Persistence.Cache
 {
-    [Inject(2)]
+    [Inject(3)]
     public class LookupCachedRepository<TEntity>
         : ILookupRepository<TEntity>
         where TEntity : Entity
@@ -21,7 +21,7 @@ namespace Core.Server.Persistence.Cache
         public IEntityCache<TEntity> Cache;
 
         [Dependency]
-        public LookupRepository<TEntity> LookupRepository;
+        public LoggingLookupRepository<TEntity> LookupRepository;
 
         public async Task<bool> Any()
         {

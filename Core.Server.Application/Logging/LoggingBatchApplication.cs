@@ -20,17 +20,17 @@ namespace Core.Server.Application.Logging
     {
         public Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
         {
-            return CallApplicationWithLog(() => Application.BatchCreate(resources), resources);
+            return LogginCall(() => Application.BatchCreate(resources), resources);
         }
 
         public Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids)
         {
-            return CallApplicationWithLog(() => Application.BatchDelete(ids), ids);
+            return LogginCall(() => Application.BatchDelete(ids), ids);
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
         {
-            return CallApplicationWithLog(() => Application.BatchUpdate(resources), resources);
+            return LogginCall(() => Application.BatchUpdate(resources), resources);
         }
     }
 }

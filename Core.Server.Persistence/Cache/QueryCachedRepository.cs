@@ -8,16 +8,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity;
+using Core.Server.Persistence.Logging;
 
 namespace Core.Server.Persistence.Cache
 {
-    [Inject(2)]
+    [Inject(3)]
     public class QueryCachedRepository<TEntity>
         : IQueryRepository<TEntity>
         where TEntity : Entity
     {
         [Dependency]
-        public QueryRepository<TEntity> QueryRepository;
+        public LoggingQueryRepository<TEntity> QueryRepository;
 
         [Dependency]
         public IQueryCache<TEntity> QueryCache;

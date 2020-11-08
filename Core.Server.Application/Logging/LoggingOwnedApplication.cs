@@ -18,12 +18,12 @@ namespace Core.Server.Application.Logging
     {
         public Task<ActionResult> Any()
         {
-          return  CallApplicationWithLog(() => Application.Any());
+          return  LogginCall(() => Application.Any());
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> GetAllOwned()
         {
-            return CallApplicationWithLog(() => Application.GetAllOwned());
+            return LogginCall(() => Application.GetAllOwned());
         }
     }
 }

@@ -18,27 +18,27 @@ namespace Core.Server.Application.Logging
     {
         public Task<ActionResult> Any()
         {
-            return CallApplicationWithLog(() => Application.Any());
+            return LogginCall(() => Application.Any());
         }
 
         public Task<ActionResult> Exists(string id)
         {
-            return CallApplicationWithLog(() => Application.Exists(id));
+            return LogginCall(() => Application.Exists(id));
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
-            return CallApplicationWithLog(() => Application.GetAll());
+            return LogginCall(() => Application.GetAll());
         }
 
         public Task<ActionResult<TResource>> GetById(string id)
         {
-            return CallApplicationWithLog(() => Application.GetById(id), id);
+            return LogginCall(() => Application.GetById(id), id);
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> GetByIds(string[] ids)
         {
-            return CallApplicationWithLog(() => Application.GetByIds(ids), ids);
+            return LogginCall(() => Application.GetByIds(ids), ids);
         }
     }
 }

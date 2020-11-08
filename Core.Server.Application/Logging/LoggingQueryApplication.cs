@@ -19,7 +19,7 @@ namespace Core.Server.Application.Logging
     {
         public Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
         {
-            return CallApplicationWithLog(() => Application.Query(queryResource), queryResource);
+            return LogginCall(() => Application.Query(queryResource), queryResource);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Config;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,7 +35,7 @@ namespace Core.Server.Common.Logging
                     sb.Append($"{loggingTierLevel}.{methodName}:Started ");
 
                 if (la.HasFlag(LoggingActions.Request) & request != null)
-                    sb.Append("Request: " + JsonSerializer.Serialize(request));
+                    sb.Append("Request: " + JsonConvert.SerializeObject(request));
 
                 if (la.HasFlag(LoggingActions.Took))
                 {
@@ -60,11 +61,11 @@ namespace Core.Server.Common.Logging
                      var stopwatch = stopwatchs[loggingTierLevel + methodName];
                      stopwatchs.Remove(loggingTierLevel + methodName);
                      stopwatch.Stop();
-                     sb.Append($"{loggingTierLevel}.{methodName} took: {stopwatch.ElapsedMilliseconds} Milliseconds");
+                     sb.Append($"{loggingTierLevel}.{methodName} took: {stopwatch.ElapsedMilliseconds} Milliseconds ");
                  }
 
                  if (la.HasFlag(LoggingActions.Response))
-                     sb.Append($"Response: {JsonSerializer.Serialize(response)}");
+                     sb.Append($"Response: {JsonConvert.SerializeObject(response)}");
              });
         }
 

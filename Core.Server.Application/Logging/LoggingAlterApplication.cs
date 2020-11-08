@@ -19,27 +19,27 @@ namespace Core.Server.Application.Logging
     {
         public Task<ActionResult<TResource>> Create(TCreateResource resource)
         {
-            return CallApplicationWithLog(() => Application.Create(resource), resource);
+            return LogginCall(() => Application.Create(resource), resource);
         }
 
         public Task<ActionResult> Delete(string id)
         {
-            return CallApplicationWithLog(() => Application.Delete(id), id);
+            return LogginCall(() => Application.Delete(id), id);
         }
 
         public Task<ActionResult> DeleteAll()
         {
-            return CallApplicationWithLog(() => Application.DeleteAll());
+            return LogginCall(() => Application.DeleteAll());
         }
 
         public Task<ActionResult<TResource>> Replace(string id, TCreateResource resource)
         {
-            return CallApplicationWithLog(() => Application.Replace(id, resource), id,resource);
+            return LogginCall(() => Application.Replace(id, resource), resource);
         }
 
         public Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
         {
-            return CallApplicationWithLog(() => Application.Update(id, resource), id, resource);
+            return LogginCall(() => Application.Update(id, resource), resource);
         }
     }
 }

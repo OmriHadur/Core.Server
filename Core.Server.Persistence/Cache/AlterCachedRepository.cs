@@ -2,15 +2,15 @@
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Common.Attributes;
-using Core.Server.Persistence.Repositories;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Unity;
+using Core.Server.Persistence.Logging;
 
 namespace Core.Server.Persistence.Cache
 {
-    [Inject(2)]
+    [Inject(3)]
     public class AlterCachedRepository<TEntity>
         :IAlterRepository<TEntity>
         where TEntity : Entity
@@ -19,7 +19,7 @@ namespace Core.Server.Persistence.Cache
         public IEntityCache<TEntity> Cache;
 
         [Dependency]
-        public AlterRepository<TEntity> AlterRepository;
+        public LoggingAlterRepository<TEntity> AlterRepository;
 
         public async Task Add(TEntity entity)
         {
