@@ -1,4 +1,4 @@
-﻿using Core.Server.Injection.Attributes;
+﻿using Core.Server.Common.Attributes;
 using Core.Server.Injection.Interfaces;
 using Core.Server.Injection.Unity;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;

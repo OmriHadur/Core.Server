@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Query;
 using Core.Server.Shared.Resources;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Unity;
 using System.Collections.Generic;
 using System.Linq;

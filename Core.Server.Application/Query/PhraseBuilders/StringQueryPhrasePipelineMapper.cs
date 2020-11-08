@@ -1,9 +1,9 @@
 ﻿using Core.Server.Common.Query;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application.Query.PhraseBuilders
 {
-    [Inject]
+    [InjectName]
     public class StringQueryPhrasePipelineMapper 
         : QueryValuePhrasePipelineMapper<QueryString, string, QueryStringOperands>
     {

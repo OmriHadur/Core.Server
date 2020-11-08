@@ -4,7 +4,7 @@ using Core.Server.Common.Entities;
 using Core.Server.Shared.Resources.Users;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application.Mappers.Implementation
 {

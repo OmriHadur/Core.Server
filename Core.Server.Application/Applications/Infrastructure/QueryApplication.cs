@@ -7,10 +7,11 @@ using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Shared.Errors;
 using Core.Server.Common.Mappers;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Query;
 using Core.Server.Shared.Query;
 using Core.Server.Common.Query.Infrastructure;
+using System.Linq;
 
 namespace Core.Server.Application
 {
@@ -42,7 +43,8 @@ namespace Core.Server.Application
                 return BadRequest((BadRequestReason)validateResult);
 
             var entities = await QueryRepository.Query(queryRequest);
-            return Ok(await ResourceMapper.Map(entities));
+            var response = await ResourceMapper.Map(entities);
+            return response.ToList();
         }
 
         private BadRequestReason? Validate(QueryRequest queryRequest)

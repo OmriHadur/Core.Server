@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Common.Mappers;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
+using System.Linq;
 
 namespace Core.Server.Application
 {
@@ -24,7 +25,8 @@ namespace Core.Server.Application
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAllOwned()
         {
             var entities = await LookupRepository.FindAll(e => e.UserId == CurrentUser.Id);
-            return Ok(await ResourceMapper.Map(entities));
+            var response = await ResourceMapper.Map(entities);
+            return response.ToList();
         }
 
         public virtual async Task<ActionResult> Any()

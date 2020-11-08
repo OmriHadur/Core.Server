@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Unity;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Tests.ResourceTests.Interfaces;
 using System;
 using Core.Server.Tests.ResourceCreation.Interfaces;

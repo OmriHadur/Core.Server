@@ -1,11 +1,11 @@
 ﻿using Core.Server.Common.Query;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using System;
 using System.Text;
 
 namespace Core.Server.Application.Query.PhraseBuilders
 {
-    [Inject]
+    [InjectName]
     public class NumberQueryPhrasePipelineMapper
         : QueryValuePhrasePipelineMapper<QueryNumber, double, QueryNumberOperands>
     {

@@ -1,11 +1,11 @@
 ﻿using Core.Server.Common.Query;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Core.Server.Application.Query.PhraseBuilders
 {
-    [Inject]
+    [InjectName]
     public class UnionQueryPhrasePipelineMapper : QueryPhrasePipelineMapper
     {
         public override int Priory => 1;

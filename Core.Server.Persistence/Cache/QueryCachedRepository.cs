@@ -2,7 +2,7 @@
 using Core.Server.Common.Entities;
 using Core.Server.Common.Query.Infrastructure;
 using Core.Server.Common.Repositories;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Persistence.Repositories;
 using System.Collections.Generic;
 using System.Linq;

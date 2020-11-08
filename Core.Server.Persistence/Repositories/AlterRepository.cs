@@ -4,7 +4,7 @@ using Core.Server.Common.Repositories;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Persistence.Repositories
 {

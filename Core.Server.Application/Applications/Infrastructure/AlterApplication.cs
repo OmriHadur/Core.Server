@@ -7,7 +7,7 @@ using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Common.Validators;
 using Core.Server.Common.Mappers;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Application

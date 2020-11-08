@@ -1,7 +1,7 @@
 ﻿using Core.Server.Common.Cache;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Persistence.Repositories;
 using System;
 using System.Linq.Expressions;

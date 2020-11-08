@@ -7,7 +7,7 @@ using Unity;
 using Core.Server.Shared.Resources;
 using Core.Server.Common.Mappers;
 using System.Linq;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application
 {

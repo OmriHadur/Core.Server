@@ -1,5 +1,5 @@
 ﻿using Core.Server.Common.Applications;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
@@ -21,7 +21,7 @@ namespace Core.Server.Application
         where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
-        where TEntity : Entity, new()
+        where TEntity : Entity
     {
         [Dependency]
         public IBatchRepository<TEntity> BatchRepository;
@@ -43,7 +43,8 @@ namespace Core.Server.Application
             var entitiesTasks = resources.Select(async resource => await Map(resource));
             var entities = entitiesTasks.Select(er => er.Result).ToList();
             await AddEntites(entities);
-            return Ok(await ResourceMapper.Map(entities));
+            var response= await ResourceMapper.Map(entities);
+            return response.ToList();
         }
 
         private async Task<TEntity> Map(TCreateResource resource)

@@ -1,4 +1,4 @@
-﻿using Core.Server.Injection.Attributes;
+﻿using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Tests.Configuration;
 using Core.Server.Tests.ResourceCreators.Interfaces;

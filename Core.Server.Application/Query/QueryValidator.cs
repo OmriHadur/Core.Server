@@ -1,7 +1,7 @@
 ﻿using Core.Server.Shared.Errors;
 using Core.Server.Shared.Resources;
 using System.Linq;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using System;
 using System.Reflection;
 using Core.Server.Common.Query;

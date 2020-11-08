@@ -1,4 +1,4 @@
-﻿using Core.Server.Injection.Attributes;
+﻿using Core.Server.Common.Attributes;
 using Core.Server.Tests.ResourceCreation.Interfaces;
 using System;
 using System.Collections.Generic;

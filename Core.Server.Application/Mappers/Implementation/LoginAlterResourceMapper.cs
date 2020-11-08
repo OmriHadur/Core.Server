@@ -1,7 +1,7 @@
 ﻿using Core.Server.Application.Helpers;
 using Core.Server.Application.Mappers.Base;
 using Core.Server.Common;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Entities.Helpers;
 using Core.Server.Common.Mappers;

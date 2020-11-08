@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
 using Core.Server.Shared.Resources;

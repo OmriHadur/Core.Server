@@ -1,7 +1,7 @@
 ﻿using Core.Server.Common.Cache;
 using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

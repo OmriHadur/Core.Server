@@ -1,4 +1,5 @@
-﻿using Core.Server.Injection.Attributes;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Injection.Cache;
 using Core.Server.Injection.Interfaces;
 using System;
@@ -24,9 +25,21 @@ namespace Core.Server.Injection.Unity
         public void ConfigureContainer()
         {
             AddAllTypesForBundles();
-            AddInjectTypes<InjectAttribute>();
-
+            AddInjectTypes();
+            AddInjectNamedTypes();
+            
             new UnityCacheBuilder().AddCache(container, reflactionHelper);
+        }
+
+        private void AddInjectNamedTypes()
+        {
+            var classTypes = reflactionHelper.GetTypesWithAttribute<InjectNameAttribute>();
+            foreach (var injectedType in classTypes)
+            {
+                var interfacesType = reflactionHelper.GetDirectInterfaces(injectedType);
+                foreach (var interfaceType in interfacesType)
+                    container.RegisterSingleton(interfaceType, injectedType, injectedType.Name);
+            }
         }
 
         private void AddAllTypesForBundles()
@@ -51,12 +64,10 @@ namespace Core.Server.Injection.Unity
             return reflactionHelper.GetGenericTypesWithAttribute<InjectBoundleWithNameAttribute>();
         }
 
-        private void AddInjectTypes<TAttribute>()
-            where TAttribute : PriorityAttribute
+        private void AddInjectTypes()
         {
-            var classTypes = reflactionHelper.GetTypesWithAttribute<TAttribute>();
+            var classTypes = reflactionHelper.GetTypesWithAttribute<InjectAttribute>();
             classTypes = classTypes.OrderBy(c => c.GetCustomAttribute<PriorityAttribute>().Priority);
-            classTypes = classTypes.ToList();
             foreach (var injectedType in classTypes)
                 AddTypesInterfaces(injectedType);
         }

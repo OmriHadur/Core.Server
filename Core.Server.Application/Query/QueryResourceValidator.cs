@@ -1,5 +1,5 @@
 ﻿using Core.Server.Shared.Errors;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Common.Query.Infrastructure;
 using Core.Server.Common.Query;

@@ -4,7 +4,7 @@ using Core.Server.Common.Entities;
 using Core.Server.Common.Query;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 
 namespace Core.Server.Persistence.Filters
 {

@@ -25,7 +25,17 @@ namespace Core.Server.Application.Logging
             set { Application.CurrentUser = value; }
         }
 
-        public async Task<ActionResult<T>> CallApplicationWithLog<T>(Func<Task<ActionResult<T>>> action,object request)
+        public async Task<ActionResult> CallApplicationWithLog(Func<Task<ActionResult>> action, params object[] request)
+        {
+            var stackTrace = new StackTrace();
+            var methodName = stackTrace.GetFrame(4).GetMethod().Name;
+            MethodLogger.MethodStart(LoggingTierLevel.Application, methodName, request);
+            var response = await action();
+            MethodLogger.MethodEnded(LoggingTierLevel.Application, methodName, response);
+            return response;
+        }
+
+        public async Task<ActionResult<T>> CallApplicationWithLog<T>(Func<Task<ActionResult<T>>> action, params object[] request)
         {
             var stackTrace = new StackTrace();
             var methodName = stackTrace.GetFrame(4).GetMethod().Name;

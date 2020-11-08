@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Applications;
 using Core.Server.Common.Entities;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -16,31 +16,19 @@ namespace Core.Server.Application.Logging
         where TResource : Resource
         where TEntity : Entity
     {
-        //[Dependency]
-        //public LookupApplication<TResource, TEntity> Application;
-
-        //[Dependency]
-        //public IMethodLogger MethodLogger;
-
-        //public UserResource CurrentUser
-        //{
-        //    get => Application.CurrentUser;
-        //    set { Application.CurrentUser = value; }
-        //}
-
         public Task<ActionResult> Any()
         {
-            return Application.Any();
+            return CallApplicationWithLog(() => Application.Any());
         }
 
         public Task<ActionResult> Exists(string id)
         {
-            return Application.Exists(id);
+            return CallApplicationWithLog(() => Application.Exists(id));
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
-            return Application.GetAll();
+            return CallApplicationWithLog(() => Application.GetAll());
         }
 
         public Task<ActionResult<TResource>> GetById(string id)

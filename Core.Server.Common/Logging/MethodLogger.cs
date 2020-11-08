@@ -1,6 +1,5 @@
-﻿using Core.Server.Common.Config;
-using Core.Server.Common.Logging;
-using Core.Server.Injection.Attributes;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Config;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,12 +8,12 @@ using System.Text;
 using System.Text.Json;
 using Unity;
 
-namespace Core.Server.Application.Logging
+namespace Core.Server.Common.Logging
 {
     [Inject]
     public class MethodLogger : IMethodLogger
     {
-        private readonly Dictionary<string, Stopwatch> Stopwatchs;
+        private readonly Dictionary<string, Stopwatch> stopwatchs;
 
         [Dependency]
         public LoggingConfig LogginConfig;
@@ -24,7 +23,7 @@ namespace Core.Server.Application.Logging
 
         public MethodLogger()
         {
-            Stopwatchs = new Dictionary<string, Stopwatch>();
+            stopwatchs = new Dictionary<string, Stopwatch>();
         }
 
         public void MethodStart(LoggingTierLevel loggingTierLevel, string methodName, object request)
@@ -34,14 +33,17 @@ namespace Core.Server.Application.Logging
                 if (la.HasFlag(LoggingActions.Started))
                     sb.Append($"{loggingTierLevel}.{methodName}:Started ");
 
-                if (la.HasFlag(LoggingActions.Request))
+                if (la.HasFlag(LoggingActions.Request) & request != null)
                     sb.Append("Request: " + JsonSerializer.Serialize(request));
 
                 if (la.HasFlag(LoggingActions.Took))
                 {
                     var stopwatch = new Stopwatch();
                     stopwatch.Start();
-                    Stopwatchs.Add(loggingTierLevel + methodName, stopwatch);
+                    var key = loggingTierLevel + methodName;
+                    if (stopwatchs.ContainsKey(key))
+                        stopwatchs.Remove(key);
+                    stopwatchs.Add(key, stopwatch);
                 }
             });
         }
@@ -55,8 +57,8 @@ namespace Core.Server.Application.Logging
 
                  if (la.HasFlag(LoggingActions.Took))
                  {
-                     var stopwatch = Stopwatchs[loggingTierLevel + methodName];
-                     Stopwatchs.Remove(loggingTierLevel + methodName);
+                     var stopwatch = stopwatchs[loggingTierLevel + methodName];
+                     stopwatchs.Remove(loggingTierLevel + methodName);
                      stopwatch.Stop();
                      sb.Append($"{loggingTierLevel}.{methodName} took: {stopwatch.ElapsedMilliseconds} Milliseconds");
                  }

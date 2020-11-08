@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Query;
 using Core.Server.Common.Query.Infrastructure;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Shared.Query;
 using Core.Server.Shared.Resources;
 using Unity;

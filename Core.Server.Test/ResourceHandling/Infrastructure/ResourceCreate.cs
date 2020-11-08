@@ -1,6 +1,6 @@
 ﻿using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
-using Core.Server.Injection.Attributes;
+using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreation.Interfaces;
 using Core.Server.Tests.ResourceCreators.Interfaces;
