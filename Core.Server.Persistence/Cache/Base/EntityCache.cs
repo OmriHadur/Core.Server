@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;
+using System.Collections.Concurrent;
 
 namespace Core.Server.Persistence.Cache
 {
@@ -20,7 +21,7 @@ namespace Core.Server.Persistence.Cache
         [Dependency]
         public CacheConfig CacheConfig;
 
-        private readonly Dictionary<string, TEntity> cache;
+        private readonly ConcurrentDictionary<string, TEntity> cache;
 
         public event EventHandler<EntityCacheChangedEventArgs> CacheChangedEvent;
 
@@ -28,7 +29,7 @@ namespace Core.Server.Persistence.Cache
 
         public EntityCache()
         {
-            cache = new Dictionary<string, TEntity>();
+            cache = new ConcurrentDictionary<string, TEntity>();
         }
 
         public TEntity Get(string id)

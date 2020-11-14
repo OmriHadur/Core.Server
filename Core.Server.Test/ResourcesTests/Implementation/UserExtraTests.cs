@@ -1,6 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Core.Server.Shared.Errors;
 using Core.Server.Shared.Resources.Users;
-using Core.Server.Shared.Errors;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Server.Tests.ResourceTests
 {

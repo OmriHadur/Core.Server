@@ -40,6 +40,7 @@ namespace Core.Server.Application
             var validationResult = await Validate(resources);
             if (IsNotOk(validationResult))
                 return validationResult;
+            
             var entitiesTasks = resources.Select(async resource => await Map(resource));
             var entities = entitiesTasks.Select(er => er.Result).ToList();
             await AddEntites(entities);
