@@ -1,11 +1,11 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceTests.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public class ResourceGenericRestTests<TResource>
-        : ResourceGenericTestsBase<TResource>
+    public class GenericRestTests<TResource>
+        : GenericTestsBase<TResource>
         , IResourceGenericRestTests
         where TResource : Resource
     {
@@ -35,7 +35,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public virtual void TestGetNotFound()
         {
-            var response = ResourceQuery.Get(RandomId);
+            var response = ResourceQuery.Get("5fb00552d72114101e33fa47");
             AssertNotFound(response);
         }
 

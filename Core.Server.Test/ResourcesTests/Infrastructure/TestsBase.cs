@@ -7,13 +7,6 @@ namespace Core.Server.Tests.ResourceTests
 {
     public abstract class TestsBase
     {
-        protected Random Random;
-
-        public TestsBase()
-        {
-            Random = new Random();
-        }
-
         protected void Validate(object expected, object actual)
         {
             Assert.IsNotNull(actual);
@@ -78,16 +71,6 @@ namespace Core.Server.Tests.ResourceTests
         protected void AssertOk(ActionResult response)
         {
             Assert.IsTrue(response is OkResult);
-        }
-
-        protected string RandomId
-        {
-            get
-            {
-                var buffer = new byte[12];
-                Random.NextBytes(buffer);
-                return string.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
-            }
         }
 
         protected void AssertBadRequestReason<T, TReson>(ActionResult<T> response, TReson badRequestReason)

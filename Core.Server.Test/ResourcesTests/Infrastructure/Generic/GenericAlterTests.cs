@@ -1,27 +1,22 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreators.Interfaces;
-using Unity;
-using Core.Server.Common.Attributes;
 using Core.Server.Tests.ResourceTests.Interfaces;
-using Core.Server.Tests.ResourceCreation.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity;
 
 namespace Core.Server.Tests.ResourceTests
 {
     [Inject]
-    public class ResourceGenericAlterTests<TCreateResource, TUpdateResource, TResource>
-        : ResourceGenericTestsBase<TResource>
+    public class GenericAlterTests<TCreateResource, TUpdateResource, TResource>
+        : GenericTestsBase<TResource>
         , IResourceGenericAlterTests
-        where TCreateResource : CreateResource, new()
+        where TCreateResource : CreateResource
         where TUpdateResource : UpdateResource
         where TResource : Resource
     {
-
         [Dependency]
         public IResourceAlter<TCreateResource, TUpdateResource, TResource> resourceAlter;
-
-        [Dependency]
-        public IObjectRandomizer ObjectRandomizer;
 
         [TestMethod]
         public void TestReplace()

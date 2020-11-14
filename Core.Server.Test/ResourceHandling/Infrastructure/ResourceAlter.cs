@@ -25,13 +25,19 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         public ActionResult<TResource> Create()
         {
-            return Create(null);
+            var createResource = RandomResourceCreator.GetRandomCreateResource();
+            return Create(createResource);
         }
 
         public ActionResult<TResource> Create(Action<TCreateResource> editFunc)
         {
             var createResource = RandomResourceCreator.GetRandomCreateResource();
             editFunc?.Invoke(createResource);
+            return Create(createResource);
+        }
+
+        public ActionResult<TResource> Create(TCreateResource createResource)
+        {
             var response = Client.Create(createResource).Result;
             if (response.IsSuccess)
                 ResourceIdsHolder.Add<TResource>(response.Value.Id);

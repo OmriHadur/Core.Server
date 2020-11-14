@@ -4,44 +4,44 @@ using Core.Server.Tests.ResourceTests.Interfaces;
 namespace Core.Server.Tests.ResourceTests
 {
     [TestClass]
-    public class ResourceRestTests
-        : ResourceTestsBase<IResourceGenericRestTests>
+    public class RunnerRestTests
+        : RunnerTestsBase<IResourceGenericRestTests>
         , IResourceGenericRestTests
     {
         [TestMethod]
         public void TestCreateAddedToList()
         {
-            RunTest(t => t.TestCreateAddedToList());
+            RunTestForAllResources(t => t.TestCreateAddedToList());
         }
 
         [TestMethod]
         public void TestDelete()
         {
-            RunTest(t => t.TestDelete());
+            RunTestForAllResources(t => t.TestDelete());
         }
 
         [TestMethod]
         public void TestDeleteNotFoundAfterDelete()
         {
-            RunTest(t => t.TestDeleteNotFoundAfterDelete());
+            RunTestForAllResources(t => t.TestDeleteNotFoundAfterDelete());
         }
 
         [TestMethod]
         public virtual void TestGet()
         {
-            RunTest(t => t.TestGet());
+            RunTestForAllResources(t => t.TestGet());
         }
 
         [TestMethod]
         public virtual void TestGetNotFound()
         {
-            RunTest(t => t.TestGetNotFound());
+            RunTestForAllResources(t => t.TestGetNotFound());
         }
 
         [TestMethod]
         public virtual void TestGetNotFoundAfterDelete()
         {
-            RunTest(t => t.TestGetNotFoundAfterDelete());
+            RunTestForAllResources(t => t.TestGetNotFoundAfterDelete());
         }
     }
 }

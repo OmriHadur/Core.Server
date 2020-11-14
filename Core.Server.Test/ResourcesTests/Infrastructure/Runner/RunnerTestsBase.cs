@@ -9,13 +9,13 @@ using System;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public class ResourceTestsBase<TResourceGenericTests>
+    public class RunnerTestsBase<TResourceGenericTests>
         where TResourceGenericTests : IResourceGenericTests
     {
         private IUnityContainer UnityContainer;
         private IReflactionHelper ReflactionHelper;
 
-        protected List<TResourceGenericTests> Tests;
+        protected IEnumerable<TResourceGenericTests> TestsForResource;
 
         [TestInitialize]
         public void TestInit()
@@ -23,29 +23,29 @@ namespace Core.Server.Tests.ResourceTests
             var testsUnityContainer = new TestsUnityContainer();
             UnityContainer = testsUnityContainer.UnityContainer;
             ReflactionHelper = testsUnityContainer.ReflactionHelper;
-            FillTests();
+            TestsForResource = GetTestsForResource();
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            foreach (var test in Tests)
+            foreach (var test in TestsForResource)
                 test.Cleanup();
         }
 
-        public void RunTest(Action<TResourceGenericTests> testRun)
+        public void RunTestForAllResources(Action<TResourceGenericTests> testRun)
         {
-            foreach (var test in Tests)
+            foreach (var testForResource in TestsForResource)
             {
-                test.TestInit();
-                testRun(test);
-                test.Cleanup();
+                testForResource.TestInit();
+                testRun(testForResource);
+                testForResource.Cleanup();
             }
         }
 
-        private void FillTests()
+        private IEnumerable<TResourceGenericTests> GetTestsForResource()
         {
-            Tests = new List<TResourceGenericTests>();
+            var testsForResource = new List<TResourceGenericTests>();
             var boundles = ReflactionHelper.GetResourcesBoundles().ToList();
 
             var type = ReflactionHelper.GetClassForInterface<TResourceGenericTests>();
@@ -58,15 +58,16 @@ namespace Core.Server.Tests.ResourceTests
                 if (!hasoveride)
                 {
                     var obj = UnityContainer.Resolve(genericType);
-                    Tests.Add((TResourceGenericTests)obj);
+                    testsForResource.Add((TResourceGenericTests)obj);
                 }
             }
 
             foreach (var overideTest in overideTests)
             {
                 var obj = UnityContainer.Resolve(overideTest);
-                Tests.Add((TResourceGenericTests)obj);
+                testsForResource.Add((TResourceGenericTests)obj);
             }
+            return testsForResource;
         }
     }
 }

@@ -4,32 +4,32 @@ using Core.Server.Tests.ResourceTests.Interfaces;
 namespace Core.Server.Tests.ResourceTests
 {
     [TestClass]
-    public class ResourceAlterTests
-        : ResourceTestsBase<IResourceGenericAlterTests>
+    public class RunnerAlterTests
+        : RunnerTestsBase<IResourceGenericAlterTests>
         , IResourceGenericAlterTests
     {
         [TestMethod]
         public virtual void TestReplace()
         {
-            RunTest(t => t.TestReplace());
+            RunTestForAllResources(t => t.TestReplace());
         }
 
         [TestMethod]
         public void TestReplaceCreated()
         {
-            RunTest(t => t.TestReplaceCreated());
+            RunTestForAllResources(t => t.TestReplaceCreated());
         }
 
         [TestMethod]
         public virtual void TestUpdate()
         {
-            RunTest(t => t.TestUpdate());
+            RunTestForAllResources(t => t.TestUpdate());
         }
 
         [TestMethod]
         public void TestGetAfterUpdate()
         {
-            RunTest(t => t.TestGetAfterUpdate());
+            RunTestForAllResources(t => t.TestGetAfterUpdate());
         }
     }
 }

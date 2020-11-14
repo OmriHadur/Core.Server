@@ -1,13 +1,14 @@
 using Core.Server.Shared.Resources;
-using System.Linq;
-using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Test.ResourcesCreators.Interfaces;
-using Unity;
+using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Tests.Utils;
+using System.Linq;
+using Unity;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    public abstract class ResourceGenericTestsBase<TResource> : TestsBase
+    public abstract class GenericTestsBase<TResource> 
+        : TestsBase
         where TResource : Resource
     {
         protected TResource CreatedResource;
@@ -32,7 +33,7 @@ namespace Core.Server.Tests.ResourceTests
 
         }
 
-        public void Cleanup()
+        public virtual void Cleanup()
         {
             ResourcesClean.Clean();
             CurrentUser.Logout();
