@@ -1,11 +1,9 @@
 using Core.Server.Shared.Resources;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Client.Results;
 using Core.Server.Test.ResourcesCreators.Interfaces;
 using Unity;
-using System;
+using Core.Server.Tests.Utils;
 
 namespace Core.Server.Tests.ResourceTests
 {
@@ -26,6 +24,9 @@ namespace Core.Server.Tests.ResourceTests
         [Dependency]
         public IResourcesIdsHolder ResourcesIdsHolder;
 
+        [Dependency]
+        public ICurrentUser CurrentUser;
+
         public virtual void TestInit()
         { 
 
@@ -34,6 +35,7 @@ namespace Core.Server.Tests.ResourceTests
         public void Cleanup()
         {
             ResourcesClean.Clean();
+            CurrentUser.Logout();
         }
 
         protected void CreateResource()

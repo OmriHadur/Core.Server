@@ -16,8 +16,10 @@ namespace Core.Server.Injection.Cache
 
             var cacheConfig = unityContainer.Resolve<CacheConfig>();
 
-            AddExcludedEntities(unityContainer, reflactionHelper, cacheConfig);
-            AddPreloadEntities(unityContainer, reflactionHelper, cacheConfig);
+            if (cacheConfig.Exclude != null)
+                AddExcludedEntities(unityContainer, reflactionHelper, cacheConfig);
+            if (cacheConfig.Preload != null)
+                AddPreloadEntities(unityContainer, reflactionHelper, cacheConfig);
         }
 
         private void AddExcludedEntities(IUnityContainer unityContainer, IReflactionHelper reflactionHelper, CacheConfig cacheConfig)

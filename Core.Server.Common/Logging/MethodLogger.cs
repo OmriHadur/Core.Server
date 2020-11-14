@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using System.Text.Json;
 using Unity;
 
 namespace Core.Server.Common.Logging
@@ -31,13 +30,13 @@ namespace Core.Server.Common.Logging
         {
             LogInformation(loggingTierLevel, (sb, la) =>
             {
-                if (la.HasFlag(LoggingActions.Started))
+                if (la >= LoggingActions.Method)
                     sb.Append($"{loggingTierLevel}.{methodName}:Started ");
 
-                if (la.HasFlag(LoggingActions.Request) & request != null)
+                if (la >= LoggingActions.MethodsTimeInputOutput)
                     sb.Append("Request: " + JsonConvert.SerializeObject(request));
 
-                if (la.HasFlag(LoggingActions.Took))
+                if (la >= LoggingActions.MethodsTime)
                 {
                     var stopwatch = new Stopwatch();
                     stopwatch.Start();
@@ -53,10 +52,10 @@ namespace Core.Server.Common.Logging
         {
             LogInformation(loggingTierLevel, (sb, la) =>
              {
-                 if (la.HasFlag(LoggingActions.Finished) || !la.HasFlag(LoggingActions.Took))
+                 if (la == LoggingActions.Method)
                      sb.Append($"{loggingTierLevel}.{methodName}:Finished ");
 
-                 if (la.HasFlag(LoggingActions.Took))
+                 if (la >= LoggingActions.MethodsTime)
                  {
                      var stopwatch = stopwatchs[loggingTierLevel + methodName];
                      stopwatchs.Remove(loggingTierLevel + methodName);
@@ -64,7 +63,7 @@ namespace Core.Server.Common.Logging
                      sb.Append($"{loggingTierLevel}.{methodName} took: {stopwatch.ElapsedMilliseconds} Milliseconds ");
                  }
 
-                 if (la.HasFlag(LoggingActions.Response))
+                 if (la == LoggingActions.MethodsTimeInputOutput)
                      sb.Append($"Response: {JsonConvert.SerializeObject(response)}");
              });
         }

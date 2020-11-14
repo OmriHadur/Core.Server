@@ -30,7 +30,8 @@ namespace Core.Server.Application.Mappers.Implementation
         public async override Task Map(UserUpdateResource resource, UserEntity entity)
         {
             await base.Map(resource, entity);
-            AddPassword(resource.Password, entity);
+            if (resource.Password != null)
+                AddPassword(resource.Password, entity);
         }
 
         private void AddPassword(string password, UserEntity userEntity)

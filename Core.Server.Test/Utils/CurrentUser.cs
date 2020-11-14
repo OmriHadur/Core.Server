@@ -33,7 +33,7 @@ namespace Core.Server.Tests.Utils
             get
             {
                 if (token == null && !logginin)
-                    LoginWithNewUser();
+                    Login();
                 return token;
             }
         }
@@ -51,7 +51,7 @@ namespace Core.Server.Tests.Utils
             OnTokenChange?.Invoke(this, token);
         }
 
-        public void LoginWithNewUser()
+        public void Relogin()
         {
             Logout();
             Login();
@@ -60,7 +60,10 @@ namespace Core.Server.Tests.Utils
 
         public void Logout()
         {
-            token = string.Empty;
+            var currentLogin = LoginResourceCreate.Value.GetIfExist();
+            if (currentLogin != null)
+                LoginResourceCreate.Value.Delete(currentLogin.Id);
+            token = null;
             OnTokenChange?.Invoke(this, token);
         }
     }

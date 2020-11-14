@@ -19,21 +19,30 @@ namespace Core.Server.Tests.ResourceTests
             Assert.IsNotNull(actual);
             var properties = expected.GetType().GetProperties();
             foreach (var property in properties)
+                ValidateProperty(expected, actual, property);
+        }
+
+        private void ValidateProperty(object expected, object actual, System.Reflection.PropertyInfo property)
+        {
+            var expectedValue = property.GetValue(expected);
+            var actualProperty = actual.GetType().GetProperties().FirstOrDefault(p => p.Name == property.Name);
+            var propertyType = actualProperty?.PropertyType;
+            if (actualProperty != null && !propertyType.IsGenericType && propertyType != typeof(DateTime))
             {
-                var expectedValue = property.GetValue(expected);
-                var actualProperty = actual.GetType().GetProperties().FirstOrDefault(p => p.Name == property.Name);
-                var propertyType = actualProperty?.PropertyType;
-                if (actualProperty != null && !propertyType.IsGenericType && propertyType != typeof(DateTime))
-                {
-                    var actualValue = actualProperty.GetValue(actual);
-                    if (propertyType.IsPrimitive || propertyType == typeof(string))
-                        Assert.AreEqual(expectedValue, actualValue, "With Property " + actualProperty.Name);
-                    else if (actualValue.GetType() == typeof(string[]))
-                        Assert.IsTrue(((string[])expectedValue).SequenceEqual((string[])actualValue));
-                    else
-                        Validate(expectedValue, actualValue);
-                }
+                var actualValue = actualProperty.GetValue(actual);
+                ValidateValue(expectedValue, actualProperty, propertyType, actualValue);
             }
+        }
+
+        private void ValidateValue(object expectedValue, System.Reflection.PropertyInfo actualProperty, Type propertyType, object actualValue)
+        {
+            if (actualValue == null) return;
+            if (propertyType.IsPrimitive || propertyType == typeof(string))
+                Assert.AreEqual(expectedValue, actualValue, "With Property " + actualProperty.Name);
+            else if (actualValue.GetType() == typeof(string[]))
+                Assert.IsTrue(((string[])expectedValue).SequenceEqual((string[])actualValue));
+            else
+                Validate(expectedValue, actualValue);
         }
 
         protected void AssertUnauthorized<T>(ActionResult<T> response)

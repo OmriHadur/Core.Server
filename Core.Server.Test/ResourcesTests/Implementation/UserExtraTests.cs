@@ -4,8 +4,8 @@ using Core.Server.Shared.Resources.Users;
 namespace Core.Server.Tests.ResourceTests
 {
     [TestClass]
-    public class UserQueryTests
-        : ResourceGenericRestTests<UserResource>
+    public class UserExtraTests
+        : ResourceGenericTestsBase<UserResource>
     {
         //[TestMethod]
         //public void TestReCreate()

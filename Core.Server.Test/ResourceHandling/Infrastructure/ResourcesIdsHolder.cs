@@ -49,7 +49,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             var type = typeof(TResource);
             if (idsbyType.ContainsKey(type))
                 return idsbyType[type].Last();
-            return string.Empty;
+            return null;
         }
 
         public bool IsEmpty<TResource>()
@@ -64,9 +64,11 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         {
             var type = typeof(TResource);
             if (idsbyType.ContainsKey(type))
+            {
                 idsbyType[type].Remove(id);
-            if (idsbyType[type].Count == 0)
-                idsbyType.Remove(type);
+                if (idsbyType[type].Count == 0)
+                    idsbyType.Remove(type);
+            }
         }
     }
 }

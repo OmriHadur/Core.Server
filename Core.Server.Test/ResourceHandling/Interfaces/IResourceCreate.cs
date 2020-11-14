@@ -9,5 +9,6 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
     {
         ActionResult<TResource> Create();
         TResource GetOrCreate();
+        TResource GetIfExist();
     }
 }

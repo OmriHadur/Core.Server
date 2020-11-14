@@ -9,7 +9,6 @@ using System;
 
 namespace Core.Server.Tests.ResourceTests
 {
-    [TestClass]
     public class ResourceTestsBase<TResourceGenericTests>
         where TResourceGenericTests : IResourceGenericTests
     {

@@ -29,7 +29,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             {
                 if (_client.ServerUrl == null)
                     _client.ServerUrl = Config.ServerUrl;
-                if (_client.Token == null)
+                if (string.IsNullOrEmpty(_client.Token))
                 {
                     CurrentUser.OnTokenChange += (s, t) => _client.Token = t;
                     _client.Token = CurrentUser.Token;

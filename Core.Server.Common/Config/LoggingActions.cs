@@ -5,11 +5,9 @@ namespace Core.Server.Common.Config
     [Flags]
     public enum LoggingActions : short
     {
-        None = 0,
-        Started = 1,
-        Finished = 2,
-        Took = 4,
-        Request=8,
-        Response= 16
+        None,
+        Method,//only write start and fininsh of methods
+        MethodsTime, // also write how long it took
+        MethodsTimeInputOutput, // also write the input and output of methods
     }
 }
