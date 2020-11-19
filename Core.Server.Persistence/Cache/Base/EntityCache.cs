@@ -1,12 +1,12 @@
-﻿using Core.Server.Common.Cache;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Cache;
 using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
-using Core.Server.Common.Attributes;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;
-using System.Collections.Concurrent;
 
 namespace Core.Server.Persistence.Cache
 {
@@ -53,15 +53,22 @@ namespace Core.Server.Persistence.Cache
         public void AddOrSet(TEntity entity)
         {
             if (entity == null) return;
-            if (cache.ContainsKey(entity.Id))
-                cache[entity.Id] = entity;
-            else
-            {
-                cache.Add(entity.Id, entity);
-                if (cache.Count > EntityConfig.MaxEntities)
-                    cache.Remove(cache.First().Key);
-            }
+
+            cache.AddOrUpdate(entity.Id, s => entity, (s, e) => entity);
+
+            RemoveIfReachedMax();
             CacheChangedEvent?.Invoke(this, new EntityCacheChangedEventArgs() { Id = entity.Id, IsAltered = true });
+        }
+
+        private void RemoveIfReachedMax()
+        {
+            if (cache.Count <= EntityConfig.MaxEntities) return;
+            bool removed;
+            do
+            {
+                removed = cache.TryRemove(cache.First().Key, out TEntity entity);
+
+            } while (!removed);
         }
 
         public void AddOrSet(IEnumerable<TEntity> entities)
@@ -74,7 +81,12 @@ namespace Core.Server.Persistence.Cache
         {
             if (cache.ContainsKey(id))
             {
-                cache.Remove(id);
+                bool removed;
+                do
+                {
+                    removed = cache.TryRemove(id, out TEntity entity);
+
+                } while (!removed);
                 CacheChangedEvent?.Invoke(this, new EntityCacheChangedEventArgs() { Id = id, IsDeleted = true });
             }
         }
