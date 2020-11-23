@@ -19,25 +19,21 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         [TestMethod]
         public void TestBatchCreate()
         {
-            var amountBefore = ResourceLookup.Get().Count();
-
             var response = ResourceBatch.Create(5);
 
             var amountAfter = ResourceLookup.Get().Count();
-            Assert.AreEqual(amountBefore + 5, amountAfter);
+            Assert.AreEqual(5, amountAfter);
             AssertOk(response);
         }
 
         [TestMethod]
         public void TestBatchDelete()
         {
-            var amountBefore = ResourceLookup.Get().Count();
-
             var createResponse = ResourceBatch.Create(5);
             var deleteResponse = ResourceBatch.Delete(createResponse.Value.Select(r => r.Id));
 
             var amountAfter = ResourceLookup.Get().Count();
-            Assert.AreEqual(amountBefore, amountAfter);
+            Assert.AreEqual(0, amountAfter);
             AssertOk(deleteResponse);
         }
 
@@ -46,7 +42,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         {
             CreateResource();
             var deleteResponse = ResourceBatch.Delete(new string[] { CreatedResource.Id, GetRandomId() });
-            AssertOk(deleteResponse);
+            AssertNotFound(deleteResponse);
         }
     }
 }

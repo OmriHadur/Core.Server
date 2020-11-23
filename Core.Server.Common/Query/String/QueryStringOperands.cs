@@ -6,6 +6,7 @@ namespace Core.Server.Common.Query
         Starts,
         Ends,
         Contains,
+        Equals,
         Empty,
         NotEmpty
     }

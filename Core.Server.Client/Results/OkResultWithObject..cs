@@ -14,7 +14,6 @@ namespace Core.Server.Client.Results
         public OkResultWithObject(T value)
             : base(value)
         {
-
         }
     }
 }

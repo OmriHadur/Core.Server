@@ -2,12 +2,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using System;
 using Core.Server.Client.Results;
+using System.Collections.Generic;
+using Core.Server.Shared.Resources;
 
 namespace Core.Server.Tests.ResourceTests
 {
     public abstract class TestsBase
     {
-        protected void Validate(object expected, object actual)
+        protected void ValidateList<T>(IEnumerable<T> expected, IEnumerable<T> actual)
+        {
+            for (int i = 0; i < expected.Count(); i++)
+                Validate(expected.ElementAt(i), actual.ElementAt(i));
+        }
+
+        protected void Validate<T>(T expected, T actual)
         {
             Assert.IsNotNull(actual);
             var properties = expected.GetType().GetProperties();
@@ -62,6 +70,14 @@ namespace Core.Server.Tests.ResourceTests
             var result = response as BadRequestResult;
             Assert.IsNotNull(result);
             Assert.AreEqual(Convert.ToInt32(badRequestReason), result.Reason);
+        }
+
+        protected void AssertAreEqual<TResource>(TResource expected, ActionResult<IEnumerable<TResource>> actual)
+            where TResource: Resource
+        {
+            Assert.IsTrue(actual.IsSuccess);
+            Assert.AreEqual(1, actual.Value.Count());
+            Validate(expected, actual.Value.First());
         }
 
         protected string GetRandomId()

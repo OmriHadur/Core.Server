@@ -31,7 +31,7 @@ namespace Core.Server.Application.Mappers
         private string GetOrderBy(QueryResource queryResource)
         {
             var orderByPropery = string.IsNullOrEmpty(queryResource.OrderBy) ? queryResource.OrderByDecending : queryResource.OrderBy;
-            return ToStartUpper(orderByPropery);
+            return orderByPropery != null ? ToStartUpper(orderByPropery) : null;
         }
 
         private string ToStartUpper(string str)

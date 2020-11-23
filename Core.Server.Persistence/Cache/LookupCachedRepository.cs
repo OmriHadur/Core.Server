@@ -25,18 +25,16 @@ namespace Core.Server.Persistence.Cache
 
         public async Task<bool> Any()
         {
-            var hasAny = Cache.Any();
-            if (Cache.IsAllCached | hasAny)
-                return hasAny;
+            if (Cache.Any())
+                return true;
 
             return await LookupRepository.Any();
         }
 
         public async Task<bool> Exists(string id)
         {
-            var isCached= Cache.IsCached(id);
-            if (Cache.IsAllCached | isCached)
-                return isCached;
+            if (Cache.IsCached(id))
+                return true;
 
             return await LookupRepository.Exists(id);
         }
@@ -85,11 +83,8 @@ namespace Core.Server.Persistence.Cache
 
         public async Task<IEnumerable<TEntity>> Get()
         {
-            if (Cache.IsAllCached)
-                return Cache.GetAll();
             var entities = await LookupRepository.Get();
             Cache.AddOrSet(entities);
-            Cache.IsAllCached = true;
             return entities;
         }
     }

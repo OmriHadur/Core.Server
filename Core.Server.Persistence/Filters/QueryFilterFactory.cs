@@ -43,19 +43,21 @@ namespace Core.Server.Persistence.Filters
 
         private static string GetRegex(QueryString queryString)
         {
-            var regex = queryString.Value;
+            var value = queryString.Value;
             switch (queryString.Operand)
             {
                 case QueryStringOperands.Starts:
-                    return '^' + regex;
+                    return '^' + value;
                 case QueryStringOperands.Ends:
-                    return regex + "$";
+                    return value + "$";
                 case QueryStringOperands.Empty:
                     return "^$";
                 case QueryStringOperands.NotEmpty:
                     return "$";
+                case QueryStringOperands.Equals:
+                    return value;
             }
-            return regex;
+            return value;
         }
 
         private FilterDefinition<TEntity> GetFilter<TEntity>(QueryNumber queryNumber)

@@ -12,12 +12,6 @@ namespace Core.Server.Injection.Cache
 
         public event EventHandler<EntityCacheChangedEventArgs> CacheChangedEvent;
 
-        public bool IsAllCached
-        {
-            get { return false; }
-            set { }
-        }
-
         public TEntity Get(string id) => null;
 
         public IEnumerable<TEntity> Get(IEnumerable<string> ids) => null;

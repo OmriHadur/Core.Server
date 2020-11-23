@@ -9,8 +9,6 @@ namespace Core.Server.Common.Cache
     {
         event EventHandler<EntityCacheChangedEventArgs> CacheChangedEvent;
 
-        bool IsAllCached { get; set; }
-
         bool IsCached(string id);
 
         TEntity Get(string id);

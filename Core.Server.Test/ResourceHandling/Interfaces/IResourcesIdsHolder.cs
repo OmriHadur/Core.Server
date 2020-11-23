@@ -15,6 +15,8 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
 
         void Add<TResource>(string id);
 
+        bool Contains<TResource>(string id);
+
         void Remove<TResource>(string id);
 
         void Clean<TResource>();

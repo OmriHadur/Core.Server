@@ -24,6 +24,12 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             idsbyType[type].Add(id);
         }
 
+        public bool Contains<TResource>(string id)
+        {
+            var type = typeof(TResource);
+            return idsbyType.ContainsKey(type) && idsbyType[type].Contains(id);
+        }
+        
         public void Clean<TResource>()
         {
             var type = typeof(TResource);

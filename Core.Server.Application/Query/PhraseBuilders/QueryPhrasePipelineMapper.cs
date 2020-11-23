@@ -29,6 +29,8 @@ namespace Core.Server.Application.Query.PhraseBuilders
 
         protected QueryBase CallNext(string queryPhrase, IEnumerable<IQueryPhrasePipelineMapper> mappers)
         {
+            if (!mappers.Any())
+                return null;
             var next = mappers.First();
             var leftMappers = mappers.Skip(1);
             return next.Map(queryPhrase, leftMappers);

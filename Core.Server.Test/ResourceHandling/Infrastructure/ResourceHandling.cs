@@ -1,8 +1,11 @@
 ﻿using Core.Server.Client.Interfaces;
+using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.Configuration;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Tests.Utils;
+using System.Collections.Generic;
+using System.Linq;
 using Unity;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
@@ -38,6 +41,19 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
                 return _client;
             }
             set { _client = value; }
+        }
+
+        protected ActionResult<IEnumerable<TResource>> Filter(ActionResult<IEnumerable<TResource>> result)
+        {
+            if (result.IsFail)
+                return result;
+            var resources = Filter(result.Value);
+            return new OkResultWithObject<IEnumerable<TResource>>(resources);
+        }
+
+        protected IEnumerable<TResource> Filter(IEnumerable<TResource> result)
+        {
+            return result.Where(r => ResourceIdsHolder.Contains<TResource>(r.Id));
         }
     }
 }

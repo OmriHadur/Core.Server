@@ -20,7 +20,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         public IEnumerable<TResource> Get()
         {
-            return Client.Get().Result.Value;
+            return Filter(Client.Get().Result.Value);
         }
 
         public IEnumerable<TResource> Get(string[] ids)

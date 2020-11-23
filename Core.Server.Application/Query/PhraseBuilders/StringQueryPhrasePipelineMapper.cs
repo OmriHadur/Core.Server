@@ -10,7 +10,7 @@ namespace Core.Server.Application.Query.PhraseBuilders
         public override int Priory => 2;
 
         protected override string MappingRegex => 
-            @$"(?'{FieldGroupName}'\w*)\.(?'{OperandGroupName}'\w*)\((?'{ValueGroupName}'\w*)\)";
+            @$"(?'{FieldGroupName}'\w*)\.(?'{OperandGroupName}'\w*)\((?'{ValueGroupName}'[^)]+)\)";
 
         protected override string GetValue(string value)
         {

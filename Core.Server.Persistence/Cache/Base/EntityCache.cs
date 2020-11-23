@@ -25,8 +25,6 @@ namespace Core.Server.Persistence.Cache
 
         public event EventHandler<EntityCacheChangedEventArgs> CacheChangedEvent;
 
-        public bool IsAllCached { get; set; }
-
         public EntityCache()
         {
             cache = new ConcurrentDictionary<string, TEntity>();
@@ -104,7 +102,6 @@ namespace Core.Server.Persistence.Cache
 
         public void Clear()
         {
-            IsAllCached = false;
             cache.Clear();
             CacheChangedEvent?.Invoke(this, new EntityCacheChangedEventArgs() { IsClear = true });
         }

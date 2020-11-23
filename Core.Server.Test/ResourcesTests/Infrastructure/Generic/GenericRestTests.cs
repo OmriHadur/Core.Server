@@ -1,6 +1,7 @@
 using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceTests.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Core.Server.Tests.ResourceTests
 {
@@ -17,10 +18,9 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public virtual void TestCreateAddedToList()
         {
-            var originalListCount = GetAllExistingCount();
-            CreateResource();
-            var newListCount = GetAllExistingCount();
-            Assert.AreEqual(originalListCount + 1, newListCount);
+            var idsCount = ResourcesIdsHolder.GetAll<TResource>().Count();
+            var listCount = ResourceLookup.Get().Count();
+            Assert.AreEqual(idsCount, listCount);
         }
 
         [TestMethod]
