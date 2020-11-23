@@ -26,10 +26,11 @@ namespace Core.Server.Tests.ResourceTests
         public override void TestInit()
         {
             var testsUnityContainer = new TestsUnityContainer();
-            testsUnityContainer.UnityContainer.BuildUp(this);
-            CreatedResource = ResourceCreate.Create().Value;
+            testsUnityContainer.UnityContainer.BuildUp(GetThis().GetType(),GetThis());
         }
 
+        protected virtual object GetThis() => this;
+        
         [TestCleanup]
         public override void Cleanup()
         {

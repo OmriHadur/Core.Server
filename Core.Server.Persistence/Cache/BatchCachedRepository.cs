@@ -31,5 +31,10 @@ namespace Core.Server.Persistence.Cache
             await BatchRepository.DeleteMany(ids);
             Cache.Delete(ids);
         }
+
+        public Task<bool> Exists(string[] ids)
+        {
+            return BatchRepository.Exists(ids);
+        }
     }
 }

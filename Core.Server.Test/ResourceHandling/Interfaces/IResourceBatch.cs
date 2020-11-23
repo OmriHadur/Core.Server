@@ -10,6 +10,8 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
         where TResource : Resource
     {
         ActionResult<IEnumerable<TResource>> Create(int amount);
-        ActionResult<IEnumerable<TResource>> Create(TCreateResource[] createResources);
+        ActionResult<IEnumerable<TResource>> Create(IEnumerable<TCreateResource> createResources);
+        ActionResult<IEnumerable<TResource>> Update(IEnumerable<TUpdateResource> updateResources);
+        ActionResult<IEnumerable<string>> Delete(IEnumerable<string> ids);
     }
 }

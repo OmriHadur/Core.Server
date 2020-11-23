@@ -24,5 +24,11 @@ namespace Core.Server.Persistence.Repositories
         {
             await Collection.DeleteManyAsync(e => ids.Contains(e.Id));
         }
+
+        public async Task<bool> Exists(string[] ids)
+        {
+            var answer = Collection.AsQueryable().Count(e => ids.Contains(e.Id));
+            return answer == ids.Length;
+        }
     }
 }

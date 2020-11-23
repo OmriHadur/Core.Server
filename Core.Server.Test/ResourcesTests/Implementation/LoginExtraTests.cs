@@ -27,6 +27,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public void TestLoginAfterUserDelete()
         {
+            CreateResource();
             var email = CreatedResource.User.Email;
             var userResourceCreate = UnityContainer.Resolve<IResourceCreate<UserResource>>();
             userResourceCreate.DeleteAll();

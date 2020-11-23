@@ -76,6 +76,9 @@ namespace Core.Server.Application
 
         public async Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids)
         {
+            var exists = await BatchRepository.Exists(ids);
+            if (!exists)
+                return NotFound();
             await BatchRepository.DeleteMany(ids);
             return Ok(ids);
         }

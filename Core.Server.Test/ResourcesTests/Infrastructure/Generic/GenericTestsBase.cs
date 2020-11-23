@@ -17,7 +17,7 @@ namespace Core.Server.Tests.ResourceTests
         public IResourcesClean ResourcesClean;
 
         [Dependency]
-        public IResourceLookup<TResource> ResourceQuery;
+        public IResourceLookup<TResource> ResourceLookup;
 
         [Dependency]
         public IResourceCreate<TResource> ResourceCreate;

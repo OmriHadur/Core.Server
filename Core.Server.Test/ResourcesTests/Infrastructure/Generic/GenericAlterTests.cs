@@ -29,7 +29,7 @@ namespace Core.Server.Tests.ResourceTests
         public void TestReplaceCreated()
         {
             var replaceResponse = resourceAlter.Replace();
-            var getResponse = ResourceQuery.Get(replaceResponse.Value.Id);
+            var getResponse = ResourceLookup.Get(replaceResponse.Value.Id);
             AssertOk(getResponse);
             Validate(replaceResponse.Value, getResponse.Value);
         }
@@ -46,7 +46,7 @@ namespace Core.Server.Tests.ResourceTests
         public void TestGetAfterUpdate()
         {
             var updateResponse = resourceAlter.Update();
-            var getResponse = ResourceQuery.Get(updateResponse.Value.Id);
+            var getResponse = ResourceLookup.Get(updateResponse.Value.Id);
             Validate(updateResponse, getResponse);
         }
     }

@@ -25,5 +25,10 @@ namespace Core.Server.Persistence.Logging
         {
             return LogginCall(() => Repository.DeleteMany(ids), ids);
         }
+
+        public Task<bool> Exists(string[] ids)
+        {
+            return LogginCall(() => Repository.Exists(ids), ids);
+        }
     }
 }

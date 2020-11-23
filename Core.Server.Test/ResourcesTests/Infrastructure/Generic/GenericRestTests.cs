@@ -27,7 +27,7 @@ namespace Core.Server.Tests.ResourceTests
         public virtual void TestGet()
         {
             var id = ResourcesIdsHolder.GetLast<TResource>();
-            var result = ResourceQuery.Get(id);
+            var result = ResourceLookup.Get(id);
             AssertNoError(result);
             Validate(CreatedResource, result.Value);
         }
@@ -35,7 +35,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public virtual void TestGetNotFound()
         {
-            var response = ResourceQuery.Get("5fb00552d72114101e33fa47");
+            var response = ResourceLookup.Get("5fb00552d72114101e33fa47");
             AssertNotFound(response);
         }
 
@@ -50,7 +50,7 @@ namespace Core.Server.Tests.ResourceTests
         public virtual void TestGetNotFoundAfterDelete()
         {
             ResourceCreate.Delete(CreatedResource.Id);
-            var response = ResourceQuery.Get(CreatedResource.Id);
+            var response = ResourceLookup.Get(CreatedResource.Id);
             AssertNotFound(response);
         }
 

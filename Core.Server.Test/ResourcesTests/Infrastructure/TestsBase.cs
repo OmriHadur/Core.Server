@@ -15,29 +15,6 @@ namespace Core.Server.Tests.ResourceTests
                 ValidateProperty(expected, actual, property);
         }
 
-        private void ValidateProperty(object expected, object actual, System.Reflection.PropertyInfo property)
-        {
-            var expectedValue = property.GetValue(expected);
-            var actualProperty = actual.GetType().GetProperties().FirstOrDefault(p => p.Name == property.Name);
-            var propertyType = actualProperty?.PropertyType;
-            if (actualProperty != null && !propertyType.IsGenericType && propertyType != typeof(DateTime))
-            {
-                var actualValue = actualProperty.GetValue(actual);
-                ValidateValue(expectedValue, actualProperty, propertyType, actualValue);
-            }
-        }
-
-        private void ValidateValue(object expectedValue, System.Reflection.PropertyInfo actualProperty, Type propertyType, object actualValue)
-        {
-            if (actualValue == null) return;
-            if (propertyType.IsPrimitive || propertyType == typeof(string))
-                Assert.AreEqual(expectedValue, actualValue, "With Property " + actualProperty.Name);
-            else if (actualValue.GetType() == typeof(string[]))
-                Assert.IsTrue(((string[])expectedValue).SequenceEqual((string[])actualValue));
-            else
-                Validate(expectedValue, actualValue);
-        }
-
         protected void AssertUnauthorized<T>(ActionResult<T> response)
         {
             Assert.IsInstanceOfType(response.Result, typeof(UnauthorizedResult));
@@ -85,6 +62,34 @@ namespace Core.Server.Tests.ResourceTests
             var result = response as BadRequestResult;
             Assert.IsNotNull(result);
             Assert.AreEqual(Convert.ToInt32(badRequestReason), result.Reason);
+        }
+
+        protected string GetRandomId()
+        {
+            return Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 24);
+        }
+
+        private void ValidateProperty(object expected, object actual, System.Reflection.PropertyInfo property)
+        {
+            var expectedValue = property.GetValue(expected);
+            var actualProperty = actual.GetType().GetProperties().FirstOrDefault(p => p.Name == property.Name);
+            var propertyType = actualProperty?.PropertyType;
+            if (actualProperty != null && !propertyType.IsGenericType && propertyType != typeof(DateTime))
+            {
+                var actualValue = actualProperty.GetValue(actual);
+                ValidateValue(expectedValue, actualProperty, propertyType, actualValue);
+            }
+        }
+
+        private void ValidateValue(object expectedValue, System.Reflection.PropertyInfo actualProperty, Type propertyType, object actualValue)
+        {
+            if (actualValue == null) return;
+            if (propertyType.IsPrimitive || propertyType == typeof(string))
+                Assert.AreEqual(expectedValue, actualValue, "With Property " + actualProperty.Name);
+            else if (actualValue.GetType() == typeof(string[]))
+                Assert.IsTrue(((string[])expectedValue).SequenceEqual((string[])actualValue));
+            else
+                Validate(expectedValue, actualValue);
         }
     }
 }

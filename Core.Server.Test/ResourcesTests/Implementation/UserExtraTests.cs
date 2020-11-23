@@ -11,6 +11,7 @@ namespace Core.Server.Tests.ResourceTests
         [TestMethod]
         public void TestReCreate()
         {
+            CreateResource();
             var email =  CreatedResource.Email;
             var response = ResourceAlter.Create(r => r.Email = email);
             AssertBadRequestReason(response, BadRequestReason.SameExists);

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     [Inject]
-    public class ResourceQuery<TResource>
+    public class ResourceLookup<TResource>
         : ResourceHandling<ILookupClient<TResource>, TResource>
         , IResourceLookup<TResource>
         where TResource : Resource
