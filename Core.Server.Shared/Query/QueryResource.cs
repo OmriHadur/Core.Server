@@ -9,7 +9,7 @@ namespace Core.Server.Shared.Query
 
         public string OrderBy { get; set; }
 
-        public string OrderByDecending { get; set; }
+        public string OrderByDescending { get; set; }
 
         [Range(0,1000)]
         public int Page { get; set; }

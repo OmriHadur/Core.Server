@@ -30,7 +30,7 @@ namespace Core.Server.Application.Mappers
 
         private string GetOrderBy(QueryResource queryResource)
         {
-            var orderByPropery = string.IsNullOrEmpty(queryResource.OrderBy) ? queryResource.OrderByDecending : queryResource.OrderBy;
+            var orderByPropery = string.IsNullOrEmpty(queryResource.OrderBy) ? queryResource.OrderByDescending : queryResource.OrderBy;
             return orderByPropery != null ? ToStartUpper(orderByPropery) : null;
         }
 
