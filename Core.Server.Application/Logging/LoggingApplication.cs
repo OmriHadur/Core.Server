@@ -15,11 +15,7 @@ namespace Core.Server.Application.Logging
         [Dependency]
         public TApplication Application;
 
-        public UserResource CurrentUser
-        {
-            get => Application.CurrentUser;
-            set { Application.CurrentUser = value; }
-        }
+        public UserResource CurrentUser => Application.CurrentUser;
 
         public Task<T> LogginCall<T>(Func<Task<T>> action, object request)
         {

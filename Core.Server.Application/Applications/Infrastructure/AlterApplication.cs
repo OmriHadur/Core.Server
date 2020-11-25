@@ -33,16 +33,6 @@ namespace Core.Server.Application
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
-        public override UserResource CurrentUser
-        {
-            get => base.CurrentUser;
-            set
-            {
-                base.CurrentUser = value;
-                ResourceValidator.CurrentUser = value;
-            }
-        }
-
         public virtual async Task<ActionResult<TResource>> Create(TCreateResource resource)
         {
             var validation = await ResourceValidator.Validate(resource);

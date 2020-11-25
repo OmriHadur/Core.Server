@@ -12,5 +12,7 @@ namespace Core.Server.Common.Applications
         Task<ActionResult<IEnumerable<TResource>>> GetAllOwned();
 
         Task<ActionResult> Any();
+
+        Task<ActionResult> ReAssign(string resourceId,string userId);
     }
 }

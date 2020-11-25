@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Unity;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Common.Applications;
+using Unity.Lifetime;
+using System.Linq;
 
 namespace Core.Server.Web.Controllers
 {
@@ -36,8 +38,14 @@ namespace Core.Server.Web.Controllers
 
         protected void SetUser()
         {
+            foreach (var registration in UnityContainer.Registrations.Where(p => p.RegisteredType == typeof(UserResource)))
+            {
+                registration.LifetimeManager.RemoveValue();
+            }
+
             var user = JwtManager.GetUser(User);
-            application.CurrentUser = user;
+            UnityContainer.RegisterInstance(user);
         }
+
     }
 }

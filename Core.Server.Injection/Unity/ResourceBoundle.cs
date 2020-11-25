@@ -21,7 +21,7 @@ namespace Core.Server.Injection.Unity
 
         public Type GetSameBaseType(Type type)
         {
-            return GetTypes().FirstOrDefault(t => t.BaseType == type.BaseType);
+            return GetTypes().FirstOrDefault(t => t.BaseType == type.BaseType || t.BaseType.BaseType == type.BaseType);
         }
     }
 }

@@ -75,6 +75,11 @@ namespace Core.Server.Client.Clients
             return SendMethod<TResource>(urlSubfix,HttpMethod.Post, content);
         }
 
+        protected Task<ActionResult> SentPostNoResource(string urlSubfix, object content)
+        {
+            return SendMethod(urlSubfix, HttpMethod.Post, content);
+        }
+
         protected Task<ActionResult<TResource>> SentPut(object content)
         {
             return SendMethod<TResource>(HttpMethod.Put, content);

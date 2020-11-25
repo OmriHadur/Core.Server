@@ -22,6 +22,9 @@ namespace Core.Server.Application
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
+        [Dependency]
+        public IAlterRepository<TEntity> AlterRepository;
+
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAllOwned()
         {
             var entities = await LookupRepository.FindAll(e => e.UserId == CurrentUser.Id);
@@ -34,6 +37,16 @@ namespace Core.Server.Application
             return await LookupRepository.Exists(e => e.UserId == CurrentUser.Id) ?
                 Ok() :
                 NotFound();
+        }
+
+        public async Task<ActionResult> ReAssign(string resourceId, string userId)
+        {
+            var entity = await LookupRepository.FindFirst(e => e.Id == resourceId && e.UserId == CurrentUser.Id);
+            if (entity == null)
+                return NotFound(resourceId);
+            entity.UserId = userId;
+            await AlterRepository.Update(entity);
+            return Ok();
         }
     }
 }

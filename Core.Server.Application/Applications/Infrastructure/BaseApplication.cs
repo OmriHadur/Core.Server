@@ -15,7 +15,10 @@ namespace Core.Server.Application
         : IBaseApplication
         where TEntity: Entity
     {
-        public virtual UserResource CurrentUser { get; set; }
+        public UserResource CurrentUser => UnityContainer.Resolve<UserResource>();
+
+        [Dependency]
+        public IUnityContainer UnityContainer;
 
         [Dependency]
         public ILogger<BaseApplication<TEntity>> Logger;

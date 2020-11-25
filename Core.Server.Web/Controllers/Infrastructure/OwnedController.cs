@@ -23,5 +23,11 @@ namespace Core.Server.Web.Controllers
         {
             return await Application.Any();
         }
+
+        [HttpPost("{resourceId}/reassign")]
+        public virtual async Task<ActionResult> ReAssign(string resourceId, string userId)
+        {
+            return await Application.ReAssign(resourceId, userId);
+        }
     }
 }

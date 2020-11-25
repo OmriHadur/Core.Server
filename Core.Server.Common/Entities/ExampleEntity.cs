@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Common.Entities
 {
-    public class ExampleEntity : Entity
+    public class ExampleEntity : OwnedEntity
     {
         [Required]
         [Range(0, 1000)]
