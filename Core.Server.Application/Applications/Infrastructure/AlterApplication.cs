@@ -1,14 +1,13 @@
 ﻿using Core.Server.Common.Applications;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
+using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
+using Core.Server.Common.Validators;
+using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Shared.Resources;
-using Core.Server.Common.Validators;
-using Core.Server.Common.Mappers;
-using Core.Server.Common.Attributes;
-using Core.Server.Shared.Resources.Users;
 
 namespace Core.Server.Application
 {
@@ -39,6 +38,8 @@ namespace Core.Server.Application
             if (!(validation is OkResult))
                 return validation;
             var entity = await AlterResourceMapper.Map(resource);
+            if (entity is OwnedEntity)
+                (entity as OwnedEntity).UserId = CurrentUser.Id;
             await AlterRepository.Add(entity);
             return await ResourceMapper.Map(entity);
         }

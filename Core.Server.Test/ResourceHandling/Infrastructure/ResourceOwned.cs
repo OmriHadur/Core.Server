@@ -22,5 +22,15 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         {
             return Filter(Client.GetAll().Result);
         }
+
+        public ActionResult Reassigen(string resourceId, string userEmail)
+        {
+            var reassginResource = new ReassginResource()
+            {
+                ResourceId = resourceId,
+                UserEmail = userEmail
+            };
+            return Client.Reassign(reassginResource).Result;
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace Core.Server.Client.Clients
             return SendMethod<T>(string.Empty, httpMethod, null);
         }
 
-        protected Task<ActionResult<T>> SendMethod<T>(string urlSubfix, HttpMethod httpMethod)
+        protected Task<ActionResult<T>> SendMethod<T>(HttpMethod httpMethod, string urlSubfix)
         {
             return SendMethod<T>(urlSubfix, httpMethod, null);
         }
@@ -71,13 +71,24 @@ namespace Core.Server.Client.Clients
             return SendMethod<T>(string.Empty, httpMethod, content);
         }
 
+        protected async Task<ActionResult> SendMethod(string urlSubfix, HttpMethod httpMethod, object content)
+        {
+            var response = await SendHttp(urlSubfix, httpMethod, content);
+            return await GetResult(response);
+        }
+
         protected async Task<ActionResult<T>> SendMethod<T>(string urlSubfix, HttpMethod httpMethod, object content)
+        {
+            var response = await SendHttp(urlSubfix, httpMethod, content);
+            return await GetResult<T>(response);
+        }
+
+        private async Task<HttpResponseMessage> SendHttp(string urlSubfix, HttpMethod httpMethod, object content)
         {
             var request = new HttpRequestMessage(httpMethod, ApiUrl + urlSubfix);
             if (content != null)
                 request.Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-            var response = await Client.SendAsync(request);
-            return await GetResult<T>(response);
+            return await Client.SendAsync(request);
         }
 
         protected Task<ActionResult> SendMethod(HttpMethod httpMethod)
@@ -88,15 +99,6 @@ namespace Core.Server.Client.Clients
         protected Task<ActionResult> SendMethod(string urlSubfix, HttpMethod httpMethod)
         {
             return SendMethod(urlSubfix, httpMethod, null);
-        }
-
-        protected async Task<ActionResult> SendMethod(string urlSubfix, HttpMethod httpMethod, object content)
-        {
-            var request = new HttpRequestMessage(httpMethod, ApiUrl + urlSubfix);
-            if (content != null)
-                request.Content = new StringContent(JsonConvert.SerializeObject(content));
-            var response = await Client.SendAsync(request);
-            return await GetResult(response);
         }
 
         private async Task<ActionResult> GetOkResult(HttpResponseMessage response)

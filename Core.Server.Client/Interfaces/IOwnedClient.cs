@@ -13,6 +13,6 @@ namespace Core.Server.Client.Interfaces
 
         Task<ActionResult> Any();
 
-        Task<ActionResult> ReAssign(string resourceId, string userId);
+        Task<ActionResult> Reassign(ReassginResource reassginResource);
     }
 }

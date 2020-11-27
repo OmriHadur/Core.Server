@@ -10,5 +10,7 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
         ActionResult<IEnumerable<TResource>> GetAll();
 
         ActionResult Any();
+
+        ActionResult Reassigen(string resourceId, string userEmail);
     }
 }

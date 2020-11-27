@@ -19,7 +19,7 @@ namespace Core.Server.Persistence.Repositories
     {
         public async Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> predicate)
         {
-            return (await Collection.FindAsync(predicate)).ToEnumerable();
+            return (await Collection.FindAsync(predicate)).ToList();
         }
 
         public async Task<TEntity> FindFirst(Expression<Func<TEntity, bool>> predicate)

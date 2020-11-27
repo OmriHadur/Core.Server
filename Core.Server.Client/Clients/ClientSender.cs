@@ -37,7 +37,7 @@ namespace Core.Server.Client.Clients
 
         protected Task<ActionResult<TResource>> SendGet(string urlSubfix)
         {
-            return SendMethod<TResource>(urlSubfix,HttpMethod.Get);
+            return SendMethod<TResource>(HttpMethod.Get, urlSubfix);
         }
 
         protected Task<ActionResult<TResource>> SendDelete()

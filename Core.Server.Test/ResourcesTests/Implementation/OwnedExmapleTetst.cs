@@ -1,10 +1,7 @@
-﻿using Core.Server.Client.Results;
-using Core.Server.Shared.Query;
-using Core.Server.Shared.Resources;
+﻿using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using Core.Server.Tests.ResourceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Linq;
 using Unity;
 
@@ -20,9 +17,39 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         protected override object GetThis() => this;
 
         [TestMethod]
-        public void TestQueryEquals()
+        public void TestOwnedGetAll()
         {
-            //ResourceOwned.
+            CreateResource();
+            CurrentUser.Relogin();
+            CreateResource();
+            var response = ResourceOwned.GetAll();
+            Assert.AreEqual(1, response.Value.Count());
+            Validate(CreatedResource, response.Value.FirstOrDefault());
+        }
+
+        [TestMethod]
+        public void TestOwnedAny()
+        {
+            CreateResource();
+            CurrentUser.Relogin();
+            var response = ResourceOwned.Any();
+            AssertNotFound(response);
+        }
+
+        [TestMethod]
+        public void TestOwnedReassign()
+        {            
+            CreateResource();
+            var lastUserEmail = CurrentUser.Email;
+            CurrentUser.Relogin();
+            CreateResource();
+            
+            var reassigenResponse =  ResourceOwned.Reassigen(CreatedResource.Id, lastUserEmail);
+            AssertOk(reassigenResponse);
+            CurrentUser.LoginAs(lastUserEmail);
+            var getAllResponse = ResourceOwned.GetAll();
+
+            Assert.AreEqual(2, getAllResponse.Value.Count());
         }
     }
 }

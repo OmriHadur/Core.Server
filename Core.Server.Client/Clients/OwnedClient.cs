@@ -20,12 +20,12 @@ namespace Core.Server.Client.Clients
 
         public Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
-            return SentPostMany("owned");
+            return SendGetMany("owned");
         }
 
-        public Task<ActionResult> ReAssign(string resourceId, string userId)
+        public Task<ActionResult> Reassign(ReassginResource reassginResource)
         {
-            return SentPostNoResource(resourceId + "/reassign", userId);
+            return SentPostNoResource("reassign", reassginResource);
         }
     }
 }

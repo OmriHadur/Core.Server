@@ -38,6 +38,5 @@ namespace Core.Server.Web.Controllers
         {
             CurrentUserGetter.CurrentUser = JwtManager.GetUser(User);
         }
-
     }
 }

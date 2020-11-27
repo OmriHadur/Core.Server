@@ -1,14 +1,14 @@
 ﻿using Core.Server.Common.Applications;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
+using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
+using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Shared.Resources;
-using Core.Server.Common.Mappers;
-using Core.Server.Common.Attributes;
-using System.Linq;
 
 namespace Core.Server.Application
 {
@@ -25,6 +25,9 @@ namespace Core.Server.Application
         [Dependency]
         public IAlterRepository<TEntity> AlterRepository;
 
+        [Dependency]
+        public ILookupRepository<UserEntity> UserRepository;
+
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAllOwned()
         {
             var entities = await LookupRepository.FindAll(e => e.UserId == CurrentUser.Id);
@@ -39,12 +42,18 @@ namespace Core.Server.Application
                 NotFound();
         }
 
-        public async Task<ActionResult> ReAssign(string resourceId, string userId)
+        public async Task<ActionResult> Reassign(ReassginResource reassginResource)
         {
-            var entity = await LookupRepository.FindFirst(e => e.Id == resourceId && e.UserId == CurrentUser.Id);
+            var entity = await LookupRepository.FindFirst(e => e.Id == reassginResource.ResourceId);
             if (entity == null)
-                return NotFound(resourceId);
-            entity.UserId = userId;
+                return NotFound(reassginResource.ResourceId);
+            if (entity.UserId != null && entity.UserId != CurrentUser.Id)
+                return Unauthorized();
+            var userEntity = await UserRepository.FindFirst(u => u.Email == reassginResource.UserEmail);
+            if (userEntity == null)
+                return NotFound(reassginResource.UserEmail);
+
+            entity.UserId = userEntity.Id;
             await AlterRepository.Update(entity);
             return Ok();
         }

@@ -27,7 +27,7 @@ namespace Core.Server.Test.ResourceCreation
             base.AddRandomValues(createResource, existingResource);
             createResource.Password = Config.UserPassword + Config.UserPassword;
             createResource.Email = existingResource.Email;
-            CurrentUser.Relogin();
+            CurrentUser.Logout();
         }
     }
 }

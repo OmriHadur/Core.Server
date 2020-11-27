@@ -24,10 +24,10 @@ namespace Core.Server.Web.Controllers
             return await Application.Any();
         }
 
-        [HttpPost("{resourceId}/reassign")]
-        public virtual async Task<ActionResult> ReAssign(string resourceId, string userId)
+        [HttpPost("reassign")]
+        public virtual async Task<ActionResult> Reassign(ReassginResource reassginResource)
         {
-            return await Application.ReAssign(resourceId, userId);
+            return await Application.Reassign(reassginResource);
         }
     }
 }

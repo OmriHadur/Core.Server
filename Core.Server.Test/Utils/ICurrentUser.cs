@@ -7,6 +7,7 @@ namespace Core.Server.Tests.Utils
         string Token { get; }
         string Email { get; }
         void Login();
+        void LoginAs(string email);
         void Relogin();
         void Logout();
     }
