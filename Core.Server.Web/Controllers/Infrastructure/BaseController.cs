@@ -1,10 +1,8 @@
 ﻿using Core.Server.Common.Entities.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Unity;
-using Core.Server.Shared.Resources.Users;
 using Core.Server.Common.Applications;
-using Unity.Lifetime;
-using System.Linq;
+using Core.Server.Common.Helpers;
 
 namespace Core.Server.Web.Controllers
 {
@@ -17,10 +15,10 @@ namespace Core.Server.Web.Controllers
         private TApplication application;
 
         [Dependency]
-        public IJwtManager JwtManager { get; set; }
+        public IJwtManager JwtManager;
 
         [Dependency]
-        public IUnityContainer UnityContainer { get; set; }
+        public ICurrentUserGetter CurrentUserGetter;
 
         [Dependency]
         public TApplication Application
@@ -38,13 +36,7 @@ namespace Core.Server.Web.Controllers
 
         protected void SetUser()
         {
-            foreach (var registration in UnityContainer.Registrations.Where(p => p.RegisteredType == typeof(UserResource)))
-            {
-                registration.LifetimeManager.RemoveValue();
-            }
-
-            var user = JwtManager.GetUser(User);
-            UnityContainer.RegisterInstance(user);
+            CurrentUserGetter.CurrentUser = JwtManager.GetUser(User);
         }
 
     }

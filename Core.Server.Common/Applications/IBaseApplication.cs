@@ -1,10 +1,9 @@
-﻿using Core.Server.Shared.Resources.Users;
-using System;
+﻿using Core.Server.Common.Helpers;
 
 namespace Core.Server.Common.Applications
 {
     public interface IBaseApplication
     {
-        UserResource CurrentUser { get; }
+        ICurrentUserGetter CurrentUserGetter { get; }
     }
 }

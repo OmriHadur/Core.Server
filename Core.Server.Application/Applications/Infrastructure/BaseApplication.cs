@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Core.Server.Common.Applications;
 using Core.Server.Common.Repositories;
 using Core.Server.Common.Entities;
+using Core.Server.Common.Helpers;
 
 namespace Core.Server.Application
 {
@@ -15,10 +16,10 @@ namespace Core.Server.Application
         : IBaseApplication
         where TEntity: Entity
     {
-        public UserResource CurrentUser => UnityContainer.Resolve<UserResource>();
+        public UserResource CurrentUser => CurrentUserGetter.CurrentUser;
 
         [Dependency]
-        public IUnityContainer UnityContainer;
+        public ICurrentUserGetter CurrentUserGetter { get; set; }
 
         [Dependency]
         public ILogger<BaseApplication<TEntity>> Logger;

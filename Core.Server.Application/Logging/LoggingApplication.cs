@@ -1,4 +1,5 @@
 ﻿using Core.Server.Common.Applications;
+using Core.Server.Common.Helpers;
 using Core.Server.Common.Logging;
 using Core.Server.Shared.Resources.Users;
 using System;
@@ -15,7 +16,7 @@ namespace Core.Server.Application.Logging
         [Dependency]
         public TApplication Application;
 
-        public UserResource CurrentUser => Application.CurrentUser;
+        public ICurrentUserGetter CurrentUserGetter { get; set; }
 
         public Task<T> LogginCall<T>(Func<Task<T>> action, object request)
         {
