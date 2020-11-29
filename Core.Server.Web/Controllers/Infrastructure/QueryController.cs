@@ -18,5 +18,11 @@ namespace Core.Server.Web.Controllers
         {
             return await Application.Query(queryResource);
         }
+
+        [HttpPost("querychild")]
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> QueryChild(QueryResource queryResource)
+        {
+            return await Application.Query(queryResource);
+        }
     }
 }

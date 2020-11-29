@@ -1,9 +1,9 @@
 ﻿using Core.Server.Application;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Core.Server.Common.Attributes;
 using Unity;
 
 namespace Core.Server.Common.Validators
