@@ -9,7 +9,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
     public class OwnedExmapleTetst
-         : GenericExtraTestBase<ExampleCreateResource, ExampleUpdateResource, ExampleResource>
+         : GenericExtraTestBase<ExampleChildCreateResource, ExampleUpdateResource, ExampleResource>
     {
         [Dependency]
         public IResourceOwned<ExampleResource> ResourceOwned;
@@ -50,6 +50,16 @@ namespace Core.Server.Test.ResourcesTests.Implementation
             var getAllResponse = ResourceOwned.GetAll();
 
             Assert.AreEqual(2, getAllResponse.Value.Count());
+        }
+
+        [TestMethod]
+        public void TestOwnedUnauthorizedReassign()
+        {
+            CreateResource();
+            CurrentUser.Relogin();
+
+            var reassigenResponse = ResourceOwned.Reassigen(CreatedResource.Id, CurrentUser.Email);
+            AssertUnauthorized(reassigenResponse);
         }
     }
 }

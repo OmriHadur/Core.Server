@@ -23,6 +23,10 @@ namespace Core.Server.Tests.ResourceTests
                 ValidateProperty(expected, actual, property);
         }
 
+        protected void AssertUnauthorized(ActionResult response)
+        {
+            Assert.IsTrue(response is UnauthorizedResult);
+        }
         protected void AssertUnauthorized<T>(ActionResult<T> response)
         {
             Assert.IsInstanceOfType(response.Result, typeof(UnauthorizedResult));

@@ -9,10 +9,10 @@ namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
     public class BatchExmapleTetst
-         : GenericExtraTestBase<ExampleCreateResource, ExampleUpdateResource, ExampleResource>
+         : GenericExtraTestBase<ExampleChildCreateResource, ExampleUpdateResource, ExampleResource>
     {
         [Dependency]
-        public IResourceBatch<ExampleCreateResource, ExampleUpdateResource, ExampleResource> ResourceBatch;
+        public IResourceBatch<ExampleChildCreateResource, ExampleUpdateResource, ExampleResource> ResourceBatch;
 
         protected override object GetThis() => this;
 
