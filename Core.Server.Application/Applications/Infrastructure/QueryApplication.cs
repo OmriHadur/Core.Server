@@ -4,6 +4,7 @@ using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
 using Core.Server.Common.Query;
 using Core.Server.Common.Query.Infrastructure;
+using Core.Server.Common.Repositories;
 using Core.Server.Shared.Errors;
 using Core.Server.Shared.Query;
 using Core.Server.Shared.Resources;
@@ -33,6 +34,9 @@ namespace Core.Server.Application
 
         [Dependency]
         public IQueryResourceMapper QueryResourceMapper;
+
+        [Dependency]
+        public IQueryRepository<TEntity> QueryRepository;
 
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
         {

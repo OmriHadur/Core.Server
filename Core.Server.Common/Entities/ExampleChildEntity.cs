@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Server.Shared.Resources
+namespace Core.Server.Common.Entities
 {
-    public class ExampleChildCreateResource : ChildCreateResource
+    public class ExampleChildEntity
     {
         [Required]
+        [MinLength(3)]
         public string Name { get; set; }
-
     }
 }

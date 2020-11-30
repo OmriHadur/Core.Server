@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Server.Common.Applications;
+using Core.Server.Common.Entities;
 using Core.Server.Common.Errors;
+using Core.Server.Common.Helpers;
+using Core.Server.Common.Repositories;
 using Core.Server.Shared.Errors;
+using Core.Server.Shared.Resources.Users;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using Unity;
-using Core.Server.Shared.Resources.Users;
-using Microsoft.Extensions.Logging;
-using Core.Server.Common.Applications;
-using Core.Server.Common.Repositories;
-using Core.Server.Common.Entities;
-using Core.Server.Common.Helpers;
 
 namespace Core.Server.Application
 {
@@ -23,9 +23,6 @@ namespace Core.Server.Application
 
         [Dependency]
         public ILogger<BaseApplication<TEntity>> Logger;
-
-        [Dependency]
-        public IQueryRepository<TEntity> QueryRepository;
 
         [Dependency]
         public ILookupRepository<TEntity> LookupRepository;

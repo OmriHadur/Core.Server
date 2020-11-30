@@ -2,10 +2,9 @@
 
 namespace Core.Server.Shared.Resources
 {
-    public class ExampleChildCreateResource : ChildCreateResource
+    public class ChildCreateResource : CreateResource
     {
         [Required]
-        public string Name { get; set; }
-
+        public string ParentId { get; set; }
     }
 }

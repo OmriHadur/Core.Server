@@ -15,5 +15,7 @@ namespace Core.Server.Common.Entities
 
         [Required]
         public string Mutable { get; set; }
+
+        public ExampleChildEntity[] ChildEntities { get; set; }
     }
 }
