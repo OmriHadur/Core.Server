@@ -1,4 +1,5 @@
 ﻿using Core.Server.Common.Entities;
+using System.Collections.Generic;
 
 namespace Core.Server.Common.Mappers
 {
@@ -7,6 +8,8 @@ namespace Core.Server.Common.Mappers
         where TChildEntity : Entity
     {
         void Add(TParentEntity parent, TChildEntity child);
+
+        void Add(TParentEntity parent, IEnumerable<TChildEntity> children);
 
         void Replace(TParentEntity parent, TChildEntity child, string childId);
 

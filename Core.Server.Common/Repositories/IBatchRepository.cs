@@ -10,6 +10,8 @@ namespace Core.Server.Common.Repositories
     {
         Task AddMany(IEnumerable<TEntity> entities);
 
+        Task UpdateMany(IEnumerable<TEntity> entities);
+
         Task DeleteMany(string[] ids);
 
         Task<bool> Exists(string[] ids);

@@ -30,5 +30,10 @@ namespace Core.Server.Persistence.Logging
         {
             return LogginCall(() => Repository.Exists(ids), ids);
         }
+
+        public Task UpdateMany(IEnumerable<TEntity> entities)
+        {
+            return LogginCall(() => Repository.UpdateMany(entities), entities);
+        }
     }
 }

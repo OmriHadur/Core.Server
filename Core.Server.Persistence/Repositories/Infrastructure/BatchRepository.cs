@@ -30,5 +30,10 @@ namespace Core.Server.Persistence.Repositories
             var answer = Collection.AsQueryable().Count(e => ids.Contains(e.Id));
             return answer == ids.Length;
         }
+
+        public async Task UpdateMany(IEnumerable<TEntity> entities)
+        {
+            //await Collection.UpdateManyAsync(entities);
+        }
     }
 }

@@ -15,6 +15,13 @@ namespace Core.Server.Application.Helpers
             GetChildren(parent).Add(child);
         }
 
+        public void Add(TParentEntity parent, IEnumerable<TChildEntity> children)
+        {
+            var parentChildren = GetChildren(parent);
+            foreach (var child in children)
+                parentChildren.Add(child);
+        }
+
         public bool Exists(TParentEntity parent, string childId)
         {
             return Get(parent, childId) != null;
