@@ -1,10 +1,10 @@
-﻿using Core.Server.Common.Entities;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
+using Core.Server.Shared.Errors;
+using Core.Server.Shared.Resources.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Core.Server.Common.Attributes;
-using Core.Server.Shared.Resources.Users;
-using Core.Server.Shared.Errors;
 using Unity;
 
 namespace Core.Server.Application

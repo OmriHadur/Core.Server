@@ -37,16 +37,16 @@ namespace Core.Server.Web.Controllers
             return await Application.Update(id, resource);
         }
 
-        [HttpDelete("{parentId}/{id}")]
-        public virtual async Task<ActionResult<TResource>> Delete(string parentId, string id)
+        [HttpDelete("{id}")]
+        public virtual async Task<ActionResult<TResource>> Delete(string id, ChildDeleteResource childResource)
         {
-            return await Application.Delete(parentId, id);
+            return await Application.Delete(childResource.ParentId, id);
         }
 
-        [HttpDelete("{parentId}")]
-        public virtual async Task<ActionResult<TResource>> DeleteAll(string parentId)
+        [HttpDelete()]
+        public virtual async Task<ActionResult<TResource>> DeleteAll(ChildDeleteResource childResource)
         {
-            return await Application.DeleteAll(parentId);
+            return await Application.DeleteAll(childResource.ParentId);
         }
     }
 }

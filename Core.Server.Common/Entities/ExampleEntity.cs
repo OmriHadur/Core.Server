@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Common.Entities
@@ -16,6 +17,11 @@ namespace Core.Server.Common.Entities
         [Required]
         public string Mutable { get; set; }
 
-        public ExampleChildEntity[] ChildEntities { get; set; }
+        public List<ExampleChildEntity> ChildEntities { get; set; }
+
+        public ExampleEntity()
+        {
+            ChildEntities = new List<ExampleChildEntity>();
+        }
     }
 }

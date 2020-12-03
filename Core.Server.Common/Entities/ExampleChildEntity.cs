@@ -2,7 +2,7 @@
 
 namespace Core.Server.Common.Entities
 {
-    public class ExampleChildEntity
+    public class ExampleChildEntity : Entity
     {
         [Required]
         [MinLength(3)]
