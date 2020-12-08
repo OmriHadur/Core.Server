@@ -58,11 +58,8 @@ namespace Core.Server.Injection.Unity
             var genricTypesWithNameForBundle = GetInjectBoundleWithNameForBundle();
 
             foreach (var resourcesBoundle in resourcesBoundles)
-            {
-                resourcesBoundle.Remove(resourcesBoundle.First());
                 foreach (var genricTypeWithNameForBundle in genricTypesWithNameForBundle)
                     AddGenricTypeWithNameForBundle(genricTypeWithNameForBundle, resourcesBoundle);
-            }
         }
 
         private void AddGenricTypeWithNameForBundle(Type genricTypeForBundle, ResourceBoundle resourcesBoundle)

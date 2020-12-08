@@ -1,6 +1,7 @@
 ﻿
 namespace Core.Server.Shared.Resources
 {
+    //[ResourceBoudle(nameof(ExampleResource))]
     public class ExampleResource : Resource
     {
         public int Value { get; set; }

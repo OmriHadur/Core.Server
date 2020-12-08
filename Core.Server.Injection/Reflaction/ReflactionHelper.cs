@@ -140,10 +140,9 @@ namespace Core.Server.Injection.Reflaction
         private ResourceBoundle GetResourceBoundle(Type typePartOfboundel)
         {
             foreach (var resourceBoundle in GetAllResourcesBoundles())
-                foreach (var type in resourceBoundle)
-                    if (type.Name == typePartOfboundel.Name)
-                        return resourceBoundle;
-             return null;
+                if (resourceBoundle.Contains(typePartOfboundel))
+                    return resourceBoundle;
+            return null;
         }
 
         public IEnumerable<Type> GetDirectInterfaces(Type type)
@@ -172,7 +171,7 @@ namespace Core.Server.Injection.Reflaction
         private IEnumerable<Type> GetGenericArguments(Type genericType, ResourceBoundle resourceBoundle)
         {
             return genericType.GetGenericArguments()
-                .Select(ga => resourceBoundle.GetSameBaseType(ga));
+                .Select(ga => resourceBoundle.GetTypeOf(ga.Name));
         }
 
         public bool IsSameType(TypeInfo parent, Type child)

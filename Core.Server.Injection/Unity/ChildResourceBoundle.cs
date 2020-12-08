@@ -2,17 +2,28 @@
 using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Resources;
 using System;
+using System.Reflection;
 
 namespace Core.Server.Injection.Unity
 {
     public class ChildResourceBoundle : ResourceBoundle
     {
+        public Type TParentResource { get; private set; }
+        public Type TParentEntity { get; private set; }
+
+        public Type TChildEntity => TEntity;
+
         public ChildResourceBoundle(Type resourceType, IReflactionHelper reflactionHelper)
             :base(resourceType,reflactionHelper)
         {
             var parentName = GetFirstWord(ResourceName);
-            Insert(0,reflactionHelper.GetTypeWithPrefix<Entity>(parentName));
-            Insert(0,reflactionHelper.GetTypeWithPrefix<Resource>(parentName));
+            TParentEntity = reflactionHelper.GetTypeWithPrefix<Entity>(parentName);
+            TParentResource = reflactionHelper.GetTypeWithPrefix<Resource>(parentName);
+        }
+
+        protected override PropertyInfo[] GetProperties()
+        {
+            return GetType().GetProperties();
         }
 
         private string GetFirstWord(string str)
