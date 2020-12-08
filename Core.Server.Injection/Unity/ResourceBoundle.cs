@@ -1,27 +1,31 @@
-﻿using System;
+﻿using Core.Server.Common.Entities;
+using Core.Server.Injection.Interfaces;
+using Core.Server.Shared.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Core.Server.Injection.Unity
 {
-    public class ResourceBoundle
+    public class ResourceBoundle : List<Type>
     {
-        public Type CreateResourceType { get; set; }
-        public Type UpdateResourceType { get; set; }
-        public Type ResourceType { get; set; }
-        public Type EntityType { get; set; }
+        protected string ResourceName;
 
-        public IEnumerable<Type> GetTypes()
+        public ResourceBoundle(Type resourceType, IReflactionHelper reflactionHelper)
         {
-            yield return CreateResourceType;
-            yield return UpdateResourceType;
-            yield return ResourceType;
-            yield return EntityType;
+            ResourceName = reflactionHelper.GetTypeName(resourceType, typeof(Resource));
+
+            Add(resourceType);
+            Add(reflactionHelper.GetTypeWithPrefix<CreateResource>(ResourceName));
+            Add(reflactionHelper.GetTypeWithPrefix<UpdateResource>(ResourceName));
+            Add(reflactionHelper.GetTypeWithPrefix<Entity>(ResourceName));
         }
 
         public Type GetSameBaseType(Type type)
         {
-            return GetTypes().FirstOrDefault(t => t.BaseType == type.BaseType || t.BaseType.BaseType == type.BaseType);
+            return this.FirstOrDefault(
+                t => t.BaseType == type.BaseType ||
+                t.BaseType.BaseType == type.BaseType);
         }
     }
 }

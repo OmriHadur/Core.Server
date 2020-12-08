@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Web.Controllers
 {
-    [InjectBoundleController]
+    [InjectChildBoundleController]
     public class ChildBatchController<TCreateResource, TUpdateResource, TResource>
         : BaseController<IChildBatchApplication<TCreateResource, TUpdateResource, TResource>>
         where TCreateResource : ChildCreateResource

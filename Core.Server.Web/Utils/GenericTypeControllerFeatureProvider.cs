@@ -22,13 +22,24 @@ namespace Core.Server.Web.Utils
         public void PopulateFeature(IEnumerable<ApplicationPart> parts, ControllerFeature feature)
         {
             //AddInjectedContollers(feature);
-            AddboundleContollers(feature);
+            AddBoundleContollers(feature);
+            AddChildBoundleContollers(feature);
         }
 
-        private void AddboundleContollers(ControllerFeature feature)
+        private void AddBoundleContollers(ControllerFeature feature)
         {
             var controllerTypes = reflactionHelper.GetGenericTypesWithAttribute<InjectBoundleControllerAttribute>();
-            var resourcesBoundles = reflactionHelper.GetResourcesBoundles().ToList();
+            var resourcesBoundles = reflactionHelper.GetResourcesBoundles();
+
+            foreach (var resourcesBoundle in resourcesBoundles)
+                foreach (var controllerType in controllerTypes)
+                    AddContoller(feature, resourcesBoundle, controllerType);
+        }
+
+        private void AddChildBoundleContollers(ControllerFeature feature)
+        {
+            var controllerTypes = reflactionHelper.GetGenericTypesWithAttribute<InjectChildBoundleControllerAttribute>();
+            var resourcesBoundles = reflactionHelper.GetChildResourcesBoundles();
 
             foreach (var resourcesBoundle in resourcesBoundles)
                 foreach (var controllerType in controllerTypes)

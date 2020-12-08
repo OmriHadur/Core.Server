@@ -22,12 +22,24 @@ namespace Core.Server.Injection.Reflaction
                 types.AddRange(assembly.GetExportedTypes());
         }
 
+        public IEnumerable<ResourceBoundle> GetAllResourcesBoundles()
+        {
+            return GetResourcesBoundles().Union(GetChildResourcesBoundles());
+        }
         public IEnumerable<ResourceBoundle> GetResourcesBoundles()
         {
-            var resourceTypes = GetDrivenTypesOf<Resource>();
+            var resourceTypes = GetDirectDrivenTypesOf<Resource>();
 
             foreach (var resourceType in resourceTypes)
-                yield return GetResourceBoundles(resourceType);
+                yield return new ResourceBoundle(resourceType, this);
+        }
+
+        public IEnumerable<ResourceBoundle> GetChildResourcesBoundles()
+        {
+            var resourceTypes = GetDirectDrivenTypesOf<ChildResource>();
+
+            foreach (var resourceType in resourceTypes)
+                yield return new ChildResourceBoundle(resourceType, this);
         }
 
         public Type FillGenericType(Type genericType, ResourceBoundle resourceBoundle)
@@ -56,12 +68,22 @@ namespace Core.Server.Injection.Reflaction
             return types.FirstOrDefault(t => t.Name == typeName);
         }
 
+        public IEnumerable<Type> GetDirectDrivenTypesOf<T>()
+        {
+            return GetDirectDrivenTypesOf(typeof(T));
+        }
+
         public IEnumerable<Type> GetDrivenTypesOf<T>()
         {
             return GetDrivenTypesOf(typeof(T));
         }
 
         public IEnumerable<Type> GetDrivenTypesOf(Type type)
+        {
+            return types.Where(t => IsDrivenType(t, type));
+        }
+
+        public IEnumerable<Type> GetDirectDrivenTypesOf(Type type)
         {
             return types.Where(t => t.BaseType?.Name == type.Name);
         }
@@ -108,12 +130,20 @@ namespace Core.Server.Injection.Reflaction
         {
             if (interfaceToType.ContainsKey(interTypeWithGeneric))
                 return interfaceToType[interTypeWithGeneric];
-            var firstGen = interTypeWithGeneric.GetGenericArguments().First();
-            var prefix = GetPrefixName(firstGen);
-            var args = GetArguments(typeArgs, prefix).ToArray();
-            var typeGenericType = type.MakeGenericType(args);
+            var typePartOfboundel = interTypeWithGeneric.GetGenericArguments().First();
+            var resourceBoundle = GetResourceBoundle(typePartOfboundel);
+            var typeGenericType = FillGenericType(type, resourceBoundle);
             interfaceToType.Add(interTypeWithGeneric, typeGenericType);
             return typeGenericType;
+        }
+
+        private ResourceBoundle GetResourceBoundle(Type typePartOfboundel)
+        {
+            foreach (var resourceBoundle in GetAllResourcesBoundles())
+                foreach (var type in resourceBoundle)
+                    if (type.Name == typePartOfboundel.Name)
+                        return resourceBoundle;
+             return null;
         }
 
         public IEnumerable<Type> GetDirectInterfaces(Type type)
@@ -139,18 +169,6 @@ namespace Core.Server.Injection.Reflaction
             }
         }
 
-        private ResourceBoundle GetResourceBoundles(Type resourceType)
-        {
-            var resourceName = GetTypeName(resourceType, typeof(Resource));
-            return new ResourceBoundle()
-            {
-                ResourceType = resourceType,
-                CreateResourceType = GetTypeWithPrefix<CreateResource>(resourceName),
-                UpdateResourceType = GetTypeWithPrefix<UpdateResource>(resourceName),
-                EntityType = GetTypeWithPrefix<Entity>(resourceName)
-            };
-        }
-
         private IEnumerable<Type> GetGenericArguments(Type genericType, ResourceBoundle resourceBoundle)
         {
             return genericType.GetGenericArguments()
@@ -163,6 +181,18 @@ namespace Core.Server.Injection.Reflaction
             var firstGenericArgument = parent.BaseType.GetGenericArguments().FirstOrDefault();
             var firstControllerGenericArgument = child.GetGenericArguments().First();
             return firstGenericArgument == firstControllerGenericArgument;
+        }
+
+        public bool IsDrivenType(Type type, Type baseType)
+        {
+            do
+            {
+                type = type.BaseType;
+                if (type?.Name == baseType.Name)
+                    return true;
+
+            } while (type != null);
+            return false;
         }
     }
 }

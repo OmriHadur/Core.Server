@@ -22,7 +22,7 @@ namespace Core.Server.Application
         where TUpdateResource : ChildUpdateResource
         where TResource : Resource
         where TParentEntity : Entity
-        where TChildEntity : Entity
+        where TChildEntity : ChildEntity
     {
         [Dependency]
         public IBatchRepository<TParentEntity> BatchRepository;
@@ -60,6 +60,7 @@ namespace Core.Server.Application
 
         public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
         {
+            //TODO BatchUpdate
             throw new NotImplementedException();
         }
 
@@ -110,6 +111,7 @@ namespace Core.Server.Application
             }
             return parents;
         }
+
         private async Task<ActionResult> Validate(TCreateResource[] resources, Dictionary<string, TParentEntity> parents)
         {
             foreach (var resource in resources)

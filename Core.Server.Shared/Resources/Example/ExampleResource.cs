@@ -10,5 +10,10 @@ namespace Core.Server.Shared.Resources
         public string Mutable { get; set; }
 
         public ExampleChildResource[] ChildResources { get; set; }
+
+        public ExampleResource()
+        {
+            ChildResources = new ExampleChildResource[0];
+        }
     }
 }

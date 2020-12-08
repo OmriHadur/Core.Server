@@ -10,10 +10,11 @@ namespace Core.Server.Injection.Interfaces
         Type GetClassForInterface<TInterface>();
         Type FillGenericType(Type genericType, ResourceBoundle resourceBoundle);
         IEnumerable<Type> GetDrivenTypesOf(Type type);
-        IEnumerable<Type> GetDrivenTypesOf<T>();
         IEnumerable<Type> GetGenericTypesWithAttribute<TAttribute>() 
             where TAttribute : Attribute;
+        IEnumerable<ResourceBoundle> GetAllResourcesBoundles();
         IEnumerable<ResourceBoundle> GetResourcesBoundles();
+        IEnumerable<ResourceBoundle> GetChildResourcesBoundles();
         string GetTypeName(Type drivenType, Type subType);
         Type GetTypeByName(string typeName);
         IEnumerable<Type> GetTypesWithAttribute<TAttribute>() 
@@ -25,5 +26,6 @@ namespace Core.Server.Injection.Interfaces
         IEnumerable<Type> GetDirectInterfaces(Type type);
         bool IsSameType(TypeInfo parent, Type child);
         Type GetTypeGenericType(Type type, Type[] typeArgs, Type interTypeWithGeneric);
+        bool IsDrivenType(Type type, Type baseType);
     }
 }

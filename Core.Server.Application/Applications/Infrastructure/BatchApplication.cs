@@ -71,6 +71,7 @@ namespace Core.Server.Application
 
         public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
         {
+            //TODO BatchUpdate
             throw new NotImplementedException();
         }
 

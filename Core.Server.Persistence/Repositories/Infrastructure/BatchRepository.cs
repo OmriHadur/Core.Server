@@ -33,6 +33,7 @@ namespace Core.Server.Persistence.Repositories
 
         public async Task UpdateMany(IEnumerable<TEntity> entities)
         {
+            //TODO UpdateMany
             //await Collection.UpdateManyAsync(entities);
         }
     }

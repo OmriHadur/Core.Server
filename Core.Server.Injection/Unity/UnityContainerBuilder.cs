@@ -24,6 +24,7 @@ namespace Core.Server.Injection.Unity
         public void ConfigureContainer()
         {
             AddAllTypesForBundles();
+            AddAllChildTypesForBundles();
             AddInjectTypes();
             AddInjectNamedTypes();
             
@@ -49,6 +50,19 @@ namespace Core.Server.Injection.Unity
             foreach (var resourcesBoundle in resourcesBoundles)
                 foreach (var genricTypeWithNameForBundle in genricTypesWithNameForBundle)
                     AddGenricTypeWithNameForBundle(genricTypeWithNameForBundle, resourcesBoundle);
+        }
+
+        private void AddAllChildTypesForBundles()
+        {
+            var resourcesBoundles = reflactionHelper.GetChildResourcesBoundles();
+            var genricTypesWithNameForBundle = GetInjectBoundleWithNameForBundle();
+
+            foreach (var resourcesBoundle in resourcesBoundles)
+            {
+                resourcesBoundle.Remove(resourcesBoundle.First());
+                foreach (var genricTypeWithNameForBundle in genricTypesWithNameForBundle)
+                    AddGenricTypeWithNameForBundle(genricTypeWithNameForBundle, resourcesBoundle);
+            }
         }
 
         private void AddGenricTypeWithNameForBundle(Type genricTypeForBundle, ResourceBoundle resourcesBoundle)

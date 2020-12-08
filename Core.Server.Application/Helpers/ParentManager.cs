@@ -1,10 +1,12 @@
-﻿using Core.Server.Common.Entities;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Core.Server.Application.Helpers
 {
+    [Inject]
     public class ParentManager<TParentEntity, TChildEntity>
         : IParentManager<TParentEntity, TChildEntity>
         where TParentEntity : Entity
