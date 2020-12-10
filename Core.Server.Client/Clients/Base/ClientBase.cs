@@ -1,13 +1,13 @@
-﻿using Newtonsoft.Json;
-using Core.Server.Client.Interfaces;
+﻿using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
+using Core.Server.Shared.Resources;
+using Newtonsoft.Json;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using Core.Server.Shared.Resources;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Core.Server.Client.Clients
 {
@@ -51,9 +51,9 @@ namespace Core.Server.Client.Clients
             }
         }
 
-        private string GetApiRoute()
+        protected virtual string GetApiRoute()
         {
-            return typeof(TResource).Name.Replace("Resource", string.Empty);
+            return typeof(TResource).Name.Replace(nameof(Resource), string.Empty);
         }
 
         protected Task<ActionResult<T>> SendMethod<T>(HttpMethod httpMethod)

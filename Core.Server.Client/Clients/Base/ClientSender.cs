@@ -40,11 +40,6 @@ namespace Core.Server.Client.Clients
             return SendMethod<TResource>(HttpMethod.Get, urlSubfix);
         }
 
-        protected Task<ActionResult<TResource>> SendDelete()
-        {
-            return SendMethod<TResource>(HttpMethod.Delete);
-        }
-
         protected Task<ActionResult> SendDelete(string urlSubfix)
         {
             return SendMethod(urlSubfix, HttpMethod.Delete);

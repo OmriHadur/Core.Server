@@ -9,14 +9,9 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
         where TUpdateResource : UpdateResource
         where TResource : Resource
     {
-        ActionResult<TResource> Create();
-        ActionResult<TResource> Create(Action<TCreateResource> editFunc);
+        ActionResult<TResource> Create(Action<TCreateResource> editFunc = null);
         ActionResult<TResource> Create(TCreateResource createResource);
-
-        ActionResult<TResource> Replace();
-        ActionResult<TResource> Replace(Action<TCreateResource> editFunc);
-
-        ActionResult<TResource> Update();
-        ActionResult<TResource> Update(Action<TUpdateResource> editFunc);
+        ActionResult<TResource> Replace(Action<TCreateResource> editFunc = null);
+        ActionResult<TResource> Update(Action<TUpdateResource> editFunc = null);
     }
 }
