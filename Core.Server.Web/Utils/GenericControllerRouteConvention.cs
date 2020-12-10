@@ -40,7 +40,9 @@ namespace Core.Server.Web.Utils
 
         private static string GetNameRemoveCreateResource(Type createResourceType)
         {
-            return createResourceType.Name.Replace(nameof(CreateResource), string.Empty);
+            return createResourceType.Name
+                .Replace(nameof(CreateResource), string.Empty)
+                .Replace(nameof(Resource), string.Empty);
         }
 
         private static string GetFirstWord(string str)

@@ -27,5 +27,6 @@ namespace Core.Server.Injection.Interfaces
         bool IsSameType(TypeInfo parent, Type child);
         Type GetTypeGenericType(Type type, Type[] typeArgs, Type interTypeWithGeneric);
         bool IsDrivenType(Type type, Type baseType);
+        T GetValueOf<T>(object objWithArrayOfT);
     }
 }

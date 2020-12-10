@@ -13,7 +13,7 @@ namespace Core.Server.Client.Clients
           IChildAlterClient<TCreateResource, TUpdateResource, TParentResource>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TParentResource : Resource, IParentResource
+        where TParentResource : Resource
         where TChildResource : Resource
     {
         public Task<ActionResult<TParentResource>> Create(TCreateResource resource)

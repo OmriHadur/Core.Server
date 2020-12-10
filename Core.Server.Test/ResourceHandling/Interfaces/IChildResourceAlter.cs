@@ -8,7 +8,7 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
         : IResourceAlter<TCreateResource, TUpdateResource, TParentResource>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TParentResource : Resource, IParentResource
+        where TParentResource : Resource
     {
     }
 }

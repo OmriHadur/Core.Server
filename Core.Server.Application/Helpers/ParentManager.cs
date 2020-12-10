@@ -1,17 +1,22 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
+using Core.Server.Injection.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using Unity;
 
 namespace Core.Server.Application.Helpers
 {
     [Inject]
     public class ParentManager<TParentEntity, TChildEntity>
         : IParentManager<TParentEntity, TChildEntity>
-        where TParentEntity : Entity, IParentEntity
+        where TParentEntity : Entity
         where TChildEntity : Entity
     {
+        [Dependency]
+        public IReflactionHelper ReflactionHelper;
+
         public void Add(TParentEntity parent, TChildEntity child)
         {
             GetChildren(parent).Add(child);
@@ -57,7 +62,7 @@ namespace Core.Server.Application.Helpers
 
         private IList<TChildEntity> GetChildren(TParentEntity parent)
         {
-            return parent.GetChildEntitiess<TChildEntity>();
+            return ReflactionHelper.GetValueOf<List<TChildEntity>>(parent);
         }
     }
 }

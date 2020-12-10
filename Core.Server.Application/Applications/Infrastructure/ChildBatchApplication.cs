@@ -22,7 +22,7 @@ namespace Core.Server.Application
         where TUpdateResource : ChildUpdateResource
         where TResource : Resource
         where TParentEntity : Entity
-        where TChildEntity : ChildEntity
+        where TChildEntity : Entity
     {
         [Dependency]
         public IBatchRepository<TParentEntity> BatchRepository;

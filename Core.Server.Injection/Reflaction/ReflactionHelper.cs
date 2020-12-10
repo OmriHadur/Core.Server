@@ -28,7 +28,7 @@ namespace Core.Server.Injection.Reflaction
         }
         public IEnumerable<ResourceBoundle> GetResourcesBoundles()
         {
-            var resourceTypes = GetDirectDrivenTypesOf<Resource>();
+            var resourceTypes = GetDirectDrivenTypesOf<Resource>().Where(t => t != typeof(ChildResource));
 
             foreach (var resourceType in resourceTypes)
                 yield return new ResourceBoundle(resourceType, this);
@@ -192,6 +192,11 @@ namespace Core.Server.Injection.Reflaction
 
             } while (type != null);
             return false;
+        }
+        public T GetValueOf<T>(object obj)
+        {
+            var prop = obj.GetType().GetProperties().FirstOrDefault(p => p.PropertyType == typeof(T));
+            return (T)(prop.GetValue(obj));
         }
     }
 }

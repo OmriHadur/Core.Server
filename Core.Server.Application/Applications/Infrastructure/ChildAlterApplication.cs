@@ -18,9 +18,9 @@ namespace Core.Server.Application
           IChildAlterApplication<TCreateResource, TUpdateResource, TParentResource>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TParentResource : Resource, IParentResource
-        where TParentEntity : Entity, IParentEntity
-        where TChildEntity : ChildEntity
+        where TParentResource : Resource
+        where TParentEntity : Entity
+        where TChildEntity : Entity
     {
         [Dependency]
         public IAlterRepository<TParentEntity> AlterRepository;
