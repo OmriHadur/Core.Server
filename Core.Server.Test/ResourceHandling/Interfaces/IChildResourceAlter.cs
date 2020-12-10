@@ -5,13 +5,10 @@ using System;
 namespace Core.Server.Tests.ResourceCreators.Interfaces
 {
     public interface IChildResourceAlter<TCreateResource, TUpdateResource, TParentResource>
+        : IResourceAlter<TCreateResource, TUpdateResource, TParentResource>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TParentResource : Resource
+        where TParentResource : Resource, IParentResource
     {
-        ActionResult<TParentResource> Create(Action<TCreateResource> editFunc = null);
-        ActionResult<TParentResource> Create(TCreateResource createResource);
-        ActionResult<TParentResource> Replace(string childId, Action<TCreateResource> editFunc = null);
-        ActionResult<TParentResource> Update(string childId, Action<TUpdateResource> editFunc = null);
     }
 }

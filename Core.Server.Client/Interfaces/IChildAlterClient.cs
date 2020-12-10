@@ -8,7 +8,7 @@ namespace Core.Server.Client.Interfaces
         : IClientBase
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TResource : Resource
+        where TResource : Resource,IParentResource
     {
         Task<ActionResult<TResource>> Create(TCreateResource resource);
 

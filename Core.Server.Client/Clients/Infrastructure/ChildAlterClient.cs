@@ -9,11 +9,11 @@ namespace Core.Server.Client.Clients
 {
     [Inject]
     public class ChildAlterClient<TCreateResource, TUpdateResource, TParentResource, TChildResource>
-        : ChildClientSender<TParentResource,TChildResource>,
+        : ChildClientSender<TParentResource, TChildResource>,
           IChildAlterClient<TCreateResource, TUpdateResource, TParentResource>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TParentResource : Resource
+        where TParentResource : Resource, IParentResource
         where TChildResource : Resource
     {
         public Task<ActionResult<TParentResource>> Create(TCreateResource resource)

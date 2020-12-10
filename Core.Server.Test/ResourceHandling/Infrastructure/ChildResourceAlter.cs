@@ -5,6 +5,7 @@ using Core.Server.Shared.Resources;
 using Core.Server.Tests.ResourceCreation.Interfaces;
 using Core.Server.Tests.ResourceCreators.Interfaces;
 using System;
+using System.Linq;
 using Unity;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
@@ -15,8 +16,8 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         , IChildResourceAlter<TCreateResource, TUpdateResource, TParentResource>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TParentResource : Resource
-        where TChildResource : Resource
+        where TParentResource : Resource, IParentResource
+        where TChildResource : ChildResource
     {
         [Dependency]
         public IRandomResourceCreator<TCreateResource, TUpdateResource, TChildResource> RandomResourceCreator;
@@ -41,18 +42,26 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return Client.Create(createResource).Result;
         }
 
-        public ActionResult<TParentResource> Replace(string childId, Action<TCreateResource> editFunc = null)
+        public ActionResult<TParentResource> Replace(Action<TCreateResource> editFunc = null)
         {
             var parent = ParentResourceCreate.GetOrCreate();
-            var createResource = RandomResourceCreator.GetRandomCreateResource();
-            var updateResource = RandomResourceCreator.GetRandomCreateResource(resource);
-            editFunc?.Invoke(updateResource);
-            return Client.Replace(resource.Id, updateResource).Result;
+            var childResources = parent.GetChildResources<TChildResource>();
+            var childResource = childResources.Last();
+            var replaceResource = RandomResourceCreator.GetRandomCreateResource(childResource);
+            replaceResource.ParentId = parent.Id;
+            editFunc?.Invoke(replaceResource);
+            return Client.Replace(childResource.Id, replaceResource).Result;
         }
 
-        public ActionResult<TParentResource> Update(string childId, Action<TUpdateResource> editFunc = null)
+        public ActionResult<TParentResource> Update(Action<TUpdateResource> editFunc = null)
         {
-            throw new NotImplementedException();
+            var parent = ParentResourceCreate.GetOrCreate();
+            var childResources = parent.GetChildResources<TChildResource>();
+            var childResource = childResources.Last();
+            var updateResource = RandomResourceCreator.GetRandomUpdateResource(childResource);
+            updateResource.ParentId = parent.Id;
+            editFunc?.Invoke(updateResource);
+            return Client.Update(childResource.Id, updateResource).Result;
         }
     }
 }

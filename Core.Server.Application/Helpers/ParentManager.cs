@@ -9,7 +9,7 @@ namespace Core.Server.Application.Helpers
     [Inject]
     public class ParentManager<TParentEntity, TChildEntity>
         : IParentManager<TParentEntity, TChildEntity>
-        where TParentEntity : Entity
+        where TParentEntity : Entity, IParentEntity
         where TChildEntity : Entity
     {
         public void Add(TParentEntity parent, TChildEntity child)
@@ -57,9 +57,7 @@ namespace Core.Server.Application.Helpers
 
         private IList<TChildEntity> GetChildren(TParentEntity parent)
         {
-            //TODO GetChildren
-            //parent.GetType().GetMembers().First(m=>m.)
-            return (IList<TChildEntity>)(parent as ExampleEntity).ChildEntities;
+            return parent.GetChildEntitiess<TChildEntity>();
         }
     }
 }
