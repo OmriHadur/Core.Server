@@ -15,7 +15,7 @@ namespace Core.Server.Tests.ResourceTests
             CreateResource();
         }
 
-        [TestMethod]
+
         public virtual void TestCreateAddedToList()
         {
             var idsCount = ResourcesIdsHolder.GetAll<TResource>().Count();
@@ -23,7 +23,7 @@ namespace Core.Server.Tests.ResourceTests
             Assert.AreEqual(idsCount, listCount);
         }
 
-        [TestMethod]
+
         public virtual void TestGet()
         {
             var id = ResourcesIdsHolder.GetLast<TResource>();
@@ -32,21 +32,21 @@ namespace Core.Server.Tests.ResourceTests
             Validate(CreatedResource, result.Value);
         }
 
-        [TestMethod]
+
         public virtual void TestGetNotFound()
         {
             var response = ResourceLookup.Get("5fb00552d72114101e33fa47");
             AssertNotFound(response);
         }
 
-        [TestMethod]
+
         public virtual void TestDelete()
         {
             var response = ResourceCreate.Delete(CreatedResource.Id);
             AssertOk(response);
         }
 
-        [TestMethod]
+
         public virtual void TestGetNotFoundAfterDelete()
         {
             ResourceCreate.Delete(CreatedResource.Id);
@@ -54,7 +54,7 @@ namespace Core.Server.Tests.ResourceTests
             AssertNotFound(response);
         }
 
-        [TestMethod]
+
         public virtual void TestDeleteNotFoundAfterDelete()
         {
             ResourceCreate.Delete(CreatedResource.Id);

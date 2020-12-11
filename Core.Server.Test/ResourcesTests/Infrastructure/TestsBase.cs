@@ -44,16 +44,12 @@ namespace Core.Server.Tests.ResourceTests
             try
             {
                 Validate(expected, actual);
-                Assert.Fail();
             }
             catch (AssertFailedException e)
             {
-                
+                return;
             }
-            catch(Exception e)
-            {
-                Assert.Fail();
-            }
+            Assert.Fail();
         }
         protected void Validate<T>(T expected, T actual)
         {
