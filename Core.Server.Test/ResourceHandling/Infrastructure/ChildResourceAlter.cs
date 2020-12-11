@@ -13,12 +13,15 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
     [Inject]
     public class ChildResourceAlter<TCreateResource, TUpdateResource, TParentResource, TChildResource>
         : ResourceHandling<IChildAlterClient<TCreateResource, TUpdateResource, TParentResource>, TParentResource>
-        , IChildResourceAlter<TCreateResource, TUpdateResource, TParentResource>
+        , IChildResourceAlter<TCreateResource, TUpdateResource, TParentResource, TChildResource>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
         where TParentResource : Resource
         where TChildResource : Resource
     {
+        //[Dependency]
+        //public IReflactionHelper ReflactionHelper;
+
         [Dependency]
         public IRandomResourceCreator<TCreateResource, TUpdateResource, TChildResource> RandomResourceCreator;
 
@@ -45,8 +48,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public ActionResult<TParentResource> Replace(Action<TCreateResource> editFunc = null)
         {
             var parent = ParentResourceCreate.GetOrCreate();
-            var childResources = new TChildResource[0];// parent.GetChildResources<TChildResource>();
-            var childResource = childResources.Last();
+            var childResource = GetChildResource(parent).Last();
             var replaceResource = RandomResourceCreator.GetRandomCreateResource(childResource);
             replaceResource.ParentId = parent.Id;
             editFunc?.Invoke(replaceResource);
@@ -56,12 +58,26 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public ActionResult<TParentResource> Update(Action<TUpdateResource> editFunc = null)
         {
             var parent = ParentResourceCreate.GetOrCreate();
-            var childResources = new TChildResource[0];
-            var childResource = childResources.Last();
+            var childResource = GetChildResource(parent).Last();
             var updateResource = RandomResourceCreator.GetRandomUpdateResource(childResource);
             updateResource.ParentId = parent.Id;
             editFunc?.Invoke(updateResource);
             return Client.Update(childResource.Id, updateResource).Result;
+        }
+
+        public TChildResource[] GetChildResource(TParentResource parentResource)
+        {
+            var propertyInfos = parentResource.GetType().GetProperties();
+            var propertyInfo = propertyInfos.FirstOrDefault(p => p.PropertyType == typeof(TChildResource[]));
+            return (TChildResource[])(propertyInfo.GetValue(parentResource));
+        }
+
+        public ActionResult<TParentResource> DeleteLastChild()
+        {
+            var parent = ParentResourceCreate.GetOrCreate();
+            var childResource = GetChildResource(parent).Last();
+            var childDeleteResource = new ChildDeleteResource() { ParentId = parent.Id };
+            return Client.Delete(childResource.Id, childDeleteResource).Result;
         }
     }
 }

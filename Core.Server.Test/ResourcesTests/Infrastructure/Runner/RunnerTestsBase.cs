@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using Core.Server.Tests.ResourceTests.Interfaces;
 using System.Linq;
 using System;
+using Core.Server.Injection.Unity;
 
 namespace Core.Server.Tests.ResourceTests
 {
     public class RunnerTestsBase<TResourceGenericTests>
         where TResourceGenericTests : IResourceGenericTests
     {
-        private IUnityContainer UnityContainer;
-        private IReflactionHelper ReflactionHelper;
+        protected IUnityContainer UnityContainer;
+        protected IReflactionHelper ReflactionHelper;
 
         protected IEnumerable<TResourceGenericTests> TestsForResource;
 
@@ -46,7 +47,7 @@ namespace Core.Server.Tests.ResourceTests
         private IEnumerable<TResourceGenericTests> GetTestsForResource()
         {
             var testsForResource = new List<TResourceGenericTests>();
-            var boundles = ReflactionHelper.GetResourcesBoundles().ToList();
+            var boundles = GetBoundles();
 
             var type = ReflactionHelper.GetClassForInterface<TResourceGenericTests>();
             var overideTests = ReflactionHelper.GetDrivenTypesOf(type);
@@ -68,6 +69,11 @@ namespace Core.Server.Tests.ResourceTests
                 testsForResource.Add((TResourceGenericTests)obj);
             }
             return testsForResource;
+        }
+
+        protected virtual List<ResourceBoundle> GetBoundles()
+        {
+            return ReflactionHelper.GetResourcesBoundles().ToList();
         }
     }
 }

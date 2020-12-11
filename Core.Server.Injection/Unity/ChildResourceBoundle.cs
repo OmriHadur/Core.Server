@@ -12,6 +12,7 @@ namespace Core.Server.Injection.Unity
         public Type TParentEntity { get; private set; }
 
         public Type TChildEntity => TEntity;
+        public Type TChildResource => TResource;
 
         public ChildResourceBoundle(Type resourceType, IReflactionHelper reflactionHelper)
             :base(resourceType,reflactionHelper)

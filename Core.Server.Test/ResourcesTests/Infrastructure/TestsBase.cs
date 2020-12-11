@@ -4,17 +4,57 @@ using System;
 using Core.Server.Client.Results;
 using System.Collections.Generic;
 using Core.Server.Shared.Resources;
+using Unity;
+using Core.Server.Tests.ResourceCreators.Interfaces;
+using Core.Server.Tests.Utils;
+using Core.Server.Test.ResourcesCreators.Interfaces;
 
 namespace Core.Server.Tests.ResourceTests
 {
     public abstract class TestsBase
     {
+        [Dependency]
+        public IResourcesClean ResourcesClean;
+
+        [Dependency]
+        public IResourcesIdsHolder ResourcesIdsHolder;
+
+        [Dependency]
+        public ICurrentUser CurrentUser;
+
+        public virtual void TestInit()
+        {
+
+        }
+
+        public virtual void Cleanup()
+        {
+            ResourcesClean.Clean();
+            CurrentUser.Logout();
+        }
+
         protected void ValidateList<T>(IEnumerable<T> expected, IEnumerable<T> actual)
         {
             for (int i = 0; i < expected.Count(); i++)
                 Validate(expected.ElementAt(i), actual.ElementAt(i));
         }
 
+        protected void ValidateNotEqual<T>(T expected, T actual)
+        {
+            try
+            {
+                Validate(expected, actual);
+                Assert.Fail();
+            }
+            catch (AssertFailedException e)
+            {
+                
+            }
+            catch(Exception e)
+            {
+                Assert.Fail();
+            }
+        }
         protected void Validate<T>(T expected, T actual)
         {
             Assert.IsNotNull(actual);
