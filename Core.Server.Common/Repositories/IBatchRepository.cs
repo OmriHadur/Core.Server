@@ -9,6 +9,7 @@ namespace Core.Server.Common.Repositories
         where TEntity : Entity
     {
         Task AddMany(IEnumerable<TEntity> entities);
+        Task ReplaceMany(IEnumerable<TEntity> entities);
 
         Task UpdateMany(IEnumerable<TEntity> entities);
 

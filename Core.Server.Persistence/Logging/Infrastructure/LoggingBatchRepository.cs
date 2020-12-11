@@ -31,6 +31,11 @@ namespace Core.Server.Persistence.Logging
             return LogginCall(() => Repository.Exists(ids), ids);
         }
 
+        public Task ReplaceMany(IEnumerable<TEntity> entities)
+        {
+            return LogginCall(() => Repository.ReplaceMany(entities), entities);
+        }
+
         public Task UpdateMany(IEnumerable<TEntity> entities)
         {
             return LogginCall(() => Repository.UpdateMany(entities), entities);

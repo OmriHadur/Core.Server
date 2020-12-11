@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 namespace Core.Server.Web.Controllers
 {
     [InjectChildBoundleController]
-    public class ChildBatchController<TCreateResource, TUpdateResource, TResource>
-        : BaseController<IChildBatchApplication<TCreateResource, TUpdateResource, TResource>>
+    public class ChildBatchController<TCreateResource, TUpdateResource, TParentResource>
+        : BaseController<IChildBatchApplication<TCreateResource, TUpdateResource, TParentResource>>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TResource : Resource
+        where TParentResource : Resource
     {
         [HttpPost("batch")]
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
+        public virtual async Task<ActionResult<IEnumerable<TParentResource>>> BatchCreate(TCreateResource[] resources)
         {
             return await Application.BatchCreate(resources);
         }
 
         [HttpPut("batch")]
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
+        public virtual async Task<ActionResult<IEnumerable<TParentResource>>> BatchUpdate(TUpdateResource[] resources)
         {
             return await Application.BatchUpdate(resources);
         }

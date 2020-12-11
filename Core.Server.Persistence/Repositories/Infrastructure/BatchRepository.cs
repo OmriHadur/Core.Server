@@ -31,6 +31,14 @@ namespace Core.Server.Persistence.Repositories
             return answer == ids.Length;
         }
 
+        public async Task ReplaceMany(IEnumerable<TEntity> entities)
+        {
+            var updates = new List<WriteModel<TEntity>>();
+            foreach (var entity in entities)
+                updates.Add(new ReplaceOneModel<TEntity>("{ _id: " + entity.Id + "}", entity));
+            await Collection.BulkWriteAsync(updates, new BulkWriteOptions() { IsOrdered = false });
+        }
+
         public async Task UpdateMany(IEnumerable<TEntity> entities)
         {
             //TODO UpdateMany

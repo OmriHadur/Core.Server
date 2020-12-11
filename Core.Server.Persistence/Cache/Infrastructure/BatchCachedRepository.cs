@@ -37,6 +37,12 @@ namespace Core.Server.Persistence.Cache
             return BatchRepository.Exists(ids);
         }
 
+        public async Task ReplaceMany(IEnumerable<TEntity> entities)
+        {
+            await BatchRepository.ReplaceMany(entities);
+            Cache.AddOrSet(entities);
+        }
+
         public async Task UpdateMany(IEnumerable<TEntity> entities)
         {
             await BatchRepository.UpdateMany(entities);

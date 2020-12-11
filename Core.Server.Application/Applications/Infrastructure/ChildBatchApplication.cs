@@ -15,12 +15,12 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class ChildBatchApplication<TCreateResource, TUpdateResource, TResource, TParentEntity, TChildEntity>
+    public class ChildBatchApplication<TCreateResource, TUpdateResource, TParentResource, TParentEntity, TChildEntity>
         : BaseApplication<TParentEntity>,
-          IChildBatchApplication<TCreateResource, TUpdateResource, TResource>
+          IChildBatchApplication<TCreateResource, TUpdateResource, TParentResource>
         where TCreateResource : ChildCreateResource
         where TUpdateResource : ChildUpdateResource
-        where TResource : Resource
+        where TParentResource : Resource
         where TParentEntity : Entity
         where TChildEntity : Entity
     {
@@ -34,16 +34,16 @@ namespace Core.Server.Application
         public IAlterResourceMapper<TCreateResource, TUpdateResource, TChildEntity> AlterResourceMapper;
 
         [Dependency]
-        public IResourceMapper<TResource, TParentEntity> ResourceMapper;
+        public IResourceMapper<TParentResource, TParentEntity> ResourceMapper;
 
         [Dependency]
         public IParentManager<TParentEntity, TChildEntity> ParentManager;
 
-        public async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
+        public async Task<ActionResult<IEnumerable<TParentResource>>> BatchCreate(TCreateResource[] resources)
         {
             var parentsIds = resources.Select(r => r.ParentId).Distinct();
             var result = await GetParents(parentsIds);
-            if (!(result is OkResult))
+            if (result.Result !=null)
                 return result.Result;
             var parents = result.Value;
 
@@ -53,12 +53,12 @@ namespace Core.Server.Application
 
             AddChildren(resources, parents);
 
-            await BatchRepository.UpdateMany(parents.Values);
+            await BatchRepository.ReplaceMany(parents.Values);
             var response = await ResourceMapper.Map(parents.Values);
             return response.ToList();
         }
 
-        public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
+        public Task<ActionResult<IEnumerable<TParentResource>>> BatchUpdate(TUpdateResource[] resources)
         {
             //TODO BatchUpdate
             throw new NotImplementedException();
@@ -84,7 +84,7 @@ namespace Core.Server.Application
                 
             }
 
-            await BatchRepository.UpdateMany(parents.Values);
+            await BatchRepository.ReplaceMany(parents.Values);
             return Ok(parentsIds);
         }
 
