@@ -12,7 +12,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
     public class QeuryExmapleTetst
-         : GenericExtraTestBase<ExampleChildCreateResource, ExampleUpdateResource, ExampleResource>
+         : GenericExtraTestBase<ExampleCreateResource, ExampleUpdateResource, ExampleResource>
     {
         [Dependency]
         public IResourceQuery<ExampleResource> ResourceQuery;

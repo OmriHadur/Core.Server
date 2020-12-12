@@ -54,9 +54,21 @@ namespace Core.Server.Tests.ResourceTests
         protected void Validate<T>(T expected, T actual)
         {
             Assert.IsNotNull(actual);
-            var properties = expected.GetType().GetProperties();
-            foreach (var property in properties)
-                ValidateProperty(expected, actual, property);
+            if (expected.GetType().IsArray)
+            {
+                var expectedArray = expected as T[];
+                var actualArray = actual as T[];
+                for (int i = 0; i < expectedArray.Length; i++)
+                {
+                    Validate(expectedArray[i], actualArray[i]);
+                }
+            }
+            else
+            {
+                var properties = expected.GetType().GetProperties();
+                foreach (var property in properties)
+                    ValidateProperty(expected, actual, property);
+            }
         }
 
         protected void AssertUnauthorized(ActionResult response)

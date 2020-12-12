@@ -33,9 +33,16 @@ namespace Core.Server.Test.ResourceCreation
 
         public PropertyInfo GetRandomProperty<T>()
         {
-            var properties = typeof(T).GetProperties();
+            var properties = GetProperties<T>();
             if (properties.Length == 0) return null;
             return properties[random.Next(properties.Length)];
+        }
+
+        private PropertyInfo[] GetProperties<T>()
+        {
+            return typeof(T).GetProperties()
+                .Where(p => p.Name != "Id" && p.Name != "ParentId")
+                .ToArray();
         }
 
         public void SetRandomValue(object resource, PropertyInfo property)

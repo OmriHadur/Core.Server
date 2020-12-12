@@ -1,11 +1,11 @@
-﻿using MongoDB.Driver;
+﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
-using Core.Server.Common.Attributes;
+using System.Threading.Tasks;
 
 namespace Core.Server.Persistence.Repositories
 {
@@ -33,16 +33,14 @@ namespace Core.Server.Persistence.Repositories
 
         public async Task ReplaceMany(IEnumerable<TEntity> entities)
         {
-            var updates = new List<WriteModel<TEntity>>();
             foreach (var entity in entities)
-                updates.Add(new ReplaceOneModel<TEntity>("{ _id: " + entity.Id + "}", entity));
-            await Collection.BulkWriteAsync(updates, new BulkWriteOptions() { IsOrdered = false });
+                await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity); 
         }
 
         public async Task UpdateMany(IEnumerable<TEntity> entities)
         {
-            //TODO UpdateMany
-            //await Collection.UpdateManyAsync(entities);
+            foreach (var entity in entities)
+                await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
         }
     }
 }

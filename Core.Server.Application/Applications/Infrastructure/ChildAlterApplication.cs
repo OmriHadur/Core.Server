@@ -6,7 +6,6 @@ using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using System.Threading.Tasks;
 using Unity;
 
@@ -20,7 +19,7 @@ namespace Core.Server.Application
         where TUpdateResource : ChildUpdateResource
         where TParentResource : Resource
         where TParentEntity : Entity
-        where TChildEntity : Entity
+        where TChildEntity : ChildEntity
     {
         [Dependency]
         public IAlterRepository<TParentEntity> AlterRepository;
@@ -48,7 +47,6 @@ namespace Core.Server.Application
                 return validation;
 
             var child = await AlterResourceMapper.Map(resource);
-            child.Id = ObjectId.GenerateNewId().ToString();
             ParentManager.Add(parnet, child);
 
             await AlterRepository.Replace(parnet);

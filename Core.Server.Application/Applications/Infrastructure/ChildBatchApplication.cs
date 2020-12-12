@@ -6,6 +6,7 @@ using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Core.Server.Application
         where TUpdateResource : ChildUpdateResource
         where TParentResource : Resource
         where TParentEntity : Entity
-        where TChildEntity : Entity
+        where TChildEntity : ChildEntity
     {
         [Dependency]
         public IBatchRepository<TParentEntity> BatchRepository;
