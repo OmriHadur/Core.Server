@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Core.Server.Common.Applications;
-using Core.Server.Shared.Resources;
-using Core.Server.Shared.Query;
+﻿using Core.Server.Common.Applications;
 using Core.Server.Common.Attributes;
+using Core.Server.Shared.Query;
+using Core.Server.Shared.Resources;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Core.Server.Web.Controllers
 {
@@ -15,12 +15,6 @@ namespace Core.Server.Web.Controllers
     {
         [HttpPost("query")]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> Query(QueryResource queryResource)
-        {
-            return await Application.Query(queryResource);
-        }
-
-        [HttpPost("querychild")]
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> QueryChild(QueryResource queryResource)
         {
             return await Application.Query(queryResource);
         }

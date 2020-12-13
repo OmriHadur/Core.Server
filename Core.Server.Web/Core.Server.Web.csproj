@@ -27,5 +27,9 @@
     <ProjectReference Include="..\Core.Server.Shared\Core.Server.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Overrides\" />
+  </ItemGroup>
+
 
 </Project>

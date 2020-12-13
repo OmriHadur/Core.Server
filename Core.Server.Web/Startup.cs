@@ -14,6 +14,8 @@ using Core.Server.Common.Config;
 using Core.Server.Injection.Interfaces;
 using Core.Server.Injection.Unity;
 using Core.Server.Injection.Reflaction;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Policy;
 
 namespace Core.Server.Web
 {
@@ -88,7 +90,6 @@ namespace Core.Server.Web
                 .AllowAnyHeader());
 
             app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
