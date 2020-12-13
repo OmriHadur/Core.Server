@@ -1,9 +1,12 @@
 ﻿using Core.Server.Common.Applications;
 using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
+using Core.Server.Web.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity;
 
 namespace Core.Server.Web.Controllers
 {
@@ -12,9 +15,14 @@ namespace Core.Server.Web.Controllers
         : BaseController<ILookupApplication<TResource>>
         where TResource : Resource
     {
+        [Dependency]
+        public IAuthorizationService AuthorizationService;
+
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
+            var authorizationResult = await AuthorizationService.AuthorizeAsync(User, typeof(TResource), Operations.Read);
+            if (!authorizationResult.Succeeded) return Unauthorized();
             return await Application.GetAll();
         }
 

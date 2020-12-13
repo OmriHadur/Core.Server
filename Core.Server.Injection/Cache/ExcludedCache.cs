@@ -14,9 +14,9 @@ namespace Core.Server.Injection.Cache
 
         public TEntity Get(string id) => null;
 
-        public IEnumerable<TEntity> Get(IEnumerable<string> ids) => null;
+        public IEnumerable<TEntity> Get(IEnumerable<string> ids) => new TEntity[0];
 
-        public IEnumerable<TEntity> GetAll() => null;
+        public IEnumerable<TEntity> GetAll() => new TEntity[0];
 
         public void AddOrSet(TEntity entity) { }
 

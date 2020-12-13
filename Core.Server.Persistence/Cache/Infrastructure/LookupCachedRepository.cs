@@ -72,7 +72,7 @@ namespace Core.Server.Persistence.Cache
         public async Task<IEnumerable<TEntity>> Get(string[] ids)
         {
             var entitiesHave = Cache.Get(ids);
-            var idsNotHave = ids.Except(entitiesHave.Select(e => e.Id)).ToArray();
+            var idsNotHave = ids.Except(entitiesHave.Select(e => e?.Id)).ToArray();
             if (idsNotHave.Count() == 0)
                 return entitiesHave;
 

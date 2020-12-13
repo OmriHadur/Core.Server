@@ -1,10 +1,10 @@
 ﻿using Core.Server.Application.Helpers;
 using Core.Server.Application.Mappers.Base;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Shared.Resources.Users;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Common.Attributes;
 
 namespace Core.Server.Application.Mappers.Implementation
 {

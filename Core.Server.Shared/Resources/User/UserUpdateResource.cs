@@ -7,7 +7,5 @@ namespace Core.Server.Shared.Resources.Users
     {
         [MinLength(5)]
         public string Password { get; set; }
-
-        public UserStatus Status { get; set; }
     }
 }

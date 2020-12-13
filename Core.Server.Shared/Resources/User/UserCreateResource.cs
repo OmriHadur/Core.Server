@@ -8,13 +8,10 @@ namespace Core.Server.Shared.Resources.Users
     {
         [Required]
         [EmailAddress]
-        ///[Immutable]
         public string Email { get; set; }
 
         [Required]
         [MinLength(5)]
         public string Password { get; set; }
-
-        public UserStatus Status { get; set; }
     }
 }
