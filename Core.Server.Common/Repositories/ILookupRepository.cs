@@ -23,6 +23,8 @@ namespace Core.Server.Common.Repositories
 
         Task<bool> Exists(string id);
 
+        Task<string> GetNotFoundId(string[] ids);
+
         Task<bool> Any();
 
         Task<bool> Exists(Expression<Func<TEntity, bool>> predicate);

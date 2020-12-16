@@ -1,5 +1,4 @@
-﻿using Core.Server.Shared.Resources.User;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Resources.Users
 {
@@ -7,5 +6,7 @@ namespace Core.Server.Shared.Resources.Users
     {
         [MinLength(5)]
         public string Password { get; set; }
+
+        public string[] Roles { get; set; }
     }
 }

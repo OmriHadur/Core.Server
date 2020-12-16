@@ -39,6 +39,13 @@ namespace Core.Server.Persistence.Cache
             return await LookupRepository.Exists(id);
         }
 
+        public async Task<string> GetNotFoundId(string[] ids)
+        {
+            if (Cache.Get(ids).All(e=>e!=null))
+                return null;
+            return await LookupRepository.GetNotFoundId(ids);
+        }
+
         public Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)
         {
             return LookupRepository.Exists(predicate);

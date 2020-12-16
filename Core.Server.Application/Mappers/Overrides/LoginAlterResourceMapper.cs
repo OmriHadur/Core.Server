@@ -3,6 +3,7 @@ using Core.Server.Common.Attributes;
 using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Entities.Helpers;
+using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
 using Core.Server.Shared.Resources.Users;
 using System;
@@ -16,29 +17,33 @@ namespace Core.Server.Application.Mappers.Implementation
         : AlterResourceMapper<LoginCreateResource,LoginUpdateResource,LoginEntity>
     {
         [Dependency]
-        public AppConfig AppConfig { get; set; }
+        public AppConfig AppConfig;
 
         [Dependency]
-        public IJwtManager JwtManager { get; set; }
+        public IJwtManager JwtManager;
 
         [Dependency]
-        public ILookupRepository<UserEntity> UserLookupRepository { get; set; }
+        public ILookupRepository<UserEntity> UserLookupRepository;
+
+        [Dependency]
+        public IResourceMapper<UserResource, UserEntity> UserResourceMapper;
 
         public async override Task<LoginEntity> Map(LoginCreateResource resource)
         {
             var userEntity = await UserLookupRepository.FindFirst(e => e.Email == resource.Email);
+            var userResource = await UserResourceMapper.Map(userEntity);
             return new LoginEntity()
             {
                 UserId = userEntity.Id,
                 CreateTime = DateTime.Now,
                 IsValid = true,
-                Token = GetToken(userEntity)
+                Token = GetToken(userResource)
             };
         }
 
-        private string GetToken(UserEntity user)
+        private string GetToken(UserResource userResource)
         {
-            return JwtManager.GenerateToken(Mapper.Map<UserResource>(user), AppConfig.Secret);
+            return JwtManager.GenerateToken(userResource, AppConfig.Secret);
         }
     }
 }

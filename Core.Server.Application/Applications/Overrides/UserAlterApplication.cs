@@ -16,13 +16,6 @@ namespace Core.Server.Application
         [Dependency]
         public IAlterRepository<LoginEntity> LoginsRepository;
 
-        public async override Task<ActionResult<UserResource>> Create(UserCreateResource createResource)
-        {
-            if (await LookupRepository.Exists(e => e.Email == createResource.Email))
-                return BadRequest(BadRequestReason.SameExists);
-
-            return await base.Create(createResource);
-        }
 
         public async override Task<ActionResult> Delete(string id)
         {

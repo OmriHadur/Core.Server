@@ -16,5 +16,7 @@ namespace Core.Server.Common.Entities
         public byte[] PasswordSalt { get; set; }
 
         public UserStatus Status { get; set; }
+
+        public string[] RolesIds { get; set; }
     }
 }

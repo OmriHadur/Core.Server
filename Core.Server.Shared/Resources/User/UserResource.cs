@@ -7,5 +7,7 @@ namespace Core.Server.Shared.Resources.Users
         public string Email { get; set; }
 
         public UserStatus Status { get; set; }
+
+        public RoleResource[] Roles { get; set; }
     }
 }

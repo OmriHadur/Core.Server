@@ -1,5 +1,4 @@
-﻿using Core.Server.Shared.Resources.User;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Resources.Users
@@ -13,5 +12,8 @@ namespace Core.Server.Shared.Resources.Users
         [Required]
         [MinLength(5)]
         public string Password { get; set; }
+
+        [Required]
+        public string[] RolesIds { get; set; }
     }
 }

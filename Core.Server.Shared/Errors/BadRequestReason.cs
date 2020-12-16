@@ -10,6 +10,7 @@
         PropertyNotCurectType,
         EnumNotInRange,
         PageSizeNotSet,
+        InvalidResource,
         Unchangeable
     }
 }
