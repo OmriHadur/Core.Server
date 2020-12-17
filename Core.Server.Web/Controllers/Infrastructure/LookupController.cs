@@ -2,46 +2,42 @@
 using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Web.Authorization;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity;
 
 namespace Core.Server.Web.Controllers
 {
     [InjectBoundleController]
     public class LookupController<TResource>
-        : BaseController<ILookupApplication<TResource>>
+        : BaseController<ILookupApplication<TResource>, TResource>
         where TResource : Resource
     {
-        [Dependency]
-        public IAuthorizationService AuthorizationService;
-
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
-            SetUser();
-            var authorizationResult = await AuthorizationService.AuthorizeAsync(User, typeof(TResource), Operations.Read);
-            if (!authorizationResult.Succeeded) return Unauthorized();
+            if (await IsUnauthorized(Operations.Read)) return Unauthorized();
             return await Application.GetAll();
         }
 
         [HttpGet("{id}")]
         public virtual async Task<ActionResult<TResource>> GetById(string id)
         {
+            if (await IsUnauthorized(Operations.Read)) return Unauthorized();
             return await Application.GetById(id);
         }
 
         [HttpGet("inline")]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetByIds([FromQuery] string ids)
         {
+            if (await IsUnauthorized(Operations.Read)) return Unauthorized();
             return await Application.GetByIds(ids.Split(','));
         }
 
         [HttpPost("ids")]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetByIds(string[] ids)
         {
+            if (await IsUnauthorized(Operations.Read)) return Unauthorized();
             return await Application.GetByIds(ids);
         }
 

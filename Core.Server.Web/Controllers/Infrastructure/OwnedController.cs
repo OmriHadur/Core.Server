@@ -9,7 +9,7 @@ namespace Core.Server.Web.Controllers
 {
     [InjectBoundleController]
     public class OwnedController<TResource>
-        : BaseController<IOwnedApplication<TResource>>
+        : BaseController<IOwnedApplication<TResource>, TResource>
         where TResource : Resource
     {
         [HttpGet("owned")]

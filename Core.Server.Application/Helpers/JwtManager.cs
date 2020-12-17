@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Common.Attributes;
+using System.Collections.Generic;
 
 namespace Core.Server.Application.Helpers
 {
@@ -32,9 +33,10 @@ namespace Core.Server.Application.Helpers
 
         private static ClaimsIdentity GetClaims(UserResource user)
         {
+            var userResourceValue = JsonConvert.SerializeObject(user);
             return new ClaimsIdentity(
                 new Claim[]{
-                new Claim(UserResourceKey,JsonConvert.SerializeObject(user))});
+                new Claim(UserResourceKey,userResourceValue)});
         }
 
         public UserResource GetUser(ClaimsPrincipal ClaimsPrincipal)
