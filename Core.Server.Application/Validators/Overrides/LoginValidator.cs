@@ -1,7 +1,6 @@
 ﻿using Core.Server.Application.Helpers;
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
-using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
 using Core.Server.Shared.Resources.Users;
@@ -19,7 +18,6 @@ namespace Core.Server.Application.Validators.Implementation
 
         [Dependency]
         public ILookupRepository<UserEntity> UserLookupRepository { get; set; }
-
 
         public override async Task<ActionResult> Validate(LoginCreateResource createResource)
         {

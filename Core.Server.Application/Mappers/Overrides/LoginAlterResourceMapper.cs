@@ -17,7 +17,7 @@ namespace Core.Server.Application.Mappers.Implementation
         : AlterResourceMapper<LoginCreateResource,LoginUpdateResource,LoginEntity>
     {
         [Dependency]
-        public AppConfig AppConfig;
+        public AppSettings AppSettings;
 
         [Dependency]
         public IJwtManager JwtManager;
@@ -43,7 +43,7 @@ namespace Core.Server.Application.Mappers.Implementation
 
         private string GetToken(UserResource userResource)
         {
-            return JwtManager.GenerateToken(userResource, AppConfig.Secret);
+            return JwtManager.GenerateToken(userResource, AppSettings.Secret);
         }
     }
 }

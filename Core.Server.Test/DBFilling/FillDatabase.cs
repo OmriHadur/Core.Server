@@ -1,11 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Core.Server.Client.Interfaces;
-using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
-using Core.Server.Tests.ResourceTests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Core.Server.Tests.ResourceTests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Server.Tests.DBFilling
 {
@@ -28,7 +22,7 @@ namespace Core.Server.Tests.DBFilling
         //    where TUpdateResource : UpdateResource
         //    where TResource : Resource
         //{
-        //    var response = GetClient<IRestClient<TCreateResource, TUpdateResource,TResource>>().Get().Result;
+        //    var response = GetClient<IRestClient<TCreateResource, TUpdateResource, TResource>>().Get().Result;
         //    return response.Value.ToList();
         //}
 

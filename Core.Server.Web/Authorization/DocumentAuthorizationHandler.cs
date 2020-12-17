@@ -1,6 +1,7 @@
 ﻿using Core.Server.Common.Config;
 using Core.Server.Common.Entities.Helpers;
 using Core.Server.Shared.Resources;
+using Core.Server.Shared.Resources.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using System;
@@ -22,13 +23,18 @@ namespace Core.Server.Web.Authorization
 
         public async Task<AuthorizationResult> AuthorizeAsync(ClaimsPrincipal claims, object resourceType, IEnumerable<IAuthorizationRequirement> requirements)
         {
-            var allowedActions = GetAllowedActions(claims, resourceType.ToString()).ToList();
+            var userResource = JwtManager.GetUser(claims);
+            if (userResource?.Email == Config.AppSettings.AdminUserName) 
+                return AuthorizationResult.Success();
+
+            var allowedActions = GetAllowedActions(userResource, resourceType.ToString()).ToList();
 
             if (IsAllowed(allowedActions, requirements.First()))
                 return AuthorizationResult.Success();
             else
                 return AuthorizationResult.Failed();
         }
+
         private bool IsAllowed(IEnumerable<ResourceActions> allowedActions, IAuthorizationRequirement requirement)
         {
             var neededAction = GetResourceActions(requirement as OperationAuthorizationRequirement);
@@ -48,12 +54,11 @@ namespace Core.Server.Web.Authorization
             return ResourceActions.None;
         }
 
-        private IEnumerable<ResourceActions> GetAllowedActions(ClaimsPrincipal claims, string resource)
+        private IEnumerable<ResourceActions> GetAllowedActions(UserResource userResource, string resource)
         {
             var allowedActions = GetResourceActions(Config.AllowAnonymous, resource);
-            var user = JwtManager.GetUser(claims);
-            if (user != null)
-                foreach (var role in user.Roles)
+            if (userResource != null)
+                foreach (var role in userResource.Roles)
                     allowedActions.Union(GetResourceActions(role.Policies, resource));
             return allowedActions;
         }
