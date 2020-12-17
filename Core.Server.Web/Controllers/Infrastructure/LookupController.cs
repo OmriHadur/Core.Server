@@ -21,6 +21,7 @@ namespace Core.Server.Web.Controllers
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TResource>>> GetAll()
         {
+            SetUser();
             var authorizationResult = await AuthorizationService.AuthorizeAsync(User, typeof(TResource), Operations.Read);
             if (!authorizationResult.Succeeded) return Unauthorized();
             return await Application.GetAll();
