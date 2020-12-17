@@ -1,4 +1,5 @@
-﻿using Core.Server.Common.Entities.Helpers;
+﻿using Core.Server.Common.Config;
+using Core.Server.Common.Entities.Helpers;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
@@ -16,31 +17,52 @@ namespace Core.Server.Web.Authorization
         [Dependency]
         public IJwtManager JwtManager;
 
-        public async Task<AuthorizationResult> AuthorizeAsync(ClaimsPrincipal claims, object resource, IEnumerable<IAuthorizationRequirement> requirements)
+        [Dependency]
+        public Config Config;
+
+        public async Task<AuthorizationResult> AuthorizeAsync(ClaimsPrincipal claims, object resourceType, IEnumerable<IAuthorizationRequirement> requirements)
         {
-            var resourceActions = GetResourceActions(claims, resource).ToList();
+            var allowedActions = GetAllowedActions(claims, resourceType.ToString()).ToList();
 
-            foreach (var requirement in requirements)
-                if (!IsAllowed(resourceActions, requirement))
-                    return AuthorizationResult.Failed();
-
-            return AuthorizationResult.Success();
+            if (IsAllowed(allowedActions, requirements.First()))
+                return AuthorizationResult.Success();
+            else
+                return AuthorizationResult.Failed();
+        }
+        private bool IsAllowed(IEnumerable<ResourceActions> allowedActions, IAuthorizationRequirement requirement)
+        {
+            var neededAction = GetResourceActions(requirement as OperationAuthorizationRequirement);
+            return allowedActions.Any(action => action.HasFlag(neededAction));
         }
 
-        private static bool IsAllowed(List<ResourceActions> resourceActions, IAuthorizationRequirement requirement)
+        private ResourceActions GetResourceActions(OperationAuthorizationRequirement operationAuthorization)
         {
-            var operationRequirement = (requirement as OperationAuthorizationRequirement).Name;
-            return resourceActions.Any(action => action.ToString() == operationRequirement);
+            if (operationAuthorization.Name == Operations.Read.Name)
+                return ResourceActions.Read;
+            if (operationAuthorization.Name == Operations.Create.Name)
+                return ResourceActions.Create;
+            if (operationAuthorization.Name == Operations.Alter.Name)
+                return ResourceActions.Alter;
+            if (operationAuthorization.Name == Operations.Delete.Name)
+                return ResourceActions.Delete;
+            return ResourceActions.None;
         }
 
-        private IEnumerable<ResourceActions> GetResourceActions(ClaimsPrincipal claims, object resource)
+        private IEnumerable<ResourceActions> GetAllowedActions(ClaimsPrincipal claims, string resource)
         {
+            var allowedActions = GetResourceActions(Config.AllowAnonymous, resource);
             var user = JwtManager.GetUser(claims);
             if (user != null)
                 foreach (var role in user.Roles)
-                    foreach (var policy in role.Policies)
-                        if (policy.ResourceType == resource.ToString())
-                            yield return policy.ResourceActions;
+                    allowedActions.Union(GetResourceActions(role.Policies, resource));
+            return allowedActions;
+        }
+
+        private IEnumerable<ResourceActions> GetResourceActions(PolicyResource[] policies,string resource)
+        {
+            foreach (var policy in policies)
+                if (policy.ResourceType == resource)
+                    yield return policy.ResourceActions;
         }
 
         public Task<AuthorizationResult> AuthorizeAsync(ClaimsPrincipal user, object resource, string policyName)

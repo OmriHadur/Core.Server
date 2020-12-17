@@ -34,6 +34,7 @@ namespace Core.Server.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(Config);
             services.AddSingleton(Config.MongoDB);
             services.AddSingleton(Config.AppSettings);
             services.AddSingleton(Config.Cache);

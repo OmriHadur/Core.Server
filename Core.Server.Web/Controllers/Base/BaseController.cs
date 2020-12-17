@@ -1,12 +1,12 @@
-﻿using Core.Server.Common.Entities.Helpers;
-using Microsoft.AspNetCore.Mvc;
-using Unity;
-using Core.Server.Common.Applications;
+﻿using Core.Server.Common.Applications;
+using Core.Server.Common.Entities.Helpers;
 using Core.Server.Common.Helpers;
-using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Core.Server.Shared.Resources;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using Unity;
 
 namespace Core.Server.Web.Controllers
 {
@@ -49,8 +49,15 @@ namespace Core.Server.Web.Controllers
 
         protected async Task<bool> IsUnauthorized(OperationAuthorizationRequirement operation)
         {
-            var result = await AuthorizationService.AuthorizeAsync(User, typeof(TResource), operation);
+            var result = await AuthorizationService.AuthorizeAsync(User, GetResourceName(), operation);
             return !result.Succeeded;
+        }
+
+        private static string GetResourceName()
+        {
+            var assemblyfullName = typeof(TResource).Assembly.FullName;
+            assemblyfullName = assemblyfullName.Substring(0, assemblyfullName.IndexOf(','));
+            return typeof(TResource).FullName + "," + assemblyfullName;
         }
     }
 }
