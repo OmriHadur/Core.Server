@@ -29,17 +29,20 @@ namespace Core.Server.Application.Mappers.Implementation
             return roleResource;
         }
 
-        public async override Task<IEnumerable<RoleResource>> Map(IEnumerable<RoleEntity> entities)
+        public async override Task<IEnumerable<RoleResource>> Map(IEnumerable<RoleEntity> rolesEntities)
         {
-            var roleResources = await base.Map(entities);
-            var policiesIds = entities.SelectMany(e => e.PoliciesId).Distinct().ToArray();
+            var roleResources = await base.Map(rolesEntities);
+            var policiesIds = rolesEntities
+                .SelectMany(role => role.PoliciesId)
+                .Distinct()
+                .ToArray();
             var policies = await PolicyLookupRepository.Get(policiesIds);
             var policiesResources = await PolicyMapper.Map(policies);
             policiesResources = policiesResources.Where(p => p != null);
 
             foreach (var roleResource in roleResources)
             {
-                var roleEntity = entities.FirstOrDefault(e => e.Id == roleResource.Id);
+                var roleEntity = rolesEntities.FirstOrDefault(e => e.Id == roleResource.Id);
                 roleResource.Policies = policiesResources.Where(p => roleEntity.PoliciesId.Contains(p.Id)).ToArray();
             }
             return roleResources;

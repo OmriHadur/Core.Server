@@ -10,8 +10,14 @@ namespace Core.Server.Test.ResourcesTests.Implementation
     public class AuthorizeTests
         : GenericExtraTestBase<ExampleCreateResource, ExampleUpdateResource, ExampleResource>
     {
-        [Dependency]
-        public IResourceAlter<ExampleCreateResource, ExampleUpdateResource, ExampleResource> ResourceAlter;
+        [TestMethod]
+        public void TestUnauthorized()
+        {
+            CurrentUser.Login();
+            AssertUnauthorized(ResourceLookup.Get());
+            AssertUnauthorized(ResourceCreate.Create());
+            AssertUnauthorized(ResourceAlter.Update());
+        }
 
         [TestMethod]
         public void TestAuthorizedRead()
@@ -21,31 +27,10 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         }
 
         [TestMethod]
-        public void TestUnauthorizedRead()
-        {
-            CurrentUser.Login();
-            AssertUnauthorized(ResourceLookup.Get());
-        }
-
-        [TestMethod]
-        public void TestUnauthorizedCreate()
-        {
-            CurrentUser.Login();
-            AssertUnauthorized(ResourceCreate.Create());
-        }
-
-        [TestMethod]
         public void TestAuthorizedCreate()
         {
             CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.Create);
             AssertOk(ResourceCreate.Create());
-        }
-
-        [TestMethod]
-        public void TestUnauthorizedAlter()
-        {
-            CurrentUser.Login();
-            AssertUnauthorized(ResourceAlter.Update());
         }
 
         [TestMethod]

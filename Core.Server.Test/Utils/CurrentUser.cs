@@ -74,7 +74,7 @@ namespace Core.Server.Test.Utils
         public void Login()
         {
             LoginAsAdmin();
-            UserResource userResource = UserResourceCreate.Value.GetOrCreate();
+            var userResource = UserResourceCreate.Value.GetOrCreate();
             var email = userResource.Email;
             LoginAs(email);
         }
