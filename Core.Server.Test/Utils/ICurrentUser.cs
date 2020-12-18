@@ -13,6 +13,6 @@ namespace Core.Server.Test.Utils
         void Login();
         void LoginAs(string email);
         void Logout();
-        void AddRole(Type type, ResourceActions resourceActions);
+        void AddRoleAndRelogin(Type type, ResourceActions resourceActions);
     }
 }

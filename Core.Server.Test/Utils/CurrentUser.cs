@@ -87,7 +87,7 @@ namespace Core.Server.Test.Utils
             OnTokenChange?.Invoke(this, token);
         }
 
-        public void AddRole(Type type, ResourceActions resourceActions)
+        public void AddRoleAndRelogin(Type type, ResourceActions resourceActions)
         {
             LoginAsAdmin();
             PolicyResourceAlter.Value.Create(p =>

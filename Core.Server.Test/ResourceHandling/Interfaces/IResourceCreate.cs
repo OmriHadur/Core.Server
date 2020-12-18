@@ -8,7 +8,10 @@ namespace Core.Server.Test.ResourceCreators.Interfaces
         where TResource : Resource
     {
         ActionResult<TResource> Create();
+        ActionResult Delete();
+
         TResource GetOrCreate();
+
         TResource GetIfExist();
     }
 }

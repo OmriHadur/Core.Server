@@ -25,7 +25,7 @@ namespace Core.Server.Application.Mappers.Implementation
         {
             var roleResource = await base.Map(entity);
             var roles = await RoleLookupRepository.Get(entity.RolesIds);
-            roleResource.Roles = (await RoleMapper.Map(roles)).ToArray();
+            roleResource.Roles = (await RoleMapper.Map(roles.ToList())).ToArray();
             return roleResource;
         }
     }

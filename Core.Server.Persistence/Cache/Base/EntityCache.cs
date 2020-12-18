@@ -40,7 +40,8 @@ namespace Core.Server.Persistence.Cache
         public IEnumerable<TEntity> Get(IEnumerable<string> ids)
         {
             foreach (var id in ids)
-                yield return Get(id);
+                if (cache.ContainsKey(id))
+                    yield return Get(id);
         }
 
         public IEnumerable<TEntity> GetAll()

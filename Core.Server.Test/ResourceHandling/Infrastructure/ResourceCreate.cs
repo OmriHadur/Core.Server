@@ -32,10 +32,16 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return response;
         }
 
+        public ActionResult Delete()
+        {
+            return Delete(ResourceIdsHolder.GetLast<TResource>());
+        }
+
         public ActionResult Delete(string id)
         {
             var response = Client.Delete(id).Result;
-            ResourceIdsHolder.Remove<TResource>(id);
+            if (response is OkResult)
+                ResourceIdsHolder.Remove<TResource>(id);
             return response;
         }
 

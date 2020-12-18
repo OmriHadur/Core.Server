@@ -29,8 +29,8 @@ namespace Core.Server.Test.ResourceTests
 
         public virtual void Cleanup()
         {
+            CurrentUser.LoginAsAdmin();
             ResourcesClean.Clean();
-            CurrentUser.Logout();
         }
 
         protected void ValidateList<T>(IEnumerable<T> expected, IEnumerable<T> actual)

@@ -20,7 +20,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         public void TestOwnedGetAll()
         {
             CreateResource();
-            CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
+            CurrentUser.AddRoleAndRelogin(typeof(ExampleResource), ResourceActions.All);
             CreateResource();
             var response = ResourceOwned.GetAll();
             Assert.AreEqual(1, response.Value.Count());
@@ -41,7 +41,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         {
             CreateResource();
             var lastResource = CreatedResource.Id;
-            CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
+            CurrentUser.AddRoleAndRelogin(typeof(ExampleResource), ResourceActions.All);
             CreateResource();
 
             var reassigenResponse = ResourceOwned.Reassigen(lastResource);
@@ -65,7 +65,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         public void TestOwnedAuthorizedReassign()
         {
             CreateResource();
-            CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
+            CurrentUser.AddRoleAndRelogin(typeof(ExampleResource), ResourceActions.All);
 
             var reassigenResponse = ResourceOwned.Reassigen(CreatedResource.Id);
             AssertOk(reassigenResponse);
