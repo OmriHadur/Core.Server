@@ -1,34 +1,41 @@
-﻿using Core.Server.Test.ResourceTests;
+﻿using Core.Server.Injection.Interfaces;
+using Core.Server.Shared.Resources;
+using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity;
 
 namespace Core.Server.Test.DBFilling
 {
     [TestClass]
     public class FillDatabase : TestsBase
     {
-        //protected int SCALE = 5;
-        //protected readonly Random random = new Random();
+        protected int SCALE = 50;
 
-        //[TestMethod]
-        //public void FillUsers()
-        //{
-        //    for (int i = 0; i < SCALE - 1; i++)
-        //        ResourcesHolder.Create<UserResource>();
-        //    ResourcesHolder.DeleteAll<LoginResource>();
-        //}
+        [Dependency]
+        public IReflactionHelper ReflactionHelper;
 
-        //protected List<TResource> GetAll<TCreateResource, TUpdateResource, TResource>()
-        //    where TCreateResource : CreateResource
-        //    where TUpdateResource : UpdateResource
-        //    where TResource : Resource
-        //{
-        //    var response = GetClient<IRestClient<TCreateResource, TUpdateResource, TResource>>().Get().Result;
-        //    return response.Value.ToList();
-        //}
+        [Dependency]
+        public IUnityContainer UnityContainer;
 
-        //protected T GetRadomResources<T>(List<T> resources)
-        //{
-        //    return resources[random.Next(resources.Count)];
-        //}
+        [TestMethod]
+        public void TestDeleteAllResources()
+        {
+            var methodInfo = GetType().GetMethod(nameof(CreateResource));
+            var bundels = ReflactionHelper.GetResourcesBoundles();
+            foreach (var bundel in bundels)
+            {
+                var resourceMethod = methodInfo.MakeGenericMethod(bundel.TResource);
+                resourceMethod.Invoke(this, new object[0]);
+            }
+        }
+
+        public void CreateResource<TResource>()
+            where TResource : Resource
+        {
+            var resourceCreate = UnityContainer.Resolve<IResourceCreate<TResource>>();
+            for (int i = 0; i < SCALE; i++)
+                resourceCreate.Create();
+        }
     }
 }
