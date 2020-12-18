@@ -41,7 +41,8 @@ namespace Core.Server.Persistence.Cache
 
         public async Task<string> GetNotFoundId(string[] ids)
         {
-            if (Cache.Get(ids).All(e=>e!=null))
+            var cachedIds = Cache.Get(ids);
+            if (cachedIds.Count() == ids.Length && cachedIds.All(e => e != null))
                 return null;
             return await LookupRepository.GetNotFoundId(ids);
         }
