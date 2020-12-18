@@ -1,6 +1,7 @@
 ﻿using Core.Server.Common.Applications;
 using Core.Server.Common.Entities.Helpers;
 using Core.Server.Common.Helpers;
+using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
@@ -29,6 +30,9 @@ namespace Core.Server.Web.Controllers
         public IAuthorizationService AuthorizationService;
 
         [Dependency]
+        public IReflactionHelper ReflactionHelper;
+
+        [Dependency]
         public TApplication Application
         {
             get
@@ -53,11 +57,9 @@ namespace Core.Server.Web.Controllers
             return !result.Succeeded;
         }
 
-        private static string GetResourceName()
+        private string GetResourceName()
         {
-            var assemblyfullName = typeof(TResource).Assembly.FullName;
-            assemblyfullName = assemblyfullName.Substring(0, assemblyfullName.IndexOf(','));
-            return typeof(TResource).FullName + "," + assemblyfullName;
+            return ReflactionHelper.GetTypeFullName(typeof(TResource));
         }
     }
 }

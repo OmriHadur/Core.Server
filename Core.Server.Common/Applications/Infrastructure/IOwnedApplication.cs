@@ -13,6 +13,8 @@ namespace Core.Server.Common.Applications
 
         Task<ActionResult> Any();
 
+        Task<ActionResult> Assign(string resourceId);
+
         Task<ActionResult> Reassign(ReassginResource reassginResource);
     }
 }

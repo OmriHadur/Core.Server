@@ -31,7 +31,7 @@ namespace Core.Server.Tests.ResourceTests
             var email = CreatedResource.User.Email;
             var userResourceCreate = UnityContainer.Resolve<IResourceCreate<UserResource>>();
             userResourceCreate.DeleteAll();
-            var createResource = new LoginCreateResource() { Email = email, Password = TestConfig.UserPassword };
+            var createResource = new LoginCreateResource() { Email = email, Password = TestConfig.DefaultPassword };
 
             var response = ResourceAlter.Create(createResource);
 

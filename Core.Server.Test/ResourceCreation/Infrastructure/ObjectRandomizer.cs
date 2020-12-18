@@ -77,8 +77,10 @@ namespace Core.Server.Test.ResourceCreation
                 return GetDecimalInRange(property);
             else if (type == typeof(DateTime))
                 return DateTime.Now.AddHours(random.Next(240));
-            else if (type.IsEnum)
-                return random.Next(Enum.GetValues(type).Length);
+            //else if (type.IsArray)
+            //    return type;
+            //else if (type.IsEnum)
+            //    return random.Next(Enum.GetValues(type).Length);
             return null;
         }
 

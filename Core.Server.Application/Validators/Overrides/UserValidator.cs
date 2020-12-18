@@ -1,4 +1,5 @@
 ﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
@@ -14,6 +15,9 @@ namespace Core.Server.Application.Validators.Implementation
     public class UserValidator
         : ResourceValidator<UserCreateResource, UserUpdateResource, UserEntity>
     {
+        [Dependency]
+        public AppSettings AppSettings;
+
         [Dependency]
         public ILookupRepository<RoleEntity> RolesLookupRepository;
 
@@ -31,9 +35,13 @@ namespace Core.Server.Application.Validators.Implementation
         {
             if (createResource.Email != entity.Email)
                 return BadRequest(BadRequestReason.Unchangeable);
-            if (createResource.Email != CurrentUser.Email)
+            if (createResource.Email != CurrentUser.Email && 
+                CurrentUser.Email != AppSettings.AdminUserName)
                 return Unauthorized();
-            return await Validate(createResource);
+            var notFoundId = await RolesLookupRepository.GetNotFoundId(createResource.RolesIds);
+            if (notFoundId != null)
+                return NotFound(notFoundId);
+            return Ok();
         }
     }
 }

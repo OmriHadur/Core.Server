@@ -35,6 +35,7 @@ namespace Core.Server.Application.Mappers.Implementation
             var policiesIds = entities.SelectMany(e => e.PoliciesId).Distinct().ToArray();
             var policies = await PolicyLookupRepository.Get(policiesIds);
             var policiesResources = await PolicyMapper.Map(policies);
+
             foreach (var roleResource in roleResources)
             {
                 var roleEntity = entities.FirstOrDefault(e => e.Id == roleResource.Id);

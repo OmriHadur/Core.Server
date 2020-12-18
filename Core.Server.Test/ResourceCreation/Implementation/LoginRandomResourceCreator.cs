@@ -22,9 +22,8 @@ namespace Core.Server.Test.ResourceCreation
 
         protected override void AddRandomValues(LoginCreateResource createResource)
         {
-            CurrentUser.Login();
-            createResource.Email = CurrentUser.Email;
-            createResource.Password = Config.UserPassword;
+            createResource.Email = UserResourceCreate.GetOrCreate().Email;
+            createResource.Password = Config.DefaultPassword;
         }
     }
 }

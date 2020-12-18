@@ -26,6 +26,7 @@ namespace Core.Server.Tests.Unity
             var config = GetTestConfig();
             UnityContainer.RegisterInstance(typeof(TestConfig), config);
             ReflactionHelper = new ReflactionHelper(config.Assemblies);
+            UnityContainer.RegisterInstance(ReflactionHelper);
             var unityContainerBuilder = new UnityContainerBuilder(UnityContainer, ReflactionHelper);
             unityContainerBuilder.ConfigureContainer();
         }

@@ -36,7 +36,6 @@ namespace Core.Server.Application.Mappers.Implementation
             {
                 UserId = userEntity.Id,
                 CreateTime = DateTime.Now,
-                IsValid = true,
                 Token = GetToken(userResource)
             };
         }

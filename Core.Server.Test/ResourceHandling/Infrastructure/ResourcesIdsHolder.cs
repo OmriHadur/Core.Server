@@ -18,6 +18,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         public void Add<TResource>(string id)
         {
+            if (id == null) return;
             var type = typeof(TResource);
             if (!idsbyType.ContainsKey(type))
                 idsbyType.Add(type, new List<string>());

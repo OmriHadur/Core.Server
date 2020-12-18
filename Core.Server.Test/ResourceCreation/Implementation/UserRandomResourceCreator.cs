@@ -19,15 +19,16 @@ namespace Core.Server.Test.ResourceCreation
         protected override void AddRandomValues(UserCreateResource createResource)
         {
             base.AddRandomValues(createResource);
-            createResource.Password = Config.UserPassword;
+            createResource.Password = Config.DefaultPassword;
+            createResource.RolesIds = new string[0];
         }
 
         protected override void AddRandomValues(UserCreateResource createResource, UserResource existingResource)
         {
             base.AddRandomValues(createResource, existingResource);
-            createResource.Password = Config.UserPassword + Config.UserPassword;
             createResource.Email = existingResource.Email;
-            CurrentUser.Logout();
+            createResource.Password = Config.DefaultPassword;
+            createResource.RolesIds = new string[0];
         }
     }
 }

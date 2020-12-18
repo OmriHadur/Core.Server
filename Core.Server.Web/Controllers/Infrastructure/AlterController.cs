@@ -2,6 +2,7 @@
 using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Web.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

@@ -26,6 +26,11 @@ namespace Core.Server.Application.Logging
             return LogginCall(() => Application.GetAllOwned());
         }
 
+        public Task<ActionResult> Assign(string resourceId)
+        {
+            return LogginCall(() => Application.Assign(resourceId));
+        }
+
         public Task<ActionResult> Reassign(ReassginResource reassginResource)
         {
             return LogginCall(() => Application.Reassign(reassginResource));

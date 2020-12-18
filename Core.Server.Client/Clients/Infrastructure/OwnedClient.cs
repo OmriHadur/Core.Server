@@ -23,6 +23,11 @@ namespace Core.Server.Client.Clients
             return SendGetMany("owned");
         }
 
+        public Task<ActionResult> Assign(string resourceId)
+        {
+            return SentPostNoResource("assign", resourceId);
+        }
+
         public Task<ActionResult> Reassign(ReassginResource reassginResource)
         {
             return SentPostNoResource("reassign", reassginResource);

@@ -51,6 +51,8 @@ namespace Core.Server.Web.Authorization
                 return ResourceActions.Alter;
             if (operationAuthorization.Name == Operations.Delete.Name)
                 return ResourceActions.Delete;
+            if (operationAuthorization.Name == Operations.Reassign.Name)
+                return ResourceActions.Reassign;
             return ResourceActions.None;
         }
 
@@ -59,7 +61,7 @@ namespace Core.Server.Web.Authorization
             var allowedActions = GetResourceActions(Config.AllowAnonymous, resource);
             if (userResource != null)
                 foreach (var role in userResource.Roles)
-                    allowedActions.Union(GetResourceActions(role.Policies, resource));
+                    allowedActions = allowedActions.Union(GetResourceActions(role.Policies, resource));
             return allowedActions;
         }
 

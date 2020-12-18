@@ -63,6 +63,13 @@ namespace Core.Server.Injection.Reflaction
             return drivenType.Name.Replace(subType.Name, string.Empty);
         }
 
+        public string GetTypeFullName(Type type)
+        {
+            var assemblyFullName = type.Assembly.FullName;
+            assemblyFullName = assemblyFullName.Substring(0, assemblyFullName.IndexOf(','));
+            return type.FullName + "," + assemblyFullName;
+        }
+
         public Type GetTypeByName(string typeName)
         {
             return types.FirstOrDefault(t => t.Name == typeName);

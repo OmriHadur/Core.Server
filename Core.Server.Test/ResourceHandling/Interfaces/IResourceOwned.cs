@@ -11,6 +11,6 @@ namespace Core.Server.Tests.ResourceCreators.Interfaces
 
         ActionResult Any();
 
-        ActionResult Reassigen(string resourceId, string userEmail);
+        ActionResult Reassigen(string resourceId);
     }
 }

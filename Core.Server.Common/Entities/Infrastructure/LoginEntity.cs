@@ -12,9 +12,6 @@ namespace Core.Server.Common.Entities
         public string Token { get; set; }
 
         [Required]
-        public bool IsValid { get; set; }
-
-        [Required]
         public DateTime CreateTime { get; set; }
     }
 }

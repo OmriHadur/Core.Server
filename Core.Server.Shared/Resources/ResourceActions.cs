@@ -10,6 +10,7 @@ namespace Core.Server.Shared.Resources
         Create = 2,
         Alter = 4,
         Delete = 8,
-        All = 15
+        Reassign = 16,
+        All = 31
     }
 }

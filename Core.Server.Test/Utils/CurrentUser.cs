@@ -1,4 +1,6 @@
 ﻿using Core.Server.Common.Attributes;
+using Core.Server.Injection.Interfaces;
+using Core.Server.Shared.Resources;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Tests.Configuration;
 using Core.Server.Tests.ResourceCreators.Interfaces;
@@ -11,65 +13,68 @@ namespace Core.Server.Tests.Utils
     public class CurrentUser : ICurrentUser
     {
         private string token;
-        private bool logginin;
-
-        [Dependency]
-        public IResourcesIdsHolder ResourcesHolder;
+        private bool isLoggin;
 
         [Dependency]
         public TestConfig Config;
 
         [Dependency]
+        public Lazy<IResourceAlter<UserCreateResource, UserUpdateResource, UserResource>> UserResourceAlter;
+
+        [Dependency]
         public Lazy<IResourceCreate<UserResource>> UserResourceCreate;
 
         [Dependency]
-        public Lazy<IResourceCreate<LoginResource>> LoginResourceCreate;
+        public Lazy<IResourceAlter<LoginCreateResource, LoginUpdateResource, LoginResource>> LoginResourceAlter;
 
         [Dependency]
-        public Lazy<IResourceAlter<LoginCreateResource, LoginUpdateResource,LoginResource>> LoginResourceAlter;
+        public Lazy<IResourceAlter<PolicyCreateResource, PolicyUpdateResource, PolicyResource>> PolicyResourceAlter;
+
+        [Dependency]
+        public Lazy<IResourceCreate<RoleResource>> RoleResourceCreate;
+
+        [Dependency]
+        public IReflactionHelper ReflactionHelper;
 
         public event EventHandler<string> OnTokenChange;
-        public string Email { get; private set; }
+
+        public UserResource UserResource { get; private set; }
 
         public string Token
         {
             get
             {
-                if (token == null && !logginin)
-                    Login();
+                if (token == null && !isLoggin)
+                    LoginAsAdmin();
                 return token;
             }
         }
 
-        public void Relogin()
+        public void ReLogin()
         {
-            UserResourceCreate.Value.Create();
-            Logout();          
-            Login();
+            Logout();
+            var email = UserResourceCreate.Value.GetOrCreate().Email;
+            LoginAs(email);
         }
 
-        public void Login()
+        public void LoginAsAdmin()
         {
-            if (!string.IsNullOrEmpty(token) | logginin)
-                return;
-
-            logginin = true;
-            Email = UserResourceCreate.Value.GetOrCreate().Email;
-            var login = LoginResourceCreate.Value.GetOrCreate();
+            isLoggin = true;
+            var login = LoginResourceAlter.Value.Create(new LoginCreateResource()
+            {
+                Email = Config.AdminUser,
+                Password = Config.AdminPassword
+            }).Value;
             token = login.Token;
-            logginin = false;
+            UserResource = login.User;
             OnTokenChange?.Invoke(this, token);
+            isLoggin = false;
         }
-
-
-
 
         public void Logout()
         {
-            var currentLogin = LoginResourceCreate.Value.GetIfExist();
-            if (currentLogin != null)
-                LoginResourceCreate.Value.Delete(currentLogin.Id);
             token = null;
+            UserResource = null;
             OnTokenChange?.Invoke(this, token);
         }
 
@@ -77,7 +82,19 @@ namespace Core.Server.Tests.Utils
         {
             var login = LoginResourceAlter.Value.Create(cr => cr.Email = email).Value;
             token = login.Token;
+            UserResource = login.User;
             OnTokenChange?.Invoke(this, token);
+        }
+
+        public void AddRole(Type type, ResourceActions resourceActions)
+        {
+            PolicyResourceAlter.Value.Create(p =>
+            {
+                p.ResourceType = ReflactionHelper.GetTypeFullName(type);
+                p.ResourceActions = resourceActions;
+            });
+            var roleId = RoleResourceCreate.Value.Create().Value.Id;
+            UserResourceAlter.Value.Replace(ur => ur.RolesIds = new string[] { roleId });
         }
     }
 }

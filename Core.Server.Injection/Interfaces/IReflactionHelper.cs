@@ -14,6 +14,7 @@ namespace Core.Server.Injection.Interfaces
             where TAttribute : Attribute;
         IEnumerable<ResourceBoundle> GetAllResourcesBoundles();
         IEnumerable<ResourceBoundle> GetResourcesBoundles();
+        string GetTypeFullName(Type type);
         IEnumerable<ResourceBoundle> GetChildResourcesBoundles();
         string GetTypeName(Type drivenType, Type subType);
         Type GetTypeByName(string typeName);

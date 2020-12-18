@@ -12,5 +12,7 @@ namespace Core.Server.Web.Authorization
             new OperationAuthorizationRequirement { Name = nameof(Alter) };
         public static OperationAuthorizationRequirement Delete =
             new OperationAuthorizationRequirement { Name = nameof(Delete) };
+        public static OperationAuthorizationRequirement Reassign =
+            new OperationAuthorizationRequirement { Name = nameof(Reassign) };
     }
 }

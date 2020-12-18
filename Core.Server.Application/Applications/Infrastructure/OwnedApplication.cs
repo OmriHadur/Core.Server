@@ -41,19 +41,28 @@ namespace Core.Server.Application
                 Ok() :
                 NotFound();
         }
+        public async Task<ActionResult> Assign(string resourceId)
+        {
+            var entity = await LookupRepository.FindFirst(e => e.Id == resourceId);
+            if (entity == null)
+                return NotFound(resourceId);
+            if (entity.UserId != null)
+                return Unauthorized();
+            entity.UserId = CurrentUser.Id;
+            await AlterRepository.Update(entity);
+            return Ok();
+        }
 
         public async Task<ActionResult> Reassign(ReassginResource reassginResource)
         {
             var entity = await LookupRepository.FindFirst(e => e.Id == reassginResource.ResourceId);
             if (entity == null)
                 return NotFound(reassginResource.ResourceId);
-            if (entity.UserId != null && entity.UserId != CurrentUser.Id)
-                return Unauthorized();
-            var userEntity = await UserRepository.FindFirst(u => u.Email == reassginResource.UserEmail);
-            if (userEntity == null)
-                return NotFound(reassginResource.UserEmail);
+            var isExists = await UserRepository.Exists(reassginResource.NewOwnerUserId);
+            if (!isExists)
+                return NotFound(reassginResource.NewOwnerUserId);
 
-            entity.UserId = userEntity.Id;
+            entity.UserId = reassginResource.NewOwnerUserId;
             await AlterRepository.Update(entity);
             return Ok();
         }

@@ -23,12 +23,17 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return Filter(Client.GetAll().Result);
         }
 
-        public ActionResult Reassigen(string resourceId, string userEmail)
+        public ActionResult Assigen(string resourceId)
+        {
+            return Client.Assign(resourceId).Result;
+        }
+
+        public ActionResult Reassigen(string resourceId)
         {
             var reassginResource = new ReassginResource()
             {
                 ResourceId = resourceId,
-                UserEmail = userEmail
+                NewOwnerUserId = CurrentUser.UserResource.Id
             };
             return Client.Reassign(reassginResource).Result;
         }

@@ -9,6 +9,6 @@ namespace Core.Server.Shared.Resources
         public string ResourceId { get; set; }
 
         [Required]
-        public string UserEmail { get; set; }
+        public string NewOwnerUserId { get; set; }
     }
 }

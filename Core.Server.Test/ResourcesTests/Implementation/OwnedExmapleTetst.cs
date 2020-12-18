@@ -20,7 +20,8 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         public void TestOwnedGetAll()
         {
             CreateResource();
-            CurrentUser.Relogin();
+            CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
+            CurrentUser.ReLogin();
             CreateResource();
             var response = ResourceOwned.GetAll();
             Assert.AreEqual(1, response.Value.Count());
@@ -31,22 +32,22 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         public void TestOwnedAny()
         {
             CreateResource();
-            CurrentUser.Relogin();
+            CurrentUser.ReLogin();
             var response = ResourceOwned.Any();
             AssertNotFound(response);
         }
 
         [TestMethod]
         public void TestOwnedReassign()
-        {            
+        {
             CreateResource();
-            var lastUserEmail = CurrentUser.Email;
-            CurrentUser.Relogin();
+            var lastResource = CreatedResource.Id;
+            CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
+            CurrentUser.ReLogin();
             CreateResource();
-            
-            var reassigenResponse =  ResourceOwned.Reassigen(CreatedResource.Id, lastUserEmail);
+
+            var reassigenResponse = ResourceOwned.Reassigen(lastResource);
             AssertOk(reassigenResponse);
-            CurrentUser.LoginAs(lastUserEmail);
             var getAllResponse = ResourceOwned.GetAll();
 
             Assert.AreEqual(2, getAllResponse.Value.Count());
@@ -56,10 +57,21 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         public void TestOwnedUnauthorizedReassign()
         {
             CreateResource();
-            CurrentUser.Relogin();
+            CurrentUser.ReLogin();
 
-            var reassigenResponse = ResourceOwned.Reassigen(CreatedResource.Id, CurrentUser.Email);
+            var reassigenResponse = ResourceOwned.Reassigen(CreatedResource.Id);
             AssertUnauthorized(reassigenResponse);
+        }
+
+        [TestMethod]
+        public void TestOwnedAuthorizedReassign()
+        {
+            CreateResource();
+            CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
+            CurrentUser.ReLogin();
+
+            var reassigenResponse = ResourceOwned.Reassigen(CreatedResource.Id);
+            AssertOk(reassigenResponse);
         }
     }
 }
