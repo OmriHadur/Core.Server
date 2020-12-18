@@ -2,12 +2,12 @@
 using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Resources;
 using Core.Server.Shared.Resources.Users;
-using Core.Server.Tests.Configuration;
-using Core.Server.Tests.ResourceCreators.Interfaces;
+using Core.Server.Test.Configuration;
+using Core.Server.Test.ResourceCreators.Interfaces;
 using System;
 using Unity;
 
-namespace Core.Server.Tests.Utils
+namespace Core.Server.Test.Utils
 {
     [Inject]
     public class CurrentUser : ICurrentUser
@@ -50,13 +50,6 @@ namespace Core.Server.Tests.Utils
             }
         }
 
-        public void ReLogin()
-        {
-            Logout();
-            var email = UserResourceCreate.Value.GetOrCreate().Email;
-            LoginAs(email);
-        }
-
         public void LoginAsAdmin()
         {
             isLoggin = true;
@@ -78,6 +71,14 @@ namespace Core.Server.Tests.Utils
             OnTokenChange?.Invoke(this, token);
         }
 
+        public void Login()
+        {
+            LoginAsAdmin();
+            UserResource userResource = UserResourceCreate.Value.GetOrCreate();
+            var email = userResource.Email;
+            LoginAs(email);
+        }
+
         public void LoginAs(string email)
         {
             var login = LoginResourceAlter.Value.Create(cr => cr.Email = email).Value;
@@ -88,6 +89,7 @@ namespace Core.Server.Tests.Utils
 
         public void AddRole(Type type, ResourceActions resourceActions)
         {
+            LoginAsAdmin();
             PolicyResourceAlter.Value.Create(p =>
             {
                 p.ResourceType = ReflactionHelper.GetTypeFullName(type);
@@ -95,6 +97,7 @@ namespace Core.Server.Tests.Utils
             });
             var roleId = RoleResourceCreate.Value.Create().Value.Id;
             UserResourceAlter.Value.Replace(ur => ur.RolesIds = new string[] { roleId });
+            Login();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Core.Server.Shared.Resources;
 
-namespace Core.Server.Tests.ResourceCreation.Interfaces
+namespace Core.Server.Test.ResourceCreation.Interfaces
 {
     public interface IRandomResourceCreator<TCreateResource, TUpdateResource, TResource>
         where TCreateResource : CreateResource

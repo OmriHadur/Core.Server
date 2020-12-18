@@ -1,7 +1,7 @@
 ﻿using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
 
-namespace Core.Server.Tests.ResourceCreators.Interfaces
+namespace Core.Server.Test.ResourceCreators.Interfaces
 {
     public interface IResourceCreate<TResource> 
         : IResourceDelete

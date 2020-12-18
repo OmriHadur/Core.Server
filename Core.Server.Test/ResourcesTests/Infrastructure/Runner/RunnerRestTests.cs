@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Core.Server.Tests.ResourceTests.Interfaces;
+using Core.Server.Test.ResourceTests.Interfaces;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests
 {
     [TestClass]
     public class RunnerRestTests

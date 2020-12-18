@@ -1,14 +1,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
-using Core.Server.Tests.Unity;
+using Core.Server.Test.Unity;
 using Core.Server.Injection.Interfaces;
 using System.Collections.Generic;
-using Core.Server.Tests.ResourceTests.Interfaces;
+using Core.Server.Test.ResourceTests.Interfaces;
 using System.Linq;
 using System;
 using Core.Server.Injection.Unity;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests
 {
     public class RunnerTestsBase<TResourceGenericTests>
         where TResourceGenericTests : IResourceGenericTests

@@ -1,4 +1,4 @@
-﻿namespace Core.Server.Tests.ResourceTests.Interfaces
+﻿namespace Core.Server.Test.ResourceTests.Interfaces
 {
     public interface IResourceGenericRestTests
         : IResourceGenericTests

@@ -1,5 +1,5 @@
 ﻿using Core.Server.Common.Attributes;
-using Core.Server.Tests.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceCreators.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

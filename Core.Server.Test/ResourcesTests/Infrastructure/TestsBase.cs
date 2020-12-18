@@ -5,11 +5,11 @@ using Core.Server.Client.Results;
 using System.Collections.Generic;
 using Core.Server.Shared.Resources;
 using Unity;
-using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Tests.Utils;
+using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.Utils;
 using Core.Server.Test.ResourcesCreators.Interfaces;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests
 {
     public abstract class TestsBase
     {

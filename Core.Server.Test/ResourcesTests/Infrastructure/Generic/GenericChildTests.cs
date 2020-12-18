@@ -1,12 +1,12 @@
 using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Tests.ResourceTests.Interfaces;
+using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceTests.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Unity;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests
 {
     [Inject]
     public class GenericChildTests<TCreateResource, TUpdateResource, TParentResource, TChildResource>

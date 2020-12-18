@@ -2,7 +2,7 @@
 using Core.Server.Shared.Resources;
 using System;
 
-namespace Core.Server.Tests.ResourceCreators.Interfaces
+namespace Core.Server.Test.ResourceCreators.Interfaces
 {
     public interface IChildResourceAlter<TCreateResource, TUpdateResource, TParentResource, TChildResource>
         : IResourceAlter<TCreateResource, TUpdateResource, TParentResource>

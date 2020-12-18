@@ -1,6 +1,6 @@
 ﻿using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Tests.ResourceTests;
+using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Unity;
@@ -8,7 +8,7 @@ using Unity;
 namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
-    public class OwnedExmapleTetst
+    public class OwnedTests
          : GenericExtraTestBase<ExampleChildCreateResource, ExampleUpdateResource, ExampleResource>
     {
         [Dependency]
@@ -21,7 +21,6 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         {
             CreateResource();
             CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
-            CurrentUser.ReLogin();
             CreateResource();
             var response = ResourceOwned.GetAll();
             Assert.AreEqual(1, response.Value.Count());
@@ -32,7 +31,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         public void TestOwnedAny()
         {
             CreateResource();
-            CurrentUser.ReLogin();
+            CurrentUser.Login();
             var response = ResourceOwned.Any();
             AssertNotFound(response);
         }
@@ -43,7 +42,6 @@ namespace Core.Server.Test.ResourcesTests.Implementation
             CreateResource();
             var lastResource = CreatedResource.Id;
             CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
-            CurrentUser.ReLogin();
             CreateResource();
 
             var reassigenResponse = ResourceOwned.Reassigen(lastResource);
@@ -57,7 +55,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         public void TestOwnedUnauthorizedReassign()
         {
             CreateResource();
-            CurrentUser.ReLogin();
+            CurrentUser.Login();
 
             var reassigenResponse = ResourceOwned.Reassigen(CreatedResource.Id);
             AssertUnauthorized(reassigenResponse);
@@ -68,7 +66,6 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         {
             CreateResource();
             CurrentUser.AddRole(typeof(ExampleResource), ResourceActions.All);
-            CurrentUser.ReLogin();
 
             var reassigenResponse = ResourceOwned.Reassigen(CreatedResource.Id);
             AssertOk(reassigenResponse);

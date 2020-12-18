@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreation.Interfaces;
+using Core.Server.Test.ResourceCreation.Interfaces;
 using System;
 using System.Reflection;
 using Unity;

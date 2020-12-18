@@ -2,10 +2,10 @@
 using Core.Server.Shared.Resources.Users;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests.ResourceExtra
 {
     [TestClass]
-    public class UserExtraTests
+    public class UserResourceExtraTests
         : GenericExtraTestBase<UserCreateResource, UserUpdateResource, UserResource>
     {
         [TestMethod]

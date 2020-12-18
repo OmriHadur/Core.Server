@@ -1,6 +1,6 @@
 ﻿using Core.Server.Client.Results;
 
-namespace Core.Server.Tests.ResourceCreators.Interfaces
+namespace Core.Server.Test.ResourceCreators.Interfaces
 {
     public interface IResourceDelete
     {

@@ -2,8 +2,9 @@
 using Core.Server.Client.Results;
 using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceCreators.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
@@ -18,9 +19,12 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return Client.Get(id).Result;
         }
 
-        public IEnumerable<TResource> Get()
+        public ActionResult<IEnumerable<TResource>> Get()
         {
-            return Filter(Client.Get().Result.Value);
+            var result = Client.Get().Result;
+            if (result.IsFail)
+                return result;
+            return new OkResultWithObject<IEnumerable<TResource>>(Filter(result.Value));
         }
 
         public IEnumerable<TResource> Get(string[] ids)

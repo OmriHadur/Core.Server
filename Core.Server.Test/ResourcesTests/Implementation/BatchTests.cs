@@ -1,6 +1,6 @@
 ﻿using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Tests.ResourceTests;
+using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Unity;
@@ -8,7 +8,7 @@ using Unity;
 namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
-    public class BatchExmapleTetst
+    public class BatchTests
          : GenericExtraTestBase<ExampleCreateResource, ExampleUpdateResource, ExampleResource>
     {
         [Dependency]
@@ -21,7 +21,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         {
             var response = ResourceBatch.Create(5);
 
-            var amountAfter = ResourceLookup.Get().Count();
+            var amountAfter = ResourceLookup.Get().Value.Count();
             Assert.AreEqual(5, amountAfter);
             AssertOk(response);
         }
@@ -32,7 +32,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
             var createResponse = ResourceBatch.Create(5);
             var deleteResponse = ResourceBatch.Delete(createResponse.Value.Select(r => r.Id));
 
-            var amountAfter = ResourceLookup.Get().Count();
+            var amountAfter = ResourceLookup.Get().Value.Count();
             Assert.AreEqual(0, amountAfter);
             AssertOk(deleteResponse);
         }

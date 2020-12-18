@@ -1,9 +1,9 @@
 ﻿using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
-using Core.Server.Tests.Configuration;
-using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Tests.Utils;
+using Core.Server.Test.Configuration;
+using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;

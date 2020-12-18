@@ -3,9 +3,9 @@ using Core.Server.Common.Config;
 using Core.Server.Injection.Interfaces;
 using Core.Server.Injection.Reflaction;
 using Core.Server.Injection.Unity;
-using Core.Server.Tests.Configuration;
-using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Tests.Utils;
+using Core.Server.Test.Configuration;
+using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Reflection;
 using Unity;
 
-namespace Core.Server.Tests.Unity
+namespace Core.Server.Test.Unity
 {
     public class TestsUnityContainer
     {

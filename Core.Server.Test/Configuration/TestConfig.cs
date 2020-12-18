@@ -1,5 +1,5 @@
 ﻿
-namespace Core.Server.Tests.Configuration
+namespace Core.Server.Test.Configuration
 {
     public class TestConfig
     {

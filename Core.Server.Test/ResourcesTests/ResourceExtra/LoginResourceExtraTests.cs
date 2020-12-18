@@ -1,12 +1,12 @@
 ﻿using Core.Server.Shared.Resources.Users;
-using Core.Server.Tests.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceCreators.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests.ResourceExtra
 {
     [TestClass]
-    public class LoginExtraTests
+    public class LoginResourceExtraTests
         : GenericExtraTestBase<LoginCreateResource, LoginUpdateResource, LoginResource>
     {
         [TestMethod]

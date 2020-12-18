@@ -2,8 +2,8 @@
 using Core.Server.Client.Results;
 using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreation.Interfaces;
-using Core.Server.Tests.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceCreation.Interfaces;
+using Core.Server.Test.ResourceCreators.Interfaces;
 using System.Linq;
 using Unity;
 

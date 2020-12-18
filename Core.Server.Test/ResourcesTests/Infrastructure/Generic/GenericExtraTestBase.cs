@@ -1,11 +1,11 @@
 using Core.Server.Shared.Resources;
-using Core.Server.Tests.Configuration;
-using Core.Server.Tests.ResourceCreators.Interfaces;
-using Core.Server.Tests.Unity;
+using Core.Server.Test.Configuration;
+using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests
 {
     public abstract class GenericExtraTestBase<TCreateResource, TUpdateResource, TResource>
         : GenericTestsBase<TResource>

@@ -2,7 +2,7 @@
 using Core.Server.Shared.Resources.Users;
 using System;
 
-namespace Core.Server.Tests.Utils
+namespace Core.Server.Test.Utils
 {
     public interface ICurrentUser
     {
@@ -10,8 +10,8 @@ namespace Core.Server.Tests.Utils
         string Token { get; }
         UserResource UserResource { get; }
         void LoginAsAdmin();
+        void Login();
         void LoginAs(string email);
-        void ReLogin();
         void Logout();
         void AddRole(Type type, ResourceActions resourceActions);
     }

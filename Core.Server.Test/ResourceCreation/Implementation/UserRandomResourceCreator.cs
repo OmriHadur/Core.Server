@@ -1,7 +1,7 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources.Users;
-using Core.Server.Tests.Configuration;
-using Core.Server.Tests.Utils;
+using Core.Server.Test.Configuration;
+using Core.Server.Test.Utils;
 using Unity;
 
 namespace Core.Server.Test.ResourceCreation

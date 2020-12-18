@@ -1,9 +1,9 @@
 using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceCreators.Interfaces;
 using System.Collections.Generic;
 using Unity;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests
 {
     public abstract class GenericTestsBase<TResource> 
         : TestsBase

@@ -2,7 +2,7 @@
 using Core.Server.Client.Results;
 using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
-using Core.Server.Tests.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourceCreators.Interfaces;
 using System.Collections.Generic;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure

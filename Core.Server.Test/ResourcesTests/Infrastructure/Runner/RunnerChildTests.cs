@@ -1,10 +1,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Core.Server.Tests.ResourceTests.Interfaces;
+using Core.Server.Test.ResourceTests.Interfaces;
 using Core.Server.Injection.Unity;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Core.Server.Tests.ResourceTests
+namespace Core.Server.Test.ResourceTests
 {
     [TestClass]
     public class RunnerChildTests

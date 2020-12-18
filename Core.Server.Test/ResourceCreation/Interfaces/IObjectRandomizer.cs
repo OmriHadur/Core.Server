@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Core.Server.Tests.ResourceCreation.Interfaces
+namespace Core.Server.Test.ResourceCreation.Interfaces
 {
     public interface IObjectRandomizer
     {

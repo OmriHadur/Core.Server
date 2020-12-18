@@ -2,9 +2,9 @@
 using Core.Server.Client.Interfaces;
 using Core.Server.Shared.Resources;
 using Core.Server.Shared.Resources.Users;
-using Core.Server.Tests.ResourceTests;
+using Core.Server.Test.ResourceTests;
 
-namespace Core.Server.Tests.DBFilling
+namespace Core.Server.Test.DBFilling
 {
     [TestClass]
     public class DeleteAllResources : TestsBase

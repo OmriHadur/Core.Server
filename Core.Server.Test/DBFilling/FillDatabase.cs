@@ -1,7 +1,7 @@
-﻿using Core.Server.Tests.ResourceTests;
+﻿using Core.Server.Test.ResourceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Core.Server.Tests.DBFilling
+namespace Core.Server.Test.DBFilling
 {
     [TestClass]
     public class FillDatabase : TestsBase
