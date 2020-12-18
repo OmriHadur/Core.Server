@@ -14,8 +14,6 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         [Dependency]
         public IResourceOwned<ExampleResource> ResourceOwned;
 
-        protected override object GetThis() => this;
-
         [TestMethod]
         public void TestOwnedGetAll()
         {

@@ -17,8 +17,6 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         [Dependency]
         public IResourceQuery<ExampleResource> ResourceQuery;
 
-        protected override object GetThis() => this;
-
         [TestMethod]
         public void TestQueryEquals()
         {

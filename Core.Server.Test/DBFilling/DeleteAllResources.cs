@@ -1,30 +1,42 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Core.Server.Client.Interfaces;
+﻿using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Test.ResourceCreators.Interfaces;
 using Core.Server.Test.ResourceTests;
+using Core.Server.Test.Unity;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity;
 
 namespace Core.Server.Test.DBFilling
 {
     [TestClass]
     public class DeleteAllResources : TestsBase
     {
-        //[TestMethod]
-        //public void TestDeleteAllResources()
-        //{
-        //    DeleteAllResourcesOfType<LoginCreateResource, LoginUpdateResource, LoginResource>();
-        //    DeleteAllResourcesOfType<UserCreateResource, UserUpdateResource, UserResource>();
-        //}
+        [Dependency]
+        public IReflactionHelper ReflactionHelper;
 
-        //private void DeleteAllResourcesOfType<TCreateResource, TUpdateResource, TResource>()
-        //    where TCreateResource : CreateResource
-        //    where TUpdateResource : UpdateResource
-        //    where TResource : Resource
-        //{
-        //    var resourceClient = 
-        //    var resources = resourceClient.Get().Result;
-        //    foreach (var resource in resources.Value)
-        //        resourceClient.Delete(resource.Id).Wait();
-        //}
+        [Dependency]
+        public IUnityContainer UnityContainer;
+
+        [TestMethod]
+        public void TestDeleteAllResources()
+        {
+            var methodInfo = GetType().GetMethod(nameof(DeleteAllResource));
+            var bundels = ReflactionHelper.GetResourcesBoundles();
+            foreach (var bundel in bundels)
+            {
+                var resourceMethod = methodInfo.MakeGenericMethod(bundel.TResource);
+                resourceMethod.Invoke(this, new object[0]);
+            }
+        }
+
+        public void DeleteAllResource<TResource>()
+            where TResource : Resource
+        {
+            var resourceLookup = UnityContainer.Resolve<IResourceLookup<TResource>>();
+            var resourceCreate = UnityContainer.Resolve<IResourceCreate<TResource>>();
+            var allResources = resourceLookup.Get(false).Value;
+            foreach (var resource in allResources)
+                resourceCreate.Delete(resource.Id);
+        }
     }
 }

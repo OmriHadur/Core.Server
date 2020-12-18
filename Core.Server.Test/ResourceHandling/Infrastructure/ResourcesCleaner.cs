@@ -21,9 +21,9 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             foreach (var type in types)
             {
                 var resourceHandlerType = typeof(IResourceCreate<>);
-                var resourceHandlerGenericType= resourceHandlerType.MakeGenericType(type);
-                var resourcehandler = UnityContainer.Resolve(resourceHandlerGenericType);
-                (resourcehandler as IResourceDelete).DeleteAll();
+                var resourceHandlerGenericType = resourceHandlerType.MakeGenericType(type);
+                var resourcehandler = (IResourceDelete)UnityContainer.Resolve(resourceHandlerGenericType);
+                resourcehandler.DeleteAll();
             }
         }
     }

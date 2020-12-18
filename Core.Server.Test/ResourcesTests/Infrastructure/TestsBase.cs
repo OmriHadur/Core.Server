@@ -8,6 +8,7 @@ using Unity;
 using Core.Server.Test.ResourceCreators.Interfaces;
 using Core.Server.Test.Utils;
 using Core.Server.Test.ResourcesCreators.Interfaces;
+using Core.Server.Test.Unity;
 
 namespace Core.Server.Test.ResourceTests
 {
@@ -22,10 +23,14 @@ namespace Core.Server.Test.ResourceTests
         [Dependency]
         public ICurrentUser CurrentUser;
 
+        [TestInitialize]
         public virtual void TestInit()
         {
-
+            var testsUnityContainer = new TestsUnityContainer();
+            testsUnityContainer.UnityContainer.BuildUp(This.GetType(), This);
         }
+
+        protected object This => this;
 
         public virtual void Cleanup()
         {

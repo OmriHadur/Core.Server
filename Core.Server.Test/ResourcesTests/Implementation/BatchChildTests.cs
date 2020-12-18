@@ -14,8 +14,6 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         [Dependency]
         public IChildResourceBatch<ExampleChildCreateResource, ExampleChildUpdateResource, ExampleResource, ExampleChildResource> ResourceBatch;
 
-        protected override object GetThis() => this;
-
         [TestMethod]
         public void TestBatchCreate()
         {

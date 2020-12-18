@@ -15,14 +15,12 @@ namespace Core.Server.Test.ResourceTests
             CreateResource();
         }
 
-
         public virtual void TestCreateAddedToList()
         {
             var idsCount = ResourcesIdsHolder.GetAll<TResource>().Count();
             var listCount = ResourceLookup.Get().Value.Count();
             Assert.AreEqual(idsCount, listCount);
         }
-
 
         public virtual void TestGet()
         {

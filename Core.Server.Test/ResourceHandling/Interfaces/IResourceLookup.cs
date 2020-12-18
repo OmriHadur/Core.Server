@@ -9,6 +9,6 @@ namespace Core.Server.Test.ResourceCreators.Interfaces
     {
         ActionResult<TResource> Get(string id);
         IEnumerable<TResource> Get(string[] ids);
-        ActionResult<IEnumerable<TResource>> Get();
+        ActionResult<IEnumerable<TResource>> Get(bool filter = true);
     }
 }
