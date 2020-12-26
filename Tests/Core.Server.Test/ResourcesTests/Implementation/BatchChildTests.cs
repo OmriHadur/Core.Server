@@ -9,10 +9,10 @@ namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
     public class BatchChildTests
-         : GenericExtraTestBase<ExampleChildCreateResource, ExampleChildUpdateResource, ExampleResource>
+         : GenericExtraTestBase<ExampleChildAlterResource, ExampleResource>
     {
         [Dependency]
-        public IChildResourceBatch<ExampleChildCreateResource, ExampleChildUpdateResource, ExampleResource, ExampleChildResource> ResourceBatch;
+        public IChildResourceBatch<ExampleChildAlterResource, ExampleResource, ExampleChildResource> ResourceBatch;
 
         [TestMethod]
         public void TestBatchCreate()

@@ -11,25 +11,23 @@ using Unity;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     [Inject]
-    public class ResourceBatach<TCreateResource, TUpdateResource, TResource>
-        : ResourceHandling<IBatchClient<TCreateResource, TUpdateResource, TResource>, TResource>
-        , IResourceBatch<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public class ResourceBatach<TAlterResource, TResource>
+        : ResourceHandling<IBatchClient<TAlterResource, TResource>, TResource>
+        , IResourceBatch<TAlterResource, TResource>
         where TResource : Resource
     {
         [Dependency]
-        public IRandomResourceCreator<TCreateResource, TUpdateResource, TResource> RandomResourceCreator;
+        public IRandomResourceCreator<TAlterResource, TResource> RandomResourceCreator;
 
         public ActionResult<IEnumerable<TResource>> Create(int amount)
         {
-            var createResources = new TCreateResource[amount];
+            var createResources = new TAlterResource[amount];
             for (int i = 0; i < amount; i++)
                 createResources[i] = RandomResourceCreator.GetRandomCreateResource();
             return Create(createResources);
         }
 
-        public ActionResult<IEnumerable<TResource>> Create(IEnumerable<TCreateResource> createResources)
+        public ActionResult<IEnumerable<TResource>> Create(IEnumerable<TAlterResource> createResources)
         {
             var result = Client.BatchCreate(createResources.ToArray()).Result;
             if (result.IsSuccess)
@@ -47,7 +45,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return result;
         }
 
-        public ActionResult<IEnumerable<TResource>> Update(IEnumerable<TUpdateResource> updateResources)
+        public ActionResult<IEnumerable<TResource>> Update(IEnumerable<TAlterResource> updateResources)
         {
             return Client.BatchUpdate(updateResources.ToArray()).Result;
         }

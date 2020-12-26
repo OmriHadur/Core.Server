@@ -12,11 +12,10 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class ChildAlterApplication<TCreateResource, TUpdateResource, TParentResource, TParentEntity, TChildEntity>
+    public class ChildAlterApplication<TAlterResource, TParentResource, TParentEntity, TChildEntity>
         : BaseApplication<TParentEntity>,
-          IChildAlterApplication<TCreateResource, TUpdateResource, TParentResource>
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+          IChildAlterApplication<TAlterResource, TParentResource>
+        where TAlterResource : ChildAlterResource
         where TParentResource : Resource
         where TParentEntity : Entity
         where TChildEntity : ChildEntity
@@ -25,7 +24,7 @@ namespace Core.Server.Application
         public IAlterRepository<TParentEntity> AlterRepository;
 
         [Dependency]
-        public IResourceValidator<TCreateResource, TUpdateResource, TParentEntity> ResourceValidator;
+        public IResourceValidator<TAlterResource, TParentEntity> ResourceValidator;
 
         [Dependency]
         public IParentManager<TParentEntity, TChildEntity> ParentManager;
@@ -34,43 +33,43 @@ namespace Core.Server.Application
         public IResourceMapper<TParentResource, TParentEntity> ResourceMapper;
 
         [Dependency]
-        public IAlterResourceMapper<TCreateResource, TUpdateResource, TChildEntity> AlterResourceMapper;
+        public IAlterResourceMapper<TAlterResource, TChildEntity> AlterResourceMapper;
 
-        public virtual async Task<ActionResult<TParentResource>> Create(TCreateResource resource)
+        public virtual async Task<ActionResult<TParentResource>> Create(TAlterResource resource)
         {
             var parnet = await LookupRepository.Get(resource.ParentId);
             if (parnet == null)
                 return NotFound(resource.ParentId);
 
-            var validation = await ResourceValidator.Validate(resource, parnet);
+            var validation = await ResourceValidator.ValidateCreate(resource, parnet);
             if (!(validation is OkResult))
                 return validation;
 
-            var child = await AlterResourceMapper.Map(resource);
+            var child = await AlterResourceMapper.MapCreate(resource);
             ParentManager.Add(parnet, child);
 
             await AlterRepository.Replace(parnet);
             return await ResourceMapper.Map(parnet);
         }
 
-        public virtual async Task<ActionResult<TParentResource>> Replace(string id, TCreateResource resource)
+        public virtual async Task<ActionResult<TParentResource>> Replace(string id, TAlterResource resource)
         {
             var parent = await LookupRepository.Get(resource.ParentId);
             if (parent == null)
                 return NotFound(resource.ParentId);
 
-            var validation = await ResourceValidator.Validate(resource, parent);
+            var validation = await ResourceValidator.ValidateCreate(resource, parent);
             if (!(validation is OkResult))
                 return validation;
 
-            var child = await AlterResourceMapper.Map(resource);
+            var child = await AlterResourceMapper.MapCreate(resource);
             ParentManager.Replace(parent, child, id);
 
             await AlterRepository.Replace(parent);
             return await ResourceMapper.Map(parent);
         }
 
-        public virtual async Task<ActionResult<TParentResource>> Update(string id, TUpdateResource resource)
+        public virtual async Task<ActionResult<TParentResource>> Update(string id, TAlterResource resource)
         {
             var parent = await LookupRepository.Get(resource.ParentId);
             if (parent == null)
@@ -78,12 +77,12 @@ namespace Core.Server.Application
             if (!ParentManager.Exists(parent, id))
                 return NotFound(id);
 
-            var validation = await ResourceValidator.Validate(resource, parent);
+            var validation = await ResourceValidator.ValidateUpdate(resource, parent);
             if (!(validation is OkResult))
                 return validation;
 
             var child = ParentManager.Get(parent, id);
-            await AlterResourceMapper.Map(resource, child);
+            await AlterResourceMapper.MapUpdate(resource, child);
             ParentManager.Replace(parent, child, id);
 
             await AlterRepository.Update(parent);

@@ -9,12 +9,12 @@ namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
     public class ScaleTests
-         : GenericExtraTestBase<ExampleCreateResource, ExampleUpdateResource, ExampleResource>
+         : GenericExtraTestBase<ExampleAlterResource, ExampleResource>
     {
         protected const int SCALE = 100;
 
         [Dependency]
-        public IResourceBatch<ExampleCreateResource, ExampleUpdateResource, ExampleResource> ResourceBatch;
+        public IResourceBatch<ExampleAlterResource, ExampleResource> ResourceBatch;
 
         [TestMethod]
         public void TestCreate()

@@ -5,15 +5,13 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Common.Applications
 {
-    public interface IBatchApplication<TCreateResource, TUpdateResource, TResource>
+    public interface IBatchApplication<TAlterResource, TResource>
         : IBaseApplication
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
         where TResource : Resource
     {
-        Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources);
+        Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TAlterResource[] resources);
 
-        Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources);
+        Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TAlterResource[] resources);
 
         Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids);
 

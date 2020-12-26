@@ -8,7 +8,7 @@ namespace Core.Server.Test.ResourceCreation
 {
     [Inject]
     public class UserRandomResourceCreator
-        : RandomResourceCreator<UserCreateResource, UserUpdateResource, UserResource>
+        : RandomResourceCreator<UserAlterResource, UserResource>
     {
         [Dependency]
         public TestConfig Config;
@@ -16,14 +16,14 @@ namespace Core.Server.Test.ResourceCreation
         [Dependency]
         public ICurrentUser CurrentUser;
 
-        protected override void AddRandomValues(UserCreateResource createResource)
+        protected override void AddRandomCreateValues(UserAlterResource createResource)
         {
-            base.AddRandomValues(createResource);
+            base.AddRandomCreateValues(createResource);
             createResource.Password = Config.DefaultPassword;
             createResource.RolesIds = new string[0];
         }
 
-        protected override void AddRandomValues(UserCreateResource createResource, UserResource existingResource)
+        protected override void AddRandomValues(UserAlterResource createResource, UserResource existingResource)
         {
             base.AddRandomValues(createResource, existingResource);
             createResource.Email = existingResource.Email;

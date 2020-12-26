@@ -12,8 +12,7 @@ using Unity;
 namespace Core.Server.Application.Validators.Implementation
 {
     [Inject]
-    public class UserValidator
-        : ResourceValidator<UserCreateResource, UserUpdateResource, UserEntity>
+    public class UserValidator: ResourceValidator<UserAlterResource, UserEntity>
     {
         [Dependency]
         public AppSettings AppSettings;
@@ -21,7 +20,7 @@ namespace Core.Server.Application.Validators.Implementation
         [Dependency]
         public ILookupRepository<RoleEntity> RolesLookupRepository;
 
-        public async override Task<ActionResult> Validate(UserCreateResource createResource)
+        public async override Task<ActionResult> ValidateCreate(UserAlterResource createResource)
         {
             if (await LookupRepository.Exists(e => e.Email == createResource.Email))
                 return BadRequest(BadRequestReason.SameExists);
@@ -31,7 +30,7 @@ namespace Core.Server.Application.Validators.Implementation
             return Ok();
         }
 
-        public async override Task<ActionResult> Validate(UserCreateResource createResource, UserEntity entity)
+        public async override Task<ActionResult> ValidateCreate(UserAlterResource createResource, UserEntity entity)
         {
             if (createResource.Email != entity.Email)
                 return BadRequest(BadRequestReason.Unchangeable);

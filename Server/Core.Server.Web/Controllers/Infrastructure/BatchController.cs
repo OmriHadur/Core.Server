@@ -9,21 +9,19 @@ using System.Threading.Tasks;
 namespace Core.Server.Web.Controllers
 {
     [InjectBoundleController]
-    public class BatchController<TCreateResource, TUpdateResource, TResource>
-        : BaseController<IBatchApplication<TCreateResource, TUpdateResource, TResource>, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public class BatchController<TAlterResource, TResource>
+        : BaseController<IBatchApplication<TAlterResource, TResource>, TResource>
         where TResource : Resource
     {
         [HttpPost("batch")]
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TAlterResource[] resources)
         {
             if (await IsUnauthorized(Operations.Create)) return Unauthorized();
             return await Application.BatchCreate(resources);
         }
 
         [HttpPut("batch")]
-        public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
+        public virtual async Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TAlterResource[] resources)
         {
             if (await IsUnauthorized(Operations.Alter)) return Unauthorized();
             return await Application.BatchUpdate(resources);

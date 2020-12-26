@@ -16,11 +16,10 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class ChildBatchApplication<TCreateResource, TUpdateResource, TParentResource, TParentEntity, TChildEntity>
+    public class ChildBatchApplication<TAlterResource, TParentResource, TParentEntity, TChildEntity>
         : BaseApplication<TParentEntity>,
-          IChildBatchApplication<TCreateResource, TUpdateResource, TParentResource>
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+          IChildBatchApplication<TAlterResource, TParentResource>
+        where TAlterResource : ChildAlterResource
         where TParentResource : Resource
         where TParentEntity : Entity
         where TChildEntity : ChildEntity
@@ -29,10 +28,10 @@ namespace Core.Server.Application
         public IBatchRepository<TParentEntity> BatchRepository;
 
         [Dependency]
-        public IResourceValidator<TCreateResource, TUpdateResource, TParentEntity> ResourceValidator;
+        public IResourceValidator<TAlterResource, TParentEntity> ResourceValidator;
 
         [Dependency]
-        public IAlterResourceMapper<TCreateResource, TUpdateResource, TChildEntity> AlterResourceMapper;
+        public IAlterResourceMapper<TAlterResource, TChildEntity> AlterResourceMapper;
 
         [Dependency]
         public IResourceMapper<TParentResource, TParentEntity> ResourceMapper;
@@ -40,7 +39,7 @@ namespace Core.Server.Application
         [Dependency]
         public IParentManager<TParentEntity, TChildEntity> ParentManager;
 
-        public async Task<ActionResult<IEnumerable<TParentResource>>> BatchCreate(TCreateResource[] resources)
+        public async Task<ActionResult<IEnumerable<TParentResource>>> BatchCreate(TAlterResource[] resources)
         {
             var parentsIds = resources.Select(r => r.ParentId).Distinct();
             var result = await GetParents(parentsIds);
@@ -59,7 +58,7 @@ namespace Core.Server.Application
             return response.ToList();
         }
 
-        public Task<ActionResult<IEnumerable<TParentResource>>> BatchUpdate(TUpdateResource[] resources)
+        public Task<ActionResult<IEnumerable<TParentResource>>> BatchUpdate(TAlterResource[] resources)
         {
             //TODO BatchUpdate
             throw new NotImplementedException();
@@ -89,12 +88,12 @@ namespace Core.Server.Application
             return Ok(parentsIds);
         }
 
-        private void AddChildren(TCreateResource[] resources, Dictionary<string, TParentEntity> parents)
+        private void AddChildren(TAlterResource[] resources, Dictionary<string, TParentEntity> parents)
         {
             foreach (var parentKeyValue in parents)
             {
                 var resourcesForParent = resources.Where(r => r.ParentId == parentKeyValue.Key);
-                var entitiesTasks = resourcesForParent.Select(async r => await AlterResourceMapper.Map(r));
+                var entitiesTasks = resourcesForParent.Select(async r => await AlterResourceMapper.MapCreate(r));
                 var entities = entitiesTasks.Select(er => er.Result).ToList();
                 ParentManager.Add(parentKeyValue.Value, entities);
             }
@@ -113,11 +112,11 @@ namespace Core.Server.Application
             return parents;
         }
 
-        private async Task<ActionResult> Validate(TCreateResource[] resources, Dictionary<string, TParentEntity> parents)
+        private async Task<ActionResult> Validate(TAlterResource[] resources, Dictionary<string, TParentEntity> parents)
         {
             foreach (var resource in resources)
             {
-                var validationResult = await ResourceValidator.Validate(resource, parents[resource.ParentId]);
+                var validationResult = await ResourceValidator.ValidateCreate(resource, parents[resource.ParentId]);
                 if (IsNotOk(validationResult))
                     return validationResult;
             }

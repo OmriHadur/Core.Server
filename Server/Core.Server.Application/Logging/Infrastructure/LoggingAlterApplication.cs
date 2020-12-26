@@ -9,15 +9,13 @@ using Unity;
 namespace Core.Server.Application.Logging
 {
     [Inject(2)]
-    public class LoggingAlterApplication<TCreateResource, TUpdateResource,TResource, TEntity>
-        : LoggingApplication<AlterApplication<TCreateResource, TUpdateResource, TResource, TEntity>>
-        , IAlterApplication<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public class LoggingAlterApplication<TAlterResource,TResource, TEntity>
+        : LoggingApplication<AlterApplication<TAlterResource, TResource, TEntity>>
+        , IAlterApplication<TAlterResource, TResource>
         where TResource : Resource
         where TEntity : Entity
     {
-        public Task<ActionResult<TResource>> Create(TCreateResource resource)
+        public Task<ActionResult<TResource>> Create(TAlterResource resource)
         {
             return LogginCall(() => Application.Create(resource), resource);
         }
@@ -32,12 +30,12 @@ namespace Core.Server.Application.Logging
             return LogginCall(() => Application.DeleteAll());
         }
 
-        public Task<ActionResult<TResource>> Replace(string id, TCreateResource resource)
+        public Task<ActionResult<TResource>> Replace(string id, TAlterResource resource)
         {
             return LogginCall(() => Application.Replace(id, resource), resource);
         }
 
-        public Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
+        public Task<ActionResult<TResource>> Update(string id, TAlterResource resource)
         {
             return LogginCall(() => Application.Update(id, resource), resource);
         }

@@ -28,7 +28,7 @@ namespace Core.Server.Web.Utils
 
         private static string GetRoute(Type createResourceType)
         {
-            if (createResourceType.BaseType == typeof(ChildCreateResource))
+            if (createResourceType.BaseType == typeof(ChildAlterResource))
             {
                 var parentName = GetFirstWord(createResourceType.Name);
                 var childName = GetNameRemoveCreateResource(createResourceType).Replace(parentName, string.Empty);
@@ -41,7 +41,8 @@ namespace Core.Server.Web.Utils
         private static string GetNameRemoveCreateResource(Type createResourceType)
         {
             return createResourceType.Name
-                .Replace(nameof(CreateResource), string.Empty)
+                .Replace("CreateResource", string.Empty)
+                .Replace("AlterResource", string.Empty)
                 .Replace(nameof(Resource), string.Empty);
         }
 

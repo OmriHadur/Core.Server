@@ -10,15 +10,13 @@ using Unity;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     [Inject]
-    public class ResourceCreate<TCreateResource, TUpdateResource, TResource>
-        : ResourceHandling<IAlterClient<TCreateResource, TUpdateResource, TResource>, TResource>
+    public class ResourceCreate<TAlterResource, TResource>
+        : ResourceHandling<IAlterClient<TAlterResource, TResource>, TResource>
         , IResourceCreate<TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
         where TResource : Resource
     {
         [Dependency]
-        public IRandomResourceCreator<TCreateResource, TUpdateResource, TResource> RandomResourceCreator;
+        public IRandomResourceCreator<TAlterResource, TResource> RandomResourceCreator;
 
         [Dependency]
         public IResourceLookup<TResource> ResourceQuery;

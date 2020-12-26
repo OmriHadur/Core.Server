@@ -11,7 +11,7 @@ namespace Core.Server.Application
 {
     [Inject]
     public class UserAlterApplication
-        : AlterApplication<UserCreateResource, UserUpdateResource, UserResource, UserEntity>
+        : AlterApplication<UserAlterResource, UserResource, UserEntity>
     {
         [Dependency]
         public IAlterRepository<LoginEntity> LoginsRepository;

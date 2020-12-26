@@ -4,15 +4,13 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Common.Mappers
 {
-    public interface IAlterResourceMapper<TCreateResource, TUpdateResource, TEntity>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public interface IAlterResourceMapper<TAlterResource, TEntity>
         where TEntity : Entity
     {
-        Task<TEntity> Map(TCreateResource resource);
+        Task<TEntity> MapCreate(TAlterResource resource);
 
-        Task Map(TCreateResource resource, TEntity entity);
+        Task MapCreate(TAlterResource resource, TEntity entity);
 
-        Task Map(TUpdateResource resource, TEntity entity);
+        Task MapUpdate(TAlterResource resource, TEntity entity);
     }
 }

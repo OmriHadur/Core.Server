@@ -12,13 +12,12 @@ using Unity;
 namespace Core.Server.Application.Validators.Implementation
 {
     [Inject]
-    public class PolicyValidator
-        : ResourceValidator<PolicyCreateResource,PolicyUpdateResource,PolicyEntity>
+    public class PolicyValidator : ResourceValidator<PolicyAlterResource, PolicyEntity>
     {
         [Dependency]
         public ILookupRepository<PolicyEntity> PolicyLookupRepository { get; set; }
 
-        public async override Task<ActionResult> Validate(PolicyCreateResource createResource)
+        public async override Task<ActionResult> ValidateCreate(PolicyAlterResource createResource)
         {
             var type = Type.GetType(createResource.ResourceType);
             if (type == null)

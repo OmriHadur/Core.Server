@@ -4,14 +4,12 @@ using System;
 
 namespace Core.Server.Test.ResourceCreators.Interfaces
 {
-    public interface IResourceAlter<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public interface IResourceAlter<TAlterResource, TResource>
         where TResource : Resource
     {
-        ActionResult<TResource> Create(Action<TCreateResource> editFunc = null);
-        ActionResult<TResource> Create(TCreateResource createResource);
-        ActionResult<TResource> Replace(Action<TCreateResource> editFunc = null);
-        ActionResult<TResource> Update(Action<TUpdateResource> editFunc = null);
+        ActionResult<TResource> Create(Action<TAlterResource> editFunc = null);
+        ActionResult<TResource> Create(TAlterResource createResource);
+        ActionResult<TResource> Replace(Action<TAlterResource> editFunc = null);
+        ActionResult<TResource> Update(Action<TAlterResource> editFunc = null);
     }
 }

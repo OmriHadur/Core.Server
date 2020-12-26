@@ -4,17 +4,16 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Common.Applications
 {
-    public interface IChildAlterApplication<TCreateResource, TUpdateResource, TResource> :
+    public interface IChildAlterApplication<TAlterResource, TResource> :
         IBaseApplication
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+        where TAlterResource : ChildAlterResource
         where TResource : Resource
     {
-        Task<ActionResult<TResource>> Create(TCreateResource resource);
+        Task<ActionResult<TResource>> Create(TAlterResource resource);
 
-        Task<ActionResult<TResource>> Replace(string id, TCreateResource resource);
+        Task<ActionResult<TResource>> Replace(string id, TAlterResource resource);
 
-        Task<ActionResult<TResource>> Update(string id, TUpdateResource resource);
+        Task<ActionResult<TResource>> Update(string id, TAlterResource resource);
 
         Task<ActionResult<TResource>> Delete(string parentId, string id);
 

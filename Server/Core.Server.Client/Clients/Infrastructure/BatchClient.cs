@@ -8,20 +8,18 @@ using Core.Server.Shared.Resources;
 namespace Core.Server.Client.Clients
 {
     [Inject]
-    public class BatchClient<TCreateResource, TUpdateResource, TResource>
+    public class BatchClient<TAlterResource, TResource>
         : ClientSender<TResource>,
-          IBatchClient<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+          IBatchClient<TAlterResource, TResource>
         where TResource : Resource
     {
 
-        public Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
+        public Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TAlterResource[] resources)
         {
             return SentPostMany("batch", resources);
         }
 
-        public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
+        public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TAlterResource[] resources)
         {
             return SentPutMany("batch", resources);
         }

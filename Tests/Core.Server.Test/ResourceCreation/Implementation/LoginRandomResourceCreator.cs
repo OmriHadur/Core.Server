@@ -1,4 +1,5 @@
 ﻿using Core.Server.Common.Attributes;
+using Core.Server.Shared.Resources;
 using Core.Server.Shared.Resources.Users;
 using Core.Server.Test.Configuration;
 using Core.Server.Test.ResourceCreators.Interfaces;
@@ -9,7 +10,7 @@ namespace Core.Server.Test.ResourceCreation
 {
     [Inject]
     public class LoginRandomResourceCreator
-        : RandomResourceCreator<LoginCreateResource, LoginUpdateResource, LoginResource>
+        : RandomResourceCreator<LoginAlterResource, LoginResource>
     {
         [Dependency]
         public TestConfig Config;
@@ -20,7 +21,7 @@ namespace Core.Server.Test.ResourceCreation
         [Dependency]
         public ICurrentUser CurrentUser;
 
-        protected override void AddRandomValues(LoginCreateResource createResource)
+        protected override void AddRandomCreateValues(LoginAlterResource createResource)
         {
             createResource.Email = UserResourceCreate.GetOrCreate().Email;
             createResource.Password = Config.DefaultPassword;

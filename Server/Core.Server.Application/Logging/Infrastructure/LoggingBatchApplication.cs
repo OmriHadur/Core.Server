@@ -10,15 +10,13 @@ using System.Collections.Generic;
 namespace Core.Server.Application.Logging
 {
     [Inject(2)]
-    public class LoggingBatchApplication<TCreateResource, TUpdateResource, TResource, TEntity>
-        : LoggingApplication<BatchApplication<TCreateResource, TUpdateResource, TResource, TEntity>>
-        , IBatchApplication<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public class LoggingBatchApplication<TAlterResource, TResource, TEntity>
+        : LoggingApplication<BatchApplication<TAlterResource, TResource, TEntity>>
+        , IBatchApplication<TAlterResource, TResource>
         where TResource : Resource
         where TEntity : Entity
     {
-        public Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
+        public Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TAlterResource[] resources)
         {
             return LogginCall(() => Application.BatchCreate(resources), resources);
         }
@@ -28,7 +26,7 @@ namespace Core.Server.Application.Logging
             return LogginCall(() => Application.BatchDelete(ids), ids);
         }
 
-        public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
+        public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TAlterResource[] resources)
         {
             return LogginCall(() => Application.BatchUpdate(resources), resources);
         }

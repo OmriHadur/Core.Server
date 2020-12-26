@@ -12,11 +12,9 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class AlterApplication<TCreateResource, TUpdateResource, TResource, TEntity>
+    public class AlterApplication<TAlterResource, TResource, TEntity>
         : BaseApplication<TEntity>,
-          IAlterApplication<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+          IAlterApplication<TAlterResource, TResource>
         where TResource : Resource
         where TEntity : Entity
     {
@@ -24,48 +22,48 @@ namespace Core.Server.Application
         public IAlterRepository<TEntity> AlterRepository;
 
         [Dependency]
-        public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator;
+        public IResourceValidator<TAlterResource, TEntity> ResourceValidator;
 
         [Dependency]
-        public IAlterResourceMapper<TCreateResource, TUpdateResource, TEntity> AlterResourceMapper;
+        public IAlterResourceMapper<TAlterResource, TEntity> AlterResourceMapper;
 
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
-        public virtual async Task<ActionResult<TResource>> Create(TCreateResource resource)
+        public virtual async Task<ActionResult<TResource>> Create(TAlterResource resource)
         {
-            var validation = await ResourceValidator.Validate(resource);
+            var validation = await ResourceValidator.ValidateCreate(resource);
             if (!(validation is OkResult))
                 return validation;
-            var entity = await AlterResourceMapper.Map(resource);
+            var entity = await AlterResourceMapper.MapCreate(resource);
             if (entity is OwnedEntity)
                 (entity as OwnedEntity).UserId = CurrentUser.Id;
             await AlterRepository.Add(entity);
             return await ResourceMapper.Map(entity);
         }
 
-        public virtual async Task<ActionResult<TResource>> Replace(string id, TCreateResource resource)
+        public virtual async Task<ActionResult<TResource>> Replace(string id, TAlterResource resource)
         {
             var entity = await LookupRepository.Get(id);
             if (entity == null)
-                entity = await AlterResourceMapper.Map(resource);
-            var validation = await ResourceValidator.Validate(resource, entity);
+                entity = await AlterResourceMapper.MapCreate(resource);
+            var validation = await ResourceValidator.ValidateCreate(resource, entity);
             if (!(validation is OkResult))
                 return validation;
-            await AlterResourceMapper.Map(resource, entity);
+            await AlterResourceMapper.MapCreate(resource, entity);
             await AlterRepository.Replace(entity);
             return await ResourceMapper.Map(entity);
         }
 
-        public virtual async Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
+        public virtual async Task<ActionResult<TResource>> Update(string id, TAlterResource resource)
         {
             var entity = await LookupRepository.Get(id);
             if (entity == null)
                 return NotFound(id);
-            var validation = await ResourceValidator.Validate(resource, entity);
+            var validation = await ResourceValidator.ValidateUpdate(resource, entity);
             if (!(validation is OkResult))
                 return validation;
-            await AlterResourceMapper.Map(resource, entity);
+            await AlterResourceMapper.MapUpdate(resource, entity);
             await AlterRepository.Update(entity);
             return await ResourceMapper.Map(entity);
         }

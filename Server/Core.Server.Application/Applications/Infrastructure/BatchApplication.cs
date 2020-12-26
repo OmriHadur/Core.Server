@@ -15,11 +15,9 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class BatchApplication<TCreateResource, TUpdateResource, TResource, TEntity>
+    public class BatchApplication<TAlterResource, TResource, TEntity>
         : BaseApplication<TEntity>,
-          IBatchApplication<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+          IBatchApplication<TAlterResource, TResource>
         where TResource : Resource
         where TEntity : Entity
     {
@@ -27,15 +25,15 @@ namespace Core.Server.Application
         public IBatchRepository<TEntity> BatchRepository;
 
         [Dependency]
-        public IResourceValidator<TCreateResource, TUpdateResource, TEntity> ResourceValidator;
+        public IResourceValidator<TAlterResource, TEntity> ResourceValidator;
 
         [Dependency]
-        public IAlterResourceMapper<TCreateResource, TUpdateResource, TEntity> AlterResourceMapper;
+        public IAlterResourceMapper<TAlterResource, TEntity> AlterResourceMapper;
 
         [Dependency]
         public IResourceMapper<TResource, TEntity> ResourceMapper;
 
-        public async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TCreateResource[] resources)
+        public async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TAlterResource[] resources)
         {
             var validationResult = await Validate(resources);
             if (IsNotOk(validationResult))
@@ -48,16 +46,16 @@ namespace Core.Server.Application
             return response.ToList();
         }
 
-        private async Task<TEntity> Map(TCreateResource resource)
+        private async Task<TEntity> Map(TAlterResource resource)
         {
-            return await AlterResourceMapper.Map(resource);
+            return await AlterResourceMapper.MapCreate(resource);
         }
 
-        private async Task<ActionResult> Validate(TCreateResource[] resources)
+        private async Task<ActionResult> Validate(TAlterResource[] resources)
         {
             foreach (var resource in resources)
             {
-                var validationResult = await ResourceValidator.Validate(resource);
+                var validationResult = await ResourceValidator.ValidateCreate(resource);
                 if (IsNotOk(validationResult))
                     return validationResult;
             }
@@ -69,7 +67,7 @@ namespace Core.Server.Application
             return BatchRepository.AddMany(entities);
         }
 
-        public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TUpdateResource[] resources)
+        public Task<ActionResult<IEnumerable<TResource>>> BatchUpdate(TAlterResource[] resources)
         {
             //TODO BatchUpdate
             throw new NotImplementedException();

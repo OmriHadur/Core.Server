@@ -12,11 +12,10 @@ using Unity;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     [Inject]
-    public class ChildResourceBatch<TCreateResource, TUpdateResource, TParentResource, TChildResource>
-        : ResourceHandling<IChildBatchClient<TCreateResource, TUpdateResource, TParentResource>, TParentResource>
-        , IChildResourceBatch<TCreateResource, TUpdateResource, TParentResource, TChildResource>
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+    public class ChildResourceBatch<TAlterResource, TParentResource, TChildResource>
+        : ResourceHandling<IChildBatchClient<TAlterResource, TParentResource>, TParentResource>
+        , IChildResourceBatch<TAlterResource, TParentResource, TChildResource>
+        where TAlterResource : ChildAlterResource
         where TParentResource : Resource
         where TChildResource : Resource
     {
@@ -24,7 +23,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         //public IReflactionHelper ReflactionHelper;
 
         [Dependency]
-        public IRandomResourceCreator<TCreateResource, TUpdateResource, TChildResource> RandomResourceCreator;
+        public IRandomResourceCreator<TAlterResource, TChildResource> RandomResourceCreator;
 
         [Dependency]
         public IResourceCreate<TChildResource> ChildResourceCreate;
@@ -34,7 +33,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         public ActionResult<IEnumerable<TParentResource>> Create(int amount)
         {
-            var createResources = new TCreateResource[amount];
+            var createResources = new TAlterResource[amount];
             for (int i = 0; i < amount; i++)
             {
                 createResources[i] = RandomResourceCreator.GetRandomCreateResource();

@@ -4,10 +4,9 @@ using System;
 
 namespace Core.Server.Test.ResourceCreators.Interfaces
 {
-    public interface IChildResourceAlter<TCreateResource, TUpdateResource, TParentResource, TChildResource>
-        : IResourceAlter<TCreateResource, TUpdateResource, TParentResource>
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+    public interface IChildResourceAlter<TChildAlterResource, TParentResource, TChildResource>
+        : IResourceAlter<TChildAlterResource, TParentResource>
+        where TChildAlterResource : ChildAlterResource
         where TParentResource : Resource
         where TChildResource : Resource
     {

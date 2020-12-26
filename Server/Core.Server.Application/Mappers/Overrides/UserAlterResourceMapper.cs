@@ -9,27 +9,27 @@ using Unity;
 namespace Core.Server.Application.Mappers.Implementation
 {
     [Inject]
-    public class UserAlterResourceMapper
-        : AlterResourceMapper<UserCreateResource,UserUpdateResource,UserEntity>
+    public class UserAlterResourceMapper: AlterResourceMapper<UserAlterResource, UserEntity>
     {
         private readonly PasswordHasher _passwordHasher = new PasswordHasher();
 
-        public async override Task<UserEntity> Map(UserCreateResource resource)
+        public async override Task<UserEntity> MapCreate(UserAlterResource resource)
         {
-            var userEntity = await base.Map(resource);
+            var userEntity = await base.MapCreate(resource);
             AddPassword(resource.Password, userEntity);
             return userEntity;
         }
 
-        public async override Task Map(UserCreateResource resource, UserEntity entity)
+        public async override Task MapCreate(UserAlterResource resource, UserEntity entity)
         {
-            await base.Map(resource, entity);
-            AddPassword(resource.Password, entity);
+            await base.MapCreate(resource, entity);
+            if (resource.Password != null)
+                AddPassword(resource.Password, entity);
         }
 
-        public async override Task Map(UserUpdateResource resource, UserEntity entity)
+        public async override Task MapUpdate(UserAlterResource resource, UserEntity entity)
         {
-            await base.Map(resource, entity);
+            await base.MapCreate(resource, entity);
             if (resource.Password != null)
                 AddPassword(resource.Password, entity);
         }

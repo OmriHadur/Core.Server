@@ -1,6 +1,4 @@
 ﻿
-using System;
-
 namespace Core.Server.Shared.Resources
 {
     public class PolicyResource : Resource

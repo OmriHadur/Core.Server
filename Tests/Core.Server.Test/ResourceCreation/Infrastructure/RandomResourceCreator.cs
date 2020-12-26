@@ -8,49 +8,49 @@ using Unity;
 namespace Core.Server.Test.ResourceCreation
 {
     [Inject]
-    public class RandomResourceCreator<TCreateResource, TUpdateResource, TResource>
-        : IRandomResourceCreator<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource, new()
-        where TUpdateResource : UpdateResource, new()
+    public class RandomResourceCreator<TAlterResource, TResource>
+        : IRandomResourceCreator<TAlterResource, TResource>
+        where TAlterResource : new()
         where TResource: Resource
     {
         [Dependency]
         public IObjectRandomizer ObjectRandomizer;
 
-        public TCreateResource GetRandomCreateResource()
+        public TAlterResource GetRandomCreateResource()
         {
-            var createResource = new TCreateResource();
-            AddRandomValues(createResource);
+            var createResource = new TAlterResource();
+            AddRandomCreateValues(createResource);
             return createResource;
         }
 
-        public TCreateResource GetRandomCreateResource(TResource existingResource)
+        public TAlterResource GetRandomCreateResource(TResource existingResource)
         {
-            var createResource = new TCreateResource();
+            var createResource = new TAlterResource();
             AddRandomValues(createResource, existingResource);
             return createResource;
         }
 
-        public TUpdateResource GetRandomUpdateResource(TResource resource)
+        public TAlterResource GetRandomUpdateResource(TResource existingResource)
         {
-            var updateResource = new TUpdateResource();
-            AddRandomValues(updateResource);
-            return updateResource;
+            var createResource = new TAlterResource();
+            AddRandomValues(createResource, existingResource);
+            return createResource;
         }
 
-        protected virtual void AddRandomValues(TCreateResource createResource)
+        protected virtual void AddRandomCreateValues(TAlterResource createResource)
         {
             ObjectRandomizer.AddRandomValues(createResource);
         }
 
-        protected virtual void AddRandomValues(TCreateResource createResource, TResource existingResource)
+
+        protected virtual void AddRandomValues(TAlterResource createResource, TResource existingResource)
         {
             ObjectRandomizer.AddRandomValues(createResource);
         }
 
-        protected virtual void AddRandomValues(TUpdateResource updateResource)
+        protected virtual void AddRandomUpdateValues(TAlterResource updateResource)
         {
-            var randomProperty = ObjectRandomizer.GetRandomProperty<TUpdateResource>();
+            var randomProperty = ObjectRandomizer.GetRandomProperty<TAlterResource>();
             if (randomProperty != null)
                 ObjectRandomizer.SetRandomValue(updateResource, randomProperty);
         }

@@ -6,14 +6,12 @@ using Unity;
 
 namespace Core.Server.Test.ResourceTests
 {
-    public abstract class GenericExtraTestBase<TCreateResource, TUpdateResource, TResource>
+    public abstract class GenericExtraTestBase<TAlterResource, TResource>
         : GenericTestsBase<TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
         where TResource : Resource
     {
         [Dependency]
-        public IResourceAlter<TCreateResource, TUpdateResource, TResource> ResourceAlter;
+        public IResourceAlter<TAlterResource, TResource> ResourceAlter;
 
         [Dependency]
         public IUnityContainer UnityContainer;

@@ -2,9 +2,12 @@
 
 namespace Core.Server.Shared.Resources
 {
-    public class ExampleChildCreateResource : ChildCreateResource
+    public class RoleAlterResource
     {
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        public string[] PoliciesId;
     }
 }

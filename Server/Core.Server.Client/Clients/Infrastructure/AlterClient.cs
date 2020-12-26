@@ -7,19 +7,17 @@ using Core.Server.Shared.Resources;
 namespace Core.Server.Client.Clients
 {
     [Inject]
-    public class AlterClient<TCreateResource, TUpdateResource, TResource>
+    public class AlterClient<TAlterResource, TResource>
         : ClientSender<TResource>,
-          IAlterClient<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+          IAlterClient<TAlterResource, TResource>
         where TResource : Resource
     {
-        public Task<ActionResult<TResource>> Create(TCreateResource resource)
+        public Task<ActionResult<TResource>> Create(TAlterResource resource)
         {
             return SentPost(resource);
         }
 
-        public Task<ActionResult<TResource>> Replace(string id, TCreateResource resource)
+        public Task<ActionResult<TResource>> Replace(string id, TAlterResource resource)
         {
             return SentPut(id,resource);
         }
@@ -29,7 +27,7 @@ namespace Core.Server.Client.Clients
             return SendDelete(id);
         }
 
-        public Task<ActionResult<TResource>> Update(string id, TUpdateResource resource)
+        public Task<ActionResult<TResource>> Update(string id, TAlterResource resource)
         {
             return SendPatch(id, resource);
         }

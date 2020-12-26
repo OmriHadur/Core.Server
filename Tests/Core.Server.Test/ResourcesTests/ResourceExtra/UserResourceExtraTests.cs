@@ -6,7 +6,7 @@ namespace Core.Server.Test.ResourceTests.ResourceExtra
 {
     [TestClass]
     public class UserResourceExtraTests
-        : GenericExtraTestBase<UserCreateResource, UserUpdateResource, UserResource>
+        : GenericExtraTestBase<UserAlterResource, UserResource>
     {
         [TestMethod]
         public void TestReCreate()

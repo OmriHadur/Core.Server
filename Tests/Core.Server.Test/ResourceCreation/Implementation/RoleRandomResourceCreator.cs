@@ -7,14 +7,14 @@ namespace Core.Server.Test.ResourceCreation
 {
     [Inject]
     public class RoleRandomResourceCreator
-        : RandomResourceCreator<RoleCreateResource, RoleUpdateResource, RoleResource>
+        : RandomResourceCreator<RoleAlterResource, RoleResource>
     {
         [Dependency]
         public IResourceCreate<PolicyResource> PolicyResourceCreate;
 
-        protected override void AddRandomValues(RoleCreateResource createResource)
+        protected override void AddRandomCreateValues(RoleAlterResource createResource)
         {
-            base.AddRandomValues(createResource);
+            base.AddRandomCreateValues(createResource);
             var policyId = PolicyResourceCreate.GetOrCreate().Id;
             createResource.PoliciesId = new string[] { policyId };
         }

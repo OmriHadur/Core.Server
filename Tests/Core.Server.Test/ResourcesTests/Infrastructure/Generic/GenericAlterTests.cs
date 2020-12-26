@@ -8,15 +8,13 @@ using Unity;
 namespace Core.Server.Test.ResourceTests
 {
     [Inject]
-    public class GenericAlterTests<TCreateResource, TUpdateResource, TResource>
+    public class GenericAlterTests<TAlterResource, TResource>
         : GenericTestsBase<TResource>
         , IResourceGenericAlterTests
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
         where TResource : Resource
     {
         [Dependency]
-        public IResourceAlter<TCreateResource, TUpdateResource, TResource> resourceAlter;
+        public IResourceAlter<TAlterResource, TResource> resourceAlter;
 
         [TestMethod]
         public void TestReplace()

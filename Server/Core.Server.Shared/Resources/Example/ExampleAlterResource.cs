@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Core.Server.Shared.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Resources
 {
-    public class ExampleCreateResource : CreateResource
+    public class ExampleAlterResource 
     {
         [Required]
         [Range(0,1000)]
@@ -12,7 +13,7 @@ namespace Core.Server.Shared.Resources
         [MinLength(3)]
         public string Name { get; set; }
 
-        [Required]
+        [Immutable]
         public string Mutable { get; set; }
 
     }

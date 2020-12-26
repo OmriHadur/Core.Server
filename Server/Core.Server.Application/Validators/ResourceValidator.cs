@@ -9,24 +9,22 @@ using Unity;
 namespace Core.Server.Common.Validators
 {
     [Inject]
-    public class ResourceValidator<TCreateResource, TUpdateResource, TEntity>
+    public class ResourceValidator<TAlterResource, TEntity>
         : BaseApplication<TEntity>,
-          IResourceValidator<TCreateResource, TUpdateResource, TEntity>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+          IResourceValidator<TAlterResource, TEntity>
         where TEntity : Entity
     {
-        public virtual async Task<ActionResult> Validate(TCreateResource createResource)
+        public virtual async Task<ActionResult> ValidateCreate(TAlterResource createResource)
         {
             return Ok();
         }
 
-        public virtual async Task<ActionResult> Validate(TCreateResource createResource, TEntity entity)
+        public virtual async Task<ActionResult> ValidateCreate(TAlterResource createResource, TEntity entity)
         {
             return Ok();
         }
 
-        public virtual async Task<ActionResult> Validate(TUpdateResource updateResource, TEntity entity)
+        public virtual async Task<ActionResult> ValidateUpdate(TAlterResource updateResource, TEntity entity)
         {
             return Ok();
         }

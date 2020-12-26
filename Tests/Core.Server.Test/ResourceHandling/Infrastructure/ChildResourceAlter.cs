@@ -11,11 +11,10 @@ using Unity;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     [Inject]
-    public class ChildResourceAlter<TCreateResource, TUpdateResource, TParentResource, TChildResource>
-        : ResourceHandling<IChildAlterClient<TCreateResource, TUpdateResource, TParentResource>, TParentResource>
-        , IChildResourceAlter<TCreateResource, TUpdateResource, TParentResource, TChildResource>
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+    public class ChildResourceAlter<TChildAlterResource, TParentResource, TChildResource>
+        : ResourceHandling<IChildAlterClient<TChildAlterResource, TParentResource>, TParentResource>
+        , IChildResourceAlter<TChildAlterResource, TParentResource, TChildResource>
+        where TChildAlterResource : ChildAlterResource
         where TParentResource : Resource
         where TChildResource : Resource
     {
@@ -23,7 +22,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         //public IReflactionHelper ReflactionHelper;
 
         [Dependency]
-        public IRandomResourceCreator<TCreateResource, TUpdateResource, TChildResource> RandomResourceCreator;
+        public IRandomResourceCreator<TChildAlterResource, TChildResource> RandomResourceCreator;
 
         [Dependency]
         public IResourceCreate<TChildResource> ChildResourceCreate;
@@ -31,7 +30,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         [Dependency]
         public IResourceCreate<TParentResource> ParentResourceCreate;
 
-        public ActionResult<TParentResource> Create(Action<TCreateResource> editFunc = null)
+        public ActionResult<TParentResource> Create(Action<TChildAlterResource> editFunc = null)
         {
             var parent = ParentResourceCreate.GetOrCreate();
             var createResource = RandomResourceCreator.GetRandomCreateResource();
@@ -40,22 +39,22 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return Create(createResource);
         }
 
-        public ActionResult<TParentResource> Create(TCreateResource createResource)
+        public ActionResult<TParentResource> Create(TChildAlterResource createResource)
         {
             return Client.Create(createResource).Result;
         }
 
-        public ActionResult<TParentResource> Replace(Action<TCreateResource> editFunc = null)
+        public ActionResult<TParentResource> Replace(Action<TChildAlterResource> editFunc = null)
         {
             var parent = ParentResourceCreate.GetOrCreate();
             var childResource = GetChildResource(parent).Last();
-            var replaceResource = RandomResourceCreator.GetRandomCreateResource(childResource);
+            var replaceResource = RandomResourceCreator.GetRandomUpdateResource(childResource);
             replaceResource.ParentId = parent.Id;
             editFunc?.Invoke(replaceResource);
             return Client.Replace(childResource.Id, replaceResource).Result;
         }
 
-        public ActionResult<TParentResource> Update(Action<TUpdateResource> editFunc = null)
+        public ActionResult<TParentResource> Update(Action<TChildAlterResource> editFunc = null)
         {
             var parent = ParentResourceCreate.GetOrCreate();
             var childResource = GetChildResource(parent).Last();
@@ -76,7 +75,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         {
             var parent = ParentResourceCreate.GetOrCreate();
             var childResource = GetChildResource(parent).Last();
-            var childDeleteResource = new ChildDeleteResource() { ParentId = parent.Id };
+            var childDeleteResource = new ChildAlterResource() { ParentId = parent.Id };
             return Client.Delete(childResource.Id, childDeleteResource).Result;
         }
     }

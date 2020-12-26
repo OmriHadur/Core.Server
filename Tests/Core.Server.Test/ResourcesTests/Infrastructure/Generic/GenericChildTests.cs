@@ -9,11 +9,10 @@ using Unity;
 namespace Core.Server.Test.ResourceTests
 {
     [Inject]
-    public class GenericChildTests<TCreateResource, TUpdateResource, TParentResource, TChildResource>
+    public class GenericChildTests<TChildAlterResource, TParentResource, TChildResource>
         : TestsBase
         , IResourceGenericChildTests
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+        where TChildAlterResource : ChildAlterResource
         where TParentResource : Resource
         where TChildResource :Resource
     {
@@ -23,7 +22,7 @@ namespace Core.Server.Test.ResourceTests
         private TChildResource childCreated;
 
         [Dependency]
-        public IChildResourceAlter<TCreateResource, TUpdateResource, TParentResource, TChildResource> ChildResourceAlter;
+        public IChildResourceAlter<TChildAlterResource, TParentResource, TChildResource> ChildResourceAlter;
 
         [Dependency]
         public IResourceLookup<TParentResource> ParentResourceLookup;

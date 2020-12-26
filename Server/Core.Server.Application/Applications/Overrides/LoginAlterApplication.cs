@@ -2,6 +2,7 @@
 using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Entities.Helpers;
+using Core.Server.Shared.Resources;
 using Core.Server.Shared.Resources.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -10,8 +11,7 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class LoginAlterApplication
-        : AlterApplication<LoginCreateResource, LoginUpdateResource, LoginResource, LoginEntity>
+    public class LoginAlterApplication: AlterApplication<LoginAlterResource, LoginResource, LoginEntity>
     {
         [Dependency]
         public AppSettings AppSettings;
@@ -19,7 +19,7 @@ namespace Core.Server.Application
         [Dependency]
         public IJwtManager JwtManager;
 
-        public override async Task<ActionResult<LoginResource>> Create(LoginCreateResource resource)
+        public override async Task<ActionResult<LoginResource>> Create(LoginAlterResource resource)
         {
             if (resource.Email == AppSettings.AdminUserName &&
                 resource.Password == AppSettings.AdminUserPassword)

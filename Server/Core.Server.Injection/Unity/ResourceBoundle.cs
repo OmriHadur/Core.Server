@@ -10,18 +10,16 @@ namespace Core.Server.Injection.Unity
     {
         public Type TResource { get; private set; }
         public Type TEntity { get; private set; }
-        public Type TCreateResource { get; private set; }
-        public Type TUpdateResource { get; private set; }
+        public Type TAlterResource { get; private set; }
 
-        public string ResourceName { get; private set; }
+        protected string ResourceName { get; private set; }
 
         public ResourceBoundle(Type resourceType, IReflactionHelper reflactionHelper)
         {
             ResourceName = reflactionHelper.GetTypeName(resourceType, typeof(Resource));
 
             TResource = resourceType;
-            TCreateResource = reflactionHelper.GetTypeWithPrefix<CreateResource>(ResourceName);
-            TUpdateResource = reflactionHelper.GetTypeWithPrefix<UpdateResource>(ResourceName);
+            TAlterResource = reflactionHelper.GetTypeByName(ResourceName + "AlterResource");
             TEntity = reflactionHelper.GetTypeWithPrefix<Entity>(ResourceName);
         }
 
@@ -40,10 +38,9 @@ namespace Core.Server.Injection.Unity
 
         public bool Contains(Type type)
         {
-            return (TCreateResource == type || 
+            return (TAlterResource == type || 
                 TResource == type || 
-                TEntity == type || 
-                TUpdateResource == type);
+                TEntity == type);
         }
     }
 }

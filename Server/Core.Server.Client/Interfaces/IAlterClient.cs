@@ -4,18 +4,16 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Client.Interfaces
 {
-    public interface IAlterClient<TCreateResource, TUpdateResource, TResource>
+    public interface IAlterClient<TAlterResource, TResource>
         : IClientBase
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
         where TResource : Resource
     {
-        Task<ActionResult<TResource>> Create(TCreateResource resource);
+        Task<ActionResult<TResource>> Create(TAlterResource resource);
 
-        Task<ActionResult<TResource>> Replace(string id, TCreateResource resource);
+        Task<ActionResult<TResource>> Replace(string id, TAlterResource resource);
 
         Task<ActionResult> Delete(string id);
 
-        Task<ActionResult<TResource>> Update(string id, TUpdateResource resource);
+        Task<ActionResult<TResource>> Update(string id, TAlterResource resource);
     }
 }

@@ -9,35 +9,33 @@ using System.Threading.Tasks;
 namespace Core.Server.Web.Controllers
 {
     [InjectBoundleController]
-    public class AlterController<TCreateResource, TUpdateResource, TResource>
-        : BaseController<IAlterApplication<TCreateResource, TUpdateResource, TResource>, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public class AlterController<TAlterResource, TResource>
+        : BaseController<IAlterApplication<TAlterResource, TResource>, TResource>
         where TResource : Resource
     {
         [HttpPost]
-        public virtual async Task<ActionResult<TResource>> Create(TCreateResource resource)
+        public virtual async Task<ActionResult<TResource>> Create(TAlterResource resource)
         {
             if (await IsUnauthorized(Operations.Create)) return Unauthorized();
             return await Application.Create(resource);
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult<TResource>> Replace(string id, TCreateResource resource)
+        public virtual async Task<ActionResult<TResource>> Replace(string id, TAlterResource resource)
         {
             if (await IsUnauthorized(Operations.Alter)) return Unauthorized();
             return await Application.Replace(id, resource);
         }
 
         [HttpPatch("{id}")]
-        public virtual async Task<ActionResult<TResource>> UpdateFromBody(string id, TUpdateResource resource)
+        public virtual async Task<ActionResult<TResource>> UpdateFromBody(string id, TAlterResource resource)
         {
             if (await IsUnauthorized(Operations.Alter)) return Unauthorized();
             return await Application.Update(id, resource);
         }
 
         [HttpPatch("{id}/inline")]
-        public virtual async Task<ActionResult<TResource>> UpdateFromQuery(string id, [FromQuery] TUpdateResource resource)
+        public virtual async Task<ActionResult<TResource>> UpdateFromQuery(string id, [FromQuery] TAlterResource resource)
         {
             if (await IsUnauthorized(Operations.Alter)) return Unauthorized();
             return await Application.Update(id, resource);

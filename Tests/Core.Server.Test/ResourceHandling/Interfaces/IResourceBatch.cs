@@ -4,14 +4,12 @@ using System.Collections.Generic;
 
 namespace Core.Server.Test.ResourceCreators.Interfaces
 {
-    public interface IResourceBatch<TCreateResource, TUpdateResource,TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource: UpdateResource
+    public interface IResourceBatch<TAlterResource,TResource>
         where TResource : Resource
     {
         ActionResult<IEnumerable<TResource>> Create(int amount);
-        ActionResult<IEnumerable<TResource>> Create(IEnumerable<TCreateResource> createResources);
-        ActionResult<IEnumerable<TResource>> Update(IEnumerable<TUpdateResource> updateResources);
+        ActionResult<IEnumerable<TResource>> Create(IEnumerable<TAlterResource> createResources);
+        ActionResult<IEnumerable<TResource>> Update(IEnumerable<TAlterResource> updateResources);
         ActionResult<IEnumerable<string>> Delete(IEnumerable<string> ids);
     }
 }

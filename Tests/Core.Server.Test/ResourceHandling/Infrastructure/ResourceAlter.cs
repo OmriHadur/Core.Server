@@ -10,27 +10,25 @@ using Unity;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     [Inject]
-    public class ResourceAlter<TCreateResource, TUpdateResource, TResource>
-        : ResourceHandling<IAlterClient<TCreateResource, TUpdateResource, TResource>, TResource>
-        , IResourceAlter<TCreateResource, TUpdateResource, TResource>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public class ResourceAlter<TAlterResource, TResource>
+        : ResourceHandling<IAlterClient<TAlterResource, TResource>, TResource>
+        , IResourceAlter<TAlterResource, TResource>
         where TResource : Resource
     {
         [Dependency]
-        public IRandomResourceCreator<TCreateResource, TUpdateResource, TResource> RandomResourceCreator;
+        public IRandomResourceCreator<TAlterResource, TResource> RandomResourceCreator;
 
         [Dependency]
         public IResourceCreate<TResource> ResourceCreate;
 
-        public ActionResult<TResource> Create(Action<TCreateResource> editFunc)
+        public ActionResult<TResource> Create(Action<TAlterResource> editFunc)
         {
             var createResource = RandomResourceCreator.GetRandomCreateResource();
             editFunc?.Invoke(createResource);
             return Create(createResource);
         }
 
-        public ActionResult<TResource> Create(TCreateResource createResource)
+        public ActionResult<TResource> Create(TAlterResource createResource)
         {
             var response = Client.Create(createResource).Result;
             if (response.IsSuccess)
@@ -38,7 +36,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return response;
         }
 
-        public ActionResult<TResource> Replace(Action<TCreateResource> editFunc)
+        public ActionResult<TResource> Replace(Action<TAlterResource> editFunc)
         {
             var resource = ResourceCreate.GetOrCreate();
             var updateResource = RandomResourceCreator.GetRandomCreateResource(resource);
@@ -46,7 +44,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             return Client.Replace(resource.Id, updateResource).Result;
         }
 
-        public ActionResult<TResource> Update(Action<TUpdateResource> editFunc)
+        public ActionResult<TResource> Update(Action<TAlterResource> editFunc)
         {
             var resource = ResourceCreate.GetOrCreate();
             var updateResource = RandomResourceCreator.GetRandomUpdateResource(resource);

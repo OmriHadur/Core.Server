@@ -6,7 +6,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
     public class AuthorizeTests
-        : GenericExtraTestBase<ExampleCreateResource, ExampleUpdateResource, ExampleResource>
+        : GenericExtraTestBase<ExampleAlterResource, ExampleResource>
     {
         [TestMethod]
         public void TestUnauthorizedRead()

@@ -9,7 +9,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
 {
     [TestClass]
     public class OwnedTests
-         : GenericExtraTestBase<ExampleChildCreateResource, ExampleUpdateResource, ExampleResource>
+         : GenericExtraTestBase<ExampleChildAlterResource, ExampleResource>
     {
         [Dependency]
         public IResourceOwned<ExampleResource> ResourceOwned;

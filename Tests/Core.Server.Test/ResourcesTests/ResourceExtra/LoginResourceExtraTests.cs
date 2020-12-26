@@ -1,4 +1,5 @@
-﻿using Core.Server.Shared.Resources.Users;
+﻿using Core.Server.Shared.Resources;
+using Core.Server.Shared.Resources.Users;
 using Core.Server.Test.ResourceCreators.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
@@ -7,7 +8,7 @@ namespace Core.Server.Test.ResourceTests.ResourceExtra
 {
     [TestClass]
     public class LoginResourceExtraTests
-        : GenericExtraTestBase<LoginCreateResource, LoginUpdateResource, LoginResource>
+        : GenericExtraTestBase<LoginAlterResource, LoginResource>
     {
         [TestMethod]
         public void TestLoginWithBadEmail()
@@ -31,7 +32,7 @@ namespace Core.Server.Test.ResourceTests.ResourceExtra
             var email = CreatedResource.User.Email;
             var userResourceCreate = UnityContainer.Resolve<IResourceCreate<UserResource>>();
             userResourceCreate.DeleteAll();
-            var createResource = new LoginCreateResource() { Email = email, Password = TestConfig.DefaultPassword };
+            var createResource = new LoginAlterResource() { Email = email, Password = TestConfig.DefaultPassword };
 
             var response = ResourceAlter.Create(createResource);
 

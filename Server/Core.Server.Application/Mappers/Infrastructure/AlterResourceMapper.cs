@@ -2,33 +2,30 @@
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
-using Core.Server.Shared.Resources;
 using System.Threading.Tasks;
 using Unity;
 
 namespace Core.Server.Application.Mappers.Base
 {
     [Inject]
-    public class AlterResourceMapper<TCreateResource, TUpdateResource, TEntity>
-        : IAlterResourceMapper<TCreateResource, TUpdateResource, TEntity>
-        where TCreateResource : CreateResource
-        where TUpdateResource : UpdateResource
+    public class AlterResourceMapper<TAlterResource, TEntity>
+        : IAlterResourceMapper<TAlterResource, TEntity>
         where TEntity : Entity
     {
         [Dependency]
         public IMapper Mapper { get; set; }
 
-        public virtual async Task<TEntity> Map(TCreateResource resource)
+        public virtual async Task<TEntity> MapCreate(TAlterResource resource)
         {
             return Mapper.Map<TEntity>(resource);
         }
 
-        public virtual async Task Map(TCreateResource resource, TEntity entity)
+        public virtual async Task MapCreate(TAlterResource resource, TEntity entity)
         {
             Mapper.Map(resource, entity);
         }
 
-        public virtual async Task Map(TUpdateResource resource, TEntity entity)
+        public virtual async Task MapUpdate(TAlterResource resource, TEntity entity)
         {
             var updatedEntity = Mapper.Map<TEntity>(resource);
             foreach (var property in typeof(TEntity).GetProperties())

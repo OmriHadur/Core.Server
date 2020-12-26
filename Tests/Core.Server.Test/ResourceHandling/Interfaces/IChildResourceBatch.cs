@@ -1,13 +1,11 @@
 ﻿using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
-using System;
 using System.Collections.Generic;
 
 namespace Core.Server.Test.ResourceCreators.Interfaces
 {
-    public interface IChildResourceBatch<TCreateResource, TUpdateResource, TParentResource, TChildResource>
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+    public interface IChildResourceBatch<TChildAlterResource, TParentResource, TChildResource>
+        where TChildAlterResource : ChildAlterResource
         where TParentResource : Resource
         where TChildResource : Resource
     {

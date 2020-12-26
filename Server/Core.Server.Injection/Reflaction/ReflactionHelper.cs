@@ -1,5 +1,4 @@
-﻿using Core.Server.Common.Entities;
-using Core.Server.Injection.Interfaces;
+﻿using Core.Server.Injection.Interfaces;
 using Core.Server.Injection.Unity;
 using Core.Server.Shared.Resources;
 using System;
@@ -166,15 +165,6 @@ namespace Core.Server.Injection.Reflaction
                     childInterfaces.Add(ii);
             }
             return allInterfaces.Except(childInterfaces);
-        }
-
-        private IEnumerable<Type> GetArguments(Type[] typeArgs, string prefix)
-        {
-            foreach (var type in typeArgs)
-            {
-                var typeName = prefix + type.Name.Substring(1);
-                yield return GetTypeByName(typeName);
-            }
         }
 
         private IEnumerable<Type> GetGenericArguments(Type genericType, ResourceBoundle resourceBoundle)

@@ -9,20 +9,19 @@ using System.Threading.Tasks;
 namespace Core.Server.Client.Clients
 {
     [Inject]
-    public class ChildBatchClient<TCreateResource, TUpdateResource, TParentResource, TChildResource>
+    public class ChildBatchClient<TChildAlterResource, TParentResource, TChildResource>
         : ChildClientSender<TParentResource, TChildResource>,
-          IChildBatchClient<TCreateResource, TUpdateResource, TParentResource>
-        where TCreateResource : ChildCreateResource
-        where TUpdateResource : ChildUpdateResource
+          IChildBatchClient<TChildAlterResource, TParentResource>
+        where TChildAlterResource : ChildAlterResource
         where TParentResource : Resource
         where TChildResource : Resource
     {
-        public Task<ActionResult<IEnumerable<TParentResource>>> BatchCreate(TCreateResource[] resources)
+        public Task<ActionResult<IEnumerable<TParentResource>>> BatchCreate(TChildAlterResource[] resources)
         {
             return SendMethod<IEnumerable<TParentResource>>("batch", HttpMethod.Post, resources);
         }
 
-        public Task<ActionResult<IEnumerable<TParentResource>>> BatchUpdate(TUpdateResource[] resources)
+        public Task<ActionResult<IEnumerable<TParentResource>>> BatchUpdate(TChildAlterResource[] resources)
         {
             return SendMethod<IEnumerable<TParentResource>>("batch", HttpMethod.Put, resources);
         }

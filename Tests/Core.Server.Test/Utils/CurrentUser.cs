@@ -19,16 +19,16 @@ namespace Core.Server.Test.Utils
         public TestConfig Config;
 
         [Dependency]
-        public Lazy<IResourceAlter<UserCreateResource, UserUpdateResource, UserResource>> UserResourceAlter;
+        public Lazy<IResourceAlter<UserAlterResource, UserResource>> UserResourceAlter;
 
         [Dependency]
         public Lazy<IResourceCreate<UserResource>> UserResourceCreate;
 
         [Dependency]
-        public Lazy<IResourceAlter<LoginCreateResource, LoginUpdateResource, LoginResource>> LoginResourceAlter;
+        public Lazy<IResourceAlter<LoginAlterResource, LoginResource>> LoginResourceAlter;
 
         [Dependency]
-        public Lazy<IResourceAlter<PolicyCreateResource, PolicyUpdateResource, PolicyResource>> PolicyResourceAlter;
+        public Lazy<IResourceAlter<PolicyAlterResource, PolicyResource>> PolicyResourceAlter;
 
         [Dependency]
         public Lazy<IResourceCreate<RoleResource>> RoleResourceCreate;
@@ -53,7 +53,7 @@ namespace Core.Server.Test.Utils
         public void LoginAsAdmin()
         {
             isLoggin = true;
-            var login = LoginResourceAlter.Value.Create(new LoginCreateResource()
+            var login = LoginResourceAlter.Value.Create(new LoginAlterResource()
             {
                 Email = Config.AdminUser,
                 Password = Config.AdminPassword

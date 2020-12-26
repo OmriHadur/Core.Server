@@ -11,13 +11,12 @@ using Unity;
 namespace Core.Server.Application.Validators.Implementation
 {
     [Inject]
-    public class RoleValidator
-        : ResourceValidator<RoleCreateResource,RoleUpdateResource,RoleEntity>
+    public class RoleValidator : ResourceValidator<RoleAlterResource, RoleEntity>
     {
         [Dependency]
         public ILookupRepository<PolicyEntity> PolicyLookupRepository { get; set; }
 
-        public async override Task<ActionResult> Validate(RoleCreateResource createResource)
+        public async override Task<ActionResult> ValidateCreate(RoleAlterResource createResource)
         {
             var notFoundId = await PolicyLookupRepository.GetNotFoundId(createResource.PoliciesId);
             if (notFoundId != null)
