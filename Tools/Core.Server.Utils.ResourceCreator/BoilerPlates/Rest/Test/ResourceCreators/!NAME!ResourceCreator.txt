@@ -1,0 +1,9 @@
+﻿using RestApi.Tests.ResourceCreators;
+using !PROJECT!.Shared.Resources;
+
+namespace !PROJECT!.Test.ResourceCreators
+{
+    public class !NAME!ResourceCreator : RestResourceCreator<!NAME!CreateResource, !NAME!Resource>
+    {
+    }
+}

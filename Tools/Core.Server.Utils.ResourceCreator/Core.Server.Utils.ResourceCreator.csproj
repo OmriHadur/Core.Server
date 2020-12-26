@@ -1,0 +1,92 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>Core.Server.ResourceCreator.Program</StartupObject>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <OutputPath>..\..\Output\Tools\</OutputPath>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Update="BoilerPlates\InnerRest\Application\Applications\!NAME!Application.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Client\Clients\!NAME!ControllClient.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Client\Interfaces\I!NAME!ControllClient.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Common\Applications\I!NAME!Application.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Common\Entities\!NAME!Entity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Shared\Resources\!NAME!CreateResource.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Shared\Resources\!NAME!Resource.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Test\ResourceCreators\!NAME!ResourceCreator.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Test\ResourceTests\!NAME!ResourceTests.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\InnerRest\Web\Controllers\!NAMES!Controller.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Application\Applications\!NAMES!Application.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Application\Mapping\!NAME!Mapping.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Client\Clients\!NAMES!ControllClient.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Client\Interfaces\I!NAMES!ControllClient.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Common\Applications\I!NAMES!Application.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Common\Entities\!NAME!Entity.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Common\Repositories\I!NAMES!Repository.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Persistence\Repositories\!NAMES!Repository.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Shared\Resources\!NAME!CreateResource.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Shared\Resources\!NAME!Resource.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Test\ResourceCreators\!NAME!ResourceCreator.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Test\ResourceTests\!NAME!ResourceTests.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Rest\Web\Controllers\!NAMES!Controller.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

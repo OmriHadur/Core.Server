@@ -1,0 +1,11 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RestApi.Tests.ResourceTests;
+using !PROJECT!.Shared.Resources;
+
+namespace !PROJECT!.Tests.RourcesTests
+{
+    [TestClass]
+    public class !NAME!ResourceTests : ResourceTests<!NAME!CreateResource, !NAME!Resource>
+    {
+    }
+}
