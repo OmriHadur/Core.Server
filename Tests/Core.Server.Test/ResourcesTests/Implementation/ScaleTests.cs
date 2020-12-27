@@ -2,7 +2,6 @@
 using Core.Server.Test.ResourceCreators.Interfaces;
 using Core.Server.Test.ResourceTests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 using Unity;
 
 namespace Core.Server.Test.ResourcesTests.Implementation
@@ -24,13 +23,6 @@ namespace Core.Server.Test.ResourcesTests.Implementation
                 CreateResource();
                 Assert.IsNotNull(CreatedResource);
             }
-        }
-
-        [TestMethod]
-        public void TestCreatePerralel()
-        {
-            CreateResource();
-            Parallel.For(0, SCALE, i => CreateResource());
         }
 
         [TestMethod]

@@ -14,7 +14,7 @@ namespace Core.Server.Test.ResourceTests.ResourceExtra
             CreateResource();
             var email =  CreatedResource.Email;
             var response = ResourceAlter.Create(r => r.Email = email);
-            AssertBadRequestReason(response, BadRequestReason.SameExists);
+            AssertValidationError(response);
         }
     }
 }

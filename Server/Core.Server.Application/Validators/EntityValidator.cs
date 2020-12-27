@@ -19,7 +19,7 @@ namespace Core.Server.Application.Validators
 
         public async Task<IEnumerable<StringKeyValuePair>> ValidateFound(string[] resources, string propertyName)
         {
-            if (resources.Length != 0)
+            if (resources?.Length != 0)
             {
                 var notFoundIds = await LookupRepository.GetNotFoundIds(resources);
                 if (notFoundIds != null && notFoundIds.Any())

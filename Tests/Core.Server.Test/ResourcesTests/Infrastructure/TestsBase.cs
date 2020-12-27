@@ -121,6 +121,11 @@ namespace Core.Server.Test.ResourceTests
             AssertBadRequestReason(response.Result, badRequestReason);
         }
 
+        protected void AssertValidationError<T>(ActionResult<T> response)
+        {
+            Assert.IsTrue(response.Result is ValidationErrorResult);
+        }
+
         protected void AssertBadRequestReason<TReson>(ActionResult response, TReson badRequestReason)
             where TReson : struct, Enum
         {

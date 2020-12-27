@@ -36,7 +36,7 @@ namespace Core.Server.Common.Validators
 
         protected virtual async Task<IEnumerable<StringKeyValuePair>> ValidateAlter(TAlterResource alterResource, TEntity entity)
         {
-            return null;
+            return new StringKeyValuePair[0];
         }
 
         protected IEnumerable<StringKeyValuePair> GetValidateCreate(TAlterResource createResource)

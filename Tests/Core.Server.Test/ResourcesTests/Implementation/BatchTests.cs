@@ -40,7 +40,7 @@ namespace Core.Server.Test.ResourcesTests.Implementation
         {
             CreateResource();
             var deleteResponse = ResourceBatch.Delete(new string[] { CreatedResource.Id, GetRandomId() });
-            AssertNotFound(deleteResponse);
+            AssertValidationError(deleteResponse);
         }
     }
 }

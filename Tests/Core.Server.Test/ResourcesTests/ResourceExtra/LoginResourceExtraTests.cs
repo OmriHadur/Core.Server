@@ -14,7 +14,7 @@ namespace Core.Server.Test.ResourceTests.ResourceExtra
         public void TestLoginWithBadEmail()
         {
             var response = ResourceAlter.Create(r => r.Email = r.Email + 'a');
-            AssertUnauthorized(response);
+            AssertValidationError(response);
         }
 
         [TestMethod]
@@ -22,7 +22,7 @@ namespace Core.Server.Test.ResourceTests.ResourceExtra
         {
             var response = ResourceAlter.Create(r => r.Password = r.Password + 'a');
 
-            AssertUnauthorized(response);
+            AssertValidationError(response);
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace Core.Server.Test.ResourceTests.ResourceExtra
 
             var response = ResourceAlter.Create(createResource);
 
-            AssertUnauthorized(response);
+            AssertValidationError(response);
         }
     }
 }
