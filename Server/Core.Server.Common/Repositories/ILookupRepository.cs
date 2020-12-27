@@ -23,7 +23,7 @@ namespace Core.Server.Common.Repositories
 
         Task<bool> Exists(string id);
 
-        Task<string> GetNotFoundId(string[] ids);
+        Task<IEnumerable<string>> GetNotFoundIds(string[] ids);
 
         Task<bool> Any();
 

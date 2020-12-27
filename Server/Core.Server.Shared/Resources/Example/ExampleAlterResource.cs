@@ -3,18 +3,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Resources
 {
-    public class ExampleAlterResource 
+    public class ExampleAlterResource
     {
-        [Required]
-        [Range(0,1000)]
+        [RequiredOnCreate]
+        [Range(0, 100)]
         public int Value { get; set; }
 
-        [Required]
+        [RequiredOnCreate]
         [MinLength(3)]
         public string Name { get; set; }
 
         [Immutable]
-        public string Mutable { get; set; }
+        [MinLength(3)]
+        public string Immutable { get; set; }
 
     }
 }

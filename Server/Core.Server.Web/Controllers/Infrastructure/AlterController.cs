@@ -4,6 +4,7 @@ using Core.Server.Shared.Resources;
 using Core.Server.Web.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Threading.Tasks;
 
 namespace Core.Server.Web.Controllers
@@ -16,6 +17,10 @@ namespace Core.Server.Web.Controllers
         [HttpPost]
         public virtual async Task<ActionResult<TResource>> Create(TAlterResource resource)
         {
+            //var m = new ModelStateDictionary();
+            //m.AddModelError("value", "is null");
+            //var b= ValidationProblem(m);
+            //return b;
             if (await IsUnauthorized(Operations.Create)) return Unauthorized();
             return await Application.Create(resource);
         }

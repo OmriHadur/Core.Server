@@ -25,9 +25,9 @@ namespace Core.Server.Persistence.Logging
             return LogginCall(() => Repository.Exists(id), id);
         }
 
-        public Task<string> GetNotFoundId(string[] ids)
+        public Task<IEnumerable<string>> GetNotFoundIds(string[] ids)
         {
-            return LogginCall(() => Repository.GetNotFoundId(ids), ids);
+            return LogginCall(() => Repository.GetNotFoundIds(ids), ids);
         }
 
         public Task<bool> Exists(Expression<Func<TEntity, bool>> predicate)

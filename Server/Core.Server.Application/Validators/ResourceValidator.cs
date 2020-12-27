@@ -1,8 +1,10 @@
 ﻿using Core.Server.Application;
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
-using Core.Server.Shared.Resources;
-using Microsoft.AspNetCore.Mvc;
+using Core.Server.Injection.Interfaces;
+using Core.Server.Shared.Attributes;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity;
 
@@ -14,19 +16,41 @@ namespace Core.Server.Common.Validators
           IResourceValidator<TAlterResource, TEntity>
         where TEntity : Entity
     {
-        public virtual async Task<ActionResult> ValidateCreate(TAlterResource createResource)
+        [Dependency]
+        public IReflactionHelper ReflactionHelper;
+
+        public virtual async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(TAlterResource alterResource)
         {
-            return Ok();
+            return GetValidateCreate(alterResource);
         }
 
-        public virtual async Task<ActionResult> ValidateCreate(TAlterResource createResource, TEntity entity)
+        public virtual Task<IEnumerable<StringKeyValuePair>> ValidateReplace(TAlterResource alterResource, TEntity entity)
         {
-            return Ok();
+            return ValidateAlter(alterResource, entity);
         }
 
-        public virtual async Task<ActionResult> ValidateUpdate(TAlterResource updateResource, TEntity entity)
+        public virtual Task<IEnumerable<StringKeyValuePair>> ValidateUpdate(TAlterResource alterResource, TEntity entity)
         {
-            return Ok();
+            return ValidateAlter(alterResource, entity);
+        }
+
+        protected virtual async Task<IEnumerable<StringKeyValuePair>> ValidateAlter(TAlterResource alterResource, TEntity entity)
+        {
+            return null;
+        }
+
+        protected IEnumerable<StringKeyValuePair> GetValidateCreate(TAlterResource createResource)
+        {
+            var properties = ReflactionHelper.GetPropertiesWithAttribute<ImmutableAttribute>(createResource);
+            if (properties.Any())
+                foreach (var property in properties)
+                    if (property.GetValue(createResource) == null)
+                        yield return new StringKeyValuePair(property.Name, $"The {property.Name} field is required.");
+        }
+
+        protected void AddValidation(IList<StringKeyValuePair> validation, string key, string value)
+        {
+            validation.Add(new StringKeyValuePair(key, value));
         }
     }
 }

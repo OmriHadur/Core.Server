@@ -1,11 +1,12 @@
 ﻿using Core.Server.Application.Helpers;
+using Core.Server.Common;
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
-using Core.Server.Shared.Resources;
 using Core.Server.Shared.Resources.Users;
-using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity;
 
@@ -20,12 +21,13 @@ namespace Core.Server.Application.Validators.Implementation
         [Dependency]
         public ILookupRepository<UserEntity> UserLookupRepository { get; set; }
 
-        public override async Task<ActionResult> ValidateCreate(LoginAlterResource createResource)
+        public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(LoginAlterResource createResource)
         {
+            var validation = GetValidateCreate(createResource).ToList();
             var userEntity = await UserLookupRepository.FindFirst(e => e.Email == createResource.Email);
             if (userEntity == null || !IsPasswordCurrent(createResource, userEntity))
-                return Unauthorized();
-            return await base.ValidateCreate(createResource);
+                AddValidation(validation, nameof(createResource.Email), "Wrong email or password");
+            return validation;
         }
 
         private bool IsPasswordCurrent(LoginAlterResource resource, UserEntity user)

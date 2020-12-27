@@ -15,7 +15,7 @@ namespace Core.Server.Common.Entities
         public string Name { get; set; }
 
         [Required]
-        public string Mutable { get; set; }
+        public string Immutable { get; set; }
 
         public List<ExampleChildEntity> ChildEntities { get; set; }
 

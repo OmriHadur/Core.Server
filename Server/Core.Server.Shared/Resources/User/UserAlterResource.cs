@@ -5,17 +5,16 @@ using System.ComponentModel.DataAnnotations;
 namespace Core.Server.Shared.Resources.Users
 {
     public class UserAlterResource
-    {
-        [Required]
-        [EmailAddress]
+    {      
         [Immutable]
+        [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [RequiredOnCreate]
         [MinLength(5)]
         public string Password { get; set; }
 
-        [Required]
+        [RequiredOnCreate]
         public string[] RolesIds { get; set; }
     }
 }

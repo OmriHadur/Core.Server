@@ -53,10 +53,10 @@ namespace Core.Server.Persistence.Repositories
             return answer.FirstOrDefault() != null;
         }
 
-        public async Task<string> GetNotFoundId(string[] ids)
+        public async Task<IEnumerable<string>> GetNotFoundIds(string[] ids)
         {
             var entities = (await Collection.FindAsync(e => ids.Contains(e.Id))).ToList();
-            return ids.FirstOrDefault(id => !entities.Any(e => e.Id == id));
+            return ids.Where(id => !entities.Any(e => e.Id == id));
         }
 
         public async Task<bool> Any()

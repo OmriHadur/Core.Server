@@ -1,9 +1,10 @@
-﻿using Core.Server.Common.Attributes;
+﻿using Core.Server.Common;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
 using Core.Server.Shared.Resources;
-using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity;
@@ -14,14 +15,24 @@ namespace Core.Server.Application.Validators.Implementation
     public class RoleValidator : ResourceValidator<RoleAlterResource, RoleEntity>
     {
         [Dependency]
-        public ILookupRepository<PolicyEntity> PolicyLookupRepository { get; set; }
+        public IEntityValidator<PolicyEntity> PolicyEntityValidator { get; set; }
 
-        public async override Task<ActionResult> ValidateCreate(RoleAlterResource createResource)
+        public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(RoleAlterResource alterResource)
         {
-            var notFoundId = await PolicyLookupRepository.GetNotFoundId(createResource.PoliciesId);
-            if (notFoundId != null)
-                return NotFound(notFoundId);
-            return Ok();
+            var validation = GetValidateCreate(alterResource).ToList();
+            var notFound =  await GetNotFoundPolicies(alterResource);
+            validation.AddRange(notFound);
+            return validation;
+        }
+
+        protected override Task<IEnumerable<StringKeyValuePair>> ValidateAlter(RoleAlterResource alterResource, RoleEntity entity)
+        {
+            return GetNotFoundPolicies(alterResource);
+        }
+
+        private Task<IEnumerable<StringKeyValuePair>> GetNotFoundPolicies(RoleAlterResource alterResource)
+        {
+            return PolicyEntityValidator.ValidateFound(alterResource.PoliciesId, nameof(alterResource.PoliciesId));
         }
     }
 }

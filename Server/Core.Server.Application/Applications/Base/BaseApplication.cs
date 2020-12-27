@@ -1,4 +1,5 @@
-﻿using Core.Server.Common.Applications;
+﻿using Core.Server.Common;
+using Core.Server.Common.Applications;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Errors;
 using Core.Server.Common.Helpers;
@@ -8,13 +9,15 @@ using Core.Server.Shared.Resources.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity;
 
 namespace Core.Server.Application
 {
     public class BaseApplication<TEntity>
         : IBaseApplication
-        where TEntity: Entity
+        where TEntity : Entity
     {
         public UserResource CurrentUser => CurrentUserGetter.CurrentUser;
 
@@ -36,7 +39,7 @@ namespace Core.Server.Application
             where TReson : struct, Enum
         {
             return new BadRequestApplicationResult(
-                Convert.ToInt32(badRequestReason), 
+                Convert.ToInt32(badRequestReason),
                 Enum.GetName(typeof(TReson), badRequestReason));
         }
 
@@ -73,6 +76,22 @@ namespace Core.Server.Application
         protected bool IsNotOk(ActionResult actionResult)
         {
             return !IsOk(actionResult);
+        }
+
+        protected ActionResult GetValidationResult(IEnumerable<StringKeyValuePair> validationErrors)
+        {
+            var validationProblemDetails = new ValidationProblemDetails();
+            var groupBy = validationErrors.GroupBy(kvp => kvp.Key);
+            foreach (var group in groupBy)
+                validationProblemDetails.Errors.Add(group.Key, group.Select(g => g.Value).ToArray());
+            return new BadRequestObjectResult(validationProblemDetails);
+        }
+
+        protected ActionResult GetValidationResult(StringKeyValuePair validationError)
+        {
+            var validationProblemDetails = new ValidationProblemDetails();
+            validationProblemDetails.Errors.Add(validationError.Key, new string[] { validationError.Value });
+            return new BadRequestObjectResult(validationProblemDetails);
         }
     }
 }

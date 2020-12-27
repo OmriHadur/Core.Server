@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Applications;
 using Core.Server.Common.Entities;
-using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Core.Server.Common.Validators
@@ -9,10 +9,10 @@ namespace Core.Server.Common.Validators
        : IBaseApplication
         where TEntity : Entity
     {
-        Task<ActionResult> ValidateCreate(TAlterResource createResource);
+        Task<IEnumerable<StringKeyValuePair>> ValidateCreate(TAlterResource createResource);
 
-        Task<ActionResult> ValidateCreate(TAlterResource createResource, TEntity entity);
+        Task<IEnumerable<StringKeyValuePair>> ValidateReplace(TAlterResource createResource, TEntity entity);
 
-        Task<ActionResult> ValidateUpdate(TAlterResource updateResource, TEntity entity);
+        Task<IEnumerable<StringKeyValuePair>> ValidateUpdate(TAlterResource updateResource, TEntity entity);
     }
 }

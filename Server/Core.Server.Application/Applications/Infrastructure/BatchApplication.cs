@@ -1,4 +1,5 @@
-﻿using Core.Server.Common.Applications;
+﻿using Core.Server.Common;
+using Core.Server.Common.Applications;
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
@@ -25,7 +26,10 @@ namespace Core.Server.Application
         public IBatchRepository<TEntity> BatchRepository;
 
         [Dependency]
-        public IResourceValidator<TAlterResource, TEntity> ResourceValidator;
+        public IBatchResourceValidator<TAlterResource, TEntity> ResourceValidator;
+
+        [Dependency]
+        public IEntityValidator<TEntity> EntityValidator;
 
         [Dependency]
         public IAlterResourceMapper<TAlterResource, TEntity> AlterResourceMapper;
@@ -35,10 +39,10 @@ namespace Core.Server.Application
 
         public async Task<ActionResult<IEnumerable<TResource>>> BatchCreate(TAlterResource[] resources)
         {
-            var validationResult = await Validate(resources);
-            if (IsNotOk(validationResult))
-                return validationResult;
-            
+            var validation = await ResourceValidator.ValidateCreate(resources);
+            if (validation.Any())
+                return GetValidationResult(validation);
+
             var entitiesTasks = resources.Select(async resource => await Map(resource));
             var entities = entitiesTasks.Select(er => er.Result).ToList();
             await AddEntites(entities);
@@ -49,17 +53,6 @@ namespace Core.Server.Application
         private async Task<TEntity> Map(TAlterResource resource)
         {
             return await AlterResourceMapper.MapCreate(resource);
-        }
-
-        private async Task<ActionResult> Validate(TAlterResource[] resources)
-        {
-            foreach (var resource in resources)
-            {
-                var validationResult = await ResourceValidator.ValidateCreate(resource);
-                if (IsNotOk(validationResult))
-                    return validationResult;
-            }
-            return Ok();
         }
 
         private Task AddEntites(IEnumerable<TEntity> entities)
@@ -75,9 +68,9 @@ namespace Core.Server.Application
 
         public async Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids)
         {
-            var exists = await BatchRepository.Exists(ids);
-            if (!exists)
-                return NotFound();
+            var validation = await EntityValidator.ValidateFound(ids,"ids");
+            if (validation.Any())
+                return GetValidationResult(validation);
             await BatchRepository.DeleteMany(ids);
             return Ok(ids);
         }

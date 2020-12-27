@@ -1,11 +1,12 @@
-﻿using Core.Server.Common.Attributes;
+﻿using Core.Server.Common;
+using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
-using Core.Server.Shared.Errors;
 using Core.Server.Shared.Resources;
-using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity;
 
@@ -17,12 +18,13 @@ namespace Core.Server.Application.Validators.Implementation
         [Dependency]
         public ILookupRepository<PolicyEntity> PolicyLookupRepository { get; set; }
 
-        public async override Task<ActionResult> ValidateCreate(PolicyAlterResource createResource)
+        public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(PolicyAlterResource alterResource)
         {
-            var type = Type.GetType(createResource.ResourceType);
+            var validation = GetValidateCreate(alterResource).ToList();
+            var type = Type.GetType(alterResource.ResourceType);
             if (type == null)
-                return BadRequest(BadRequestReason.InvalidResource);
-            return Ok();
+                AddValidation(validation,nameof(alterResource.ResourceType), "Invalid resource");
+            return validation;
         }
     }
 }

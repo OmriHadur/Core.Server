@@ -11,6 +11,7 @@
         EnumNotInRange,
         PageSizeNotSet,
         InvalidResource,
-        Unchangeable
+        ImmutableIsNull,
+        Immutable
     }
 }

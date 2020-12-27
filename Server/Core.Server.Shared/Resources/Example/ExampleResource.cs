@@ -8,7 +8,7 @@ namespace Core.Server.Shared.Resources
 
         public string Name { get; set; }
 
-        public string Mutable { get; set; }
+        public string Immutable { get; set; }
 
         public ExampleChildResource[] ChildResources { get; set; }
 

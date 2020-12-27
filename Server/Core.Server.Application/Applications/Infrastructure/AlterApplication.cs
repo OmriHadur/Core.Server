@@ -6,6 +6,7 @@ using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 using Unity;
 
@@ -33,8 +34,8 @@ namespace Core.Server.Application
         public virtual async Task<ActionResult<TResource>> Create(TAlterResource resource)
         {
             var validation = await ResourceValidator.ValidateCreate(resource);
-            if (!(validation is OkResult))
-                return validation;
+            if (validation.Any())
+                return GetValidationResult(validation);
             var entity = await AlterResourceMapper.MapCreate(resource);
             if (entity is OwnedEntity)
                 (entity as OwnedEntity).UserId = CurrentUser.Id;
@@ -47,9 +48,9 @@ namespace Core.Server.Application
             var entity = await LookupRepository.Get(id);
             if (entity == null)
                 entity = await AlterResourceMapper.MapCreate(resource);
-            var validation = await ResourceValidator.ValidateCreate(resource, entity);
-            if (!(validation is OkResult))
-                return validation;
+            var validation = await ResourceValidator.ValidateUpdate(resource, entity);
+            if (validation.Any())
+                return GetValidationResult(validation);
             await AlterResourceMapper.MapCreate(resource, entity);
             await AlterRepository.Replace(entity);
             return await ResourceMapper.Map(entity);
@@ -61,8 +62,8 @@ namespace Core.Server.Application
             if (entity == null)
                 return NotFound(id);
             var validation = await ResourceValidator.ValidateUpdate(resource, entity);
-            if (!(validation is OkResult))
-                return validation;
+            if (validation.Any())
+                return GetValidationResult(validation);
             await AlterResourceMapper.MapUpdate(resource, entity);
             await AlterRepository.Update(entity);
             return await ResourceMapper.Map(entity);

@@ -1,4 +1,5 @@
-﻿using Core.Server.Common.Applications;
+﻿using Core.Server.Common;
+using Core.Server.Common.Applications;
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
@@ -114,12 +115,14 @@ namespace Core.Server.Application
 
         private async Task<ActionResult> Validate(TAlterResource[] resources, Dictionary<string, TParentEntity> parents)
         {
+            var validation = new List<StringKeyValuePair>();
             foreach (var resource in resources)
             {
-                var validationResult = await ResourceValidator.ValidateCreate(resource, parents[resource.ParentId]);
-                if (IsNotOk(validationResult))
-                    return validationResult;
+                var resourceValidation = await ResourceValidator.ValidateReplace(resource, parents[resource.ParentId]);
+                validation.AddRange(resourceValidation);
             }
+            if (validation.Any())
+                return GetValidationResult(validation);
             return Ok();
         }
     }
