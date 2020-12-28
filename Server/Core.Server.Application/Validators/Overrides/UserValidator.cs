@@ -22,18 +22,18 @@ namespace Core.Server.Application.Validators.Implementation
 
         public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(UserAlterResource createResource)
         {
-            var validation = GetValidateCreate(createResource).ToList();
+            var validation = (await base.ValidateCreate(createResource)).ToList();
             if (await LookupRepository.Exists(e => e.Email == createResource.Email))
                 AddValidation(validation, nameof(UserAlterResource.Email), "Email already exists");
             await AddNotFoundRoles(createResource, validation);
             return validation;
         }
 
-        protected override async Task<IEnumerable<StringKeyValuePair>> ValidateAlter(UserAlterResource createResource, UserEntity entity)
+        protected override async Task<IEnumerable<StringKeyValuePair>> ValidateAlter(UserAlterResource alterResource, UserEntity entity)
         {
-            var validation = new List<StringKeyValuePair>();
+            var validation = (await base.ValidateAlter(alterResource, entity)).ToList();
             AddAuthorized(entity, validation);
-            await AddNotFoundRoles(createResource, validation);
+            await AddNotFoundRoles(alterResource, validation);
             return validation;
         }
 

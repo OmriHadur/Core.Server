@@ -38,7 +38,8 @@ namespace Core.Server.Test.ResourceTests
         {
             foreach (var testForResource in TestsForResource)
             {
-                testForResource.TestInit();
+                Console.WriteLine("Start: " + testForResource);
+                testForResource.TestInit();              
                 testRun(testForResource);
                 testForResource.Cleanup();
             }

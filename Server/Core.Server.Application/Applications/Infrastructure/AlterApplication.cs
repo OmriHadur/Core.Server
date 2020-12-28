@@ -48,10 +48,10 @@ namespace Core.Server.Application
             var entity = await LookupRepository.Get(id);
             if (entity == null)
                 entity = await AlterResourceMapper.MapCreate(resource);
-            var validation = await ResourceValidator.ValidateUpdate(resource, entity);
+            var validation = await ResourceValidator.ValidateReplace(resource, entity);
             if (validation.Any())
                 return GetValidationResult(validation);
-            await AlterResourceMapper.MapCreate(resource, entity);
+            await AlterResourceMapper.MapReplace(resource, entity);
             await AlterRepository.Replace(entity);
             return await ResourceMapper.Map(entity);
         }

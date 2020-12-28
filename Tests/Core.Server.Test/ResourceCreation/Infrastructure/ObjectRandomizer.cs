@@ -67,15 +67,15 @@ namespace Core.Server.Test.ResourceCreation
                 return random.Next(2) == 0;
             if (type == typeof(string))
                 return GetStringValue(property);
-            else if (type == typeof(int))
+            else if (type == typeof(int) || type == typeof(int?))
                 return GetIntInRange(property);
-            else if (type == typeof(long))
+            else if (type == typeof(long) || type == typeof(long?))
                 return GetLongInRange(property);
-            else if (type == typeof(double))
+            else if (type == typeof(double) || type == typeof(double?))
                 return GetDoubleInRange(property);
-            else if (type == typeof(decimal))
+            else if (type == typeof(decimal) || type == typeof(decimal?))
                 return GetDecimalInRange(property);
-            else if (type == typeof(DateTime))
+            else if (type == typeof(DateTime) || type == typeof(DateTime?))
                 return DateTime.Now.AddHours(random.Next(240));
             //else if (type.IsArray)
             //    return type;

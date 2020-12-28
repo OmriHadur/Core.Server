@@ -16,17 +16,16 @@ namespace Core.Server.Test.ResourceCreation
         [Dependency]
         public ICurrentUser CurrentUser;
 
-        protected override void AddRandomCreateValues(UserAlterResource createResource)
+        protected override void AddRandomValues(UserAlterResource createResource)
         {
-            base.AddRandomCreateValues(createResource);
+            base.AddRandomValues(createResource);
             createResource.Password = Config.DefaultPassword;
             createResource.RolesIds = new string[0];
         }
 
-        protected override void AddRandomValues(UserAlterResource createResource, UserResource existingResource)
+        protected override void AddRandomToExistingValues(UserAlterResource createResource, UserResource existingResource)
         {
-            base.AddRandomValues(createResource, existingResource);
-            createResource.Email = existingResource.Email;
+            base.AddRandomToExistingValues(createResource, existingResource);
             createResource.Password = Config.DefaultPassword;
             createResource.RolesIds = new string[0];
         }

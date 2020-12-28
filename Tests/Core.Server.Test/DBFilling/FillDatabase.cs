@@ -1,4 +1,5 @@
-﻿using Core.Server.Injection.Interfaces;
+﻿using AutoMapper.Configuration.Annotations;
+using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Resources;
 using Core.Server.Test.ResourceCreators.Interfaces;
 using Core.Server.Test.ResourceTests;
@@ -10,7 +11,7 @@ namespace Core.Server.Test.DBFilling
     [TestClass]
     public class FillDatabase : TestsBase
     {
-        protected int SCALE = 50;
+        protected int SCALE = 5;
 
         [Dependency]
         public IReflactionHelper ReflactionHelper;
@@ -19,7 +20,7 @@ namespace Core.Server.Test.DBFilling
         public IUnityContainer UnityContainer;
 
         [TestMethod]
-        public void TestDeleteAllResources()
+        public void TestFillDatabase()
         {
             var methodInfo = GetType().GetMethod(nameof(CreateResource));
             var bundels = ReflactionHelper.GetResourcesBoundles();

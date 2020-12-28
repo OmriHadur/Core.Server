@@ -1,4 +1,6 @@
 ﻿using Core.Server.Common.Attributes;
+using Core.Server.Injection.Interfaces;
+using Core.Server.Shared.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Test.ResourceCreation.Interfaces;
 using System;
@@ -16,36 +18,42 @@ namespace Core.Server.Test.ResourceCreation
         [Dependency]
         public IObjectRandomizer ObjectRandomizer;
 
+        [Dependency]
+        public IReflactionHelper ReflactionHelper;
+
         public TAlterResource GetRandomCreateResource()
         {
             var createResource = new TAlterResource();
-            AddRandomCreateValues(createResource);
+            AddRandomValues(createResource);
             return createResource;
         }
 
-        public TAlterResource GetRandomCreateResource(TResource existingResource)
+        public TAlterResource GetRandomReplacResource(TResource existingResource)
         {
             var createResource = new TAlterResource();
-            AddRandomValues(createResource, existingResource);
+            AddRandomToExistingValues(createResource, existingResource);
             return createResource;
         }
 
         public TAlterResource GetRandomUpdateResource(TResource existingResource)
         {
             var createResource = new TAlterResource();
-            AddRandomValues(createResource, existingResource);
+            AddRandomToExistingValues(createResource, existingResource);
             return createResource;
         }
 
-        protected virtual void AddRandomCreateValues(TAlterResource createResource)
+        protected virtual void AddRandomValues(TAlterResource createResource)
         {
             ObjectRandomizer.AddRandomValues(createResource);
         }
 
 
-        protected virtual void AddRandomValues(TAlterResource createResource, TResource existingResource)
+        protected virtual void AddRandomToExistingValues(TAlterResource alterResource, TResource existingResource)
         {
-            ObjectRandomizer.AddRandomValues(createResource);
+            ObjectRandomizer.AddRandomValues(alterResource);
+            var properties = ReflactionHelper.GetPropertiesWithAttribute<ImmutableAttribute>(alterResource);
+            foreach (var property in properties)
+                property.SetValue(alterResource, null);
         }
 
         protected virtual void AddRandomUpdateValues(TAlterResource updateResource)

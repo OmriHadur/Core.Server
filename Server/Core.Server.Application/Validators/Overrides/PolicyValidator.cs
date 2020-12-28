@@ -18,12 +18,12 @@ namespace Core.Server.Application.Validators.Implementation
         [Dependency]
         public ILookupRepository<PolicyEntity> PolicyLookupRepository { get; set; }
 
-        public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(PolicyAlterResource alterResource)
+        public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(PolicyAlterResource createResource)
         {
-            var validation = GetValidateCreate(alterResource).ToList();
-            var type = Type.GetType(alterResource.ResourceType);
+            var validation = (await base.ValidateCreate(createResource)).ToList();
+            var type = Type.GetType(createResource.ResourceType);
             if (type == null)
-                AddValidation(validation,nameof(alterResource.ResourceType), "Invalid resource");
+                AddValidation(validation,nameof(createResource.ResourceType), "Invalid resource");
             return validation;
         }
     }

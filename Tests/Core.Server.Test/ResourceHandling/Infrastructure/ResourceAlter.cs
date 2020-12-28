@@ -39,7 +39,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
         public ActionResult<TResource> Replace(Action<TAlterResource> editFunc)
         {
             var resource = ResourceCreate.GetOrCreate();
-            var updateResource = RandomResourceCreator.GetRandomCreateResource(resource);
+            var updateResource = RandomResourceCreator.GetRandomReplacResource(resource);
             editFunc?.Invoke(updateResource);
             return Client.Replace(resource.Id, updateResource).Result;
         }

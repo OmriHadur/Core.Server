@@ -20,16 +20,16 @@ namespace Core.Server.Application.Mappers.Implementation
             return userEntity;
         }
 
-        public async override Task MapCreate(UserAlterResource resource, UserEntity entity)
+        public async override Task MapReplace(UserAlterResource resource, UserEntity entity)
         {
-            await base.MapCreate(resource, entity);
+            await base.MapReplace(resource, entity);
             if (resource.Password != null)
                 AddPassword(resource.Password, entity);
         }
 
         public async override Task MapUpdate(UserAlterResource resource, UserEntity entity)
         {
-            await base.MapCreate(resource, entity);
+            await base.MapReplace(resource, entity);
             if (resource.Password != null)
                 AddPassword(resource.Password, entity);
         }

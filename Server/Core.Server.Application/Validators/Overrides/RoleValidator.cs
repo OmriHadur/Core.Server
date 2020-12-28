@@ -19,7 +19,7 @@ namespace Core.Server.Application.Validators.Implementation
 
         public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(RoleAlterResource alterResource)
         {
-            var validation = GetValidateCreate(alterResource).ToList();
+            var validation = (await base.ValidateCreate(alterResource)).ToList();
             var notFound =  await GetNotFoundPolicies(alterResource);
             validation.AddRange(notFound);
             return validation;

@@ -10,11 +10,11 @@ namespace Core.Server.Shared.Resources.Users
         [EmailAddress]
         public string Email { get; set; }
 
-        [RequiredOnCreate]
+        [RequiredOnAlter]
         [MinLength(5)]
         public string Password { get; set; }
 
-        [RequiredOnCreate]
+        [RequiredOnAlter]
         public string[] RolesIds { get; set; }
     }
 }

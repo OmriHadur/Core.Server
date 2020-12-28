@@ -2,7 +2,7 @@
 
 namespace Core.Server.Shared.Attributes
 {
-    public class RequiredOnCreateAttribute : Attribute
+    public class RequiredOnAlterAttribute : Attribute
     {
     }
 }

@@ -6,7 +6,7 @@ namespace Core.Server.Test.ResourceCreation.Interfaces
         where TResource: Resource
     {
         TAlterResource GetRandomCreateResource();
-        TAlterResource GetRandomCreateResource(TResource existingResource);
+        TAlterResource GetRandomReplacResource(TResource existingResource);
         TAlterResource GetRandomUpdateResource(TResource existingResource);
     }
 }

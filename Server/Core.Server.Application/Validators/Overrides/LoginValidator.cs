@@ -23,7 +23,7 @@ namespace Core.Server.Application.Validators.Implementation
 
         public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(LoginAlterResource createResource)
         {
-            var validation = GetValidateCreate(createResource).ToList();
+            var validation = (await base.ValidateCreate(createResource)).ToList();
             var userEntity = await UserLookupRepository.FindFirst(e => e.Email == createResource.Email);
             if (userEntity == null || !IsPasswordCurrent(createResource, userEntity))
                 AddValidation(validation, nameof(createResource.Email), "Wrong email or password");

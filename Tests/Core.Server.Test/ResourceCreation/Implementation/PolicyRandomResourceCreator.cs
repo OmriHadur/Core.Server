@@ -12,9 +12,9 @@ namespace Core.Server.Test.ResourceCreation
         [Dependency]
         public IReflactionHelper ReflactionHelper;
 
-        protected override void AddRandomCreateValues(PolicyAlterResource createResource)
+        protected override void AddRandomValues(PolicyAlterResource createResource)
         {
-            base.AddRandomCreateValues(createResource);
+            base.AddRandomValues(createResource);
             var fullName = ReflactionHelper.GetTypeFullName(typeof(ExampleResource));
             createResource.ResourceType = fullName;
             createResource.ResourceActions = ResourceActions.All;

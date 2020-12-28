@@ -5,17 +5,13 @@ namespace Core.Server.Shared.Resources
 {
     public class ExampleAlterResource
     {
-        [RequiredOnCreate]
+        [RequiredOnAlter]
         [Range(0, 100)]
-        public int Value { get; set; }
-
-        [RequiredOnCreate]
-        [MinLength(3)]
-        public string Name { get; set; }
+        public int? Value { get; set; }
 
         [Immutable]
         [MinLength(3)]
-        public string Immutable { get; set; }
+        public string Name { get; set; }
 
     }
 }

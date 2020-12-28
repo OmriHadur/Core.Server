@@ -3,6 +3,7 @@ using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,12 +22,16 @@ namespace Core.Server.Common.Validators
 
         public virtual async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(TAlterResource alterResource)
         {
-            return GetValidateCreate(alterResource);
+            var validationImmutableAttribute = GetNullProperties<ImmutableAttribute>(alterResource);
+            var validationAlterAttribute = GetNullProperties<RequiredOnAlterAttribute>(alterResource);
+            return validationImmutableAttribute.Union(validationAlterAttribute);
         }
 
-        public virtual Task<IEnumerable<StringKeyValuePair>> ValidateReplace(TAlterResource alterResource, TEntity entity)
+        public virtual async Task<IEnumerable<StringKeyValuePair>> ValidateReplace(TAlterResource alterResource, TEntity entity)
         {
-            return ValidateAlter(alterResource, entity);
+            var validationAlterAttribute = GetNullProperties<RequiredOnAlterAttribute>(alterResource);
+            var validationAlter = await ValidateAlter(alterResource, entity);
+            return validationAlterAttribute.Union(validationAlter);
         }
 
         public virtual Task<IEnumerable<StringKeyValuePair>> ValidateUpdate(TAlterResource alterResource, TEntity entity)
@@ -36,16 +41,24 @@ namespace Core.Server.Common.Validators
 
         protected virtual async Task<IEnumerable<StringKeyValuePair>> ValidateAlter(TAlterResource alterResource, TEntity entity)
         {
-            return new StringKeyValuePair[0];
+            return GetNonNullImmutableProperties(alterResource);
         }
 
-        protected IEnumerable<StringKeyValuePair> GetValidateCreate(TAlterResource createResource)
+        protected IEnumerable<StringKeyValuePair> GetNullProperties<TAttribute>(TAlterResource createResource)
+            where TAttribute : Attribute
+        {
+            var properties = ReflactionHelper.GetPropertiesWithAttribute<TAttribute>(createResource);
+            foreach (var property in properties)
+                if (property.GetValue(createResource) == null)
+                    yield return new StringKeyValuePair(property.Name, $"The {property.Name} field is required.");
+        }
+
+        protected IEnumerable<StringKeyValuePair> GetNonNullImmutableProperties(TAlterResource createResource)
         {
             var properties = ReflactionHelper.GetPropertiesWithAttribute<ImmutableAttribute>(createResource);
-            if (properties.Any())
-                foreach (var property in properties)
-                    if (property.GetValue(createResource) == null)
-                        yield return new StringKeyValuePair(property.Name, $"The {property.Name} field is required.");
+            foreach (var property in properties)
+                if (property.GetValue(createResource) != null)
+                    yield return new StringKeyValuePair(property.Name, $"The {property.Name} field is immutable and cannot be assign.");
         }
 
         protected void AddValidation(IList<StringKeyValuePair> validation, string key, string value)

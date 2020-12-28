@@ -9,7 +9,7 @@ namespace Core.Server.Common.Mappers
     {
         Task<TEntity> MapCreate(TAlterResource resource);
 
-        Task MapCreate(TAlterResource resource, TEntity entity);
+        Task MapReplace(TAlterResource resource, TEntity entity);
 
         Task MapUpdate(TAlterResource resource, TEntity entity);
     }

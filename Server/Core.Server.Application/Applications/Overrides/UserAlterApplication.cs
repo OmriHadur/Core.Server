@@ -1,7 +1,6 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
-using Core.Server.Shared.Errors;
 using Core.Server.Shared.Resources.Users;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ namespace Core.Server.Application
     {
         [Dependency]
         public IAlterRepository<LoginEntity> LoginsRepository;
-
 
         public async override Task<ActionResult> Delete(string id)
         {
