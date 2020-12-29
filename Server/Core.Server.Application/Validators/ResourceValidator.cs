@@ -65,5 +65,20 @@ namespace Core.Server.Common.Validators
         {
             validation.Add(new StringKeyValuePair(key, value));
         }
+
+        protected void AddValidationAlreadyExists(IList<StringKeyValuePair> validation, string key)
+        {
+            validation.Add(new StringKeyValuePair(key, key + " already exists"));
+        }
+
+        protected void AddValidationUnauthorized(IList<StringKeyValuePair> validation, string key)
+        {
+            validation.Add(new StringKeyValuePair(key, "Unauthorized to change values of " + key));
+        }
+
+        protected void AddValidationInvalid(IList<StringKeyValuePair> validation, string key)
+        {
+            validation.Add(new StringKeyValuePair(key, "Invalid value of " + key));
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Core.Server.Shared.Resources.Users;
+﻿using Core.Server.Shared.Resources.User;
 
 namespace Core.Server.Common.Helpers
 {

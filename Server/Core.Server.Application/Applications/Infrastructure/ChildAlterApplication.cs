@@ -48,7 +48,7 @@ namespace Core.Server.Application
             var parnet = await LookupRepository.Get(resource.ParentId);
             var validations = await ResourceValidator.ValidateReplace(resource, parnet);
             if (validations.Any())
-                return GetValidationResult(validation);
+                return GetValidationResult(validations);
 
             var child = await AlterResourceMapper.MapCreate(resource);
             ParentManager.Add(parnet, child);
@@ -66,7 +66,7 @@ namespace Core.Server.Application
             var parent = await LookupRepository.Get(resource.ParentId);
             var validations = await ResourceValidator.ValidateReplace(resource, parent);
             if (validations.Any())
-                return GetValidationResult(validation);
+                return GetValidationResult(validations);
 
             var child = await AlterResourceMapper.MapCreate(resource);
             ParentManager.Replace(parent, child, id);
@@ -83,9 +83,9 @@ namespace Core.Server.Application
             if (!ParentManager.Exists(parent, id))
                 return NotFound(id);
 
-            var validation = await ResourceValidator.ValidateUpdate(resource, parent);
-            if (validation.Any())
-                return GetValidationResult(validation);
+            var validations = await ResourceValidator.ValidateUpdate(resource, parent);
+            if (validations.Any())
+                return GetValidationResult(validations);
 
             var child = ParentManager.Get(parent, id);
             await AlterResourceMapper.MapUpdate(resource, child);

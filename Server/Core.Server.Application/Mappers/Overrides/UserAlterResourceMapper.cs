@@ -2,7 +2,7 @@
 using Core.Server.Application.Mappers.Base;
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using System.Threading.Tasks;
 using Unity;
 

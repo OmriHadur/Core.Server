@@ -1,5 +1,5 @@
 ﻿using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using System;
 
 namespace Core.Server.Test.Utils

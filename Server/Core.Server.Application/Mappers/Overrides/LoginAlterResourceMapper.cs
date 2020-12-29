@@ -6,7 +6,7 @@ using Core.Server.Common.Entities.Helpers;
 using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using System;
 using System.Threading.Tasks;
 using Unity;

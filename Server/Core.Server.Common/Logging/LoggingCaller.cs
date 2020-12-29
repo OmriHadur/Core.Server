@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Applications;
 using Core.Server.Common.Logging;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;

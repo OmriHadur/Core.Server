@@ -3,7 +3,7 @@ using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Entities.Helpers;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Unity;

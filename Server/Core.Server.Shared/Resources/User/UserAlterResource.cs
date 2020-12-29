@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Server.Shared.Resources.Users
+namespace Core.Server.Shared.Resources.User
 {
     public class UserAlterResource
     {      
@@ -13,8 +13,5 @@ namespace Core.Server.Shared.Resources.Users
         [RequiredOnAlter]
         [MinLength(5)]
         public string Password { get; set; }
-
-        [RequiredOnAlter]
-        public string[] RolesIds { get; set; }
     }
 }

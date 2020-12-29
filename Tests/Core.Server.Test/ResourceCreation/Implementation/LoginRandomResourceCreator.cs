@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using Core.Server.Test.Configuration;
 using Core.Server.Test.ResourceCreators.Interfaces;
 using Core.Server.Test.Utils;

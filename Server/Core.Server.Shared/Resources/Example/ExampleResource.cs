@@ -9,10 +9,5 @@ namespace Core.Server.Shared.Resources
         public string Name { get; set; }
 
         public ExampleChildResource[] ChildResources { get; set; }
-
-        public ExampleResource()
-        {
-            ChildResources = new ExampleChildResource[0];
-        }
     }
 }

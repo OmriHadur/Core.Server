@@ -1,4 +1,4 @@
-﻿using Core.Server.Shared.Resources.Users;
+﻿using Core.Server.Shared.Resources.User;
 using System.Security.Claims;
 
 namespace Core.Server.Common.Entities.Helpers

@@ -1,7 +1,7 @@
 ﻿using Core.Server.Common.Config;
 using Core.Server.Common.Entities.Helpers;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using System;

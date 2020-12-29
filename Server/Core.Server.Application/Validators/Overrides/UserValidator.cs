@@ -3,7 +3,7 @@ using Core.Server.Common.Attributes;
 using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Validators;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,8 +24,7 @@ namespace Core.Server.Application.Validators.Implementation
         {
             var validation = (await base.ValidateCreate(createResource)).ToList();
             if (await LookupRepository.Exists(e => e.Email == createResource.Email))
-                AddValidation(validation, nameof(UserAlterResource.Email), "Email already exists");
-            await AddNotFoundRoles(createResource, validation);
+                AddValidationAlreadyExists(validation, nameof(UserAlterResource.Email));
             return validation;
         }
 
@@ -33,21 +32,13 @@ namespace Core.Server.Application.Validators.Implementation
         {
             var validation = (await base.ValidateAlter(alterResource, entity)).ToList();
             AddAuthorized(entity, validation);
-            await AddNotFoundRoles(alterResource, validation);
             return validation;
         }
 
         private void AddAuthorized(UserEntity entity, List<StringKeyValuePair> validation)
         {
-            if (entity.Id != CurrentUser.Id &&
-                CurrentUser.Email != AppSettings.AdminUserName)
-                AddValidation(validation, nameof(UserAlterResource.Email), "Unauthorized to alter user");
-        }
-
-        private async Task AddNotFoundRoles(UserAlterResource userAlterResource, List<StringKeyValuePair> validation)
-        {
-            var notFound = await RoleEntityValidator.ValidateFound(userAlterResource.RolesIds, nameof(userAlterResource.RolesIds));
-            validation.AddRange(notFound);
+            if (entity.Id != CurrentUser.Id && CurrentUser.Email != AppSettings.AdminUserName)
+                AddValidationUnauthorized(validation, nameof(UserAlterResource.Email));
         }
     }
 }

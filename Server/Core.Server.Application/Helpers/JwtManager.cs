@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using Core.Server.Common.Attributes;
 using System.Collections.Generic;
 

@@ -1,4 +1,4 @@
-﻿using Core.Server.Shared.Resources.User;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Common.Entities
@@ -15,8 +15,11 @@ namespace Core.Server.Common.Entities
         [Required]
         public byte[] PasswordSalt { get; set; }
 
-        public UserStatus Status { get; set; }
+        public List<UserRoleEntity> Roles { get; set; }
 
-        public string[] RolesIds { get; set; }
+        public UserEntity()
+        {
+            Roles = new List<UserRoleEntity>();
+        }
     }
 }

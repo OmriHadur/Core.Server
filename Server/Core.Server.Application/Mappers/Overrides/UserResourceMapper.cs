@@ -4,7 +4,7 @@ using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.Users;
+using Core.Server.Shared.Resources.User;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity;
@@ -24,7 +24,8 @@ namespace Core.Server.Application.Mappers.Implementation
         public async override Task<UserResource> Map(UserEntity entity)
         {
             var roleResource = await base.Map(entity);
-            var roles = await RoleLookupRepository.Get(entity.RolesIds);
+            var rolesIds = entity.Roles.Select(r => r.Id);
+            var roles = await RoleLookupRepository.Get(rolesIds.ToArray());
             roleResource.Roles = (await RoleMapper.Map(roles.ToList())).ToArray();
             return roleResource;
         }

@@ -1,5 +1,5 @@
 ﻿
-namespace Core.Server.Shared.Resources.Users
+namespace Core.Server.Shared.Resources.User
 {
     public class LoginResource : Resource
     {
