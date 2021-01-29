@@ -154,7 +154,9 @@ namespace Core.Server.Test.ResourceCreation
 
         private string GetObjectName(PropertyInfo property)
         {
-            return $"{property.ReflectedType.Name.Substring(0, 2)}-{property.Name.Substring(0, 4)}";
+            var prefix = property.ReflectedType.Name.Substring(0, 2);
+            var subfix = property.Name.Substring(0, Math.Min(4, property.Name.Length));
+            return $"{prefix}-{subfix}";
         }
 
         private static T GetAttribute<T>(IEnumerable<Attribute> CustomAttributes)

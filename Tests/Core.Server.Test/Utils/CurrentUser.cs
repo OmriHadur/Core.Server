@@ -1,7 +1,6 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.User;
 using Core.Server.Test.Configuration;
 using Core.Server.Test.ResourceCreators.Interfaces;
 using System;
@@ -20,6 +19,9 @@ namespace Core.Server.Test.Utils
 
         [Dependency]
         public Lazy<IResourceAlter<UserAlterResource, UserResource>> UserResourceAlter;
+
+        [Dependency]
+        public Lazy<IChildResourceAlter<UserRoleAlterResource, UserResource, UserRoleResource>> UserRoleResourceAlter;
 
         [Dependency]
         public Lazy<IResourceCreate<UserResource>> UserResourceCreate;
@@ -96,7 +98,11 @@ namespace Core.Server.Test.Utils
                 p.ResourceActions = resourceActions;
             });
             var roleId = RoleResourceCreate.Value.Create().Value.Id;
-            //UserResourceAlter.Value.Replace(ur => ur.RolesIds = new string[] { roleId });
+            UserRoleResourceAlter.Value.Create(e =>
+            {
+                e.Id = roleId;
+                e.ParentId = UserResourceCreate.Value.GetOrCreate().Id;
+            });
             Login();
         }
     }

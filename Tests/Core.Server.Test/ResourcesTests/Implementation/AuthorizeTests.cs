@@ -1,5 +1,6 @@
 ﻿using Core.Server.Shared.Resources;
 using Core.Server.Test.ResourceTests;
+using Example.Server.Shared.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Server.Test.ResourcesTests.Implementation

@@ -21,32 +21,32 @@ namespace Core.Server.Persistence.Logging
 
         public Task Delete(string id)
         {
-            return LogginCall(() => Repository.Delete(id), id);
+            return LogginCall( () => Repository.Delete(id), id);
         }
 
         public Task DeleteAll()
         {
-            return LogginCall(() => Repository.DeleteAll());
+            return LogginCall( () => Repository.DeleteAll());
         }
 
         public Task DeleteMany(Expression<Func<TEntity, bool>> predicate)
         {
-            return LogginCall(() => Repository.DeleteMany(predicate), predicate);
+            return LogginCall( () => Repository.DeleteMany(predicate), predicate);
         }
 
         public Task DeleteOne(Expression<Func<TEntity, bool>> predicate)
         {
-            return LogginCall(() => Repository.DeleteOne(predicate), predicate);
+            return LogginCall( () => Repository.DeleteOne(predicate), predicate);
         }
 
         public Task Replace(TEntity entity)
         {
-            return LogginCall(() => Repository.Replace(entity), entity);
+            return LogginCall( () => Repository.Replace(entity), entity);
         }
 
         public Task Update(TEntity entity)
         {
-            return LogginCall(() => Repository.Update(entity), entity);
+            return LogginCall( () => Repository.Update(entity), entity);
         }
     }
 }

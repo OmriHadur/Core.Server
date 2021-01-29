@@ -1,4 +1,4 @@
-﻿using Core.Server.Shared.Resources.User;
+﻿using Core.Server.Shared.Resources;
 using Core.Server.Test.ResourceCreators.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;

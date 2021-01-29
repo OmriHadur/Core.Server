@@ -17,12 +17,14 @@ namespace Core.Server.Persistence.Logging
 
         public Task LogginCall(Func<Task> action, object request = null)
         {
-            return LogginCall(action, LoggingTierLevel.Repository, request);
+            return LogginCall(EntityName, action, LoggingTierLevel.Repository, request);
         }
 
         public Task<T> LogginCall<T>(Func<Task<T>> action, object request = null)
         {
-            return LogginCall(action, LoggingTierLevel.Repository, request);
+            return LogginCall(EntityName, action, LoggingTierLevel.Repository, request);
         }
+
+        private string EntityName => Repository.GetType().GenericTypeArguments[0].Name;
     }
 }

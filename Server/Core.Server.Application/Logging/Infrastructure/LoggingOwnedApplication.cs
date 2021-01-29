@@ -18,7 +18,7 @@ namespace Core.Server.Application.Logging
     {
         public Task<ActionResult> Any()
         {
-          return  LogginCall(() => Application.Any());
+            return LogginCall(() => Application.Any());
         }
 
         public Task<ActionResult<IEnumerable<TResource>>> GetAllOwned()

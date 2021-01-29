@@ -1,8 +1,8 @@
 ﻿using Core.Server.Client.Results;
 using Core.Server.Shared.Query;
-using Core.Server.Shared.Resources;
 using Core.Server.Test.ResourceCreators.Interfaces;
 using Core.Server.Test.ResourceTests;
+using Example.Server.Shared.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;

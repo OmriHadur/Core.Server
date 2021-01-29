@@ -1,5 +1,5 @@
 ﻿using Core.Server.Common.Attributes;
-using Core.Server.Shared.Resources.User;
+using Core.Server.Shared.Resources;
 using Core.Server.Test.Configuration;
 using Core.Server.Test.Utils;
 using Unity;

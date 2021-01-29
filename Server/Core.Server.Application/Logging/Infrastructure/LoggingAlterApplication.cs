@@ -9,7 +9,7 @@ using Unity;
 namespace Core.Server.Application.Logging
 {
     [Inject(2)]
-    public class LoggingAlterApplication<TAlterResource,TResource, TEntity>
+    public class LoggingAlterApplication<TAlterResource, TResource, TEntity>
         : LoggingApplication<AlterApplication<TAlterResource, TResource, TEntity>>
         , IAlterApplication<TAlterResource, TResource>
         where TResource : Resource
