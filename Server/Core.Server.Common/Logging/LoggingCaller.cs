@@ -1,8 +1,5 @@
-﻿using Core.Server.Common.Applications;
-using Core.Server.Common.Logging;
-using Core.Server.Shared.Resources.User;
+﻿using Core.Server.Common.Logging;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;

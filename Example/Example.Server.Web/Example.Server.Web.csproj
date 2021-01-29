@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <OutputPath>..\..\Output\Example\</OutputPath>
+  </PropertyGroup>
+ 
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="log4net" Version="2.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
+    <PackageReference Include="MongoDB.Driver" Version="2.11.2" />
+    <PackageReference Include="Unity" Version="5.11.7" />
+    <PackageReference Include="Unity.Microsoft.DependencyInjection" Version="5.11.5" />
+  </ItemGroup>
+ 
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Server\Core.Server.Web\Core.Server.Web.csproj" />
+  </ItemGroup>
+
+
+</Project>

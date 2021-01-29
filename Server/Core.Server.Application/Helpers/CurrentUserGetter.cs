@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Helpers;
-using Core.Server.Shared.Resources.User;
+using Core.Server.Shared.Resources;
 
 namespace Core.Server.Application.Helpers
 {

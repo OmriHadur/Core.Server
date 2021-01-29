@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputPath>..\..\Output\Example\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Unity" Version="5.11.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Server\Core.Server.Application\Core.Server.Application.csproj" />
+    <ProjectReference Include="..\..\Server\Core.Server.Common\Core.Server.Common.csproj" />
+    <ProjectReference Include="..\..\Server\Core.Server.Shared\Core.Server.Shared.csproj" />
+    <ProjectReference Include="..\Example.Server.Common\Example.Server.Common.csproj" />
+    <ProjectReference Include="..\Example.Server.Shared\Example.Server.Shared.csproj" />
+  </ItemGroup>
+  
+</Project>

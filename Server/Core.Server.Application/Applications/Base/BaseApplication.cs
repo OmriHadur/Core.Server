@@ -5,7 +5,7 @@ using Core.Server.Common.Errors;
 using Core.Server.Common.Helpers;
 using Core.Server.Common.Repositories;
 using Core.Server.Shared.Errors;
-using Core.Server.Shared.Resources.User;
+using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

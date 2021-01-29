@@ -1,9 +1,0 @@
-﻿using !PROJECT!.Shared.Resources;
-using RestApi.Common.Applications;
-
-namespace !PROJECT!.Common.Applications
-{
-    public interface I!NAMES!Application : IRestApplication<!NAME!CreateResource, !NAME!Resource>
-    {
-    }
-}

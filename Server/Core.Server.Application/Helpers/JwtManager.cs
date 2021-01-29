@@ -1,4 +1,6 @@
-﻿using Core.Server.Common.Entities.Helpers;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Entities.Helpers;
+using Core.Server.Shared.Resources;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
@@ -6,9 +8,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using Core.Server.Shared.Resources.User;
-using Core.Server.Common.Attributes;
-using System.Collections.Generic;
 
 namespace Core.Server.Application.Helpers
 {

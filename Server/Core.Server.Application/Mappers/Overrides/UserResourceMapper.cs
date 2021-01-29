@@ -4,7 +4,6 @@ using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
 using Core.Server.Common.Repositories;
 using Core.Server.Shared.Resources;
-using Core.Server.Shared.Resources.User;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity;

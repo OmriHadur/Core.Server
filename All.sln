@@ -19,17 +19,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Web", "Server\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Injection", "Server\Core.Server.Injection\Core.Server.Injection.csproj", "{D367FDC9-D6E1-4170-88DC-27D8E859E355}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Product", "Product", "{13A49025-5650-49A4-9053-080DEA589166}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{13A49025-5650-49A4-9053-080DEA589166}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Server.Application", "Product\Product.Server.Application\Product.Server.Application.csproj", "{B02CEB7B-41B6-4731-9672-1F5BD0FBDF2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Server.Application", "Example\Example.Server.Application\Example.Server.Application.csproj", "{B02CEB7B-41B6-4731-9672-1F5BD0FBDF2B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Server.Common", "Product\Product.Server.Common\Product.Server.Common.csproj", "{101245DB-7D53-4718-97EA-810A91B63E1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Server.Common", "Example\Example.Server.Common\Example.Server.Common.csproj", "{101245DB-7D53-4718-97EA-810A91B63E1F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Server.Persistence", "Product\Product.Server.Persistence\Product.Server.Persistence.csproj", "{8B89E151-0394-48A7-B558-BCABB37C6E86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Server.Persistence", "Example\Example.Server.Persistence\Example.Server.Persistence.csproj", "{8B89E151-0394-48A7-B558-BCABB37C6E86}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Server.Shared", "Product\Product.Server.Shared\Product.Server.Shared.csproj", "{3E72CC38-A190-4689-9178-A245F94A15D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Server.Shared", "Example\Example.Server.Shared\Example.Server.Shared.csproj", "{3E72CC38-A190-4689-9178-A245F94A15D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.Server.Web", "Product\Product.Server.Web\Product.Server.Web.csproj", "{4FD36C39-BAF9-4F3D-861C-A908AB497A05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Server.Web", "Example\Example.Server.Web\Example.Server.Web.csproj", "{4FD36C39-BAF9-4F3D-861C-A908AB497A05}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Server.Application", "Server\Core.Server.Application\Core.Server.Application.csproj", "{9FFBE0FA-00C4-4108-8646-BCE9FE2D93DB}"
 EndProject

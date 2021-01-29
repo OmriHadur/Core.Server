@@ -1,9 +1,0 @@
-﻿using System.ComponentModel.DataAnnotations;
-using RestApi.Common.Entities;
-
-namespace !PROJECT!.Common.Entities
-{
-    public class !NAME!Entity : Entity
-    {
-    }
-}

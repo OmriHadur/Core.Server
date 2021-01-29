@@ -1,7 +1,7 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
-using Core.Server.Shared.Resources.User;
+using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Unity;

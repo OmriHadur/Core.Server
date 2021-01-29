@@ -3,7 +3,7 @@ using Core.Server.Common.Attributes;
 using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Validators;
-using Core.Server.Shared.Resources.User;
+using Core.Server.Shared.Resources;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

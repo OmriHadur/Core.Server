@@ -1,7 +1,7 @@
 ﻿using Core.Server.Shared.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Server.Shared.Resources.User
+namespace Core.Server.Shared.Resources
 {
     public class LoginAlterResource 
     {

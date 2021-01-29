@@ -1,0 +1,8 @@
+﻿using Core.Server.Shared.Resources;
+
+namespace !PROJECT!.Shared.Resources
+{
+    public class !NAME!Resource : Resource
+    {
+    }
+}

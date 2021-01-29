@@ -1,7 +1,6 @@
 ﻿using Core.Server.Common.Applications;
 using Core.Server.Common.Helpers;
 using Core.Server.Common.Logging;
-using Core.Server.Shared.Resources.User;
 using System;
 using System.Threading.Tasks;
 using Unity;

@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Server.Shared.Resources.User
+namespace Core.Server.Shared.Resources
 {
     public class UserAlterResource
     {      
