@@ -19,7 +19,7 @@ namespace Core.Server.Test.DBFilling
         [Dependency]
         public IUnityContainer UnityContainer;
 
-        [TestMethod]
+        //[TestMethod]
         public void TestFillDatabase()
         {
             var methodInfo = GetType().GetMethod(nameof(CreateResource));

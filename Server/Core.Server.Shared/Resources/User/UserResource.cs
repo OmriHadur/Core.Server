@@ -4,6 +4,6 @@
     {
         public string Email { get; set; }
 
-        public RoleResource[] Roles { get; set; }
+        public UserRoleResource[] Roles { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace Core.Server.Application.Mappers.Base
             profile.CreateMap<UserAlterResource, UserEntity>();
             profile.CreateMap<UserEntity, UserResource>()
                 .ForMember(r => r.Roles, a => a.Ignore());
+            profile.CreateMap<RoleResource,UserRoleResource > ();
         }
     }
 }

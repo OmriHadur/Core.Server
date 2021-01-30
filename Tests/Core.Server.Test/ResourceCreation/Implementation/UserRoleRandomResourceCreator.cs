@@ -7,7 +7,7 @@ namespace Core.Server.Test.ResourceCreation
 {
     [Inject]
     public class UserRoleRandomResourceCreator
-        : RandomResourceCreator<UserRoleAlterResource, RoleResource>
+        : RandomResourceCreator<UserRoleAlterResource, UserRoleResource>
     {
         [Dependency]
         public IResourceCreate<RoleResource> RoleResourceCreate;
@@ -17,9 +17,9 @@ namespace Core.Server.Test.ResourceCreation
             createResource.Id = RoleResourceCreate.GetOrCreate().Id;
         }
 
-        protected override void AddRandomToExistingValues(UserRoleAlterResource alterResource, RoleResource existingResource)
+        protected override void AddRandomToExistingValues(UserRoleAlterResource alterResource, UserRoleResource existingResource)
         {
-            alterResource.Id = RoleResourceCreate.GetOrCreate().Id;
+            alterResource.Id = RoleResourceCreate.Create().Value.Id;
         }
     }
 }

@@ -47,7 +47,6 @@ namespace Core.Server.Test.ResourceCreation
             ObjectRandomizer.AddRandomValues(createResource);
         }
 
-
         protected virtual void AddRandomToExistingValues(TAlterResource alterResource, TResource existingResource)
         {
             ObjectRandomizer.AddRandomValues(alterResource);

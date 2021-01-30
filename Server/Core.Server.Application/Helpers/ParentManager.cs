@@ -56,7 +56,8 @@ namespace Core.Server.Application.Helpers
             var children = GetChildren(parent);
             var childEntity = children.FirstOrDefault(c => c.Id == childId);
             children.Remove(childEntity);
-            child.Id = childId;
+            if (child.Id == null)
+                child.Id = childId;
             children.Add(child);
         }
 

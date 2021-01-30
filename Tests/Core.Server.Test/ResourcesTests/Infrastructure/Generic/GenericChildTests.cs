@@ -49,7 +49,6 @@ namespace Core.Server.Test.ResourceTests
         {
             ChildResourceAlter.Replace();
             var child = GetChild();
-            Assert.AreEqual(childCreated.Id, child.Id);
             ValidateNotEqual(childCreated, child);
         }
 
@@ -57,7 +56,6 @@ namespace Core.Server.Test.ResourceTests
         {
             ChildResourceAlter.Update();
             var child = GetChild();
-            Assert.AreEqual(childCreated.Id, child.Id);
             ValidateNotEqual(childCreated, child);
         }
 
