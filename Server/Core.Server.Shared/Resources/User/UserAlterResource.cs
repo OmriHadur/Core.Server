@@ -1,5 +1,4 @@
 ﻿using Core.Server.Shared.Attributes;
-using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Resources
