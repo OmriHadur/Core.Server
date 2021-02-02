@@ -16,5 +16,26 @@
   <PropertyGroup>
     <OutputPath>..\..\Output\Tools\</OutputPath>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Common\Entities\!NAME!Entity.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!NAME!AlterResource.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!NAME!Resource.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Resource\!PROJECT!.Common\Entities\!NAME!Entity.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Resource\!PROJECT!.Shared\Resources\!NAME!\!NAME!AlterResource.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="BoilerPlates\Resource\!PROJECT!.Shared\Resources\!NAME!\!NAME!Resource.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

@@ -6,16 +6,14 @@ namespace Core.Server.ResourceCreator
 {
     public class Program
     {
-        static readonly string ProjectName = "BestEmployeePoll";
-        static readonly string ProjectPath = @"E:\Dropbox\Workspace\" + ProjectName;
+        static readonly string ProjectName = "Example.Server";
+        static readonly string ProjectPath = @$"E:\Workspace\RetailShopping\Core.Server\Example\";
         static readonly string NewResourceName = "Poll";
-        static readonly string NewResourcePluralName = NewResourceName + "s";
 
-        static readonly string ParentName = "";
-        static readonly bool IsInnerRest = false;
+        static readonly string ParentName = "Poll";
+        static readonly bool IsChild = false;
 
         static readonly string NameWildCard = "!NAME!";
-        static readonly string NamePluralWildCard = "!NAMES!";
         static readonly string ProjectWildCard = "!PROJECT!";
         static readonly string ParentWildCard = "!PARENT!";
         static readonly string boilerPlatesPath = GetBoilerPlatesPath();
@@ -37,17 +35,9 @@ namespace Core.Server.ResourceCreator
         private static void CreateFile(FileInfo fileInfo, string newFilePath)
         {
             var fileContent = File.ReadAllText(fileInfo.FullName);
-            fileContent = ReplateWildCards(fileContent);
+            fileContent = ReplaceWildCards(fileContent);
             using var fs = File.CreateText(newFilePath);
             fs.Write(fileContent);
-        }
-
-        private static string ReplateWildCards(string fileContent)
-        {
-            fileContent = fileContent.Replace(NameWildCard, NewResourceName);
-            fileContent = fileContent.Replace(NamePluralWildCard, NewResourcePluralName);
-            fileContent = fileContent.Replace(ProjectWildCard, ProjectName);
-            return fileContent.Replace(ParentWildCard, ParentName);
         }
 
         private static string[] GetBolierplateFiles()
@@ -58,8 +48,7 @@ namespace Core.Server.ResourceCreator
         private static string GetNewFilePath(FileInfo fileInfo, string newFileDirectoryPath)
         {
             var fileName = fileInfo.Name.Replace(".txt", ".cs");
-            fileName = fileName.Replace(NameWildCard, NewResourceName);
-            fileName = fileName.Replace(NamePluralWildCard, NewResourcePluralName);
+            fileName = ReplaceWildCards(fileName);
             var newFilePath = newFileDirectoryPath + fileName;
             return newFilePath;
         }
@@ -67,7 +56,8 @@ namespace Core.Server.ResourceCreator
         {
             var absPath = fileInfo.Directory.FullName.Replace(boilerPlatesPath, string.Empty);
             absPath = absPath.Substring(1);
-            var newFileDirectoryPath = $"{ProjectPath}\\{ProjectName}.{absPath}\\";
+            absPath = ReplaceWildCards(absPath);
+            var newFileDirectoryPath = ProjectPath + absPath + "\\";
             Directory.CreateDirectory(newFileDirectoryPath);
             return newFileDirectoryPath;
         }
@@ -76,7 +66,15 @@ namespace Core.Server.ResourceCreator
         {
             return Directory.GetCurrentDirectory() + 
                 "\\BoilerPlates\\" + 
-                (IsInnerRest ? "InnerRest" : "Rest");
+                (IsChild ? "ChildResource" : "Resource");
+        }
+
+        private static string ReplaceWildCards(string str)
+        {
+            str = str.Replace(ProjectWildCard, ProjectName);
+            str = str.Replace(NameWildCard, NewResourceName);
+            str = str.Replace(ParentWildCard, ParentName);
+            return str;
         }
     }
 }

@@ -1,0 +1,9 @@
+﻿using Core.Server.Shared.Resources;
+using System.ComponentModel.DataAnnotations;
+
+namespace !PROJECT!.Shared.Resources
+{
+    public class !NAME!AlterResource : ChildAlterResource
+    {
+    }
+}
