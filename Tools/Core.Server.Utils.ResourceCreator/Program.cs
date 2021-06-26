@@ -6,10 +6,9 @@ namespace Core.Server.ResourceCreator
 {
     public class Program
     {
-        static readonly string ProjectName = "Example.Server";
-        static readonly string ProjectPath = @$"E:\Workspace\RetailShopping\Core.Server\Example\";
-        static readonly string NewResourceName = "Poll";
-
+        static readonly string ProjectName = "Retail.Server";
+        static readonly string ProjectPath = @$"E:\Workspace\RetailShopping\Retail.Server.New\";
+        static readonly string NewResourceName = "Product";
         static readonly string ParentName = "Poll";
         static readonly bool IsChild = false;
 
@@ -47,7 +46,7 @@ namespace Core.Server.ResourceCreator
 
         private static string GetNewFilePath(FileInfo fileInfo, string newFileDirectoryPath)
         {
-            var fileName = fileInfo.Name.Replace(".txt", ".cs");
+            var fileName = fileInfo.Name.Replace(".txt", string.Empty);
             fileName = ReplaceWildCards(fileName);
             var newFilePath = newFileDirectoryPath + fileName;
             return newFilePath;

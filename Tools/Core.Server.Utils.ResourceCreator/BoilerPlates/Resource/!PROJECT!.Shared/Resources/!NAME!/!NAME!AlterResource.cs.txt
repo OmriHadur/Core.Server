@@ -1,7 +1,8 @@
 ﻿using Core.Server.Shared.Resources;
 using System.ComponentModel.DataAnnotations;
+using Core.Server.Shared.Attributes;
 
-namespace !PROJECT!.Shared.Resources
+namespace !PROJECT!.Shared.Resources.!NAME!
 {
     public class !NAME!AlterResource
     {

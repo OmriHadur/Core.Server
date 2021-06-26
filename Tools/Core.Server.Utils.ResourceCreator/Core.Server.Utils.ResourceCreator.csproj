@@ -18,24 +18,30 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Update="BoilerPlates\ChildResource\!PROJECT!.Common\Entities\!NAME!Entity.txt">
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Common\Entities\!NAME!Entity.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!NAME!AlterResource.txt">
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!NAME!AlterResource.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!NAME!Resource.txt">
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!NAME!Resource.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Resource\!PROJECT!.Common\Entities\!NAME!Entity.txt">
+    <None Update="BoilerPlates\Resource\!PROJECT!.Common\Entities\!NAME!Entity.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Resource\!PROJECT!.Shared\Resources\!NAME!\!NAME!AlterResource.txt">
+    <None Update="BoilerPlates\Resource\!PROJECT!.Shared\Resources\!NAME!\!NAME!AlterResource.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Resource\!PROJECT!.Shared\Resources\!NAME!\!NAME!Resource.txt">
+    <None Update="BoilerPlates\Resource\!PROJECT!.Shared\Resources\!NAME!\!NAME!Resource.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="BoilerPlates\Project\!PROJECT!.Server.Application\Mappers\" />
+    <Folder Include="BoilerPlates\Project\!PROJECT!.Server.Common\Entities\" />
+    <Folder Include="BoilerPlates\Project\!PROJECT!.Server.Shared\Resources\" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using Core.Server.Common.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace !PROJECT!.Common.Entities
+namespace !PROJECT!.Common.Entities.!NAME!
 {
     public class !NAME!Entity : Entity
     {

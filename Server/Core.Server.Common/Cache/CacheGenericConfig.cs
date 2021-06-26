@@ -48,6 +48,8 @@ namespace Core.Server.Common.Cache
 
         private CacheTypeConfig GetCacheTypeConfig()
         {
+            if (CacheConfig.Overrides == null)
+                return null;
             return CacheConfig.Overrides
                 .FirstOrDefault(ovride => ovride.Type == typeof(TEntity).Name + nameof(Entity));
         }

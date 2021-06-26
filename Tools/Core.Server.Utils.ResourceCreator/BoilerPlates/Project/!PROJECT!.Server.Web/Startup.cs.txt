@@ -1,0 +1,12 @@
+using Microsoft.Extensions.Configuration;
+
+namespace !PROJECT!.Server.Web
+{
+    public class Startup: Core.Server.Web.Startup
+    {
+        public Startup(IConfiguration configuration)
+            :base(configuration)
+        {
+        }
+    }
+}

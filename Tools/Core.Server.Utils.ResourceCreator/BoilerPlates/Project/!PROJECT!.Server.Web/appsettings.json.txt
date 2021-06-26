@@ -1,0 +1,33 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Error",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    },
+    "Application": "MethodsTimeInputOutput",
+    "Repository": "MethodsTime"
+  },
+  "Cache": {
+    "MaxEntities": 5,
+    "MaxQueries": 7,
+    ],
+    "Preload": [ ],
+    "Exclude": [ "Login", "User" ]
+  },
+  "AllowedHosts": "*",
+  "AssembliesPrefixes": [
+    "Core.",
+    "!PROJECT!."
+  ],
+  "AllowAnonymous": [
+    {
+      "ResourceType": "Core.Server.Shared.Resources.LoginResource,Core.Server.Shared",
+      "ResourceActions": 2
+    },
+    {
+      "ResourceType": "Core.Server.Shared.Resources.UserResource,Core.Server.Shared",
+      "ResourceActions": 2
+    }
+  ]
+}

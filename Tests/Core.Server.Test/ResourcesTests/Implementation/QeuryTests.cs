@@ -64,7 +64,11 @@ namespace Core.Server.Test.ResourcesTests.Implementation
             var res1 = CreateResource();
             var res2 = ResourceAlter.Create(r => r.Name = CreatedResource.Name).Value;
 
-            var result = Query(queryPhrase: GetQueryPhraseEquals(), orderBy: nameof(ExampleResource.Value), page: 2, pageSize: 1);
+            var result = Query(
+                queryPhrase: GetQueryPhraseEquals(), 
+                orderBy: nameof(ExampleResource.Value), 
+                page: 2, 
+                pageSize: 1);
 
             var expected = res1.Value < res2.Value ? res2 : res1;
             Assert.AreEqual(1, result.Value.Count());

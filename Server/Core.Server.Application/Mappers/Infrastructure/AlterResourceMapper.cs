@@ -36,11 +36,22 @@ namespace Core.Server.Application.Mappers.Base
         {
             AssignImmutableValues(resource, entity);
             var updatedEntity = Mapper.Map<TEntity>(resource);
-            foreach (var property in typeof(TEntity).GetProperties())
+            UpdateEntity(entity, updatedEntity);
+        }
+
+        private static void UpdateEntity<T>(T entity, T updatedEntity)
+        {
+            foreach (var property in entity.GetType().GetProperties())
             {
                 var value = property.GetValue(updatedEntity);
                 if (value != null)
-                    property.SetValue(entity, value);
+                {
+                    var propertyType = property.PropertyType;
+                    if (propertyType.IsPrimitive || propertyType.IsArray || propertyType == typeof(string))
+                        property.SetValue(entity, value);
+                    else
+                        UpdateEntity(property.GetValue(entity), property.GetValue(updatedEntity));
+                }
             }
         }
 
