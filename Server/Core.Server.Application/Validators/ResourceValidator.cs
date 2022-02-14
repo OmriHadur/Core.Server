@@ -5,6 +5,7 @@ using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Attributes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity;
@@ -23,20 +24,22 @@ namespace Core.Server.Common.Validators
         public virtual async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(TAlterResource alterResource)
         {
             var validationImmutableAttribute = GetNullProperties<ImmutableAttribute>(alterResource);
-            var validationAlterAttribute = GetNullProperties<RequiredOnAlterAttribute>(alterResource);
+            var validationAlterAttribute = GetNullProperties<RequiredAttribute>(alterResource);
             return validationImmutableAttribute.Union(validationAlterAttribute);
         }
 
         public virtual async Task<IEnumerable<StringKeyValuePair>> ValidateReplace(TAlterResource alterResource, TEntity entity)
         {
-            var validationAlterAttribute = GetNullProperties<RequiredOnAlterAttribute>(alterResource);
+            var validationAlterAttribute = GetNullProperties<RequiredAttribute>(alterResource);
             var validationAlter = await ValidateAlter(alterResource, entity);
             return validationAlterAttribute.Union(validationAlter);
         }
 
-        public virtual Task<IEnumerable<StringKeyValuePair>> ValidateUpdate(TAlterResource alterResource, TEntity entity)
+        public virtual async Task<IEnumerable<StringKeyValuePair>> ValidateUpdate(TAlterResource alterResource, TEntity entity)
         {
-            return ValidateAlter(alterResource, entity);
+            var validationAlterAttribute = GetNullProperties<RequiredUpdateAttribute>(alterResource);
+            var validationAlter = await ValidateAlter(alterResource, entity);
+            return validationAlterAttribute.Union(validationAlter);
         }
 
         protected virtual async Task<IEnumerable<StringKeyValuePair>> ValidateAlter(TAlterResource alterResource, TEntity entity)

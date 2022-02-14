@@ -8,8 +8,8 @@ namespace Core.Server.ResourceCreator
     {
         static readonly string ProjectName = "Retail.Server";
         static readonly string ProjectPath = @$"E:\Workspace\RetailShopping\Retail.Server.New\";
-        static readonly string NewResourceName = "Product";
-        static readonly string ParentName = "Poll";
+        static readonly string NewResourceName = "Category";
+        static readonly string ParentName = "";
         static readonly bool IsChild = false;
 
         static readonly string NameWildCard = "!NAME!";

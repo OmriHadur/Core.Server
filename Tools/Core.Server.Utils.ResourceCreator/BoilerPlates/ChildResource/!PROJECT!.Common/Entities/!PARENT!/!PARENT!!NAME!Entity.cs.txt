@@ -1,9 +1,9 @@
 ﻿using Core.Server.Common.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace !PROJECT!.Common.Entities
+namespace !PROJECT!.Common.Entities.!PARENT!
 {
-    public class !NAME!Entity : ChildEntity
+    public class !PARENT!!NAME!Entity : ChildEntity
     {
     }
 }

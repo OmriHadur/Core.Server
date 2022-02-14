@@ -2,7 +2,7 @@
 
 namespace !PROJECT!.Shared.Resources
 {
-    public class !NAME!Resource : ChildResource
+    public class !PARENT!!NAME!Resource : ChildResource
     {
     }
 }

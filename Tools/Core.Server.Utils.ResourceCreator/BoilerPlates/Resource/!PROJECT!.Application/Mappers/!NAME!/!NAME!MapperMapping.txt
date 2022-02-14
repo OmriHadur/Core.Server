@@ -1,0 +1,18 @@
+﻿using AutoMapper;
+using Core.Server.Common.Attributes;
+using Core.Server.Common.Entities;
+using Core.Server.Common.Mappers;
+using Core.Server.Shared.Resources;
+
+namespace !PROJECT!.Application.Mappers.!NAME!
+{
+    [InjectName]
+    public class !NAME!MapperMapping : IAutoMapperMapping
+    {
+        public virtual void AddAutoMapping(Profile profile)
+        {
+            profile.CreateMap<!NAME!AlterResource, !NAME!Entity>();
+            profile.CreateMap<!NAME!Entity, !NAME!Resource>();
+        }
+    }
+}

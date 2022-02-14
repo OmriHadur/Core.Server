@@ -28,7 +28,10 @@ namespace Core.Server.Injection.Reflaction
         }
         public IEnumerable<ResourceBoundle> GetResourcesBoundles()
         {
-            var resourceTypes = GetDirectDrivenTypesOf<Resource>().Where(t => t != typeof(ChildResource));
+            var resourceTypes = GetDrivenTypesOf<Resource>().Where(t => 
+                t != typeof(ChildResource) &&
+                t != typeof(NamedResource)
+            );
 
             foreach (var resourceType in resourceTypes)
                 yield return new ResourceBoundle(resourceType, this);

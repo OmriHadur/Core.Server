@@ -9,7 +9,7 @@ namespace Core.Server.Shared.Resources
         [EmailAddress]
         public string Email { get; set; }
 
-        [RequiredOnAlter]
+        [Required]
         [MinLength(5)]
         public string Password { get; set; }
     }

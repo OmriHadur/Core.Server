@@ -9,6 +9,8 @@ namespace Core.Server.Common.Config
         public CacheConfig Cache { get; set; }
         public LoggingConfig Logging { get; set; }
         public PolicyResource[] AllowAnonymous { get; set; }
+        public ResourceBoundle[] ResourceBoundles { get; set; }
+        public ChildResourceBoundle[] ChildResourceBoundles { get; set; }
         public string[] AssembliesPrefixes { get; set; }
     }
 }

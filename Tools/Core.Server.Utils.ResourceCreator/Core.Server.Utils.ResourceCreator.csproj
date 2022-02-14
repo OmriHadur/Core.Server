@@ -18,16 +18,22 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Update="BoilerPlates\ChildResource\!PROJECT!.Common\Entities\!NAME!Entity.cs.txt">
+    <None Remove="BoilerPlates\Resource\!PROJECT!.Application\Mappers\!NAME!AlterResourceMapper.txt" />
+    <None Remove="BoilerPlates\Resource\!PROJECT!.Application\Mappers\!NAME!MapperMapping.txt" />
+    <None Remove="BoilerPlates\Resource\!PROJECT!.Application\Mappers\!NAME!ResourceMapper.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Common\Entities\!PARENT!\!PARENT!!NAME!Entity.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!NAME!AlterResource.cs.txt">
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!PARENT!!NAME!AlterResource.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!NAME!Resource.cs.txt">
+    <None Update="BoilerPlates\ChildResource\!PROJECT!.Shared\Resources\!PARENT!\!PARENT!!NAME!Resource.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="BoilerPlates\Resource\!PROJECT!.Common\Entities\!NAME!Entity.cs.txt">
+    <None Update="BoilerPlates\Resource\!PROJECT!.Common\Entities\!NAME!\!NAME!Entity.cs.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="BoilerPlates\Resource\!PROJECT!.Shared\Resources\!NAME!\!NAME!AlterResource.cs.txt">
