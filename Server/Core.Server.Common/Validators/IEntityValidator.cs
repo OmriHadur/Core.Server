@@ -1,5 +1,4 @@
-﻿using Core.Server.Common.Applications;
-using Core.Server.Common.Entities;
+﻿using Core.Server.Common.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

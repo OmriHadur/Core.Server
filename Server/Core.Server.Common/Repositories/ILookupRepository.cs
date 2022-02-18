@@ -1,5 +1,4 @@
 ﻿using Core.Server.Common.Entities;
-using Core.Server.Common.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Server.Common.Repositories
 {
-    public interface ILookupRepository<TEntity> 
+    public interface ILookupRepository<TEntity>
         : IBaseRepository
         where TEntity : Entity
     {

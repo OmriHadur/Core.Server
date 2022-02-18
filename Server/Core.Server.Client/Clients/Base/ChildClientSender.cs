@@ -10,7 +10,7 @@ namespace Core.Server.Client.Clients
         protected override string GetApiRoute()
         {
             var parentName = typeof(TParentResource).Name.Replace(nameof(Resource), string.Empty);
-            var childName =typeof(TChildResource).Name
+            var childName = typeof(TChildResource).Name
                 .Replace(nameof(Resource), string.Empty)
                 .Replace(parentName, string.Empty);
 

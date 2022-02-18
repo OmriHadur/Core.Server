@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Core.Server.Common.Logging
+﻿namespace Core.Server.Common.Logging
 {
     public interface IMethodLogger
     {

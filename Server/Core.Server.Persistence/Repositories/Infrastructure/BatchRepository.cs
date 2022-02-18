@@ -34,7 +34,7 @@ namespace Core.Server.Persistence.Repositories
         public async Task ReplaceMany(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
-                await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity); 
+                await Collection.ReplaceOneAsync(e => e.Id == entity.Id, entity);
         }
 
         public async Task UpdateMany(IEnumerable<TEntity> entities)

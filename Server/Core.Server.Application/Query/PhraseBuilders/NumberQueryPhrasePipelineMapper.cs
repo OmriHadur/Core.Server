@@ -1,5 +1,5 @@
-﻿using Core.Server.Common.Query;
-using Core.Server.Common.Attributes;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Query;
 using System;
 using System.Text;
 

@@ -16,7 +16,7 @@ namespace Core.Server.Injection.Unity
         public Type TChildAlterResource => TAlterResource;
 
         public ChildResourceBoundle(Type resourceType, IReflactionHelper reflactionHelper)
-            :base(resourceType,reflactionHelper)
+            : base(resourceType, reflactionHelper)
         {
             var parentName = GetFirstWord(ResourceName);
             TParentEntity = reflactionHelper.GetTypeWithPrefix<Entity>(parentName);

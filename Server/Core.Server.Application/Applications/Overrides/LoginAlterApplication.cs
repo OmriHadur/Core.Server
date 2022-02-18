@@ -10,7 +10,7 @@ using Unity;
 namespace Core.Server.Application
 {
     [Inject]
-    public class LoginAlterApplication: AlterApplication<LoginAlterResource, LoginResource, LoginEntity>
+    public class LoginAlterApplication : AlterApplication<LoginAlterResource, LoginResource, LoginEntity>
     {
         [Dependency]
         public AppSettings AppSettings;

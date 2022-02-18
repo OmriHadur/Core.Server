@@ -1,8 +1,8 @@
 ﻿using Core.Server.Client.Results;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Core.Server.Shared.Resources;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Core.Server.Client.Clients
 {
@@ -10,7 +10,7 @@ namespace Core.Server.Client.Clients
         : ClientBase<TResource>
         where TResource : Resource
     {
-        protected Task<ActionResult<TResource>> SendPatch(string urlSubfix,object content)
+        protected Task<ActionResult<TResource>> SendPatch(string urlSubfix, object content)
         {
             return SendMethod<TResource>(urlSubfix, HttpMethod.Patch, content);
         }
@@ -67,7 +67,7 @@ namespace Core.Server.Client.Clients
 
         protected Task<ActionResult<TResource>> SentPost(string urlSubfix, object content)
         {
-            return SendMethod<TResource>(urlSubfix,HttpMethod.Post, content);
+            return SendMethod<TResource>(urlSubfix, HttpMethod.Post, content);
         }
 
         protected Task<ActionResult> SentPostNoResource(string urlSubfix, object content)

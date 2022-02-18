@@ -5,10 +5,10 @@
         public string Key;
         public string Value;
 
-        public StringKeyValuePair(string key,string value)
+        public StringKeyValuePair(string key, string value)
         {
             Key = key;
-            Value= value;
+            Value = value;
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Core.Server.Application.Query.PhraseBuilders
 {
-    public abstract class QueryValuePhrasePipelineMapper<TQueryValue, TValue, TOperand> 
+    public abstract class QueryValuePhrasePipelineMapper<TQueryValue, TValue, TOperand>
         : QueryPhrasePipelineMapper
         where TQueryValue : QueryValue<TValue, TOperand>, new()
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Core.Server.Test.ResourceCreators.Interfaces
 {
-    public interface IResourceLookup<TResource> 
+    public interface IResourceLookup<TResource>
         where TResource : Resource
     {
         ActionResult<TResource> Get(string id);

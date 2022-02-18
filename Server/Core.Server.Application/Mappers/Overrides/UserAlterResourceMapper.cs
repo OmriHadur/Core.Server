@@ -9,7 +9,7 @@ using Unity;
 namespace Core.Server.Application.Mappers.Implementation
 {
     [Inject]
-    public class UserAlterResourceMapper: AlterResourceMapper<UserAlterResource, UserEntity>
+    public class UserAlterResourceMapper : AlterResourceMapper<UserAlterResource, UserEntity>
     {
         private readonly PasswordHasher _passwordHasher = new PasswordHasher();
 

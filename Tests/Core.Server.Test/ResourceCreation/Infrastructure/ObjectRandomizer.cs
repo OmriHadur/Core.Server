@@ -136,7 +136,7 @@ namespace Core.Server.Test.ResourceCreation
             var name = GetObjectName(property);
             if (maxLength != null && name.Length > maxLength)
                 name = name.Substring(0, (int)maxLength);
-            var stringValueLength = random.Next(Math.Max(name.Length+2, minLength ?? 10), maxLength ?? 20);
+            var stringValueLength = random.Next(Math.Max(name.Length + 2, minLength ?? 10), maxLength ?? 20);
             var randomStringLength = stringValueLength - name.Length - 1;
             if (randomStringLength <= 0)
                 return name;

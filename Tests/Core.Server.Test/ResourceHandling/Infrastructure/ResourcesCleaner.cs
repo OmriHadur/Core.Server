@@ -1,6 +1,6 @@
 ﻿using Core.Server.Common.Attributes;
-using Core.Server.Test.ResourcesCreators.Interfaces;
 using Core.Server.Test.ResourceCreators.Interfaces;
+using Core.Server.Test.ResourcesCreators.Interfaces;
 using Unity;
 
 namespace Core.Server.Test.ResourcesCreators.Infrastructure

@@ -11,7 +11,7 @@ namespace Core.Server.Application.Mappers.Implementation
 {
     [Inject]
     public class LoginResourceMapper
-        : ResourceMapper<LoginResource,LoginEntity>
+        : ResourceMapper<LoginResource, LoginEntity>
     {
         [Dependency]
         public ILookupRepository<UserEntity> UserLookupRepository { get; set; }
@@ -23,7 +23,7 @@ namespace Core.Server.Application.Mappers.Implementation
         {
             var loginResource = Mapper.Map<LoginResource>(entity);
             var userEntity = await UserLookupRepository.Get(entity.UserId);
-            loginResource.User = await UserResourceMapper.Map(userEntity);;
+            loginResource.User = await UserResourceMapper.Map(userEntity); ;
             return loginResource;
         }
     }

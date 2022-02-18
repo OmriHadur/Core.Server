@@ -2,7 +2,7 @@
 
 namespace Core.Server.Shared.Resources
 {
-    public class PolicyAlterResource 
+    public class PolicyAlterResource
     {
         [Required]
         public string Name { get; set; }

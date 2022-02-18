@@ -11,11 +11,11 @@ namespace Core.Server.Shared.Query
 
         public string OrderByDescending { get; set; }
 
-        [Range(0,1000)]
+        [Range(0, 1000)]
         public int Page { get; set; }
 
         [Range(0, 1000)]
         public int PageSize { get; set; }
     }
-    
+
 }

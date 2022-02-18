@@ -1,8 +1,8 @@
-﻿using Core.Server.Shared.Errors;
-using Core.Server.Common.Attributes;
-using Core.Server.Shared.Resources;
-using Core.Server.Common.Query.Infrastructure;
+﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Query;
+using Core.Server.Common.Query.Infrastructure;
+using Core.Server.Shared.Errors;
+using Core.Server.Shared.Resources;
 
 namespace Core.Server.Application.Query
 {
@@ -10,7 +10,7 @@ namespace Core.Server.Application.Query
     public class QueryResourceValidator : QueringBase, IQueryResourceValidator
     {
         public BadRequestReason? Validate<TResource>(QueryRequest queryRequest)
-            where TResource: Resource
+            where TResource : Resource
         {
             if (queryRequest.Page != 0 && queryRequest.PageSize == 0)
                 return BadRequestReason.EnumNotInRange;
@@ -21,7 +21,8 @@ namespace Core.Server.Application.Query
         private BadRequestReason? ValidateProperty<TResource>(string propertyName)
             where TResource : Resource
         {
-            if (!string.IsNullOrEmpty(propertyName)){
+            if (!string.IsNullOrEmpty(propertyName))
+            {
                 var propertyInfo = GetPropertyInfo<TResource>(propertyName);
                 if (propertyInfo == null)
                     return BadRequestReason.PropertyNotFound;

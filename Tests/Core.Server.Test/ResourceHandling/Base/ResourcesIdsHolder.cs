@@ -7,7 +7,7 @@ using System.Linq;
 namespace Core.Server.Test.ResourcesCreators.Infrastructure
 {
     [Inject]
-    public class ResourcesIdsHolder: IResourcesIdsHolder
+    public class ResourcesIdsHolder : IResourcesIdsHolder
     {
         private readonly Dictionary<Type, List<string>> idsbyType;
 
@@ -30,7 +30,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
             var type = typeof(TResource);
             return idsbyType.ContainsKey(type) && idsbyType[type].Contains(id);
         }
-        
+
         public void Clean<TResource>()
         {
             var type = typeof(TResource);

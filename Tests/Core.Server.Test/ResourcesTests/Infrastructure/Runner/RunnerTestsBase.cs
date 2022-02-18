@@ -1,12 +1,12 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity;
-using Core.Server.Test.Unity;
 using Core.Server.Injection.Interfaces;
-using System.Collections.Generic;
-using Core.Server.Test.ResourceTests.Interfaces;
-using System.Linq;
-using System;
 using Core.Server.Injection.Unity;
+using Core.Server.Test.ResourceTests.Interfaces;
+using Core.Server.Test.Unity;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Unity;
 
 namespace Core.Server.Test.ResourceTests
 {
@@ -39,7 +39,7 @@ namespace Core.Server.Test.ResourceTests
             foreach (var testForResource in TestsForResource)
             {
                 Console.WriteLine("Start: " + testForResource);
-                testForResource.TestInit();              
+                testForResource.TestInit();
                 testRun(testForResource);
                 testForResource.Cleanup();
             }

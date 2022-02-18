@@ -2,7 +2,7 @@
 
 namespace Core.Server.Common.Entities
 {
-    public class NamedEntity:Entity
+    public class NamedEntity : Entity
     {
         [Required]
         public string Name { get; set; }

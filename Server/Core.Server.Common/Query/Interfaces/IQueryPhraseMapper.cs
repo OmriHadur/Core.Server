@@ -1,5 +1,4 @@
-﻿using Core.Server.Common.Query;
-using Core.Server.Shared.Resources;
+﻿using Core.Server.Shared.Resources;
 
 namespace Core.Server.Common.Query
 {

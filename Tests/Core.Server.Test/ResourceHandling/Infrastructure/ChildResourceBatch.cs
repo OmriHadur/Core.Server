@@ -4,7 +4,6 @@ using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Test.ResourceCreation.Interfaces;
 using Core.Server.Test.ResourceCreators.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity;

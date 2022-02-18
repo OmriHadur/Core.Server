@@ -14,7 +14,7 @@ namespace Core.Server.Test.ResourceTests
         , IResourceGenericChildTests
         where TChildAlterResource : ChildAlterResource
         where TParentResource : Resource
-        where TChildResource :Resource
+        where TChildResource : Resource
     {
 
         private TParentResource parentCreated;

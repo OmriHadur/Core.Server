@@ -38,7 +38,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         public ActionResult<IEnumerable<string>> Delete(IEnumerable<string> ids)
         {
-            var result =  Client.BatchDelete(ids.ToArray()).Result;
+            var result = Client.BatchDelete(ids.ToArray()).Result;
             if (result.IsSuccess)
                 foreach (var id in result.Value)
                     ResourceIdsHolder.Remove<TResource>(id);

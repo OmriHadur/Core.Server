@@ -3,7 +3,7 @@
 namespace Core.Server.Test.ResourceCreation.Interfaces
 {
     public interface IRandomResourceCreator<TAlterResource, TResource>
-        where TResource: Resource
+        where TResource : Resource
     {
         TAlterResource GetRandomCreateResource();
         TAlterResource GetRandomReplacResource(TResource existingResource);

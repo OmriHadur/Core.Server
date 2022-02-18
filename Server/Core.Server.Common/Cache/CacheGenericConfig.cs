@@ -8,7 +8,7 @@ namespace Core.Server.Common.Cache
 {
     public class CacheEntityConfig<TEntity>
         : ICacheEntityConfig<TEntity>
-        where TEntity:Entity
+        where TEntity : Entity
     {
         private int maxEntities;
         private int maxQueries;

@@ -2,7 +2,7 @@
 
 namespace Core.Server.Common.Attributes
 {
-    public class InjectNameAttribute: Attribute
+    public class InjectNameAttribute : Attribute
     {
     }
 }

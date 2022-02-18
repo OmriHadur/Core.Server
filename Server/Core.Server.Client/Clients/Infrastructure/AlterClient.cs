@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Core.Server.Client.Interfaces;
+﻿using Core.Server.Client.Interfaces;
 using Core.Server.Client.Results;
 using Core.Server.Common.Attributes;
 using Core.Server.Shared.Resources;
+using System.Threading.Tasks;
 
 namespace Core.Server.Client.Clients
 {
@@ -19,7 +19,7 @@ namespace Core.Server.Client.Clients
 
         public Task<ActionResult<TResource>> Replace(string id, TAlterResource resource)
         {
-            return SentPut(id,resource);
+            return SentPut(id, resource);
         }
 
         public Task<ActionResult> Delete(string id)

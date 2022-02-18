@@ -20,7 +20,7 @@ namespace Core.Server.Application.Mappers.Base
 
         [Dependency]
         public IReflactionHelper ReflactionHelper;
-        
+
         public virtual async Task<TEntity> MapCreate(TAlterResource resource)
         {
             return Mapper.Map<TEntity>(resource);

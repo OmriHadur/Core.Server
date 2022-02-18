@@ -5,7 +5,7 @@ using Unity;
 
 namespace Core.Server.Test.ResourceTests
 {
-    public abstract class GenericTestsBase<TResource> 
+    public abstract class GenericTestsBase<TResource>
         : TestsBase
         where TResource : Resource
     {

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Core.Server.Common.Mappers;
-using System;
 using Unity;
 
 namespace Core.Server.Application.Mappers
@@ -11,7 +10,7 @@ namespace Core.Server.Application.Mappers
         {
             var mappers = unityContainer.ResolveAll<IAutoMapperMapping>();
             foreach (var mapper in mappers)
-                mapper.AddAutoMapping(this);             
+                mapper.AddAutoMapping(this);
         }
     }
 }

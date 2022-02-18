@@ -3,8 +3,6 @@ using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Attributes;
 using Core.Server.Shared.Resources;
 using Core.Server.Test.ResourceCreation.Interfaces;
-using System;
-using System.Reflection;
 using Unity;
 
 namespace Core.Server.Test.ResourceCreation
@@ -13,7 +11,7 @@ namespace Core.Server.Test.ResourceCreation
     public class RandomResourceCreator<TAlterResource, TResource>
         : IRandomResourceCreator<TAlterResource, TResource>
         where TAlterResource : new()
-        where TResource: Resource
+        where TResource : Resource
     {
         [Dependency]
         public IObjectRandomizer ObjectRandomizer;

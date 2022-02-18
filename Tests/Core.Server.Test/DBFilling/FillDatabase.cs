@@ -1,5 +1,4 @@
-﻿using AutoMapper.Configuration.Annotations;
-using Core.Server.Injection.Interfaces;
+﻿using Core.Server.Injection.Interfaces;
 using Core.Server.Shared.Resources;
 using Core.Server.Test.ResourceCreators.Interfaces;
 using Core.Server.Test.ResourceTests;

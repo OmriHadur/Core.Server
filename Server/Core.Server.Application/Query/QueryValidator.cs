@@ -1,10 +1,10 @@
-﻿using Core.Server.Shared.Errors;
-using Core.Server.Shared.Resources;
-using System.Linq;
-using Core.Server.Common.Attributes;
-using System;
-using System.Reflection;
+﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Query;
+using Core.Server.Shared.Errors;
+using Core.Server.Shared.Resources;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace Core.Server.Application.Query
 {

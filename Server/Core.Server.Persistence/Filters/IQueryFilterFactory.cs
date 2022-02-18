@@ -1,6 +1,6 @@
-﻿using MongoDB.Driver;
-using Core.Server.Common.Entities;
+﻿using Core.Server.Common.Entities;
 using Core.Server.Common.Query;
+using MongoDB.Driver;
 
 namespace Core.Server.Persistence.Filters
 {

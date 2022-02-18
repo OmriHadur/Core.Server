@@ -6,6 +6,6 @@ namespace Core.Server.Shared.Resources
     public class ChildBatchDeleteResource
     {
         [Required]
-        public Dictionary<string,string[]> ParentAndIds { get; set; }
+        public Dictionary<string, string[]> ParentAndIds { get; set; }
     }
 }

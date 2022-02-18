@@ -1,7 +1,6 @@
 ﻿using Core.Server.Common;
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
-using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
 using Core.Server.Shared.Resources;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace Core.Server.Application.Validators.Implementation
         public override async Task<IEnumerable<StringKeyValuePair>> ValidateCreate(RoleAlterResource alterResource)
         {
             var validation = (await base.ValidateCreate(alterResource)).ToList();
-            var notFound =  await GetNotFoundPolicies(alterResource);
+            var notFound = await GetNotFoundPolicies(alterResource);
             validation.AddRange(notFound);
             return validation;
         }

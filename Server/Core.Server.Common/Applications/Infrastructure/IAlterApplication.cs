@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Server.Shared.Resources;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Core.Server.Shared.Resources;
 
 namespace Core.Server.Common.Applications
 {

@@ -1,11 +1,8 @@
 ﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
-using Core.Server.Persistence.Cache;
 using Core.Server.Persistence.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Core.Server.Persistence.Logging

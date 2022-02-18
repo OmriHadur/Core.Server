@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Core.Server.Common.Attributes
+﻿namespace Core.Server.Common.Attributes
 {
     public class InjectAttribute : PriorityAttribute
     {

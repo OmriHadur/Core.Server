@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Core.Server.Test.ResourceCreators.Interfaces
 {
-    public interface IResourceBatch<TAlterResource,TResource>
+    public interface IResourceBatch<TAlterResource, TResource>
         where TResource : Resource
     {
         ActionResult<IEnumerable<TResource>> Create(int amount);

@@ -1,6 +1,4 @@
-﻿using Core.Server.Shared.Errors;
-
-namespace Core.Server.Client.Results
+﻿namespace Core.Server.Client.Results
 {
     public class BadRequestResult : ActionResult
     {

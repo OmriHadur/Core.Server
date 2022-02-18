@@ -1,5 +1,5 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Core.Server.Test.ResourceTests.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Core.Server.Test.ResourceTests
 {

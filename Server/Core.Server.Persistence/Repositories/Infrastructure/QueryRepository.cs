@@ -1,16 +1,12 @@
-﻿using MongoDB.Driver;
+﻿using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
-using Core.Server.Common.Query;
+using Core.Server.Common.Query.Infrastructure;
 using Core.Server.Common.Repositories;
 using Core.Server.Persistence.Filters;
-using System;
+using MongoDB.Driver;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Common.Attributes;
-using Core.Server.Common.Query.Infrastructure;
 
 namespace Core.Server.Persistence.Repositories
 {

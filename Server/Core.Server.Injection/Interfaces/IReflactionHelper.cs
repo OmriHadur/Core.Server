@@ -10,7 +10,7 @@ namespace Core.Server.Injection.Interfaces
         Type GetClassForInterface<TInterface>();
         Type FillGenericType(Type genericType, ResourceBoundle resourceBoundle);
         IEnumerable<Type> GetDrivenTypesOf(Type type);
-        IEnumerable<Type> GetGenericTypesWithAttribute<TAttribute>() 
+        IEnumerable<Type> GetGenericTypesWithAttribute<TAttribute>()
             where TAttribute : Attribute;
         IEnumerable<ResourceBoundle> GetAllResourcesBoundles();
         IEnumerable<ResourceBoundle> GetResourcesBoundles();
@@ -18,7 +18,7 @@ namespace Core.Server.Injection.Interfaces
         IEnumerable<ResourceBoundle> GetChildResourcesBoundles();
         string GetTypeName(Type drivenType, Type subType);
         Type GetTypeByName(string typeName);
-        IEnumerable<Type> GetTypesWithAttribute<TAttribute>() 
+        IEnumerable<Type> GetTypesWithAttribute<TAttribute>()
             where TAttribute : Attribute;
         IEnumerable<PropertyInfo> GetPropertiesWithAttribute<TAttribute>(object obj)
             where TAttribute : Attribute;

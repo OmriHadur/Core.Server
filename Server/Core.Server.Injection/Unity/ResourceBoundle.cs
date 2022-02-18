@@ -38,8 +38,8 @@ namespace Core.Server.Injection.Unity
 
         public bool Contains(Type type)
         {
-            return (TAlterResource == type || 
-                TResource == type || 
+            return (TAlterResource == type ||
+                TResource == type ||
                 TEntity == type);
         }
     }

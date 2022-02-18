@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
 namespace Core.Server.ResourceCreator
@@ -63,8 +62,8 @@ namespace Core.Server.ResourceCreator
 
         private static string GetBoilerPlatesPath()
         {
-            return Directory.GetCurrentDirectory() + 
-                "\\BoilerPlates\\" + 
+            return Directory.GetCurrentDirectory() +
+                "\\BoilerPlates\\" +
                 (IsChild ? "ChildResource" : "Resource");
         }
 

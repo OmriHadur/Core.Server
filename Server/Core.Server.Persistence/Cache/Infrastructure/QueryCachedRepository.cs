@@ -1,14 +1,13 @@
-﻿using Core.Server.Common.Cache;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Cache;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Query.Infrastructure;
 using Core.Server.Common.Repositories;
-using Core.Server.Common.Attributes;
-using Core.Server.Persistence.Repositories;
+using Core.Server.Persistence.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Persistence.Logging;
 
 namespace Core.Server.Persistence.Cache
 {
@@ -26,9 +25,9 @@ namespace Core.Server.Persistence.Cache
         public async Task<IEnumerable<TEntity>> Query(QueryRequest queryRequest)
         {
             var entities = QueryCache.GetEntities(queryRequest);
-            if (entities != null) 
+            if (entities != null)
                 return entities;
-            entities=(await QueryRepository.Query(queryRequest)).ToList();
+            entities = (await QueryRepository.Query(queryRequest)).ToList();
             QueryCache.Add(queryRequest, entities);
             return entities;
         }

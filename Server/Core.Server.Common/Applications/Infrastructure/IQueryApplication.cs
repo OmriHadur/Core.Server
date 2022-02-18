@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Server.Shared.Query;
+using Core.Server.Shared.Resources;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Core.Server.Shared.Resources;
-using Core.Server.Shared.Query;
 
 namespace Core.Server.Common.Applications
 {

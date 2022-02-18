@@ -1,5 +1,4 @@
 ﻿using Core.Server.Common.Entities;
-using Core.Server.Common.Query;
 using Core.Server.Common.Query.Infrastructure;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -1,9 +1,9 @@
-﻿using Core.Server.Common.Query;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Query;
 using Core.Server.Shared.Resources;
-using Core.Server.Common.Attributes;
-using Unity;
 using System.Collections.Generic;
 using System.Linq;
+using Unity;
 
 namespace Core.Server.Application.Query
 {

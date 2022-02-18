@@ -1,5 +1,4 @@
 ﻿using Core.Server.Common.Entities;
-using Core.Server.Shared.Resources;
 using System.Threading.Tasks;
 
 namespace Core.Server.Common.Mappers

@@ -1,5 +1,4 @@
 ﻿using Core.Server.Common.Applications;
-using Core.Server.Common.Entities;
 using Core.Server.Common.Helpers;
 using Core.Server.Common.Logging;
 using System;

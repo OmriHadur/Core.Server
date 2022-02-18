@@ -32,7 +32,7 @@ namespace Core.Server.Application.Validators
         {
             var notFoundId = await LookupRepository.Exists(resourceId);
             return !notFoundId ?
-                GetNotFound(propertyName, resourceId) : 
+                GetNotFound(propertyName, resourceId) :
                 null;
         }
 

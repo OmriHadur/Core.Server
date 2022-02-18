@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Core.Server.Shared.Errors;
 
 namespace Core.Server.Common.Errors
 {

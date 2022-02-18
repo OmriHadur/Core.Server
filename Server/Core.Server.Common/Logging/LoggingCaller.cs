@@ -20,7 +20,7 @@ namespace Core.Server.Application.Logging
             MethodLogger.MethodEnded(loggingTierLevel, callName, null);
         }
 
-        public async Task<T> LogginCall<T>(string entityName, Func<Task<T>> action, LoggingTierLevel loggingTierLevel, object request=null)
+        public async Task<T> LogginCall<T>(string entityName, Func<Task<T>> action, LoggingTierLevel loggingTierLevel, object request = null)
         {
             var callName = entityName + "." + GetMethodName(action);
             MethodLogger.MethodStart(loggingTierLevel, callName, request);

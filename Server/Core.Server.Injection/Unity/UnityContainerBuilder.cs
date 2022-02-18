@@ -27,7 +27,7 @@ namespace Core.Server.Injection.Unity
             AddAllChildTypesForBundles();
             AddInjectTypes();
             AddInjectNamedTypes();
-            
+
             new UnityCacheBuilder().AddCache(container, reflactionHelper);
         }
 

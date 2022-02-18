@@ -7,7 +7,6 @@ using Core.Server.Common.Repositories;
 using Core.Server.Common.Validators;
 using Core.Server.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +43,7 @@ namespace Core.Server.Application
         {
             var parentsIds = resources.Select(r => r.ParentId).Distinct();
             var result = await GetParents(parentsIds);
-            if (result.Result !=null)
+            if (result.Result != null)
                 return result.Result;
             var parents = result.Value;
 
@@ -82,7 +81,7 @@ namespace Core.Server.Application
                         return NotFound(childId);
                     ParentManager.Remove(parents[parentId], childId);
                 }
-                
+
             }
 
             await BatchRepository.ReplaceMany(parents.Values);

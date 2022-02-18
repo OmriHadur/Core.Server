@@ -1,14 +1,13 @@
-﻿using MongoDB.Driver;
-using Core.Server.Common;
+﻿using Core.Server.Common.Config;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
+using MongoDB.Driver;
 using System.Security.Authentication;
 using Unity;
-using Core.Server.Common.Config;
 
 namespace Core.Server.Persistence.Repositories
 {
-    public class BaseRepository<TEntity> 
+    public class BaseRepository<TEntity>
         : IBaseRepository
         where TEntity : Entity
     {

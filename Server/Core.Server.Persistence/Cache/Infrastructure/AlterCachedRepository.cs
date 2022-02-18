@@ -1,18 +1,18 @@
-﻿using Core.Server.Common.Cache;
+﻿using Core.Server.Common.Attributes;
+using Core.Server.Common.Cache;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Repositories;
-using Core.Server.Common.Attributes;
+using Core.Server.Persistence.Logging;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Unity;
-using Core.Server.Persistence.Logging;
 
 namespace Core.Server.Persistence.Cache
 {
     [Inject(3)]
     public class AlterCachedRepository<TEntity>
-        :IAlterRepository<TEntity>
+        : IAlterRepository<TEntity>
         where TEntity : Entity
     {
         [Dependency]

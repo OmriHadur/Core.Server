@@ -1,5 +1,4 @@
-﻿using Core.Server.Common;
-using Core.Server.Common.Applications;
+﻿using Core.Server.Common.Applications;
 using Core.Server.Common.Attributes;
 using Core.Server.Common.Entities;
 using Core.Server.Common.Mappers;
@@ -46,7 +45,7 @@ namespace Core.Server.Application
             var entitiesTasks = resources.Select(async resource => await Map(resource));
             var entities = entitiesTasks.Select(er => er.Result).ToList();
             await AddEntites(entities);
-            var response= await ResourceMapper.Map(entities);
+            var response = await ResourceMapper.Map(entities);
             return response.ToList();
         }
 
@@ -68,7 +67,7 @@ namespace Core.Server.Application
 
         public async Task<ActionResult<IEnumerable<string>>> BatchDelete(string[] ids)
         {
-            var validation = await EntityValidator.ValidateFound(ids,"ids");
+            var validation = await EntityValidator.ValidateFound(ids, "ids");
             if (validation.Any())
                 return GetValidationResult(validation);
             await BatchRepository.DeleteMany(ids);

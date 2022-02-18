@@ -1,6 +1,5 @@
 ﻿using Core.Server.Client.Results;
 using Core.Server.Shared.Resources;
-using System;
 
 namespace Core.Server.Test.ResourceCreators.Interfaces
 {

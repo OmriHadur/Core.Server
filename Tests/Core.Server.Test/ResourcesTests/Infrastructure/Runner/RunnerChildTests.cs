@@ -1,6 +1,6 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Core.Server.Test.ResourceTests.Interfaces;
 using Core.Server.Injection.Unity;
+using Core.Server.Test.ResourceTests.Interfaces;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 

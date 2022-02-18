@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Core.Server.Shared.Resources
 {
-    public class LoginAlterResource 
+    public class LoginAlterResource
     {
         [EmailAddress]
         [Immutable]

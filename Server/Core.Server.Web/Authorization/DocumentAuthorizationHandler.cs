@@ -23,7 +23,7 @@ namespace Core.Server.Web.Authorization
         public async Task<AuthorizationResult> AuthorizeAsync(ClaimsPrincipal claims, object resourceType, IEnumerable<IAuthorizationRequirement> requirements)
         {
             var userResource = JwtManager.GetUser(claims);
-            if (userResource?.Email == Config.AppSettings.AdminUserName) 
+            if (userResource?.Email == Config.AppSettings.AdminUserName)
                 return AuthorizationResult.Success();
 
             var allowedActions = GetAllowedActions(userResource, resourceType.ToString()).ToList();
@@ -64,7 +64,7 @@ namespace Core.Server.Web.Authorization
             return allowedActions;
         }
 
-        private IEnumerable<ResourceActions> GetResourceActions(PolicyResource[] policies,string resource)
+        private IEnumerable<ResourceActions> GetResourceActions(PolicyResource[] policies, string resource)
         {
             foreach (var policy in policies)
                 if (policy.ResourceType == resource)

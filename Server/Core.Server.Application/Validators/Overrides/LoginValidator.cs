@@ -14,7 +14,7 @@ namespace Core.Server.Application.Validators.Implementation
 {
     [Inject]
     public class LoginValidator
-        : ResourceValidator<LoginAlterResource,LoginEntity>
+        : ResourceValidator<LoginAlterResource, LoginEntity>
     {
         private readonly PasswordHasher _passwordHasher = new PasswordHasher();
 

@@ -3,7 +3,7 @@ using Core.Server.Shared.Resources;
 
 namespace Core.Server.Test.ResourceCreators.Interfaces
 {
-    public interface IResourceCreate<TResource> 
+    public interface IResourceCreate<TResource>
         : IResourceDelete
         where TResource : Resource
     {

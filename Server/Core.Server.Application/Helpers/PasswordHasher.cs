@@ -3,7 +3,7 @@ using Core.Server.Common.Helpers;
 
 namespace Core.Server.Application.Helpers
 {
-    public class PasswordHasher: IPasswordHasher
+    public class PasswordHasher : IPasswordHasher
     {
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

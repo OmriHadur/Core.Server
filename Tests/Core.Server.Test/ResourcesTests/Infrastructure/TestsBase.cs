@@ -1,14 +1,14 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
-using System;
 using Core.Server.Client.Results;
-using System.Collections.Generic;
 using Core.Server.Shared.Resources;
-using Unity;
 using Core.Server.Test.ResourceCreators.Interfaces;
-using Core.Server.Test.Utils;
 using Core.Server.Test.ResourcesCreators.Interfaces;
 using Core.Server.Test.Unity;
+using Core.Server.Test.Utils;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Unity;
 
 namespace Core.Server.Test.ResourceTests
 {
@@ -135,7 +135,7 @@ namespace Core.Server.Test.ResourceTests
         }
 
         protected void AssertAreEqual<TResource>(TResource expected, ActionResult<IEnumerable<TResource>> actual)
-            where TResource: Resource
+            where TResource : Resource
         {
             Assert.IsTrue(actual.IsSuccess);
             Assert.AreEqual(1, actual.Value.Count());

@@ -1,5 +1,4 @@
 ﻿using Core.Server.Common.Query;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -10,7 +9,7 @@ namespace Core.Server.Application.Query.PhraseBuilders
     {
         public abstract int Priory { get; }
 
-        public QueryBase Map(string queryPhrase, IEnumerable<IQueryPhrasePipelineMapper> mappers) 
+        public QueryBase Map(string queryPhrase, IEnumerable<IQueryPhrasePipelineMapper> mappers)
         {
             if (IsCanMap(queryPhrase))
                 return InnerMap(queryPhrase, mappers);

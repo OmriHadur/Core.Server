@@ -20,7 +20,7 @@ namespace Core.Server.Test.ResourcesCreators.Infrastructure
 
         [Dependency]
         public IResourceLookup<TResource> ResourceQuery;
-        
+
         public ActionResult<TResource> Create()
         {
             var createResource = RandomResourceCreator.GetRandomCreateResource();

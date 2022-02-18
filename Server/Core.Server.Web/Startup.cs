@@ -1,21 +1,21 @@
-using System.Text;
+using AutoMapper;
+using Core.Server.Application.Mappers;
+using Core.Server.Common.Config;
+using Core.Server.Injection.Interfaces;
+using Core.Server.Injection.Reflaction;
+using Core.Server.Injection.Unity;
+using Core.Server.Web.Authorization;
+using Core.Server.Web.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Unity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using AutoMapper;
-using Core.Server.Web.Utils;
-using Core.Server.Application.Mappers;
-using Core.Server.Common.Config;
-using Core.Server.Injection.Interfaces;
-using Core.Server.Injection.Unity;
-using Core.Server.Injection.Reflaction;
-using Core.Server.Web.Authorization;
-using Microsoft.AspNetCore.Authorization;
+using System.Text;
+using Unity;
 
 namespace Core.Server.Web
 {

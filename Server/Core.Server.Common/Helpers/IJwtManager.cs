@@ -5,7 +5,7 @@ namespace Core.Server.Common.Entities.Helpers
 {
     public interface IJwtManager
     {
-        string GenerateToken(UserResource user,string secret);
+        string GenerateToken(UserResource user, string secret);
         UserResource GetUser(ClaimsPrincipal ClaimsPrincipal);
     }
 }
